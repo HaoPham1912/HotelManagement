@@ -9,7 +9,18 @@ import java.util.Set;
 public class RoomEntity {
 
     @Id
-    @Column(name = "maphong")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int roomId;
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
+    @Column(name = "maphong", nullable = false, unique = true)
     private String maPhong;
 
     @ManyToOne

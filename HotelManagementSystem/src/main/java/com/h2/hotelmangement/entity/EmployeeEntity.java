@@ -8,7 +8,18 @@ import javax.persistence.*;
 public class EmployeeEntity {
 
     @Id
-    @Column(name = "manhanvien")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int employeeId;
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    @Column(name = "manhanvien", nullable = false, unique = true)
     private String maNhanVien;
 
     @OneToOne

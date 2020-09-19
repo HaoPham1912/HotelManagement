@@ -8,7 +8,18 @@ import java.util.Date;
 public class BookingEntity {
 
     @Id
-    @Column(name = "mabooking")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int bookingId;
+
+    public int getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(int bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    @Column(name = "mabooking", nullable = false, unique = true)
     private String maBooking;
 
     @ManyToOne

@@ -10,7 +10,18 @@ import java.util.Set;
 public class SaleEntity {
 
     @Id
-    @Column(name = "makhuyenmai")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int saleId;
+
+    public int getSaleId() {
+        return saleId;
+    }
+
+    public void setSaleId(int saleId) {
+        this.saleId = saleId;
+    }
+
+    @Column(name = "makhuyenmai", nullable = false, unique = true)
     private String maKhuyenMai;
 
     @Column(name = "madichvu", nullable = false, length = 30)

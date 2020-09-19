@@ -9,11 +9,22 @@ import java.util.Set;
 public class CustomerEntity {
 
     @Id
-    @Column(name = "makhachhang")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int customerId;
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    @Column(name = "makhachhang", nullable = false, unique = true)
     private String maKhachHang;
 
     @OneToOne
-    @JoinColumn(name = "account_id")
+    @JoinColumn(name = "account_ii")
     private AccountEntity taiKhoanKhachHang;
 
     @Column(name = "soCMND", nullable = false, length = 20)

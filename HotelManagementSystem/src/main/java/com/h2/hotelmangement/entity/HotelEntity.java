@@ -9,7 +9,18 @@ import java.util.Set;
 public class HotelEntity {
 
     @Id
-    @Column(name = "machinhanh")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int hotelId;
+
+    public int getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(int hotelId) {
+        this.hotelId = hotelId;
+    }
+
+    @Column(name = "machinhanh", nullable = false, unique = true)
     private String maChiNhanh;
 
     @Column(name = "tenchinhanh", nullable = false, length = 20)

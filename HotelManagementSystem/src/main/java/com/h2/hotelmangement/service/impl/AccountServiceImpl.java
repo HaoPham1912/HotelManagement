@@ -12,8 +12,9 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
+
     @Override
-    public void saveAccount(AccountEntity accountEntity) {
-        accountRepository.save(accountEntity);
+    public void save(AccountEntity accountEntity) {
+         accountRepository.save(accountEntity);
     }
 }

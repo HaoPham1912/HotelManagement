@@ -10,7 +10,18 @@ import java.util.Set;
 public class BillEntity {
 
     @Id
-    @Column(name = "mahoadon")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int billId;
+
+    public int getBillId() {
+        return billId;
+    }
+
+    public void setBillId(int billId) {
+        this.billId = billId;
+    }
+
+    @Column(name = "mahoadon", nullable = false, unique = true)
     private String maHoaDon;
 
     @ManyToOne

@@ -7,16 +7,12 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "taikhoan")
-public class AccountEntity extends  BaseEntity implements Serializable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
-
+public class AccountEntity extends  BaseEntity{
     @Id
-    @Column(name = "mataikhoan")
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private int id;
+
+    @Column(name = "mataikhoan", nullable =false, unique = true)
     private String maTaiKhoan;
 
     @Column(name = "username", nullable = false)
@@ -37,6 +33,7 @@ public class AccountEntity extends  BaseEntity implements Serializable {
     @OneToOne(mappedBy = "taiKhoanKhachHang")
     private CustomerEntity accountKhachHang;
 
+
     public String getMaTaiKhoan() {
         return maTaiKhoan;
     }
@@ -45,6 +42,7 @@ public class AccountEntity extends  BaseEntity implements Serializable {
         this.maTaiKhoan = maTaiKhoan;
     }
 
+
     public String getUsername() {
         return username;
     }
@@ -52,6 +50,7 @@ public class AccountEntity extends  BaseEntity implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
+
 
     public String getPassword() {
         return password;
@@ -77,6 +76,7 @@ public class AccountEntity extends  BaseEntity implements Serializable {
         this.accountKhachHang = accountKhachHang;
     }
 
+
     public String getRoleName() {
         return roleName;
     }
@@ -85,11 +85,29 @@ public class AccountEntity extends  BaseEntity implements Serializable {
         this.roleName = roleName;
     }
 
+
     public String getTrangthai() {
         return trangthai;
     }
 
     public void setTrangthai(String trangthai) {
+        this.trangthai = trangthai;
+    }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    public AccountEntity() {
+    }
+
+    public AccountEntity(String maTaiKhoan, String username, String password, String trangthai, String roleName) {
+        this.maTaiKhoan = maTaiKhoan;
+        this.username = username;
+        this.password = password;
+        this.roleName = roleName;
         this.trangthai = trangthai;
     }
 }

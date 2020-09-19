@@ -5,14 +5,22 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "dichvu")
-public class ServicesEntity extends BaseEntity implements Serializable {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+public class ServicesEntity extends BaseEntity {
+
 
     @Id
-    @Column(name = "madichvu")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int serviceId;
+
+    public int getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(int serviceId) {
+        this.serviceId = serviceId;
+    }
+
+    @Column(name = "madichvu", nullable = false, unique = true)
     private String maDichVu;
 
     @Column(name = "tendichvu", nullable = false, length = 30)
