@@ -11,7 +11,8 @@ public class EmployeeEntity {
     @Column(name = "manhanvien")
     private String maNhanVien;
 
-    @OneToOne(mappedBy = "accountNhanVien")
+    @OneToOne
+    @JoinColumn(name = "account_id")
     private AccountEntity taiKhoanNhanVien;
 
     @Column(name = "tennhanvien", nullable = false, length = 100)

@@ -1,11 +1,13 @@
 package com.h2.hotelmangement.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "taikhoan")
-public class AccountEntity extends BaseEntity implements Serializable {
+public class AccountEntity extends  BaseEntity implements Serializable {
 
     /**
      *
@@ -14,20 +16,25 @@ public class AccountEntity extends BaseEntity implements Serializable {
 
     @Id
     @Column(name = "mataikhoan")
+    @GeneratedValue
     private String maTaiKhoan;
 
-    @Column(name = "username", nullable = false, length = 30)
+    @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "password", nullable = false, length = 30)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToOne
-    @JoinColumn(name = "manhanvien")
+    @Column(name = "rolename", nullable = false)
+    private String roleName;
+
+    @Column(name = "trangthai", nullable = false)
+    private String trangthai;
+
+    @OneToOne(mappedBy = "taiKhoanNhanVien")
     private EmployeeEntity accountNhanVien;
 
-    @OneToOne
-    @JoinColumn(name = "makhachhang")
+    @OneToOne(mappedBy = "taiKhoanKhachHang")
     private CustomerEntity accountKhachHang;
 
     public String getMaTaiKhoan() {
@@ -70,5 +77,20 @@ public class AccountEntity extends BaseEntity implements Serializable {
         this.accountKhachHang = accountKhachHang;
     }
 
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getTrangthai() {
+        return trangthai;
+    }
+
+    public void setTrangthai(String trangthai) {
+        this.trangthai = trangthai;
+    }
 }
 

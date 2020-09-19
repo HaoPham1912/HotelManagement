@@ -12,7 +12,8 @@ public class CustomerEntity {
     @Column(name = "makhachhang")
     private String maKhachHang;
 
-    @OneToOne(mappedBy = "accountKhachHang")
+    @OneToOne
+    @JoinColumn(name = "account_id")
     private AccountEntity taiKhoanKhachHang;
 
     @Column(name = "soCMND", nullable = false, length = 20)
