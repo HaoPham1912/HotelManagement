@@ -36,13 +36,12 @@ public class Rooms {
     //nay la thay vi tao 1 entity hinh la 1 class thi minh tao tu day luon
     //minh tao ra cai table ra roomimages tu day
     //khi save thi minh se save xuong no 1 list String name cua imange
-    //Tai ten imange co the trung nen t de list
     //tuong tu voi imangehotel luon nha
 
     @Column(name = "thumbnail")
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "roomimages", joinColumns = @JoinColumn(name = "roomid"))
-    private List<String> thumbnailsRoomList;
+    private Set<String> thumbnailsRoomList;
 
     public Long getRoomid() {
         return roomid;
@@ -84,11 +83,11 @@ public class Rooms {
         this.services = services;
     }
 
-    public List<String> getThumbnailsRoomList() {
+    public Set<String> getThumbnailsRoomList() {
         return thumbnailsRoomList;
     }
 
-    public void setThumbnailsRoomList(List<String> thumbnailsRoomList) {
+    public void setThumbnailsRoomList(Set<String> thumbnailsRoomList) {
         this.thumbnailsRoomList = thumbnailsRoomList;
     }
 

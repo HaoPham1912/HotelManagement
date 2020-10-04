@@ -38,7 +38,7 @@ public class Hotels {
     @Column(name = "thumbnail")
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "hotelimages", joinColumns = @JoinColumn(name = "hotelid"))
-    private List<String> thumbnailsHotelList;
+    private Set<String> thumbnailsHotelList;
 
     public Long getHotelid() {
         return hotelid;
@@ -104,11 +104,11 @@ public class Hotels {
         this.roomsSet = roomsSet;
     }
 
-    public List<String> getThumbnailsHotelList() {
+    public Set<String> getThumbnailsHotelList() {
         return thumbnailsHotelList;
     }
 
-    public void setThumbnailsHotelList(List<String> thumbnailsHotelList) {
+    public void setThumbnailsHotelList(Set<String> thumbnailsHotelList) {
         this.thumbnailsHotelList = thumbnailsHotelList;
     }
 }
