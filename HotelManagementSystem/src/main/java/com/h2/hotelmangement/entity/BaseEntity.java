@@ -16,49 +16,49 @@ import java.util.Date;
 public abstract class BaseEntity {
     @Column
     @CreatedBy
-    private String createdBy;
+    private String createdby;
 
     @Column
     @CreatedDate
-    private Date createdDate;
+    private Date createddate;
 
     @Column
     @LastModifiedBy
-    private String modifiedBy;
+    private String modifiedby;
 
     @Column
     @LastModifiedDate
-    private Date modifiedDate;
+    private Date modifieddate;
 
-    public String getCreatedBy() {
-        return createdBy;
+    public String getCreatedby() {
+        return createdby;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public void setCreatedby(String createdby) {
+        this.createdby = createdby;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
+    public Date getCreateddate() {
+        return createddate;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public void setCreateddate(Date createddate) {
+        this.createddate = createddate;
     }
 
-    public String getModifiedBy() {
-        return modifiedBy;
+    public String getModifiedby() {
+        return modifiedby;
     }
 
-    public void setModifiedBy(String modifiedBy) {
-        this.modifiedBy = modifiedBy;
+    public void setModifiedby(String modifiedby) {
+        this.modifiedby = modifiedby;
     }
 
-    public Date getModifiedDate() {
-        return modifiedDate;
+    public Date getModifieddate() {
+        return modifieddate;
     }
 
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
+    public void setModifieddate(Date modifieddate) {
+        this.modifieddate = modifieddate;
     }
 }

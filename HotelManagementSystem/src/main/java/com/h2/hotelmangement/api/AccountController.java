@@ -1,9 +1,8 @@
 package com.h2.hotelmangement.api;
 
-import com.h2.hotelmangement.entity.AccountEntity;
+import com.h2.hotelmangement.entity.Accounts;
 import com.h2.hotelmangement.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,8 +13,8 @@ public class AccountController {
     private AccountService accountService;
 
     @PostMapping("register")
-    public String save(@RequestBody AccountEntity accountEntity){
-        accountService.save(accountEntity);
+    public String save(@RequestBody Accounts accounts){
+        accountService.save(accounts);
         return "index";
     }
 }
