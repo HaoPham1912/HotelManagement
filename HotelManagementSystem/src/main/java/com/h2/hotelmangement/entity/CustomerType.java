@@ -12,7 +12,7 @@ public class CustomerType {
     private Long id;
 
     @Column(name = "typename")
-    private String typename;
+    private String typeName;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customerType")
     private Set<Customer> customerSet;
@@ -25,12 +25,12 @@ public class CustomerType {
         this.id = id;
     }
 
-    public String getTypename() {
-        return typename;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setTypename(String typename) {
-        this.typename = typename;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     public Set<Customer> getCustomerSet() {

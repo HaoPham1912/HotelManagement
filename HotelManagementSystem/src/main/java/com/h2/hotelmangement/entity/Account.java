@@ -10,7 +10,7 @@ public class Account extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "accountid")
-    private Long accountid;
+    private Long accountId;
 
     @Column(name = "username", length = 50, nullable = false)
     private String username;
@@ -24,12 +24,12 @@ public class Account extends BaseEntity {
     @ManyToMany(mappedBy = "accounts")
     private Set<Role> roleEntities;
 
-    public Long getAccountid() {
-        return accountid;
+    public Long getAccountId() {
+        return accountId;
     }
 
-    public void setAccountid(Long accountid) {
-        this.accountid = accountid;
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 
     public String getUsername() {

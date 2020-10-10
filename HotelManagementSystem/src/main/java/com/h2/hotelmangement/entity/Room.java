@@ -11,7 +11,7 @@ public class Room {
     @Id
     @Column(name = "roomid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long roomid;
+    private Long roomId;
 
     @Column(name = "roomcode",nullable = false, unique = true, length = 20)
     private String roomCode;
@@ -43,12 +43,12 @@ public class Room {
     @JoinTable(name = "roomimages", joinColumns = @JoinColumn(name = "roomid"))
     private Set<String> thumbnailsRoomList;
 
-    public Long getRoomid() {
-        return roomid;
+    public Long getRoomId() {
+        return roomId;
     }
 
-    public void setRoomid(Long roomid) {
-        this.roomid = roomid;
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
     }
 
     public String getName() {

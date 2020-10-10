@@ -10,7 +10,7 @@ public class Service extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "servicesid")
-    private Long servicesid;
+    private Long servicesId;
 
     @Column(name = "servicecode", nullable = false, unique = true, length = 20)
     private String serviceCode;
@@ -24,12 +24,12 @@ public class Service extends BaseEntity {
     @ManyToMany
     private Set<Room> rooms;
 
-    public Long getServicesid() {
-        return servicesid;
+    public Long getServicesId() {
+        return servicesId;
     }
 
-    public void setServicesid(Long servicesid) {
-        this.servicesid = servicesid;
+    public void setServicesId(Long servicesId) {
+        this.servicesId = servicesId;
     }
 
     public String getName() {

@@ -14,51 +14,51 @@ import java.util.Date;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
-    @Column
+    @Column(name = "createby")
     @CreatedBy
-    private String createdby;
+    private String createBy;
 
-    @Column
+    @Column(name = "createddate")
     @CreatedDate
-    private Date createddate;
+    private Date createdDate;
 
-    @Column
+    @Column(name = "modifiedby")
     @LastModifiedBy
-    private String modifiedby;
+    private String modifiedBy;
 
-    @Column
+    @Column(name = "modifieddate")
     @LastModifiedDate
-    private Date modifieddate;
+    private Date modifiedDate;
 
-    public String getCreatedby() {
-        return createdby;
+    public String getCreateBy() {
+        return createBy;
     }
 
-    public void setCreatedby(String createdby) {
-        this.createdby = createdby;
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 
-    public Date getCreateddate() {
-        return createddate;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreateddate(Date createddate) {
-        this.createddate = createddate;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public String getModifiedby() {
-        return modifiedby;
+    public String getModifiedBy() {
+        return modifiedBy;
     }
 
-    public void setModifiedby(String modifiedby) {
-        this.modifiedby = modifiedby;
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
     }
 
-    public Date getModifieddate() {
-        return modifieddate;
+    public Date getModifiedDate() {
+        return modifiedDate;
     }
 
-    public void setModifieddate(Date modifieddate) {
-        this.modifieddate = modifieddate;
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 }

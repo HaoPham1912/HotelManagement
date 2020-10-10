@@ -16,7 +16,7 @@ public class Promotion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "promoid")
-    private Long promoid;
+    private Long promoId;
 
     @Column(name = "code", nullable = false, unique = true, length = 20)
     private String promotionCode;
@@ -25,22 +25,14 @@ public class Promotion {
     @Column(name = "percent", nullable = false)
     private float percent;
 
-    @Column(name = "custype", nullable =  false)
-    private String custype;
+    @Column(name = "custype", nullable = false)
+    private String cusType;
 
     @Column(name = "startdate", nullable = false)
-    private String startdate;
+    private String startDate;
 
     @Column(name = "enddate", nullable = false)
-    private String enddate;
-
-    public Long getPromoid() {
-        return promoid;
-    }
-
-    public void setPromoid(Long promoid) {
-        this.promoid = promoid;
-    }
+    private String endDate;
 
     public String getPromotionCode() {
         return promotionCode;
@@ -58,27 +50,35 @@ public class Promotion {
         this.percent = percent;
     }
 
-    public String getCustype() {
-        return custype;
+    public Long getPromoId() {
+        return promoId;
     }
 
-    public void setCustype(String custype) {
-        this.custype = custype;
+    public void setPromoId(Long promoId) {
+        this.promoId = promoId;
     }
 
-    public String getStartdate() {
-        return startdate;
+    public String getCusType() {
+        return cusType;
     }
 
-    public void setStartdate(String startdate) {
-        this.startdate = startdate;
+    public void setCusType(String cusType) {
+        this.cusType = cusType;
     }
 
-    public String getEnddate() {
-        return enddate;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setEnddate(String enddate) {
-        this.enddate = enddate;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }

@@ -10,7 +10,7 @@ public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "hotelid")
-    private Long hotelid;
+    private Long hotelId;
 
     @Column(name = "hotelcode", nullable = false, unique = true, length = 20)
     private String hotelCode;
@@ -41,12 +41,12 @@ public class Hotel {
     @JoinTable(name = "hotelimages", joinColumns = @JoinColumn(name = "hotelid"))
     private Set<String> thumbnailsHotelList;
 
-    public Long getHotelid() {
-        return hotelid;
+    public Long getHotelId() {
+        return hotelId;
     }
 
-    public void setHotelid(Long hotelid) {
-        this.hotelid = hotelid;
+    public void setHotelId(Long hotelId) {
+        this.hotelId = hotelId;
     }
 
     public String getName() {

@@ -3,6 +3,7 @@ package com.h2.hotelmangement.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 @Embeddable
 class BookingKey implements Serializable {
@@ -14,10 +15,10 @@ class BookingKey implements Serializable {
     private Long billId;
 
     @Column(name = "bookdate", nullable = false)
-    private String bookdate;
+    private String bookDate;
 
     @Column(name = "checkindate", nullable = false)
-    private String checkindate;
+    private String checkinDate;
 
     public Long getRoomId() {
         return roomId;
@@ -35,19 +36,35 @@ class BookingKey implements Serializable {
         this.billId = billId;
     }
 
-    public String getBookdate() {
-        return bookdate;
+    public String getBookDate() {
+        return bookDate;
     }
 
-    public void setBookdate(String bookdate) {
-        this.bookdate = bookdate;
+    public void setBookDate(String bookDate) {
+        this.bookDate = bookDate;
     }
 
-    public String getCheckindate() {
-        return checkindate;
+    public String getCheckinDate() {
+        return checkinDate;
     }
 
-    public void setCheckindate(String checkindate) {
-        this.checkindate = checkindate;
+    public void setCheckinDate(String checkinDate) {
+        this.checkinDate = checkinDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookingKey that = (BookingKey) o;
+        return Objects.equals(roomId, that.roomId) &&
+                Objects.equals(billId, that.billId) &&
+                Objects.equals(bookDate, that.bookDate) &&
+                Objects.equals(checkinDate, that.checkinDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(roomId, billId, bookDate, checkinDate);
     }
 }

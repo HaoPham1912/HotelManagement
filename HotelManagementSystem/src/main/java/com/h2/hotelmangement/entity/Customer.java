@@ -22,7 +22,7 @@ public class Customer {
     private String phone;
 
     @Column(name = "idcard", length = 12, nullable = false)
-    private String idcard;
+    private String idCard;
 
     @OneToOne
     @JoinColumn(name = "accountid")
@@ -53,12 +53,12 @@ public class Customer {
         this.phone = phone;
     }
 
-    public String getIdcard() {
-        return idcard;
+    public String getIdCard() {
+        return idCard;
     }
 
-    public void setIdcard(String idcard) {
-        this.idcard = idcard;
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
     public Account getAccountCus() {

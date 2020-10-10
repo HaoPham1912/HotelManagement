@@ -20,7 +20,7 @@ public class Booking {
     private Bill bills;
 
     @Column(name = "checkoutdate", nullable = false)
-    private String checkoutdate;
+    private String checkoutDate;
 
     @Column(name = "paidprice", nullable = false)
     private double paidPrice;
@@ -52,12 +52,12 @@ public class Booking {
         this.bills = bills;
     }
 
-    public String getCheckoutdate() {
-        return checkoutdate;
+    public String getCheckoutDate() {
+        return checkoutDate;
     }
 
-    public void setCheckoutdate(String checkoutdate) {
-        this.checkoutdate = checkoutdate;
+    public void setCheckoutDate(String checkoutDate) {
+        this.checkoutDate = checkoutDate;
     }
 
     public double getPaidPrice() {

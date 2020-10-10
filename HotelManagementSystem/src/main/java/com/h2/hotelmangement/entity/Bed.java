@@ -10,13 +10,13 @@ public class Bed {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bedid")
-    private Long bedid;
+    private Long bedId;
 
     @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "ammountpeople", nullable = false)
-    private int ammountpeople;
+    private int ammountPeople;
 
     @Column(name = "price", nullable = false)
     private double price;
@@ -25,12 +25,12 @@ public class Bed {
     @JoinColumn(name = "roomid")
     private Room room;
 
-    public Long getBedid() {
-        return bedid;
+    public Long getBedId() {
+        return bedId;
     }
 
-    public void setBedid(Long bedid) {
-        this.bedid = bedid;
+    public void setBedId(Long bedId) {
+        this.bedId = bedId;
     }
 
     public String getName() {
@@ -41,12 +41,12 @@ public class Bed {
         this.name = name;
     }
 
-    public int getAmmountpeople() {
-        return ammountpeople;
+    public int getAmmountPeople() {
+        return ammountPeople;
     }
 
-    public void setAmmountpeople(int ammountpeople) {
-        this.ammountpeople = ammountpeople;
+    public void setAmmountPeople(int ammountPeople) {
+        this.ammountPeople = ammountPeople;
     }
 
     public double getPrice() {

@@ -10,7 +10,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employeeid")
-    private Long employeeid;
+    private Long employeeiI;
 
     @Column(name = "empcode", nullable = false, unique = true, length = 20)
     private String empCode;
@@ -23,7 +23,7 @@ public class Employee {
 
     //so CMND
     @Column(name = "idcard", length = 12, nullable = false)
-    private String idcard;
+    private String idCard;
 
     @OneToOne
     @JoinColumn(name = "accountid")
@@ -33,13 +33,6 @@ public class Employee {
     @JoinColumn(name = "hotelid")
     private Hotel empHotel;
 
-    public Long getEmployeeid() {
-        return employeeid;
-    }
-
-    public void setEmployeeid(Long employeeid) {
-        this.employeeid = employeeid;
-    }
 
     public String getName() {
         return name;
@@ -57,12 +50,20 @@ public class Employee {
         this.phone = phone;
     }
 
-    public String getIdcard() {
-        return idcard;
+    public Long getEmployeeiI() {
+        return employeeiI;
     }
 
-    public void setIdcard(String idcard) {
-        this.idcard = idcard;
+    public void setEmployeeiI(Long employeeiI) {
+        this.employeeiI = employeeiI;
+    }
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
     public Account getAccountEmp() {

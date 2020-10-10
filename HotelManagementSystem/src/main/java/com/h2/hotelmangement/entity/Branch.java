@@ -12,7 +12,8 @@ public class Branch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long branchid;
+    @Column(name = "branchid")
+    private Long branchId;
 
     @Column(name = "name", length = 100, nullable = false)
     private String name;
@@ -23,12 +24,12 @@ public class Branch {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "branchs")
     private Set<Hotel> hotels;
 
-    public Long getBranchid() {
-        return branchid;
+    public Long getBranchId() {
+        return branchId;
     }
 
-    public void setBranchid(Long branchid) {
-        this.branchid = branchid;
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
     }
 
     public String getName() {
