@@ -9,11 +9,11 @@ public class Branch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "hotelid")
-    private Long hotelId;
+    @Column(name = "branchid")
+    private Long branchId;
 
-    @Column(name = "hotelcode", nullable = false, unique = true, length = 20)
-    private String hotelCode;
+    @Column(name = "branchcode", nullable = false, unique = true, length = 20)
+    private String branchCode;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -38,13 +38,6 @@ public class Branch {
     @JoinTable(name = "branchimages", joinColumns = @JoinColumn(name = "branchid"))
     private Set<String> thumbnailsHotelList;
 
-    public Long getHotelId() {
-        return hotelId;
-    }
-
-    public void setHotelId(Long hotelId) {
-        this.hotelId = hotelId;
-    }
 
     public String getName() {
         return name;
@@ -103,11 +96,19 @@ public class Branch {
         this.thumbnailsHotelList = thumbnailsHotelList;
     }
 
-    public String getHotelCode() {
-        return hotelCode;
+    public Long getBranchId() {
+        return branchId;
     }
 
-    public void setHotelCode(String hotelCode) {
-        this.hotelCode = hotelCode;
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
+    public String getBranchCode() {
+        return branchCode;
+    }
+
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
     }
 }
