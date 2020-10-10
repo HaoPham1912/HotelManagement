@@ -10,7 +10,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employeeid")
-    private Long employeeiI;
+    private Long employeeId;
 
     @Column(name = "empcode", nullable = false, unique = true, length = 20)
     private String empCode;
@@ -50,12 +50,12 @@ public class Employee {
         this.phone = phone;
     }
 
-    public Long getEmployeeiI() {
-        return employeeiI;
+    public Long getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployeeiI(Long employeeiI) {
-        this.employeeiI = employeeiI;
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getIdCard() {
