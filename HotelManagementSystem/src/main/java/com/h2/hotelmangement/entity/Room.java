@@ -24,8 +24,8 @@ public class Room {
     private double price;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotelid")
-    private Hotel roomHotel;
+    @JoinColumn(name = "branchid")
+    private Branch roomBranch;
 
 
     @OneToMany(mappedBy = "room")
@@ -63,12 +63,12 @@ public class Room {
         this.price = price;
     }
 
-    public Hotel getRoomHotel() {
-        return roomHotel;
+    public Branch getRoomBranch() {
+        return roomBranch;
     }
 
-    public void setRoomHotel(Hotel roomHotel) {
-        this.roomHotel = roomHotel;
+    public void setRoomBranch(Branch roomBranch) {
+        this.roomBranch = roomBranch;
     }
 
     public Set<Service> getServices() {

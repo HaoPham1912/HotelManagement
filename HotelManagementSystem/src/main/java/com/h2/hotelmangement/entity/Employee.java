@@ -30,8 +30,8 @@ public class Employee {
     private Account accountEmp;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotelid")
-    private Hotel empHotel;
+    @JoinColumn(name = "branchid")
+    private Branch empBranch;
 
 
     public String getName() {
@@ -74,12 +74,12 @@ public class Employee {
         this.accountEmp = accountEmp;
     }
 
-    public Hotel getEmpHotel() {
-        return empHotel;
+    public Branch getEmpBranch() {
+        return empBranch;
     }
 
-    public void setEmpHotel(Hotel empHotel) {
-        this.empHotel = empHotel;
+    public void setEmpBranch(Branch empBranch) {
+        this.empBranch = empBranch;
     }
 
     public String getEmpCode() {
