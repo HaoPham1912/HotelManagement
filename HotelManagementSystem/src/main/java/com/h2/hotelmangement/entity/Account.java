@@ -5,7 +5,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "accounts")
-public class Accounts extends BaseEntity {
+public class Account extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Accounts extends BaseEntity {
     private boolean status;
 
     @ManyToMany(mappedBy = "accounts")
-    private Set<Roles> roleEntities;
+    private Set<Role> roleEntities;
 
     public Long getAccountid() {
         return accountid;
@@ -56,11 +56,11 @@ public class Accounts extends BaseEntity {
         this.status = status;
     }
 
-    public Set<Roles> getRoleEntities() {
+    public Set<Role> getRoleEntities() {
         return roleEntities;
     }
 
-    public void setRoleEntities(Set<Roles> roleEntities) {
+    public void setRoleEntities(Set<Role> roleEntities) {
         this.roleEntities = roleEntities;
     }
 }

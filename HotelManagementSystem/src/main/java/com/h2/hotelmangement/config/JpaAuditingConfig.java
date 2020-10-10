@@ -26,7 +26,7 @@ public class JpaAuditingConfig {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if(authentication == null || !authentication.isAuthenticated()){
                 return Optional.ofNullable("No authen");
-            }
+        }
             return Optional.ofNullable(authentication.getName());
         }
     }

@@ -2,12 +2,11 @@ package com.h2.hotelmangement.entity;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "bills")
-public class Bills {
+public class Bill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +23,11 @@ public class Bills {
     private double totalprice;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bills")
-    private Set<Bookings> billBookingSet;
+    private Set<Booking> billBookingSet;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerid")
-    private Customers customers;
+    private Customer customer;
 
     public Long getBillid() {
         return billid;
@@ -62,19 +61,19 @@ public class Bills {
         this.totalprice = totalprice;
     }
 
-    public Set<Bookings> getBillBookingSet() {
+    public Set<Booking> getBillBookingSet() {
         return billBookingSet;
     }
 
-    public void setBillBookingSet(Set<Bookings> billBookingSet) {
+    public void setBillBookingSet(Set<Booking> billBookingSet) {
         this.billBookingSet = billBookingSet;
     }
 
-    public Customers getCustomers() {
-        return customers;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomers(Customers customers) {
-        this.customers = customers;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

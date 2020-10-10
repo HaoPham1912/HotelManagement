@@ -5,7 +5,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "customertypes")
-public class CustomerTypes {
+public class CustomerType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,8 +14,8 @@ public class CustomerTypes {
     @Column(name = "typename")
     private String typename;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customerTypes")
-    private Set<Customers> customers;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customerType")
+    private Set<Customer> customerSet;
 
     public Long getId() {
         return id;
@@ -33,11 +33,11 @@ public class CustomerTypes {
         this.typename = typename;
     }
 
-    public Set<Customers> getCustomers() {
-        return customers;
+    public Set<Customer> getCustomerSet() {
+        return customerSet;
     }
 
-    public void setCustomers(Set<Customers> customers) {
-        this.customers = customers;
+    public void setCustomerSet(Set<Customer> customerSet) {
+        this.customerSet = customerSet;
     }
 }

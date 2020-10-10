@@ -1,12 +1,11 @@
 package com.h2.hotelmangement.entity;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "customers")
-public class Customers {
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,14 +23,14 @@ public class Customers {
 
     @OneToOne
     @JoinColumn(name = "accountid")
-    private Accounts accountCus;
+    private Account accountCus;
 
     @ManyToOne
     @JoinColumn(name = "typecustomerid")
-    private CustomerTypes customerTypes;
+    private CustomerType customerType;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customers")
-    private Set<Bills> cusBillsSet;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    private Set<Bill> cusBillSet;
 
     public Long getCustomerid() {
         return customerid;
@@ -65,27 +64,27 @@ public class Customers {
         this.idcard = idcard;
     }
 
-    public Accounts getAccountCus() {
+    public Account getAccountCus() {
         return accountCus;
     }
 
-    public void setAccountCus(Accounts accountCus) {
+    public void setAccountCus(Account accountCus) {
         this.accountCus = accountCus;
     }
 
-    public CustomerTypes getCustomerTypes() {
-        return customerTypes;
+    public CustomerType getCustomerType() {
+        return customerType;
     }
 
-    public void setCustomerTypes(CustomerTypes customerTypes) {
-        this.customerTypes = customerTypes;
+    public void setCustomerType(CustomerType customerType) {
+        this.customerType = customerType;
     }
 
-    public Set<Bills> getCusBillsSet() {
-        return cusBillsSet;
+    public Set<Bill> getCusBillSet() {
+        return cusBillSet;
     }
 
-    public void setCusBillsSet(Set<Bills> cusBillsSet) {
-        this.cusBillsSet = cusBillsSet;
+    public void setCusBillSet(Set<Bill> cusBillSet) {
+        this.cusBillSet = cusBillSet;
     }
 }

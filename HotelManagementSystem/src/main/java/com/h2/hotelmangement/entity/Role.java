@@ -5,7 +5,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "roles")
-public class Roles {
+public class Role {
 
     @Id
     @Column(name = "roleid")
@@ -15,7 +15,7 @@ public class Roles {
     private String roleName;
 
     @ManyToMany
-    private Set<Accounts> accounts;
+    private Set<Account> accounts;
 
     public Long getRoleId() {
         return roleId;
@@ -34,11 +34,11 @@ public class Roles {
     }
 
 
-    public Set<Accounts> getAccounts() {
+    public Set<Account> getAccounts() {
         return accounts;
     }
 
-    public void setAccounts(Set<Accounts> accounts) {
+    public void setAccounts(Set<Account> accounts) {
         this.accounts = accounts;
     }
 }

@@ -1,13 +1,12 @@
 package com.h2.hotelmangement.entity;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "rooms")
-public class Rooms {
+public class Room {
 
     @Id
     @Column(name = "roomid")
@@ -22,16 +21,16 @@ public class Rooms {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hotelid")
-    private Hotels roomHotels;
+    private Hotel roomHotel;
 
 
-    @OneToMany(mappedBy = "rooms")
-    private List<Beds> bedInRoomList;
+    @OneToMany(mappedBy = "room")
+    private List<Bed> bedInRoomList;
 
 
 
     @ManyToMany(mappedBy = "rooms" )
-    private Set<Services> services;
+    private Set<Service> services;
 
     //nay la thay vi tao 1 entity hinh la 1 class thi minh tao tu day luon
     //minh tao ra cai table ra roomimages tu day
@@ -67,19 +66,19 @@ public class Rooms {
         this.price = price;
     }
 
-    public Hotels getRoomHotels() {
-        return roomHotels;
+    public Hotel getRoomHotel() {
+        return roomHotel;
     }
 
-    public void setRoomHotels(Hotels roomHotels) {
-        this.roomHotels = roomHotels;
+    public void setRoomHotel(Hotel roomHotel) {
+        this.roomHotel = roomHotel;
     }
 
-    public Set<Services> getServices() {
+    public Set<Service> getServices() {
         return services;
     }
 
-    public void setServices(Set<Services> services) {
+    public void setServices(Set<Service> services) {
         this.services = services;
     }
 
@@ -91,11 +90,11 @@ public class Rooms {
         this.thumbnailsRoomList = thumbnailsRoomList;
     }
 
-    public List<Beds> getBedInRoomList() {
+    public List<Bed> getBedInRoomList() {
         return bedInRoomList;
     }
 
-    public void setBedInRoomList(List<Beds> bedInRoomList) {
+    public void setBedInRoomList(List<Bed> bedInRoomList) {
         this.bedInRoomList = bedInRoomList;
     }
 }

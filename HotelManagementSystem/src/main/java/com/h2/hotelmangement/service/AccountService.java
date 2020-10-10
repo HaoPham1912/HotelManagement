@@ -1,7 +1,7 @@
 package com.h2.hotelmangement.service;
 
-import com.h2.hotelmangement.entity.Accounts;
+import com.h2.hotelmangement.entity.Account;
 
 public interface AccountService {
-    void save(Accounts accounts);
+    void save(Account account);
 }

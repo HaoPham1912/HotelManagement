@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "promotions")
-public class Promotions {
+public class Promotion {
 
     //khuyen mai nay t nghi la minh tao ra xong roi se send code cho khach hang than thiet hay VIP gi do quan email hay sdt roi khi nguoi ta book hoac thanh toan
     //thi nhap vo xong khuyen mai cho ho de giam do phuc tap
@@ -29,10 +29,10 @@ public class Promotions {
     private String custype;
 
     @Column(name = "startdate", nullable = false)
-    private Date startdate;
+    private String startdate;
 
     @Column(name = "enddate", nullable = false)
-    private Date enddate;
+    private String enddate;
 
     public Long getPromoid() {
         return promoid;
@@ -66,19 +66,19 @@ public class Promotions {
         this.custype = custype;
     }
 
-    public Date getStartdate() {
+    public String getStartdate() {
         return startdate;
     }
 
-    public void setStartdate(Date startdate) {
+    public void setStartdate(String startdate) {
         this.startdate = startdate;
     }
 
-    public Date getEnddate() {
+    public String getEnddate() {
         return enddate;
     }
 
-    public void setEnddate(Date enddate) {
+    public void setEnddate(String enddate) {
         this.enddate = enddate;
     }
 }

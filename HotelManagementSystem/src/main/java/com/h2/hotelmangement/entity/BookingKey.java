@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Embeddable
-class BookingKeys implements Serializable {
+class BookingKey implements Serializable {
 
     @Column(name = "roomid")
     private Long roomId;
@@ -14,10 +14,10 @@ class BookingKeys implements Serializable {
     private Long billId;
 
     @Column(name = "bookdate", nullable = false)
-    private Date bookdate;
+    private String bookdate;
 
     @Column(name = "checkindate", nullable = false)
-    private Date checkindate;
+    private String checkindate;
 
     public Long getRoomId() {
         return roomId;
@@ -35,19 +35,19 @@ class BookingKeys implements Serializable {
         this.billId = billId;
     }
 
-    public Date getBookdate() {
+    public String getBookdate() {
         return bookdate;
     }
 
-    public void setBookdate(Date bookdate) {
+    public void setBookdate(String bookdate) {
         this.bookdate = bookdate;
     }
 
-    public Date getCheckindate() {
+    public String getCheckindate() {
         return checkindate;
     }
 
-    public void setCheckindate(Date checkindate) {
+    public void setCheckindate(String checkindate) {
         this.checkindate = checkindate;
     }
 }

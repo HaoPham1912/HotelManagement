@@ -8,7 +8,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "branchs")
-public class Branchs {
+public class Branch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class Branchs {
     private String location;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "branchs")
-    private Set<Hotels> hotels;
+    private Set<Hotel> hotels;
 
     public Long getBranchid() {
         return branchid;
@@ -47,11 +47,11 @@ public class Branchs {
         this.location = location;
     }
 
-    public Set<Hotels> getHotels() {
+    public Set<Hotel> getHotels() {
         return hotels;
     }
 
-    public void setHotels(Set<Hotels> hotels) {
+    public void setHotels(Set<Hotel> hotels) {
         this.hotels = hotels;
     }
 }

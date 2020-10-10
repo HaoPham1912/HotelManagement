@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "employees")
-public class Employees {
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +24,11 @@ public class Employees {
 
     @OneToOne
     @JoinColumn(name = "accountid")
-    private Accounts accountEmp;
+    private Account accountEmp;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hotelid")
-    private Hotels empHotels;
+    private Hotel empHotel;
 
     public Long getEmployeeid() {
         return employeeid;
@@ -62,19 +62,19 @@ public class Employees {
         this.idcard = idcard;
     }
 
-    public Accounts getAccountEmp() {
+    public Account getAccountEmp() {
         return accountEmp;
     }
 
-    public void setAccountEmp(Accounts accountEmp) {
+    public void setAccountEmp(Account accountEmp) {
         this.accountEmp = accountEmp;
     }
 
-    public Hotels getEmpHotels() {
-        return empHotels;
+    public Hotel getEmpHotel() {
+        return empHotel;
     }
 
-    public void setEmpHotels(Hotels empHotels) {
-        this.empHotels = empHotels;
+    public void setEmpHotel(Hotel empHotel) {
+        this.empHotel = empHotel;
     }
 }

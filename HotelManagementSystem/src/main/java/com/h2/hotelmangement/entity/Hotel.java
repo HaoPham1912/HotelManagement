@@ -1,13 +1,11 @@
 package com.h2.hotelmangement.entity;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "hotels")
-public class Hotels {
+public class Hotel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,13 +25,13 @@ public class Hotels {
     private boolean status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Branchs branchs;
+    private Branch branchs;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "empHotels")
-    private Set<Employees> employeesSet;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "empHotel")
+    private Set<Employee> employeeSet;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "roomHotels")
-    private Set<Rooms> roomsSet;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "roomHotel")
+    private Set<Room> roomSet;
 
     @Column(name = "thumbnail")
     @ElementCollection(fetch = FetchType.EAGER)
@@ -80,28 +78,28 @@ public class Hotels {
         this.status = status;
     }
 
-    public Branchs getBranchs() {
+    public Branch getBranchs() {
         return branchs;
     }
 
-    public void setBranchs(Branchs branchs) {
+    public void setBranchs(Branch branchs) {
         this.branchs = branchs;
     }
 
-    public Set<Employees> getEmployeesSet() {
-        return employeesSet;
+    public Set<Employee> getEmployeeSet() {
+        return employeeSet;
     }
 
-    public void setEmployeesSet(Set<Employees> employeesSet) {
-        this.employeesSet = employeesSet;
+    public void setEmployeeSet(Set<Employee> employeeSet) {
+        this.employeeSet = employeeSet;
     }
 
-    public Set<Rooms> getRoomsSet() {
-        return roomsSet;
+    public Set<Room> getRoomSet() {
+        return roomSet;
     }
 
-    public void setRoomsSet(Set<Rooms> roomsSet) {
-        this.roomsSet = roomsSet;
+    public void setRoomSet(Set<Room> roomSet) {
+        this.roomSet = roomSet;
     }
 
     public Set<String> getThumbnailsHotelList() {

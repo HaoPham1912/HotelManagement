@@ -2,11 +2,10 @@ package com.h2.hotelmangement.entity;
 
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "beds")
-public class Beds {
+public class Bed {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +23,7 @@ public class Beds {
 
     @ManyToOne
     @JoinColumn(name = "roomid")
-    private Rooms rooms;
+    private Room room;
 
     public Long getBedid() {
         return bedid;
@@ -58,12 +57,12 @@ public class Beds {
         this.price = price;
     }
 
-    public Rooms getRooms() {
-        return rooms;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRooms(Rooms rooms) {
-        this.rooms = rooms;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
 }
