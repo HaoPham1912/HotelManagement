@@ -30,7 +30,10 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private List<Bed> bedInRoomList;
 
-    @ManyToMany(mappedBy = "rooms" )
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "service_room",
+            joinColumns = { @JoinColumn(name = "room_id")},
+            inverseJoinColumns = {@JoinColumn(name = "service_id")})
     private Set<Service> services;
 
     //nay la thay vi tao 1 entity hinh la 1 class thi minh tao tu day luon

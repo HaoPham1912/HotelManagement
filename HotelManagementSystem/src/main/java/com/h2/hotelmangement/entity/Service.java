@@ -21,7 +21,10 @@ public class Service extends BaseEntity {
     @Column(name = "price", nullable = false)
     private double price;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "service_room",
+            joinColumns = { @JoinColumn(name = "service_id")},
+            inverseJoinColumns = {@JoinColumn(name = "room_id")})
     private Set<Room> rooms;
 
     public Long getServicesId() {
