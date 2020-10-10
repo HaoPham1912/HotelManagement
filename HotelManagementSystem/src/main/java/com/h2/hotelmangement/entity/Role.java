@@ -15,11 +15,8 @@ public class Role {
     @Column(name = "rolename")
     private String roleName;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "account_role",
-    joinColumns = { @JoinColumn(name = "role_id")},
-    inverseJoinColumns = {@JoinColumn(name = "account_id")})
-    private Set<Account> accounts = new HashSet<>();
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+       private Set<Account> accounts = new HashSet<>();
 
     public Long getRoleId() {
         return roleId;

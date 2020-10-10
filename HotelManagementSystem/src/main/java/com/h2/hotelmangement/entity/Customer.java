@@ -12,7 +12,7 @@ public class Customer {
     @Column(name = "customerid")
     private Long customerId;
 
-    @Column(name = "cuscode", nullable = false, unique = true, length =20 )
+    @Column(name = "cuscode", nullable = false, unique = true, length = 20)
     private String cusCode;
 
     @Column(name = "name", nullable = false, length = 100)
@@ -34,7 +34,6 @@ public class Customer {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private Set<Bill> cusBillSet;
-
 
 
     public String getName() {

@@ -22,11 +22,11 @@ public class Account extends BaseEntity {
     @Column(name = "status")
     private boolean status;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "account_role",
             joinColumns = { @JoinColumn(name = "account_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private Set<Role> roleEntities = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
     public Long getAccountId() {
         return accountId;
@@ -60,12 +60,12 @@ public class Account extends BaseEntity {
         this.status = status;
     }
 
-    public Set<Role> getRoleEntities() {
-        return roleEntities;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRoleEntities(Set<Role> roleEntities) {
-        this.roleEntities = roleEntities;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
 

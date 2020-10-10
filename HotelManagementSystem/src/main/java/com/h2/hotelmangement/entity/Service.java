@@ -1,6 +1,7 @@
 package com.h2.hotelmangement.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -21,8 +22,11 @@ public class Service extends BaseEntity {
     @Column(name = "price", nullable = false)
     private double price;
 
-    @ManyToMany
-    private Set<Room> rooms;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "service_room",
+            joinColumns = { @JoinColumn(name = "service_id")},
+            inverseJoinColumns = {@JoinColumn(name = "room_id")})
+    private Set<Room> rooms = new HashSet<>();
 
     public Long getServicesId() {
         return servicesId;

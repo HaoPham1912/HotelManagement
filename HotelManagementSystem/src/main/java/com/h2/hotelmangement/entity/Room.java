@@ -1,6 +1,7 @@
 package com.h2.hotelmangement.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -30,13 +31,8 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private List<Bed> bedInRoomList;
 
-    @ManyToMany(mappedBy = "rooms" )
-    private Set<Service> services;
-
-    //nay la thay vi tao 1 entity hinh la 1 class thi minh tao tu day luon
-    //minh tao ra cai table ra roomimages tu day
-    //khi save thi minh se save xuong no 1 list String name cua imange
-    //tuong tu voi imangehotel luon nha
+    @ManyToMany(mappedBy = "rooms", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Service> services = new HashSet<>();
 
     @Column(name = "thumbnail")
     @ElementCollection(fetch = FetchType.EAGER)
