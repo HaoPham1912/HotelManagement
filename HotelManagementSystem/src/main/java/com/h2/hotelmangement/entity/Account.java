@@ -1,6 +1,7 @@
 package com.h2.hotelmangement.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -21,8 +22,11 @@ public class Account extends BaseEntity {
     @Column(name = "status")
     private boolean status;
 
-    @ManyToMany(mappedBy = "accounts")
-    private Set<Role> roleEntities;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "account_role",
+            joinColumns = { @JoinColumn(name = "account_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    private Set<Role> roleEntities = new HashSet<>();
 
     public Long getAccountId() {
         return accountId;
