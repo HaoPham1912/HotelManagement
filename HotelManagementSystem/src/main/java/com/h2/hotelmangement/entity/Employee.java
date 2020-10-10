@@ -12,6 +12,9 @@ public class Employee {
     @Column(name = "employeeid")
     private Long employeeid;
 
+    @Column(name = "empcode", nullable = false, unique = true, length = 20)
+    private String empCode;
+
     @Column(name = "name", length = 100, nullable = false)
     private String name;
 
@@ -76,5 +79,13 @@ public class Employee {
 
     public void setEmpHotel(Hotel empHotel) {
         this.empHotel = empHotel;
+    }
+
+    public String getEmpCode() {
+        return empCode;
+    }
+
+    public void setEmpCode(String empCode) {
+        this.empCode = empCode;
     }
 }

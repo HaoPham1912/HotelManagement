@@ -12,6 +12,9 @@ public class Service extends BaseEntity {
     @Column(name = "servicesid")
     private Long servicesid;
 
+    @Column(name = "servicecode", nullable = false, unique = true, length = 20)
+    private String serviceCode;
+
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -51,5 +54,13 @@ public class Service extends BaseEntity {
 
     public void setRooms(Set<Room> rooms) {
         this.rooms = rooms;
+    }
+
+    public String getServiceCode() {
+        return serviceCode;
+    }
+
+    public void setServiceCode(String serviceCode) {
+        this.serviceCode = serviceCode;
     }
 }

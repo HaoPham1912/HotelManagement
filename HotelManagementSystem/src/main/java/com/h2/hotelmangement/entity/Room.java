@@ -13,6 +13,9 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roomid;
 
+    @Column(name = "roomcode",nullable = false, unique = true, length = 20)
+    private String roomCode;
+
     @Column(name = "name")
     private String name;
 
@@ -26,8 +29,6 @@ public class Room {
 
     @OneToMany(mappedBy = "room")
     private List<Bed> bedInRoomList;
-
-
 
     @ManyToMany(mappedBy = "rooms" )
     private Set<Service> services;
@@ -96,5 +97,13 @@ public class Room {
 
     public void setBedInRoomList(List<Bed> bedInRoomList) {
         this.bedInRoomList = bedInRoomList;
+    }
+
+    public String getRoomCode() {
+        return roomCode;
+    }
+
+    public void setRoomCode(String roomCode) {
+        this.roomCode = roomCode;
     }
 }

@@ -18,8 +18,8 @@ public class Promotion {
     @Column(name = "promoid")
     private Long promoid;
 
-    @Column(name = "code", nullable = false, unique = true)
-    private String code;
+    @Column(name = "code", nullable = false, unique = true, length = 20)
+    private String promotionCode;
 
     //phan tram khuyen mai
     @Column(name = "percent", nullable = false)
@@ -42,12 +42,12 @@ public class Promotion {
         this.promoid = promoid;
     }
 
-    public String getCode() {
-        return code;
+    public String getPromotionCode() {
+        return promotionCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setPromotionCode(String promotionCode) {
+        this.promotionCode = promotionCode;
     }
 
     public float getPercent() {

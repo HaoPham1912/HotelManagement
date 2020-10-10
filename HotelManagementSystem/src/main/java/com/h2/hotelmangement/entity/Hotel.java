@@ -12,6 +12,9 @@ public class Hotel {
     @Column(name = "hotelid")
     private Long hotelid;
 
+    @Column(name = "hotelcode", nullable = false, unique = true, length = 20)
+    private String hotelCode;
+
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -108,5 +111,13 @@ public class Hotel {
 
     public void setThumbnailsHotelList(Set<String> thumbnailsHotelList) {
         this.thumbnailsHotelList = thumbnailsHotelList;
+    }
+
+    public String getHotelCode() {
+        return hotelCode;
+    }
+
+    public void setHotelCode(String hotelCode) {
+        this.hotelCode = hotelCode;
     }
 }

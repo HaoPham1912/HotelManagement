@@ -10,7 +10,10 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customerid")
-    private Long customerid;
+    private Long customerId;
+
+    @Column(name = "cuscode", nullable = false, unique = true, length =20 )
+    private String cusCode;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
@@ -32,13 +35,7 @@ public class Customer {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private Set<Bill> cusBillSet;
 
-    public Long getCustomerid() {
-        return customerid;
-    }
 
-    public void setCustomerid(Long customerid) {
-        this.customerid = customerid;
-    }
 
     public String getName() {
         return name;
@@ -86,5 +83,21 @@ public class Customer {
 
     public void setCusBillSet(Set<Bill> cusBillSet) {
         this.cusBillSet = cusBillSet;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getCusCode() {
+        return cusCode;
+    }
+
+    public void setCusCode(String cusCode) {
+        this.cusCode = cusCode;
     }
 }
