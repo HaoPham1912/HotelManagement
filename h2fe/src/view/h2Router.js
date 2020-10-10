@@ -1,26 +1,27 @@
-import Header from "../components/HelloWorld.vue";
 import path from "../util/path";
-import HelloWorld from "../view/HelloWorld.vue";
 
 
+/* Admin components */
+import Room from './admin/Room.vue';
+import ClientLayout from '../components/layout/ClientLayout.vue';
+import AdminLayout from '../components-admin/layout/AdminLayout.vue';
 
 const h2f_Routes = [
     {
-        path: path.HOME,
-        name: "HOME",
-        children:[
-            {
-                path: path.HELLO,
-                component: HelloWorld,
-                name: "HelloWorld"
-            },
-            {
-                path: path.HEADER,
-                component: Header,
-                name: "Header",
-                props: true
-            }
+        path: path.CLIENT,
+        component: ClientLayout,
+        children: [
 
+        ],
+    },
+    {
+        path: path.ADMIN,
+        component: AdminLayout,
+        children: [
+            {
+                path: path.ADMIN_ROOM,
+                component: Room,
+            }
         ]
     }
 ];
