@@ -9,9 +9,17 @@
   },
   "dependencies": {
     "bootstrap-vue": "^2.17.3",
+    "chart.js": "^2.9.3",
     "core-js": "^3.6.5",
+    "primeicons": "^4.0.0",
+    "primevue": "^2.1.0",
+    "sass-loader": "^10.0.3",
     "vue": "^2.6.11",
-    "vue-router": "^3.4.6"
+    "vue-bootstrap-sidebar": "^1.0.8",
+    "vue-chartjs": "^3.5.1",
+    "vue-router": "^3.4.6",
+    "vue-sidebar-menu": "^4.7.3",
+    "vuejs-datepicker": "^1.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -21,6 +29,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "jquery": "^3.5.1",
+    "node-sass": "^4.14.1",
     "vue-slider-component": "^3.2.5",
     "vue-template-compiler": "^2.6.11"
   },

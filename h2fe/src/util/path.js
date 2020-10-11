@@ -6,7 +6,10 @@ export default {
 
 
     /* Admin */
+    ADMIN_LOGIN: '/admin-login',
     ADMIN: '/admin',
+    ADMIN_DASHBOARD: 'dashboard',
+    ADMIN_PROFILE: 'profile',
     ADMIN_ROOM: 'room',
 
 

@@ -1,3 +1,3 @@
 <template>
-    <h1>Admin Footer</h1>
+    <div></div>
 </template>
