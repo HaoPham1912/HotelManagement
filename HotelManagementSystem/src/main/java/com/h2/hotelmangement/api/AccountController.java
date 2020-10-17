@@ -14,7 +14,7 @@ public class AccountController {
 
     @PostMapping("register")
     public String save(@RequestBody Account account){
-        accountService.save(account);
+
         return "index";
     }
 }

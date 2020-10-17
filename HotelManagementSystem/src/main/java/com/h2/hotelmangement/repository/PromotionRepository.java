@@ -1,10 +1,9 @@
 package com.h2.hotelmangement.repository;
 
-import com.h2.hotelmangement.entity.Account;
+import com.h2.hotelmangement.entity.Promotion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AccountRepository extends JpaRepository<Account, Long> {
-
+public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 }

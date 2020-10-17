@@ -1,4 +1,31 @@
 package com.h2.hotelmangement.service.impl;
 
-public class CustomerServiceImpl {
+import com.h2.hotelmangement.entity.Customer;
+import com.h2.hotelmangement.repository.CustomerRepository;
+import com.h2.hotelmangement.service.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class CustomerServiceImpl implements CustomerService {
+
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @Override
+    public List<Customer> findAllCustomer() {
+        return customerRepository.findAll();
+    }
+
+    @Override
+    public void saveOrUpdate(Customer customer) {
+        customerRepository.save(customer);
+    }
+
+    @Override
+    public void deleteCustomer(Long id) {
+        customerRepository.deleteById(id);
+    }
 }

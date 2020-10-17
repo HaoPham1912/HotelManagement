@@ -32,7 +32,7 @@ public class Room {
     private List<Bed> bedInRoomList;
 
     @ManyToMany(mappedBy = "rooms", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Service> services = new HashSet<>();
+    private Set<Services> services = new HashSet<>();
 
     @Column(name = "thumbnail")
     @ElementCollection(fetch = FetchType.EAGER)
@@ -71,11 +71,11 @@ public class Room {
         this.roomBranch = roomBranch;
     }
 
-    public Set<Service> getServices() {
+    public Set<Services> getServices() {
         return services;
     }
 
-    public void setServices(Set<Service> services) {
+    public void setServices(Set<Services> services) {
         this.services = services;
     }
 

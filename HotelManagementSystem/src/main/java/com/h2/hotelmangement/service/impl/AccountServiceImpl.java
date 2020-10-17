@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -23,8 +24,19 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepository;
 
     @Override
-    public void save(Account account) {
+    public void createOrUpdate(Account account) {
         accountRepository.save(account);
+    }
+
+    @Override
+    public List<Account> findAll() {
+        return accountRepository.findAll();
+    }
+
+
+    @Override
+    public void delete(Long accountId) {
+        accountRepository.deleteById(accountId);
     }
 
 }
