@@ -19,6 +19,6 @@ public class BedController {
 
     @PostMapping("/bed")
     public void addBed(@RequestBody Bed bed){
-        bedService.createOrUpdate(bed);
+        bedService.save(bed);
     }
 }

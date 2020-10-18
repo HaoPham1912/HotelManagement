@@ -8,7 +8,7 @@ public interface PromotionService {
 
     List<Promotion> findAllPromotion();
 
-    void saveOrUpdate(Promotion promotion);
+    void save(Promotion promotion);
 
     void delete(Long id);
 }

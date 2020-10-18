@@ -15,7 +15,7 @@ public class BranchController {
 
     @PostMapping(value = "/branch")
     public String addBranch(@RequestBody Branch branch){
-        branchService.addBranch(branch);
+        branchService.save(branch);
         return "index";
     }
 

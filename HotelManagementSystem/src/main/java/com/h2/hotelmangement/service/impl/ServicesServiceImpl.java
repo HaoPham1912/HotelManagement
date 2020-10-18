@@ -21,7 +21,7 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
-    public void saveOrUpdate(Services services) {
+    public void save(Services services) {
         serviceRepository.save(services);
     }
 

@@ -20,7 +20,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public void saveOrUpdate(Room room) {
+    public void save(Room room) {
         roomRepository.save(room);
     }
 

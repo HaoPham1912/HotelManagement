@@ -8,7 +8,7 @@ public interface ServicesService {
 
     List<Services> findAllService();
 
-    void saveOrUpdate(Services services);
+    void save(Services services);
 
     void deleteService(Long id);
 }

@@ -15,7 +15,7 @@ public class RoomController {
 
     @PostMapping("/room")
     public void addRoom(@RequestBody Room room){
-        roomService.saveOrUpdate(room);
+        roomService.save(room);
     }
 
     @PutMapping("/room/{id}")
@@ -23,7 +23,7 @@ public class RoomController {
         Room existRoom = roomService.getRoomById(id);
         if(existRoom != null){
             //existRoom.setThumbnailsRoomList(room.getThumbnailsRoomList());
-            roomService.saveOrUpdate(room);
+            roomService.save(room);
         }
     }
 }

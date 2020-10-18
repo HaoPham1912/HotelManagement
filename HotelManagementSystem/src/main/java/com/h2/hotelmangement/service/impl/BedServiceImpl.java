@@ -20,7 +20,7 @@ public class BedServiceImpl implements BedService {
     }
 
     @Override
-    public void createOrUpdate(Bed bed) {
+    public void save(Bed bed) {
         bedRepository.save(bed);
     }
 

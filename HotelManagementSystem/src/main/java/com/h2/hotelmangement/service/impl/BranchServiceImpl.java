@@ -16,12 +16,7 @@ public class BranchServiceImpl implements BranchService {
     private BranchRepository branchRepository;
 
     @Override
-    public Branch addBranch(Branch branch) {
-        return branchRepository.save(branch);
-    }
-
-    @Override
-    public Branch updateBranch(Branch branch) {
+    public Branch save(Branch branch) {
         return branchRepository.save(branch);
     }
 

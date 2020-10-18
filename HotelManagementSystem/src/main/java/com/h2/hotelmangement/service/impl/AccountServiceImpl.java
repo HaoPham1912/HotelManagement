@@ -24,7 +24,7 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepository;
 
     @Override
-    public void createOrUpdate(Account account) {
+    public void save(Account account) {
         accountRepository.save(account);
     }
 

@@ -8,7 +8,7 @@ public interface BedService {
 
     List<Bed> findAllBed();
 
-    void createOrUpdate(Bed bed);
+    void save(Bed bed);
 
     void delete(Long id);
 }

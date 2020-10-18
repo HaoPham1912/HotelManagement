@@ -6,9 +6,7 @@ import java.util.List;
 
 public interface BranchService {
 
-    Branch addBranch(Branch branch);
-
-    Branch updateBranch(Branch branch);
+    Branch save(Branch branch);
 
     void deleteBranch(Long id);
 

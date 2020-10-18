@@ -6,7 +6,7 @@ import java.util.List;
 
 
 public interface AccountService {
-    void createOrUpdate(Account account);
+    void save(Account account);
 
     List<Account> findAll();
 
