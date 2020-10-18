@@ -27,6 +27,9 @@ public class Branch {
     @Column(name = "status", nullable = false)
     private boolean status;
 
+    @Column(name = "description")
+    private String description;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "empBranch")
     private Set<Employee> employeeSet;
 
@@ -110,5 +113,13 @@ public class Branch {
 
     public void setBranchCode(String branchCode) {
         this.branchCode = branchCode;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

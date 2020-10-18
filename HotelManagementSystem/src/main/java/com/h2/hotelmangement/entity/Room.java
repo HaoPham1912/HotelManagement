@@ -23,10 +23,12 @@ public class Room {
     @Column(name = "price")
     private double price;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branchid")
     private Branch roomBranch;
-
 
     @OneToMany(mappedBy = "room")
     private List<Bed> bedInRoomList;
@@ -101,5 +103,13 @@ public class Room {
 
     public void setRoomCode(String roomCode) {
         this.roomCode = roomCode;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

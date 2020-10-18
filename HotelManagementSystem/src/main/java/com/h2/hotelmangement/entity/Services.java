@@ -22,6 +22,9 @@ public class Services extends BaseEntity {
     @Column(name = "price", nullable = false)
     private double price;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "service_room",
             joinColumns = { @JoinColumn(name = "service_id")},
@@ -66,5 +69,13 @@ public class Services extends BaseEntity {
 
     public void setServiceCode(String serviceCode) {
         this.serviceCode = serviceCode;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -21,6 +21,9 @@ public class Bed {
     @Column(name = "price", nullable = false)
     private double price;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "roomid")
     private Room room;
@@ -65,4 +68,11 @@ public class Bed {
         this.room = room;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
