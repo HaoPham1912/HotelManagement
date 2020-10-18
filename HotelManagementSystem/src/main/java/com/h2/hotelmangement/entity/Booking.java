@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Booking {
 
     @EmbeddedId
-    BookingKey bookingKey;
+    private BookingKey bookingKey;
 
     @ManyToOne
     @MapsId("roomId")

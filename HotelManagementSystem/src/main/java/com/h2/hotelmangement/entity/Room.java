@@ -17,7 +17,7 @@ public class Room {
     @Column(name = "roomcode",nullable = false, unique = true, length = 20)
     private String roomCode;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @Column(name = "price")
@@ -32,6 +32,9 @@ public class Room {
 
     @OneToMany(mappedBy = "room")
     private List<Bed> bedInRoomList;
+
+    @OneToMany(mappedBy = "room")
+    private List<ComboType> comboTypeList;
 
     @ManyToMany(mappedBy = "rooms", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Services> services = new HashSet<>();

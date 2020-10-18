@@ -15,7 +15,7 @@ public class Branch {
     @Column(name = "branchcode", nullable = false, unique = true, length = 20)
     private String branchCode;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @Column(name = "address", nullable = false)

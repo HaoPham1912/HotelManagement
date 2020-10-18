@@ -1,3 +1,4 @@
+
 INSERT INTO `bookinghotel`.`customertypes` (`typename`) VALUES ('NORMAL');
 INSERT INTO `bookinghotel`.`customertypes` (`typename`) VALUES ('GOLD');
 INSERT INTO `bookinghotel`.`customertypes` (`typename`) VALUES ('DIAMOND');
@@ -16,7 +17,7 @@ INSERT INTO `bookinghotel`.`account_role` (`account_id`, `role_id`) VALUES ('2',
 INSERT INTO `bookinghotel`.`account_role` (`account_id`, `role_id`) VALUES ('3', '3');
 INSERT INTO `bookinghotel`.`account_role` (`account_id`, `role_id`) VALUES ('1', '3');
 
-INSERT INTO `bookinghotel`.`customers` (`cuscode`, `idcard`, `name`, `phone`, `accountid`, `typecustomerid`) VALUES ('NOR', '123321123', 'Nguyen van a', '0223331234', '2', '1');
+INSERT INTO `bookinghotel`.`customers` (`cuscode`, `idcard`, `name`, `phone`, `accountid`, `typecustomerid`) VALUES ('NOR1', '123321123', 'Nguyen van a', '0223331234', '2', '1');
 
 INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`, `name`, `status`) VALUES ('Ho Chi Minh', 'CN1', 'H2 Quan 9', b'1');
 INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`, `name`, `status`) VALUES ('Ha Noi', 'CN2', 'H2 Ho Guom', b'1');
@@ -53,3 +54,9 @@ INSERT INTO `bookinghotel`.`service_room` (`service_id`, `room_id`) VALUES ('4',
 
 INSERT INTO `bookinghotel`.`promotions` (`custype`, `enddate`, `percent`, `code`, `startdate`) VALUES ('GOLD', '2020/12/19', '10', 'KM1', '2020/12/10');
 INSERT INTO `bookinghotel`.`promotions` (`custype`, `enddate`, `percent`, `code`, `startdate`) VALUES ('DIAMOND', '2020/12/31', '15', 'NY1', '2020/12/25');
+
+INSERT INTO `bookinghotel`.`bills` (`createdate`, `totalprice`, `customerid`) VALUES ('2020/11/01', '2000000', '1');
+INSERT INTO `bookinghotel`.`bills` (`createdate`, `totalprice`, `customerid`) VALUES ('2020/11/05', '2500000', '1');
+
+INSERT INTO `bookinghotel`.`bookings` (`billid`, `bookdate`, `checkindate`, `roomid`, `checkoutdate`, `paidprice`, `status`) VALUES ('1', '2020/10/25', '2020/10/29', '1', '2020/11/1', '1000000', b'1');
+INSERT INTO `bookinghotel`.`bookings` (`billid`, `bookdate`, `checkindate`, `roomid`, `checkoutdate`, `paidprice`, `status`) VALUES ('2', '2020/10/19', '2020/11/03', '2', '2020/11/05', '10000000', b'1');
