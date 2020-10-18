@@ -16,7 +16,7 @@ public class Bed {
     private String name;
 
     @Column(name = "ammountpeople", nullable = false)
-    private int ammountPeople;
+    private int amountPeople;
 
     @Column(name = "price", nullable = false)
     private double price;
@@ -41,12 +41,12 @@ public class Bed {
         this.name = name;
     }
 
-    public int getAmmountPeople() {
-        return ammountPeople;
+    public int getAmountPeople() {
+        return amountPeople;
     }
 
-    public void setAmmountPeople(int ammountPeople) {
-        this.ammountPeople = ammountPeople;
+    public void setAmountPeople(int amountPeople) {
+        this.amountPeople = amountPeople;
     }
 
     public double getPrice() {

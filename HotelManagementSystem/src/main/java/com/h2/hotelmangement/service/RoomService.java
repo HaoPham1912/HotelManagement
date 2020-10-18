@@ -11,4 +11,6 @@ public interface RoomService {
     void saveOrUpdate(Room room);
 
     void delete(Long id);
+
+    Room getRoomById(Long id);
 }
