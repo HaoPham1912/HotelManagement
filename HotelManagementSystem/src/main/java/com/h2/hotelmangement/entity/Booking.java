@@ -75,4 +75,16 @@ public class Booking {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "bookingKey=" + bookingKey.toString() +
+                ", room=" + room +
+                ", bills=" + bills +
+                ", checkoutDate='" + checkoutDate + '\'' +
+                ", paidPrice=" + paidPrice +
+                ", status=" + status +
+                '}';
+    }
 }

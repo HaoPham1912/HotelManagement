@@ -21,7 +21,7 @@ public class Branch {
     @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(name = "rating")
+    @Column(name = "rating", columnDefinition = "float default 0")
     private float rating;
 
     @Column(name = "status", nullable = false)
@@ -121,5 +121,18 @@ public class Branch {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Branch{" +
+                "branchId=" + branchId +
+                ", branchCode='" + branchCode + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", rating=" + rating +
+                ", status=" + status +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

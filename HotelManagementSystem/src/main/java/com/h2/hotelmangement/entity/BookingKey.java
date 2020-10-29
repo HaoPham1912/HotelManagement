@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Embeddable
-class BookingKey implements Serializable {
+public class BookingKey implements Serializable {
 
     @Column(name = "roomid")
     private Long roomId;
@@ -66,5 +66,15 @@ class BookingKey implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(roomId, billId, bookDate, checkinDate);
+    }
+
+    @Override
+    public String toString() {
+        return "BookingKey{" +
+                "roomId=" + roomId +
+                ", billId=" + billId +
+                ", bookDate='" + bookDate + '\'' +
+                ", checkinDate='" + checkinDate + '\'' +
+                '}';
     }
 }

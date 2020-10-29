@@ -8,4 +8,6 @@ public interface BookingService {
     void saveOrUpdate(Booking booking);
 
     List<Booking> findAllBooking();
+
+    List<Booking> getBookingByBookingDate(Long id);
 }

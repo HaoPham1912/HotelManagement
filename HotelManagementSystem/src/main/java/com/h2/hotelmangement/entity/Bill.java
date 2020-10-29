@@ -1,7 +1,9 @@
 package com.h2.hotelmangement.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,6 +30,9 @@ public class Bill {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerid")
     private Customer customer;
+
+    @OneToMany(mappedBy = "bills", cascade = CascadeType.ALL)
+    private List<Booking> bookingList = new ArrayList<>();
 
     public Long getBillid() {
         return billid;
@@ -75,5 +80,24 @@ public class Bill {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public List<Booking> getBookingList() {
+        return bookingList;
+    }
+
+    public void setBookingList(List<Booking> bookingList) {
+        this.bookingList = bookingList;
+    }
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "billid=" + billid +
+                ", createdate=" + createdate +
+                ", promocode='" + promocode + '\'' +
+                ", totalprice=" + totalprice +
+                ", customer=" + customer +
+                +'}';
     }
 }

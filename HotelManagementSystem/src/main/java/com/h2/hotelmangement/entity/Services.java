@@ -78,4 +78,16 @@ public class Services extends BaseEntity {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Services{" +
+                "servicesId=" + servicesId +
+                ", serviceCode='" + serviceCode + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", rooms=" + rooms +
+                '}';
+    }
 }

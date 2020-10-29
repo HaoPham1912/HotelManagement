@@ -1,6 +1,7 @@
 package com.h2.hotelmangement.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,6 +39,9 @@ public class Room {
 
     @ManyToMany(mappedBy = "rooms", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Services> services = new HashSet<>();
+
+    @OneToMany(mappedBy = "room" , cascade = CascadeType.ALL)
+    private List<Booking> bookingList = new ArrayList<>();
 
     @Column(name = "thumbnail")
     @ElementCollection(fetch = FetchType.EAGER)
@@ -114,5 +118,32 @@ public class Room {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<ComboType> getComboTypeList() {
+        return comboTypeList;
+    }
+
+    public void setComboTypeList(List<ComboType> comboTypeList) {
+        this.comboTypeList = comboTypeList;
+    }
+
+    public List<Booking> getBookingList() {
+        return bookingList;
+    }
+
+    public void setBookingList(List<Booking> bookingList) {
+        this.bookingList = bookingList;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "roomId=" + roomId +
+                ", roomCode='" + roomCode + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
