@@ -21,6 +21,9 @@ public class Customer {
     @Column(name = "phone", length = 11, nullable = false)
     private String phone;
 
+    @Column(name = "email", length =100, nullable = false)
+    private String email;
+
     @Column(name = "idcard", length = 12, nullable = false)
     private String idCard;
 
@@ -98,5 +101,13 @@ public class Customer {
 
     public void setCusCode(String cusCode) {
         this.cusCode = cusCode;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

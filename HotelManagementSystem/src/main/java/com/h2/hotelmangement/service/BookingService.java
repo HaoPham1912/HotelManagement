@@ -9,5 +9,6 @@ public interface BookingService {
 
     List<Booking> findAllBooking();
 
-    List<Booking> getBookingByBookingDate(Long id);
+    List<Booking> getBookingByBookingDate(String bookingDate);
+
 }

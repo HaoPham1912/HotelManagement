@@ -1,10 +1,17 @@
 package com.h2.hotelmangement.api;
 
 import com.h2.hotelmangement.entity.Room;
+import com.h2.hotelmangement.model.dto.RoomDTO;
+import com.h2.hotelmangement.model.mapper.RoomMapper;
 import com.h2.hotelmangement.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/")
@@ -25,5 +32,19 @@ public class RoomController {
             //existRoom.setThumbnailsRoomList(room.getThumbnailsRoomList());
             roomService.save(room);
         }
+    }
+
+    @GetMapping("room")
+    public ResponseEntity<List<RoomDTO>> getListRoom(){
+        RoomMapper roomMapper = new RoomMapper();
+        List<Room> roomList = roomService.findAllRoom();
+        List<RoomDTO> roomDTOList = new ArrayList<>();
+        for (Room room :
+                roomList) {
+            RoomDTO roomDTO = roomMapper.roomEntityToDto(room);
+            roomDTOList.add(roomDTO);
+        }
+
+        return new ResponseEntity<>(roomDTOList, HttpStatus.OK);
     }
 }

@@ -13,7 +13,7 @@ public class AccountController {
     private AccountService accountService;
 
     @PostMapping("register")
-    public String save(@RequestBody Account account){
+    public String save(@RequestBody Account account) {
 
         return "index";
     }

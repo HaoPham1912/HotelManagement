@@ -11,4 +11,6 @@ public interface BranchService {
     void deleteBranch(Long id);
 
     List<Branch> getAllBranch();
+
+    List<Branch> getBranchByLocation(String location);
 }

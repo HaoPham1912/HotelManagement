@@ -25,7 +25,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<Booking> getBookingByBookingDate(Long id) {
-        return bookingRepository.findBookingByBookingKey_BillId(id);
+    public List<Booking> getBookingByBookingDate(String bookingDate) {
+        return bookingRepository.findBookingByBookingKey_BookDate(bookingDate);
     }
 }

@@ -17,7 +17,7 @@ INSERT INTO `bookinghotel`.`account_role` (`account_id`, `role_id`) VALUES ('2',
 INSERT INTO `bookinghotel`.`account_role` (`account_id`, `role_id`) VALUES ('3', '3');
 INSERT INTO `bookinghotel`.`account_role` (`account_id`, `role_id`) VALUES ('1', '3');
 
-INSERT INTO `bookinghotel`.`customers` (`cuscode`, `idcard`, `name`, `phone`, `accountid`, `typecustomerid`) VALUES ('NOR1', '123321123', 'Nguyen van a', '0223331234', '2', '1');
+INSERT INTO `bookinghotel`.`customers` (`cuscode`, `idcard`, `name`, `phone`,`email`, `accountid`, `typecustomerid`) VALUES ('NOR1', '123321123', 'Nguyen van a', '0223331234','vana@gmail.com', '2', '1');
 
 INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`, `name`, `status`) VALUES ('Ho Chi Minh', 'CN1', 'H2 Quan 9', b'1');
 INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`, `name`, `status`) VALUES ('Ha Noi', 'CN2', 'H2 Ho Guom', b'1');

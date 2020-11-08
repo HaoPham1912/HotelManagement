@@ -24,24 +24,26 @@ public class BookingController {
     private RoomService roomService;
 
     @GetMapping("/booking")
-    public ResponseEntity<Room> getBookingByBookingDate(@RequestParam(name = "id") Long id){
-        System.out.println("param1 " +id);
+    public ResponseEntity<Room> getBookingByBookingDate(@RequestParam(name = "id") Long id) {
+        System.out.println("param1 " + id);
 
-        List<Booking> bookingsList = bookingService.getBookingByBookingDate(id);
+        String bookDate = "2020/10/19";
+
+        List<Booking> bookingsList = bookingService.getBookingByBookingDate(bookDate);
 
         Booking booking = bookingsList.get(0);
 
         Long roomid = booking.getRoom().getRoomId();
 
-        Room room= roomService.getRoomById(roomid);
+        Room room = roomService.getRoomById(roomid);
 
         List<Booking> bookings = room.getBookingList();
 
         Booking booking1 = bookings.get(0);
 
-        System.out.println("bookings"+booking1.toString());
+        System.out.println("bookings" + booking1.toString());
 
-        System.out.println("==============="+room.getRoomBranch().getBranchId());
+        System.out.println("===============" + room.getRoomBranch().getBranchId());
         return new ResponseEntity(room, HttpStatus.OK);
     }
 }
