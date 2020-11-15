@@ -3,6 +3,8 @@ package com.h2.hotelmangement.api;
 import com.h2.hotelmangement.entity.Bill;
 import com.h2.hotelmangement.entity.Booking;
 import com.h2.hotelmangement.entity.Room;
+import com.h2.hotelmangement.model.dto.BookingDTO;
+import com.h2.hotelmangement.model.mapper.BookingMapper;
 import com.h2.hotelmangement.repository.BookingRepository;
 import com.h2.hotelmangement.service.BookingService;
 import com.h2.hotelmangement.service.RoomService;
@@ -11,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,26 +27,16 @@ public class BookingController {
     private RoomService roomService;
 
     @GetMapping("/booking")
-    public ResponseEntity<Room> getBookingByBookingDate(@RequestParam(name = "id") Long id) {
-        System.out.println("param1 " + id);
+    public ResponseEntity<List<BookingDTO>> getAllBooking() {
+        BookingMapper bookingMapper = new BookingMapper();
+        List<BookingDTO> bookingDTOList = new ArrayList<>();
+        List<Booking> bookingList = bookingService.findAllBooking();
 
-        String bookDate = "2020/10/19";
+        for (Booking booking: bookingList ) {
+            BookingDTO bookingDTO =bookingMapper.entityToDTO(booking);
+            bookingDTOList.add(bookingDTO);
+        }
 
-        List<Booking> bookingsList = bookingService.getBookingByBookingDate(bookDate);
-
-        Booking booking = bookingsList.get(0);
-
-        Long roomid = booking.getRoom().getRoomId();
-
-        Room room = roomService.getRoomById(roomid);
-
-        List<Booking> bookings = room.getBookingList();
-
-        Booking booking1 = bookings.get(0);
-
-        System.out.println("bookings" + booking1.toString());
-
-        System.out.println("===============" + room.getRoomBranch().getBranchId());
-        return new ResponseEntity(room, HttpStatus.OK);
+        return new ResponseEntity<>(bookingDTOList, HttpStatus.OK);
     }
 }

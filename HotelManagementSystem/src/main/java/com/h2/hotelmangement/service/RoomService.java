@@ -13,4 +13,6 @@ public interface RoomService {
     void delete(Long id);
 
     Room getRoomById(Long id);
+
+    Room getRoomByRoomCode(String roomCode);
 }

@@ -16,7 +16,7 @@ public class Role {
     private String roleName;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-       private Set<Account> accounts = new HashSet<>();
+    private Set<Account> accounts = new HashSet<>();
 
     public Long getRoleId() {
         return roleId;

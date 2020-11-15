@@ -25,6 +25,8 @@ public class RoomController {
         roomService.save(room);
     }
 
+   public  RoomMapper roomMapper = new RoomMapper();
+
     @PutMapping("/room/{id}")
     public void updateRoom(@RequestBody Room room, @PathVariable Long id){
         Room existRoom = roomService.getRoomById(id);
@@ -36,15 +38,22 @@ public class RoomController {
 
     @GetMapping("room")
     public ResponseEntity<List<RoomDTO>> getListRoom(){
-        RoomMapper roomMapper = new RoomMapper();
+
         List<Room> roomList = roomService.findAllRoom();
         List<RoomDTO> roomDTOList = new ArrayList<>();
-        for (Room room :
-                roomList) {
+        for (Room room : roomList) {
             RoomDTO roomDTO = roomMapper.roomEntityToDto(room);
             roomDTOList.add(roomDTO);
         }
-
         return new ResponseEntity<>(roomDTOList, HttpStatus.OK);
+    }
+
+    @GetMapping("room/{code}")
+    public ResponseEntity<RoomDTO> getRoomByCode(@PathVariable(value = "code") String roomCode){
+
+        Room room = roomService.getRoomByRoomCode(roomCode);
+        RoomDTO roomDTO = roomMapper.roomEntityToDto(room);
+
+        return new ResponseEntity<>(roomDTO, HttpStatus.OK);
     }
 }

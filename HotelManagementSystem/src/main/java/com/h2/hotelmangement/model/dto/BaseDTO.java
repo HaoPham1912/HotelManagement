@@ -1,0 +1,42 @@
+package com.h2.hotelmangement.model.dto;
+
+import java.util.Date;
+
+public abstract class BaseDTO {
+    private String createBy;
+    private Date createDate;
+    private String modifiedBy;
+    private Date modifiedDate;
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+}
