@@ -16,19 +16,16 @@ import java.util.List;
 @RequestMapping("/")
 public class ServicesAPI {
 
+    private ServiceMapper serviceMapper = new ServiceMapper();
+
     @Autowired
     private ServicesService servicesService;
 
     @GetMapping("/services")
     public ResponseEntity<List<ServicesDTO>> getAllService(){
-        List<ServicesDTO> servicesDTOList = new ArrayList<>();
-        ServiceMapper serviceMapper = new ServiceMapper();
         List<Services> servicesList = servicesService.findAllService();
-        for (Services services :
-                servicesList) {
-            ServicesDTO servicesDTO = serviceMapper.serviceEntityToDTO(services);
-            servicesDTOList.add(servicesDTO);
-        }
+        List<ServicesDTO> servicesDTOList = serviceMapper.convertListServiceEntityToDto(servicesList);
+
         return new ResponseEntity<>(servicesDTOList, HttpStatus.OK);
     }
 

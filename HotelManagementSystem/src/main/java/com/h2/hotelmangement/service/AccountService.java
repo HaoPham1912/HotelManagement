@@ -6,6 +6,8 @@ import java.util.List;
 
 
 public interface AccountService {
+    Account getAccountByUsername(String username);
+
     void save(Account account);
 
     List<Account> findAll();

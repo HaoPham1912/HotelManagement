@@ -3,9 +3,12 @@ package com.h2.hotelmangement.model.mapper;
 import com.h2.hotelmangement.entity.Booking;
 import com.h2.hotelmangement.model.dto.BookingDTO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BookingMapper {
 
-    public BookingDTO entityToDTO(Booking booking){
+    public BookingDTO entityToDTO(Booking booking) {
         BookingDTO bookingDTO = new BookingDTO();
 
         bookingDTO.setBillId(booking.getBookingKey().getBillId());
@@ -17,5 +20,14 @@ public class BookingMapper {
         bookingDTO.setStatus(booking.isStatus());
 
         return bookingDTO;
+    }
+
+    public List<BookingDTO> convertBookingListEntityToDto(List<Booking> bookingList) {
+        List<BookingDTO> bookingDTOList = new ArrayList<>();
+        for (Booking booking : bookingList) {
+            BookingDTO bookingDTO = entityToDTO(booking);
+            bookingDTOList.add(bookingDTO);
+        }
+        return bookingDTOList;
     }
 }

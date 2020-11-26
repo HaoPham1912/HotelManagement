@@ -1,13 +1,13 @@
 package com.h2.hotelmangement.api;
 
 import com.h2.hotelmangement.entity.Bill;
+import com.h2.hotelmangement.model.dto.BillDTO;
+import com.h2.hotelmangement.model.mapper.BillMapper;
 import com.h2.hotelmangement.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,9 +18,16 @@ public class BillAPI {
     @Autowired
     private BillService billService;
 
-    @GetMapping("/bill")
-    public ResponseEntity<List<Bill>> getAllBill(){
+    private BillMapper billMapper = new BillMapper();
 
-        return new ResponseEntity<>(billService.getAllBill(), HttpStatus.OK);
+    @GetMapping("/bill")
+    public ResponseEntity<List<BillDTO>> getAllBill(){
+        List<Bill> billList = billService.getAllBill();
+        return new ResponseEntity<>(billMapper.convertListBillEntityToDto(billList), HttpStatus.OK);
+    }
+
+    @PostMapping("/bill")
+    public Bill addBill(@RequestBody Bill bill){
+        return billService.save(bill);
     }
 }

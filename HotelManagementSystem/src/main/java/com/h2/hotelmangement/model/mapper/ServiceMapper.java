@@ -5,7 +5,9 @@ import com.h2.hotelmangement.entity.Services;
 import com.h2.hotelmangement.model.dto.BaseDTO;
 import com.h2.hotelmangement.model.dto.ServicesDTO;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -29,5 +31,15 @@ public class ServiceMapper extends BaseDTO {
         servicesDTO.setRoomIdSet(rommIdSet);
 
         return servicesDTO;
+    }
+
+    public List<ServicesDTO> convertListServiceEntityToDto(List<Services> servicesList){
+        List<ServicesDTO> servicesDTOList = new ArrayList<>();
+        for (Services services :
+                servicesList) {
+            ServicesDTO servicesDTO = serviceEntityToDTO(services);
+            servicesDTOList.add(servicesDTO);
+        }
+        return servicesDTOList;
     }
 }

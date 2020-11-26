@@ -21,6 +21,8 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:8080")
 public class BookingAPI {
 
+    private BookingMapper bookingMapper = new BookingMapper();
+
     @Autowired
     private BookingService bookingService;
 
@@ -29,15 +31,8 @@ public class BookingAPI {
 
     @GetMapping("/booking")
     public ResponseEntity<List<BookingDTO>> getAllBooking() {
-        BookingMapper bookingMapper = new BookingMapper();
-        List<BookingDTO> bookingDTOList = new ArrayList<>();
         List<Booking> bookingList = bookingService.findAllBooking();
-
-        for (Booking booking: bookingList ) {
-            BookingDTO bookingDTO =bookingMapper.entityToDTO(booking);
-            bookingDTOList.add(bookingDTO);
-        }
-
+        List<BookingDTO> bookingDTOList = bookingMapper.convertBookingListEntityToDto(bookingList);
         return new ResponseEntity<>(bookingDTOList, HttpStatus.OK);
     }
 }

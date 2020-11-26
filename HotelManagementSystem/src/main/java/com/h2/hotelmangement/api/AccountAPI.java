@@ -20,18 +20,19 @@ public class AccountAPI {
     @Autowired
     private AccountService accountService;
 
+    private AccountMapper accountMapper = new AccountMapper();
+
     @GetMapping("/account")
     public ResponseEntity<List<AccountDTO>> getAllAccount(){
-        AccountMapper accountMapper = new AccountMapper();
-        List<AccountDTO> accountDTOList = new ArrayList<>();
         List<Account> accountList = accountService.findAll();
-        for (Account account:
-             accountList) {
-            AccountDTO accountDTO = accountMapper.convertEntityToDto(account);
-            accountDTOList.add(accountDTO);
-        }
+        List<AccountDTO> accountDTOList = accountMapper.convertListEntityToDto(accountList);
         return new ResponseEntity<>(accountDTOList, HttpStatus.OK);
     }
 
-
+    @PostMapping("/account")
+    public ResponseEntity<AccountDTO> getAccountByUsername(@RequestBody Account account){
+        String username = account.getUsername();
+        Account accountGetted = accountService.getAccountByUsername(username);
+        return new ResponseEntity<>(accountMapper.convertEntityToDto(accountGetted), HttpStatus.OK);
+    }
 }
