@@ -11,23 +11,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
-public class BranchController {
+@RequestMapping("/api")
+public class BranchAPI {
 
     @Autowired
     private BranchService branchService;
-
-    @PostMapping(value = "/branch")
-    public String addBranch(@RequestBody Branch branch){
-        branchService.save(branch);
-        return "index";
-    }
 
     @GetMapping("/branch")
     public ResponseEntity<List<Branch>> getBranchByLocation(@RequestParam(name = "address") String address){
         System.out.println(address);
         List<Branch> branchList = branchService.getBranchByLocation(address);
-
         return new ResponseEntity<>(branchList, HttpStatus.OK);
     }
 

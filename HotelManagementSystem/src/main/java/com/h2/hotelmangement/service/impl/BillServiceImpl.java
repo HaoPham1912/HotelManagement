@@ -18,4 +18,9 @@ public class BillServiceImpl implements BillService {
     public List<Bill> getAllBill() {
         return billRepository.findAll();
     }
+
+    @Override
+    public Bill save(Bill bill) {
+        return billRepository.save(bill);
+    }
 }

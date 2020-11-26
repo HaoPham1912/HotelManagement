@@ -23,7 +23,7 @@ INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`, `name`, `status`)
 INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`, `name`, `status`) VALUES ('Ha Noi', 'CN2', 'H2 Ho Guom', b'1');
 INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`, `name`, `status`) VALUES ('Da Nang', 'CN3', 'H2 Hoi An', b'1');
 
-INSERT INTO `bookinghotel`.`employees` (`empcode`, `idcard`, `name`, `phone`, `accountid`, `branchid`) VALUES ('EMP1', '456456897', 'Nguyen Thi Nhan Vien', '0223321456', '3', '2');
+INSERT INTO `bookinghotel`.`employees` (`empcode`, `idcard`, `name`, `email` , `phone`, `accountid`, `branchid`) VALUES ('EMP1', '456456897', 'Nguyen Thi Nhan Vien','emp@gmail.com', '0223321456', '3', '2');
 
 INSERT INTO `bookinghotel`.`rooms` (`name`, `price`, `roomcode`, `branchid`) VALUES ('Peace1', '1000000', 'RHCM1', '2');
 INSERT INTO `bookinghotel`.`rooms` (`name`, `price`, `roomcode`, `branchid`) VALUES ('Peace2', '500000', 'RHCM2', '2');

@@ -20,6 +20,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<Employee> findEmpByBranchCode(String branchCode) {
+        return employeeRepository.getEmployeeByEmpBranch_BranchCode(branchCode);
+    }
+
+    @Override
     public void save(Employee employee) {
         employeeRepository.save(employee);
     }

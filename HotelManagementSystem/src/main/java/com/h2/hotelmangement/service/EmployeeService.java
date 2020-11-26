@@ -8,6 +8,8 @@ public interface EmployeeService {
 
     List<Employee> findAllEmployee();
 
+    List<Employee> findEmpByBranchCode(String branchCode);
+
     void save(Employee employee);
 
     void delete(Long id);

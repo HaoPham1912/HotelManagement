@@ -1,7 +1,7 @@
 package com.h2.hotelmangement.api;
 
-import com.h2.hotelmangement.entity.Role;
-import com.h2.hotelmangement.service.RoleService;
+import com.h2.hotelmangement.entity.Bill;
+import com.h2.hotelmangement.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RequestMapping("/api")
 @RestController
-@RequestMapping("/")
-public class RoleController {
+public class BillAPI {
 
     @Autowired
-    private RoleService roleService;
+    private BillService billService;
 
-    @GetMapping("/roles")
-    public ResponseEntity<List<Role>> getAllRoles(){
-        List<Role> roleList = roleService.findAllRole();
-        return new ResponseEntity<>(roleList, HttpStatus.OK);
+    @GetMapping("/bill")
+    public ResponseEntity<List<Bill>> getAllBill(){
+
+        return new ResponseEntity<>(billService.getAllBill(), HttpStatus.OK);
     }
 }

@@ -18,6 +18,10 @@ public class Employee {
     @Column(name = "name", length = 100, nullable = false)
     private String name;
 
+    @Column(name = "email", length = 50, nullable = false)
+    private String email;
+
+
     @Column(name = "phone", length = 11, nullable = false)
     private String phone;
 
@@ -88,5 +92,13 @@ public class Employee {
 
     public void setEmpCode(String empCode) {
         this.empCode = empCode;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

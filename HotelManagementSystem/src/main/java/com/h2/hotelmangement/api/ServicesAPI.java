@@ -7,16 +7,14 @@ import com.h2.hotelmangement.service.ServicesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/")
-public class ServicesController {
+public class ServicesAPI {
 
     @Autowired
     private ServicesService servicesService;
@@ -32,5 +30,11 @@ public class ServicesController {
             servicesDTOList.add(servicesDTO);
         }
         return new ResponseEntity<>(servicesDTOList, HttpStatus.OK);
+    }
+
+    @PostMapping("services")
+    public Long addNewServices(@RequestBody Services services){
+        servicesService.save(services);
+        return services.getServicesId();
     }
 }

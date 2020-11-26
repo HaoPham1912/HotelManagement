@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping("/")
-public class AccountController {
+@RequestMapping("/api")
+public class AccountAPI {
 
     @Autowired
     private AccountService accountService;

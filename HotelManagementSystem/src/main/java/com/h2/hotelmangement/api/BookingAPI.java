@@ -17,8 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
-public class BookingController {
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:8080")
+public class BookingAPI {
 
     @Autowired
     private BookingService bookingService;
