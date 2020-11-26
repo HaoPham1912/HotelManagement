@@ -1,5 +1,8 @@
 server running on port: 9090
 admin-dashboard running on: 8080
 
+form login on: localhost:8080/login
+form register on:  localhost:8080/register
+
 (retrieve data of customer, account, employee, booking)
 add chart in to Manage Revenue
