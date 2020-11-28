@@ -7,6 +7,16 @@ public class EmployeeDTO {
     private String empName;
     private String empPhone;
     private String username;
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     private String brandCode;
 
     public String getEmployeeId() {

@@ -1,55 +1,60 @@
 <template>
-  <section id="tables">
-    <mdb-row>
-      <mdb-col md="12">
-        <mdb-card cascade narrow class="mt-5">
-          <mdb-card-body>
-            <mdb-tbl>
-              <thead class="blue-grey lighten-4">
-                <tr>
-                  <th>Employee Id</th>
-                  <th>Employee Code</th>
-                  <th>Id Card</th>
-                  <th>Name</th>
-                  <th>Phone</th>
-                  <th>Username</th>
-                  <th>Branch Code</th>
-                  <th colspan="2">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(data, index) in employees" :key="index">
-                  <td>{{ data.employeeId }}</td>
-                  <td>{{ data.employeeCode }}</td>
-                  <td>{{ data.empIdCard }}</td>
-                  <td>{{ data.empName }}</td>
-                  <td>{{ data.empPhone }}</td>
-                  <td>{{ data.username }}</td>
-                  <td>{{ data.brandCode }}</td>
-                  <td>
-                    <div
-                      class="btn-link-edit action-button"
-                      @click="edit(scope.row)"
-                    >
-                      <i class="fas fa-pencil-alt"></i>
-                    </div>
-                  </td>
-                  <td>
-                    <div
-                      class="btn-link-delete action-button"
-                      @click="remove(scope.row)"
-                    >
-                      <i class="fas fa-trash"></i>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </mdb-tbl>
-          </mdb-card-body>
-        </mdb-card>
-      </mdb-col>
-    </mdb-row>
-  </section>
+  <div>
+    <section id="tables">
+      <mdb-row>
+        <mdb-col md="12">
+          <mdb-card cascade narrow class="mt-5">
+            <a href="/employee/add" type="button" class="btn btn-success">
+              Add new Employee
+            </a>
+            <mdb-card-body>
+              <mdb-tbl>
+                <thead class="blue-grey lighten-4">
+                  <tr>
+                    <th>Employee Id</th>
+                    <th>Employee Code</th>
+                    <th>Id Card</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Username</th>
+                    <th>Branch Code</th>
+                    <th colspan="2">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(data, index) in employees" :key="index">
+                    <td>{{ data.employeeId }}</td>
+                    <td>{{ data.employeeCode }}</td>
+                    <td>{{ data.empIdCard }}</td>
+                    <td>{{ data.empName }}</td>
+                    <td>{{ data.empPhone }}</td>
+                    <td>{{ data.username }}</td>
+                    <td>{{ data.brandCode }}</td>
+                    <td>
+                      <div
+                        class="btn-link-edit action-button"
+                        @click="edit(scope.row)"
+                      >
+                        <i class="fas fa-pencil-alt"></i>
+                      </div>
+                    </td>
+                    <td>
+                      <div
+                        class="btn-link-delete action-button"
+                        @click="remove(scope.row)"
+                      >
+                        <i class="fas fa-trash"></i>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </mdb-tbl>
+            </mdb-card-body>
+          </mdb-card>
+        </mdb-col>
+      </mdb-row>
+    </section>
+  </div>
 </template>
 <script>
 import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl } from 'mdbvue';
@@ -85,4 +90,9 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+a {
+  right: 0;
+  width: 200px;
+}
+</style>

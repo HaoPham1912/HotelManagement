@@ -8,7 +8,8 @@ import EmployeeTable from '../components/table/Employee.vue';
 import BookingTable from '../components/table/BookingTable.vue'
 import Chart from '../components/views/Chart.vue';
 import Login from '../components/form/Login.vue';
-import Register from '../components/form/Register.vue'
+import Register from '../components/form/Register.vue';
+import AddNewEmployee from '../components/form/Add.vue'
 
 Vue.use(Router);
 
@@ -64,6 +65,11 @@ export default new Router({
           name: 'Chart',
           component: Chart,
           props: { page: 8 },
+        },
+        {
+          path: '/employee/add',
+          name: 'Add New Emp',
+          component: AddNewEmployee,
         },
       ]
       },
