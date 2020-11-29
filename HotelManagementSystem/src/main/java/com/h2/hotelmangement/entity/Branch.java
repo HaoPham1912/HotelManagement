@@ -21,6 +21,9 @@ public class Branch {
     @Column(name = "address", nullable = false)
     private String address;
 
+    @Column(name = "location", nullable = false)
+    private String location;
+
     @Column(name = "rating", columnDefinition = "float default 0")
     private float rating;
 
@@ -41,6 +44,13 @@ public class Branch {
     @JoinTable(name = "branchimages", joinColumns = @JoinColumn(name = "branchid"))
     private Set<String> thumbnailsHotelList;
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public String getName() {
         return name;

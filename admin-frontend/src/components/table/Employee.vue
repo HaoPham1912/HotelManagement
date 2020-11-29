@@ -4,9 +4,11 @@
       <mdb-row>
         <mdb-col md="12">
           <mdb-card cascade narrow class="mt-5">
-            <a href="/employee/add" type="button" class="btn btn-success">
-              Add new Employee
-            </a>
+            <div class="link-add">
+              <a href="/employee/add" type="button" class="btn btn-success">
+                Add new Employee
+              </a>
+            </div>
             <mdb-card-body>
               <mdb-tbl>
                 <thead class="blue-grey lighten-4">
@@ -94,5 +96,8 @@ export default {
 a {
   right: 0;
   width: 200px;
+}
+.link-add {
+  margin-left: auto;
 }
 </style>

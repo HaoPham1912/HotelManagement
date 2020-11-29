@@ -19,9 +19,9 @@ INSERT INTO `bookinghotel`.`account_role` (`account_id`, `role_id`) VALUES ('1',
 
 INSERT INTO `bookinghotel`.`customers` (`cuscode`, `idcard`, `name`, `phone`,`email`, `accountid`, `typecustomerid`) VALUES ('NOR1', '123321123', 'Nguyen van a', '0223331234','vana@gmail.com', '2', '1');
 
-INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`, `name`, `status`) VALUES ('Ho Chi Minh', 'CN1', 'H2 Quan 9', b'1');
-INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`, `name`, `status`) VALUES ('Ha Noi', 'CN2', 'H2 Ho Guom', b'1');
-INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`, `name`, `status`) VALUES ('Da Nang', 'CN3', 'H2 Hoi An', b'1');
+INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`,`location`, `name`, `status`) VALUES ('202 Hoàng Văn Thụ, Phường 9, Phú Nhuận, Thành phố Hồ Chí Minh', 'HCM1','Ho Chi Minh', 'H2 Quan 9', b'1');
+INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`,`location`, `name`, `status`) VALUES ('45 Hàng Bồ, Hoàn Kiếm, Hà Nội, Phố Cổ, Hà Nội, Việt Nam', 'HN1', 'Ha Noi','H2 Ho Guom', b'1');
+INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`,`location`, `name`, `status`) VALUES ('Đường Trường Sa, Hòa Hải, Đà Nẵng, Việt Nam, 550000', 'DN1','Da Nang', 'H2 Hoi An', b'1');
 
 INSERT INTO `bookinghotel`.`employees` (`empcode`, `idcard`, `name`, `email` , `phone`, `accountid`, `branchid`) VALUES ('EMP1', '456456897', 'Nguyen Thi Nhan Vien','emp@gmail.com', '0223321456', '3', '2');
 

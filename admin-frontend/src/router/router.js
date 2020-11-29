@@ -9,7 +9,8 @@ import BookingTable from '../components/table/BookingTable.vue'
 import Chart from '../components/views/Chart.vue';
 import Login from '../components/form/Login.vue';
 import Register from '../components/form/Register.vue';
-import AddNewEmployee from '../components/form/Add.vue'
+import AddNewEmployee from '../components/form/Add.vue';
+import BranchTable from '../components/table/BranchTable.vue';
 
 Vue.use(Router);
 
@@ -51,7 +52,7 @@ export default new Router({
         {
           path: '/branch',
           name: 'Chart',
-          component: Chart,
+          component: BranchTable,
           props: { page: 6 },
         },
         {
