@@ -8,6 +8,16 @@ public class EmployeeDTO {
     private String empPhone;
     private String username;
     private String password;
+    private String email;
+    private String branchCode;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getPassword() {
         return password;
@@ -16,8 +26,6 @@ public class EmployeeDTO {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    private String brandCode;
 
     public String getEmployeeId() {
         return employeeId;
@@ -67,11 +75,26 @@ public class EmployeeDTO {
         this.username = username;
     }
 
-    public String getBrandCode() {
-        return brandCode;
+    public String getBranchCode() {
+        return branchCode;
     }
 
-    public void setBrandCode(String brandCode) {
-        this.brandCode = brandCode;
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
+    }
+
+    @Override
+    public String toString() {
+        return "EmployeeDTO{" +
+                "employeeId='" + employeeId + '\'' +
+                ", employeeCode='" + employeeCode + '\'' +
+                ", empIdCard='" + empIdCard + '\'' +
+                ", empName='" + empName + '\'' +
+                ", empPhone='" + empPhone + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", branchCode='" + branchCode + '\'' +
+                '}';
     }
 }

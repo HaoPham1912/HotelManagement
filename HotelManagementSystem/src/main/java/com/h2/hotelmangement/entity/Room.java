@@ -1,5 +1,7 @@
 package com.h2.hotelmangement.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,17 +27,15 @@ public class Room {
     private double price;
 
     @Column(name = "description")
+    @Type(type = "text")
     private String description;
+
+    @Column(name = "status",  columnDefinition = "boolean default true")
+    private boolean status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branchid")
     private Branch roomBranch;
-
-    @OneToMany(mappedBy = "room")
-    private List<Bed> bedInRoomList;
-
-    @OneToMany(mappedBy = "room")
-    private List<ComboType> comboTypeList;
 
     @ManyToMany(mappedBy = "rooms", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Services> services = new HashSet<>();
@@ -43,10 +43,33 @@ public class Room {
     @OneToMany(mappedBy = "room" , cascade = CascadeType.ALL)
     private List<Booking> bookingList = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "policyid")
+    private CancelPolicy cancelPolicy;
+
     @Column(name = "thumbnail")
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "roomimages", joinColumns = @JoinColumn(name = "roomid"))
     private Set<String> thumbnailsRoomList;
+
+    @ManyToMany(mappedBy = "rooms", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Bed> bedSet = new HashSet<>();
+
+    public CancelPolicy getCancelPolicy() {
+        return cancelPolicy;
+    }
+
+    public void setCancelPolicy(CancelPolicy cancelPolicy) {
+        this.cancelPolicy = cancelPolicy;
+    }
+
+    public Set<Bed> getBedSet() {
+        return bedSet;
+    }
+
+    public void setBedSet(Set<Bed> bedSet) {
+        this.bedSet = bedSet;
+    }
 
     public Long getRoomId() {
         return roomId;
@@ -96,14 +119,6 @@ public class Room {
         this.thumbnailsRoomList = thumbnailsRoomList;
     }
 
-    public List<Bed> getBedInRoomList() {
-        return bedInRoomList;
-    }
-
-    public void setBedInRoomList(List<Bed> bedInRoomList) {
-        this.bedInRoomList = bedInRoomList;
-    }
-
     public String getRoomCode() {
         return roomCode;
     }
@@ -120,13 +135,6 @@ public class Room {
         this.description = description;
     }
 
-    public List<ComboType> getComboTypeList() {
-        return comboTypeList;
-    }
-
-    public void setComboTypeList(List<ComboType> comboTypeList) {
-        this.comboTypeList = comboTypeList;
-    }
 
     public List<Booking> getBookingList() {
         return bookingList;
@@ -134,6 +142,14 @@ public class Room {
 
     public void setBookingList(List<Booking> bookingList) {
         this.bookingList = bookingList;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     @Override

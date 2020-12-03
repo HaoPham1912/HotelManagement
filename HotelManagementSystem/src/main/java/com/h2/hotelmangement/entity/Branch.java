@@ -1,5 +1,7 @@
 package com.h2.hotelmangement.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -19,6 +21,7 @@ public class Branch {
     private String name;
 
     @Column(name = "address", nullable = false)
+    @Type(type = "text")
     private String address;
 
     @Column(name = "location", nullable = false)
@@ -31,6 +34,7 @@ public class Branch {
     private boolean status;
 
     @Column(name = "description")
+    @Type(type = "text")
     private String description;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "empBranch")

@@ -15,9 +15,11 @@ public class EmployeeMapper {
         employeeDTO.setEmployeeCode(employee.getEmpCode());
         employeeDTO.setEmpIdCard(employee.getIdCard());
         employeeDTO.setEmpPhone(employee.getPhone());
+        employeeDTO.setEmail(employee.getEmail());
         employeeDTO.setUsername(employee.getAccountEmp().getUsername());
-        employeeDTO.setBrandCode(employee.getEmpBranch().getBranchCode());
-
+        employeeDTO.setBranchCode(employee.getEmpBranch().getBranchCode());
+        employeeDTO.setUsername(employee.getAccountEmp().getUsername());
+        employeeDTO.setPassword(employee.getAccountEmp().getPassword());
         return employeeDTO;
     }
 

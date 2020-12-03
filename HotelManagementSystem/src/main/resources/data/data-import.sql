@@ -19,22 +19,25 @@ INSERT INTO `bookinghotel`.`account_role` (`account_id`, `role_id`) VALUES ('1',
 
 INSERT INTO `bookinghotel`.`customers` (`cuscode`, `idcard`, `name`, `phone`,`email`, `accountid`, `typecustomerid`) VALUES ('NOR1', '123321123', 'Nguyen van a', '0223331234','vana@gmail.com', '2', '1');
 
-INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`,`location`, `name`, `status`) VALUES ('202 Hoàng Văn Thụ, Phường 9, Phú Nhuận, Thành phố Hồ Chí Minh', 'HCM1','Ho Chi Minh', 'H2 Quan 9', b'1');
-INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`,`location`, `name`, `status`) VALUES ('45 Hàng Bồ, Hoàn Kiếm, Hà Nội, Phố Cổ, Hà Nội, Việt Nam', 'HN1', 'Ha Noi','H2 Ho Guom', b'1');
-INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`,`location`, `name`, `status`) VALUES ('Đường Trường Sa, Hòa Hải, Đà Nẵng, Việt Nam, 550000', 'DN1','Da Nang', 'H2 Hoi An', b'1');
+INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`,`location`, `name`, `status`) VALUES ('Vinhomes Central Park, Binh Thanh District, Ho Chi Minh City, Viet Nam', 'HCM1','Ho Chi Minh', 'H2 Quan 9', b'1');
+INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`,`location`, `name`, `status`) VALUES ('44-46 Le Thanh Ton Street, Loc Tho Ward, Nha Trang City, Khanh Hoa Province, Vietnam', 'NT1', 'Nha Trang','H2 Ho Guom', b'1');
+INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`,`location`, `name`, `status`) VALUES ('341 Tran Hung Dao Street, An Hai Bac Ward, Son Tra District, Da Nang, Viet Nam', 'DN1','Da Nang', 'H2 Hoi An', b'1');
 
 INSERT INTO `bookinghotel`.`employees` (`empcode`, `idcard`, `name`, `email` , `phone`, `accountid`, `branchid`) VALUES ('EMP1', '456456897', 'Nguyen Thi Nhan Vien','emp@gmail.com', '0223321456', '3', '2');
 
-INSERT INTO `bookinghotel`.`rooms` (`name`, `price`, `roomcode`, `branchid`) VALUES ('Peace1', '1000000', 'RHCM1', '2');
-INSERT INTO `bookinghotel`.`rooms` (`name`, `price`, `roomcode`, `branchid`) VALUES ('Peace2', '500000', 'RHCM2', '2');
-INSERT INTO `bookinghotel`.`rooms` (`name`, `price`, `roomcode`, `branchid`) VALUES ('Peach3', '500000', 'RHN1', '3');
-INSERT INTO `bookinghotel`.`rooms` (`name`, `price`, `roomcode`, `branchid`) VALUES ('Peach4', '800000', 'RDN1', '1');
+INSERT INTO `bookinghotel`.`cancelpolicy` (`code`, `title`, `detail`) VALUES ('PL1', 'Cancellation should be made at least 07 days prior to arrival date','Cancellation should be made at least 07 days prior to arrival date to avoid the penalty charge. No-show or late cancellation, the hotel reserves the right to charge full nights of the booking.');
+INSERT INTO `bookinghotel`.`cancelpolicy` (`code`, `title`) VALUES ('PL2', 'Non-refundable');
 
-INSERT INTO `bookinghotel`.`beds` (`ammountpeople`, `name`, `price`, `roomid`) VALUES ('2', 'Couple', '200000', '1');
-INSERT INTO `bookinghotel`.`beds` (`ammountpeople`, `name`, `price`, `roomid`) VALUES ('1', 'Single', '150000', '1');
-INSERT INTO `bookinghotel`.`beds` (`ammountpeople`, `name`, `price`, `roomid`) VALUES ('2', 'Couple', '200000', '2');
-INSERT INTO `bookinghotel`.`beds` (`ammountpeople`, `name`, `price`, `roomid`) VALUES ('2', 'Couple', '200000', '3');
-INSERT INTO `bookinghotel`.`beds` (`ammountpeople`, `name`, `price`, `roomid`) VALUES ('1', 'Single', '150000', '2');
+INSERT INTO `bookinghotel`.`rooms` (`name`, `price`, `roomcode`,`policyid`, `branchid`) VALUES ('Peace1', '1000000', 'RHCM1', '1', '2');
+INSERT INTO `bookinghotel`.`rooms` (`name`, `price`, `roomcode`,`policyid`, `branchid`) VALUES ('Peace2', '500000', 'RHCM2','2', '2');
+INSERT INTO `bookinghotel`.`rooms` (`name`, `price`, `roomcode`,`policyid`, `branchid`) VALUES ('Peach3', '500000', 'RHN1','1', '3');
+INSERT INTO `bookinghotel`.`rooms` (`name`, `price`, `roomcode`,`policyid`, `branchid`) VALUES ('Peach4', '800000', 'RDN1','2', '1');
+
+INSERT INTO `bookinghotel`.`beds` (`ammountpeople`, `name`, `price`) VALUES ('2', 'Couple', '200000');
+INSERT INTO `bookinghotel`.`beds` (`ammountpeople`, `name`, `price`) VALUES ('1', 'Single', '150000');
+INSERT INTO `bookinghotel`.`beds` (`ammountpeople`, `name`, `price`) VALUES ('2', 'Couple', '200000');
+INSERT INTO `bookinghotel`.`beds` (`ammountpeople`, `name`, `price`) VALUES ('2', 'Couple', '200000');
+INSERT INTO `bookinghotel`.`beds` (`ammountpeople`, `name`, `price`) VALUES ('1', 'Single', '150000');
 
 INSERT INTO `bookinghotel`.`services` (`name`, `price`, `servicecode`) VALUES ('Ho Boi', '200000', 'HB1');
 INSERT INTO `bookinghotel`.`services` (`name`, `price`, `servicecode`) VALUES ('Xong Hoi', '150000', 'XH1');
@@ -60,3 +63,13 @@ INSERT INTO `bookinghotel`.`bills` (`createdate`, `totalprice`, `customerid`) VA
 
 INSERT INTO `bookinghotel`.`bookings` (`billid`, `bookdate`, `checkindate`, `roomid`, `checkoutdate`, `paidprice`, `status`) VALUES ('1', '2020/10/25', '2020/10/29', '1', '2020/11/1', '1000000', b'1');
 INSERT INTO `bookinghotel`.`bookings` (`billid`, `bookdate`, `checkindate`, `roomid`, `checkoutdate`, `paidprice`, `status`) VALUES ('2', '2020/10/19', '2020/11/03', '2', '2020/11/05', '10000000', b'1');
+
+UPDATE `bookinghotel`.`branchs` SET `description` = 'Located on the picturesque Saigon river bank, Vinpearl Luxury Landmark 81 is sumptously encapsulated in the beautiful green garden of Vinhomes Central Park.' WHERE (`branchid` = '1');
+UPDATE `bookinghotel`.`branchs` SET `description` = 'Vinpearl Condotel Riverfront Da Nang is a modern apartment hotel with a unique view facing the Han River and the Dragon Bridge, with a wide view of the whole city. The hotel follows the neoclassical architecture with the most luxurious design according to international standards. With 5-star quality service and entertainment promising to bring the highest sophisticated experience to visitors.' WHERE (`branchid` = '3');
+UPDATE `bookinghotel`.`branchs` SET `description` = 'As a luxury and classy hotel apartment, Vinpearl Condotel Empire Nha Trang is built up with unprecedented options, where customers can not only own a homy comfortable living space, but also enjoy ecotourism right in a coastal city. With a proud 41-storey building standing in the heart of the city, Vinpearl Condotel Empire Nha Trang gives visitors a complete sense of the vibrant urban life.' WHERE (`branchid` = '2');
+
+INSERT INTO `bookinghotel`.`bed_room` (`bed_id`, `room_id`) VALUES ('1', '1');
+INSERT INTO `bookinghotel`.`bed_room` (`bed_id`, `room_id`) VALUES ('2', '2');
+INSERT INTO `bookinghotel`.`bed_room` (`bed_id`, `room_id`) VALUES ('3', '3');
+INSERT INTO `bookinghotel`.`bed_room` (`bed_id`, `room_id`) VALUES ('4', '4');
+INSERT INTO `bookinghotel`.`bed_room` (`bed_id`, `room_id`) VALUES ('5', '1');

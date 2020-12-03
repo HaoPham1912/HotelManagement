@@ -1,5 +1,6 @@
 package com.h2.hotelmangement.api;
 
+import com.h2.hotelmangement.entity.Employee;
 import com.h2.hotelmangement.model.dto.EmployeeDTO;
 import com.h2.hotelmangement.model.mapper.EmployeeMapper;
 import com.h2.hotelmangement.service.EmployeeService;
@@ -32,5 +33,10 @@ public class EmployeeAPI {
         List<EmployeeDTO> employeeDTOList = employeeMapper.listEmpEntityToDto(employeeService.findEmpByBranchCode(branchCode));
 
         return new ResponseEntity<>(employeeDTOList, HttpStatus.OK);
+    }
+
+    @PostMapping("/employee")
+    public void addNewEmployee(@RequestBody EmployeeDTO employee){
+        System.out.println(employee);
     }
 }

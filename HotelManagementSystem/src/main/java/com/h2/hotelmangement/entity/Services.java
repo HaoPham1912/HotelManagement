@@ -1,5 +1,7 @@
 package com.h2.hotelmangement.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,6 +25,7 @@ public class Services extends BaseEntity {
     private double price;
 
     @Column(name = "description")
+    @Type(type = "text")
     private String description;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

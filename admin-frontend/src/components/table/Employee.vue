@@ -18,6 +18,7 @@
                     <th>Id Card</th>
                     <th>Name</th>
                     <th>Phone</th>
+                    <th>Email</th>
                     <th>Username</th>
                     <th>Branch Code</th>
                     <th colspan="2">Action</th>
@@ -30,23 +31,28 @@
                     <td>{{ data.empIdCard }}</td>
                     <td>{{ data.empName }}</td>
                     <td>{{ data.empPhone }}</td>
+                    <td>{{ data.email }}</td>
                     <td>{{ data.username }}</td>
-                    <td>{{ data.brandCode }}</td>
+                    <td>{{ data.branchCode }}</td>
                     <td>
-                      <div
-                        class="btn-link-edit action-button"
-                        @click="edit(scope.row)"
-                      >
-                        <i class="fas fa-pencil-alt"></i>
-                      </div>
+                      <button class="btn-warning">
+                        <a
+                          class="btn-link-edit action-button"
+                          @click="edit(scope.row)"
+                        >
+                          <i class="fas fa-pencil-alt"></i>
+                        </a>
+                      </button>
                     </td>
                     <td>
-                      <div
-                        class="btn-link-delete action-button"
-                        @click="remove(scope.row)"
-                      >
-                        <i class="fas fa-trash"></i>
-                      </div>
+                      <button class="btn-danger">
+                        <a
+                          class="btn-link-delete action-button"
+                          @click="remove(scope.row)"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </a>
+                      </button>
                     </td>
                   </tr>
                 </tbody>

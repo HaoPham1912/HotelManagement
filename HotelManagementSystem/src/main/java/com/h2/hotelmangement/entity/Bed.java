@@ -2,6 +2,8 @@ package com.h2.hotelmangement.entity;
 
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "beds")
@@ -24,9 +26,12 @@ public class Bed {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "roomid")
-    private Room room;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "bed_room",
+            joinColumns = { @JoinColumn(name = "bed_id")},
+            inverseJoinColumns = {@JoinColumn(name = "room_id")})
+    private Set<Room> rooms = new HashSet<>();
+
 
     public Long getBedId() {
         return bedId;
@@ -60,13 +65,6 @@ public class Bed {
         this.price = price;
     }
 
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
 
     public String getDescription() {
         return description;
@@ -74,5 +72,13 @@ public class Bed {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(Set<Room> rooms) {
+        this.rooms = rooms;
     }
 }

@@ -8,8 +8,8 @@
               <thead class="blue-grey lighten-4">
                 <tr>
                   <th>BranchID</th>
-                  <th>Address</th>
                   <th>Branch Code</th>
+                  <th>Address</th>
                   <th>Description</th>
                   <th>Branch Name</th>
                   <th>Rating</th>
@@ -20,8 +20,10 @@
               <tbody>
                 <tr v-for="(data, index) in branchs" :key="index">
                   <td>{{ data.branchId }}</td>
+                  <td>
+                    <a href="">{{ data.branchCode }}</a>
+                  </td>
                   <td>{{ data.address }}</td>
-                  <td>{{ data.branchCode }}</td>
                   <td>{{ data.description }}</td>
                   <td>{{ data.branchName }}</td>
                   <td>{{ data.rating }}</td>
