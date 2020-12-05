@@ -1,10 +1,8 @@
 package com.h2.hotelmangement.api;
 
-import com.h2.hotelmangement.entity.Employee;
 import com.h2.hotelmangement.model.dto.EmployeeDTO;
 import com.h2.hotelmangement.model.mapper.EmployeeMapper;
 import com.h2.hotelmangement.service.EmployeeService;
-import org.jboss.weld.context.http.Http;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
