@@ -17,6 +17,7 @@ public class BranchMapper {
 
         branchDTO.setBranchId(branch.getBranchId().toString());
         branchDTO.setAddress(branch.getAddress());
+        branchDTO.setLocation(branch.getLocation());
         branchDTO.setBranchCode(branch.getBranchCode());
         branchDTO.setDescription(branch.getDescription());
         branchDTO.setBranchName(branch.getName());

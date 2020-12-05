@@ -21,7 +21,7 @@ public class Customer {
     @Column(name = "phone", length = 11, nullable = false)
     private String phone;
 
-    @Column(name = "email", length =100, nullable = false)
+    @Column(name = "email", length =100, nullable = false, unique = true)
     private String email;
 
     @Column(name = "idcard", length = 12, nullable = false)

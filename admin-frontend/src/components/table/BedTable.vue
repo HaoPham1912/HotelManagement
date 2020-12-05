@@ -7,25 +7,21 @@
             <mdb-tbl>
               <thead class="blue-grey lighten-4">
                 <tr>
-                  <th>Room Id</th>
-                  <th>Bill Id</th>
-                  <th>Book Date</th>
-                  <th>Checkin Date</th>
-                  <th>Check out Date</th>
-                  <th>Paid Price</th>
-                  <th>Status</th>
-                  <th colspan="2">Action</th>
+                  <th>Bed ID</th>
+                  <th>Name</th>
+                  <th>Amount People</th>
+                  <th>Price</th>
+                  <th>In Room</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(data, index) in bookings" :key="index">
-                  <td>{{ data.roomId }}</td>
-                  <td>{{ data.billId }}</td>
-                  <td>{{ data.bookDate }}</td>
-                  <td>{{ data.checkinDate }}</td>
-                  <td>{{ data.checkoutDate }}</td>
-                  <td>{{ data.paidPrice }}</td>
-                  <td>{{ data.status }}</td>
+                <tr v-for="(data, index) in beds" :key="index">
+                  <td>{{ data.bedId }}</td>
+                  <td>{{ data.name }}</td>
+                  <td>{{ data.amountPeople }}</td>
+                  <td>{{ data.price }}</td>
+                  <td>{{ data.roomCodeSet }}</td>
                   <td class="action">
                     <div>
                       <button class="btn-warning">
@@ -61,7 +57,7 @@
 <script>
 import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl } from 'mdbvue';
 
-import BookingService from '../../services/BookingService';
+import BedService from '../../services/BedService';
 export default {
   components: {
     mdbRow,
@@ -71,10 +67,10 @@ export default {
     mdbTbl,
   },
   methods: {
-    retrieveBookings() {
-      BookingService.getAll()
+    retrieveAll() {
+      BedService.getAll()
         .then((response) => {
-          this.bookings = response.data;
+          this.beds = response.data;
           console.log(response.data);
         })
         .catch((e) => {
@@ -84,12 +80,17 @@ export default {
   },
   data() {
     return {
-      bookings: [],
+      beds: [],
     };
   },
   mounted() {
-    this.retrieveBookings();
+    this.retrieveAll();
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.action {
+  display: flex;
+  justify-content: space-evenly;
+}
+</style>

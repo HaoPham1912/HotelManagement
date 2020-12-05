@@ -12,7 +12,7 @@
                   <th>Password</th>
                   <th>Status</th>
                   <th>RoleName</th>
-                  <th colspan="2">Action</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -22,20 +22,27 @@
                   <td>{{ data.password }}</td>
                   <td>{{ data.status }}</td>
                   <td>{{ data.roleName }}</td>
-                  <td>
-                    <div
-                      class="btn-link-edit action-button"
-                      @click="edit(scope.row)"
-                    >
-                      <i class="fas fa-pencil-alt"></i>
+                  <td class="action">
+                    <div>
+                      <button class="btn-warning">
+                        <a
+                          class="btn-link-edit action-button"
+                          @click="edit(scope.row)"
+                        >
+                          <i class="fas fa-pencil-alt"></i> </a
+                        >EDIT
+                      </button>
                     </div>
-                  </td>
-                  <td>
-                    <div
-                      class="btn-link-delete action-button"
-                      @click="remove(scope.row)"
-                    >
-                      <i class="fas fa-trash"></i>
+                    <div>
+                      <button class="btn-danger">
+                        <a
+                          class="btn-link-delete action-button"
+                          @click="remove(scope.row)"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </a>
+                        DELETE
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -81,4 +88,9 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.action {
+  display: flex;
+  justify-content: space-evenly;
+}
+</style>

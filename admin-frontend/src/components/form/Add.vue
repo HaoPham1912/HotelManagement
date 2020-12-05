@@ -84,6 +84,16 @@
       <label class="form-label" for="password">Password Account</label>
     </div>
 
+    <div class="form-outline mb-4">
+      <input
+        type="text"
+        id="password"
+        class="form-control"
+        v-model="employee.password"
+      />
+      <label class="form-label" for="password">Confirm Password</label>
+    </div>
+
     <!-- Message input -->
     <div class="form-outline mb-4">
       <select

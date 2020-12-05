@@ -13,4 +13,6 @@ public interface BranchService {
     List<Branch> getAllBranch();
 
     List<Branch> getBranchByLocation(String location);
+
+    Branch getBranchByBranchCode(String branchCode);
 }

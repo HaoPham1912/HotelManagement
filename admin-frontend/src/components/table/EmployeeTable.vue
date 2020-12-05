@@ -21,7 +21,7 @@
                     <th>Email</th>
                     <th>Username</th>
                     <th>Branch Code</th>
-                    <th colspan="2">Action</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -34,25 +34,28 @@
                     <td>{{ data.email }}</td>
                     <td>{{ data.username }}</td>
                     <td>{{ data.branchCode }}</td>
-                    <td>
-                      <button class="btn-warning">
-                        <a
-                          class="btn-link-edit action-button"
-                          @click="edit(scope.row)"
-                        >
-                          <i class="fas fa-pencil-alt"></i>
-                        </a>
-                      </button>
-                    </td>
-                    <td>
-                      <button class="btn-danger">
-                        <a
-                          class="btn-link-delete action-button"
-                          @click="remove(scope.row)"
-                        >
-                          <i class="fas fa-trash"></i>
-                        </a>
-                      </button>
+                    <td class="action">
+                      <div>
+                        <button class="btn-warning">
+                          <a
+                            class="btn-link-edit action-button"
+                            @click="edit(scope.row)"
+                          >
+                            <i class="fas fa-pencil-alt"></i> </a
+                          >EDIT
+                        </button>
+                      </div>
+                      <div>
+                        <button class="btn-danger">
+                          <a
+                            class="btn-link-delete action-button"
+                            @click="remove(scope.row)"
+                          >
+                            <i class="fas fa-trash"></i>
+                          </a>
+                          DELETE
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -104,6 +107,10 @@ a {
   width: 200px;
 }
 .link-add {
-  margin-left: auto;
+  margin-right: auto;
+}
+.action {
+  display: flex;
+  justify-content: space-around;
 }
 </style>

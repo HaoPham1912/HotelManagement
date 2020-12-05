@@ -7,25 +7,19 @@
             <mdb-tbl>
               <thead class="blue-grey lighten-4">
                 <tr>
-                  <th>Room Id</th>
-                  <th>Bill Id</th>
-                  <th>Book Date</th>
-                  <th>Checkin Date</th>
-                  <th>Check out Date</th>
-                  <th>Paid Price</th>
-                  <th>Status</th>
-                  <th colspan="2">Action</th>
+                  <th>Policy ID</th>
+                  <th>Policy Code</th>
+                  <th>Title</th>
+                  <th>Detail</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(data, index) in bookings" :key="index">
-                  <td>{{ data.roomId }}</td>
-                  <td>{{ data.billId }}</td>
-                  <td>{{ data.bookDate }}</td>
-                  <td>{{ data.checkinDate }}</td>
-                  <td>{{ data.checkoutDate }}</td>
-                  <td>{{ data.paidPrice }}</td>
-                  <td>{{ data.status }}</td>
+                <tr v-for="(data, index) in policies" :key="index">
+                  <td>{{ data.policyId }}</td>
+                  <td>{{ data.policyCode }}</td>
+                  <td>{{ data.title }}</td>
+                  <td>{{ data.detail }}</td>
                   <td class="action">
                     <div>
                       <button class="btn-warning">
@@ -61,7 +55,7 @@
 <script>
 import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl } from 'mdbvue';
 
-import BookingService from '../../services/BookingService';
+import CancelPolicyService from '../../services/CancelPolicyService';
 export default {
   components: {
     mdbRow,
@@ -71,10 +65,10 @@ export default {
     mdbTbl,
   },
   methods: {
-    retrieveBookings() {
-      BookingService.getAll()
+    retrieveAll() {
+      CancelPolicyService.getAll()
         .then((response) => {
-          this.bookings = response.data;
+          this.policies = response.data;
           console.log(response.data);
         })
         .catch((e) => {
@@ -84,12 +78,17 @@ export default {
   },
   data() {
     return {
-      bookings: [],
+      policies: [],
     };
   },
   mounted() {
-    this.retrieveBookings();
+    this.retrieveAll();
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.action {
+  display: flex;
+  justify-content: space-evenly;
+}
+</style>
