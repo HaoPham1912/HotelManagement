@@ -30,9 +30,9 @@ public class AccountAPI {
     }
 
     @PostMapping("/account")
-    public ResponseEntity<AccountDTO> getAccountByUsername(@RequestBody Account account){
-        String username = account.getUsername();
-        Account accountGetted = accountService.getAccountByUsername(username);
-        return new ResponseEntity<>(accountMapper.convertEntityToDto(accountGetted), HttpStatus.OK);
+    public ResponseEntity<HttpStatus> getAccountByUsername(@RequestBody Account account){
+        System.out.println(account.getUsername());
+        System.out.println(account.getPassword());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

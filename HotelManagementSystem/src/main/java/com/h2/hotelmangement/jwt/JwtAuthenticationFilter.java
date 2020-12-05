@@ -35,7 +35,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final String INVALID_JWT = "INVALID_JWT";
 
+
     private static final List<String> unauthorizedURL = new ArrayList<>(Arrays.asList("/login"));
+
 
     @Autowired
     JwtTokenProvider jwtTokenProvider;
