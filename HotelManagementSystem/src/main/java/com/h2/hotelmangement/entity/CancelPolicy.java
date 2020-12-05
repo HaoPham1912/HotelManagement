@@ -9,7 +9,7 @@ import java.util.Set;
 @Table(name = "cancelpolicy")
 public class CancelPolicy {
 
-    @Column(name = "comboid")
+    @Column(name = "id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

@@ -10,6 +10,24 @@ public class EmployeeDTO {
     private String password;
     private String email;
     private String branchCode;
+    private String roleName;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
 
     public String getEmail() {
         return email;
@@ -95,6 +113,7 @@ public class EmployeeDTO {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", branchCode='" + branchCode + '\'' +
+                ", roleName='" + roleName + '\'' +
                 '}';
     }
 }

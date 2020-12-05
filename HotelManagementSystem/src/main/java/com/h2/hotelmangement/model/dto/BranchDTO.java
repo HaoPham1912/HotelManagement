@@ -11,7 +11,16 @@ public class BranchDTO {
     private String branchName;
     private String rating;
     private String status;
+    private String location;
     private Set<String> empCodeSet = new HashSet<>();
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public Set<String> getEmpCodeSet() {
         return empCodeSet;

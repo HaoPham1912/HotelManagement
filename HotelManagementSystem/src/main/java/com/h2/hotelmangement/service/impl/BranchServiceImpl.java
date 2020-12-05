@@ -34,4 +34,9 @@ public class BranchServiceImpl implements BranchService {
     public List<Branch> getBranchByLocation(String address) {
         return branchRepository.findBranchByAddress(address);
     }
+
+    @Override
+    public Branch getBranchByBranchCode(String branchCode) {
+        return branchRepository.findBranchByBranchCode(branchCode);
+    }
 }

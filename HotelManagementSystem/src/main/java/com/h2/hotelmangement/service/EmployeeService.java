@@ -10,6 +10,8 @@ public interface EmployeeService {
 
     List<Employee> findEmpByBranchCode(String branchCode);
 
+    Employee findEmpById(Long id);
+
     void save(Employee employee);
 
     void delete(Long id);

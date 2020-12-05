@@ -31,4 +31,10 @@ public class BranchAPI {
         return new ResponseEntity<>(branchDTOList, HttpStatus.OK);
     }
 
+    @GetMapping("/branch/{code}")
+    public ResponseEntity<BranchDTO> getBranchByBranchCode(@PathVariable("code") String branchCode){
+        Branch branch = branchService.getBranchByBranchCode(branchCode);
+        BranchDTO branchDTO = branchMapper.convertEntityToDto(branch);
+        return new ResponseEntity<>(branchDTO,HttpStatus.OK);
+    }
 }

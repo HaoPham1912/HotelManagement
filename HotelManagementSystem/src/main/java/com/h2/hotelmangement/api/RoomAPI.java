@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3454")
 public class RoomAPI {
 
     @Autowired
@@ -38,9 +39,9 @@ public class RoomAPI {
 
     @GetMapping("room")
     public ResponseEntity<List<RoomDTO>> getListRoom(){
-
         List<Room> roomList = roomService.findAllRoom();
         List<RoomDTO> roomDTOList = new ArrayList<>();
+
         for (Room room : roomList) {
             RoomDTO roomDTO = roomMapper.roomEntityToDto(room);
             roomDTOList.add(roomDTO);

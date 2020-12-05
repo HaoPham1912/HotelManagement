@@ -1,11 +1,17 @@
 package com.h2.hotelmangement.entity;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "accounts")
+@DynamicInsert
+@DynamicUpdate
 public class Account extends BaseEntity {
 
     @Id
@@ -13,13 +19,13 @@ public class Account extends BaseEntity {
     @Column(name = "accountid")
     private Long accountId;
 
-    @Column(name = "username", length = 50, nullable = false)
+    @Column(name = "username", length = 50, nullable = false, unique = true)
     private String username;
 
     @Column(name = "password", length = 50, nullable = false)
     private String password;
 
-    @Column(name = "status")
+    @Column(name = "status", columnDefinition = "boolean default true", nullable = false)
     private boolean status;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

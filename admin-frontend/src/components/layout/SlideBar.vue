@@ -10,7 +10,7 @@
           :action="true"
           :class="activeItem === 1 && 'active'"
         >
-          <mdb-icon icon="user" class="mr-3" />Manage
+          <mdb-icon icon="table" class="mr-3" />Manage
           Account</mdb-list-group-item
         >
       </router-link>
@@ -19,7 +19,7 @@
           :action="true"
           :class="activeItem === 2 && 'active'"
         >
-          <mdb-icon icon="user" class="mr-3" />
+          <mdb-icon icon="table" class="mr-3" />
           Manage Customer</mdb-list-group-item
         >
       </router-link>
@@ -39,36 +39,52 @@
           Booking</mdb-list-group-item
         >
       </router-link>
-      <router-link to="/revenue" @click.native="activeItem = 5">
+
+      <router-link to="/branch" @click.native="activeItem = 5">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 5 && 'active'"
           ><mdb-icon icon="table" class="mr-3" />Manage
-          Revenue</mdb-list-group-item
+          Branch</mdb-list-group-item
         >
       </router-link>
-      <router-link to="/branch" @click.native="activeItem = 6">
+      <router-link to="/room" @click.native="activeItem = 6">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 6 && 'active'"
           ><mdb-icon icon="table" class="mr-3" />Manage
-          Branch</mdb-list-group-item
+          Room</mdb-list-group-item
         >
       </router-link>
-      <router-link to="/room" @click.native="activeItem = 7">
+      <router-link to="/policy" @click.native="activeItem = 7">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 7 && 'active'"
           ><mdb-icon icon="table" class="mr-3" />Manage
-          Room</mdb-list-group-item
+          Policy</mdb-list-group-item
         >
       </router-link>
-      <router-link to="/promo" @click.native="activeItem = 8">
+      <router-link to="/bed" @click.native="activeItem = 8">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 8 && 'active'"
+          ><mdb-icon icon="table" class="mr-3" />Manage Bed</mdb-list-group-item
+        >
+      </router-link>
+      <router-link to="/service" @click.native="activeItem = 9">
+        <mdb-list-group-item
+          :action="true"
+          :class="activeItem === 9 && 'active'"
           ><mdb-icon icon="table" class="mr-3" />Manage
-          Promotion</mdb-list-group-item
+          Service</mdb-list-group-item
+        >
+      </router-link>
+      <router-link to="/revenue" @click.native="activeItem = 10">
+        <mdb-list-group-item
+          :action="true"
+          :class="activeItem === 10 && 'active'"
+          ><mdb-icon icon="table" class="mr-3" />Manage
+          Revenue</mdb-list-group-item
         >
       </router-link>
     </mdb-list-group>

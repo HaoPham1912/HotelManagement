@@ -30,7 +30,7 @@ public class Room {
     @Type(type = "text")
     private String description;
 
-    @Column(name = "status",  columnDefinition = "boolean default true")
+        @Column(name = "status",  columnDefinition = "boolean default true")
     private boolean status;
 
     @ManyToOne(fetch = FetchType.LAZY)
