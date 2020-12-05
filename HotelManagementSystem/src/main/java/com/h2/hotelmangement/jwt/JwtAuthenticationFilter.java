@@ -29,7 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final String INVALID_JWT = "INVALID_JWT";
 
-    private static final List<String> unauthorizedURL = new ArrayList<>(Arrays.asList("/login", "/admin/login"));
+    private static final List<String> unauthorizedURL = new ArrayList<>(Arrays.asList("/login", "/admin/login","/api"));
 
     @Autowired
     JwtTokenProvider jwtTokenProvider;
@@ -39,10 +39,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String getJWTViaRequest(HttpServletRequest requets) {
         String bearerToken = requets.getHeader(AUTHORIZATION);
-        if (StringUtils.isEmpty(bearerToken) || bearerToken.startsWith(BEARER)) {
+        if (StringUtils.isEmpty(bearerToken) || !bearerToken.startsWith(BEARER)) {
             return INVALID_JWT;
         }
-        return bearerToken.substring(0, 7);
+        return bearerToken.substring(7);
     }
 
     @Override
@@ -80,6 +80,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private boolean checkAuthorizedURL(String url) {
-        return Objects.isNull(unauthorizedURL.stream().filter(url::startsWith).findFirst().orElseThrow(null));
+        return Objects.isNull(unauthorizedURL.stream().filter(url::startsWith).findFirst().orElse(null));
     }
 }

@@ -80,7 +80,7 @@ export default new Router({
         },
         {
           path: '/branch',
-          name: 'Chart',
+          name: 'Branch',
           component: BranchTable,
           props: { page: 10 },
         },
