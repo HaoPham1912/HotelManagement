@@ -4,6 +4,10 @@ import com.h2.hotelmangement.entity.Account;
 import com.h2.hotelmangement.entity.Role;
 import com.h2.hotelmangement.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,6 +15,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -37,6 +43,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     AccountService accountService;
 
+
+
     private String getJWTViaRequest(HttpServletRequest requets) {
         String bearerToken = requets.getHeader(AUTHORIZATION);
         if (StringUtils.isEmpty(bearerToken) || !bearerToken.startsWith(BEARER)) {
@@ -50,29 +58,30 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         String currentUrl = request.getRequestURI();
-        if (checkAuthorizedURL(currentUrl)) {
-            String jwt = getJWTViaRequest(request);
-            if (jwtTokenProvider.validateToken(jwt)) {
-                Long accountId = jwtTokenProvider.getUserIdFromJWT(jwt);
-                Optional<Account> account = accountService.getAccountByAccountId(accountId);
-                if (account.isPresent()) {
-                    ArrayList<GrantedAuthority> grantedAuthorities = (ArrayList<GrantedAuthority>) account.get().getRoles().stream()
-                            .map(JwtAuthenticationFilter::getRole)
-                            .collect(Collectors.toList());
-                    UserDetails userDetails = new User(account.get().getUsername(),
-                            account.get().getPassword(),
-                            grantedAuthorities);
-                    UsernamePasswordAuthenticationToken authenticationToken =
-                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                    filterChain.doFilter(request,response);
-                } else {
-                    response.sendError(403);
-                }
-            }
-        } else {
-            filterChain.doFilter(request,response);
-        }
+        filterChain.doFilter(request,response);
+//        if (checkAuthorizedURL(currentUrl)) {
+//            String jwt = getJWTViaRequest(request);
+//            if (jwtTokenProvider.validateToken(jwt)) {
+//                Long accountId = jwtTokenProvider.getUserIdFromJWT(jwt);
+//                Optional<Account> account = accountService.getAccountByAccountId(accountId);
+//                if (account.isPresent()) {
+//                    ArrayList<GrantedAuthority> grantedAuthorities = (ArrayList<GrantedAuthority>) account.get().getRoles().stream()
+//                            .map(JwtAuthenticationFilter::getRole)
+//                            .collect(Collectors.toList());
+//                    UserDetails userDetails = new User(account.get().getUsername(),
+//                            account.get().getPassword(),
+//                            grantedAuthorities);
+//                    UsernamePasswordAuthenticationToken authenticationToken =
+//                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+//                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+//                    filterChain.doFilter(request,response);
+//                } else {
+//                    response.sendError(403);
+//                }
+//            }
+//        } else {
+//            filterChain.doFilter(request,response);
+//        }
     }
 
     private static GrantedAuthority getRole(Role role) {
