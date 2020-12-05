@@ -56,7 +56,7 @@ public class WebSecurityConfiguration  extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/login","/customerUnauthenticated/**").permitAll() // Cho phép tất cả mọi người truy cập vào 2 địa chỉ này
+                .antMatchers("/login","/login/sid","/customerUnauthenticated/**").permitAll() // Cho phép tất cả mọi người truy cập vào 2 địa chỉ này
                 .anyRequest().authenticated(); // Tất cả các request khác đều cần phải xác thực mới được truy cập
 
 //        http.logout().logoutUrl("/customerUnauthenticated/logout")
