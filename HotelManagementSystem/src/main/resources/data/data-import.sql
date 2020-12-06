@@ -73,3 +73,8 @@ INSERT INTO `bookinghotel`.`bed_room` (`bed_id`, `room_id`) VALUES ('2', '2');
 INSERT INTO `bookinghotel`.`bed_room` (`bed_id`, `room_id`) VALUES ('3', '3');
 INSERT INTO `bookinghotel`.`bed_room` (`bed_id`, `room_id`) VALUES ('4', '4');
 INSERT INTO `bookinghotel`.`bed_room` (`bed_id`, `room_id`) VALUES ('5', '1');
+
+UPDATE `bookinghotel`.`rooms` SET `amountpeople` = '3' WHERE (`roomid` = '1');
+UPDATE `bookinghotel`.`rooms` SET `amountpeople` = '1' WHERE (`roomid` = '2');
+UPDATE `bookinghotel`.`rooms` SET `amountpeople` = '2' WHERE (`roomid` = '3');
+UPDATE `bookinghotel`.`rooms` SET `amountpeople` = '2' WHERE (`roomid` = '4');

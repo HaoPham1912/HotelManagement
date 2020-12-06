@@ -33,6 +33,9 @@ public class Room {
     @Column(name = "status",  columnDefinition = "boolean default true")
     private Boolean status;
 
+    @Column(name = "amountpeople", nullable = false)
+    private int amountPeople;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branchid")
     private Branch roomBranch;
@@ -150,6 +153,14 @@ public class Room {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public int getAmountPeople() {
+        return amountPeople;
+    }
+
+    public void setAmountPeople(int amountPeople) {
+        this.amountPeople = amountPeople;
     }
 
     @Override
