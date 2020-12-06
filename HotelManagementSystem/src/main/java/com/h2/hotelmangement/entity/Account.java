@@ -25,7 +25,7 @@ public class Account extends BaseEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "status", columnDefinition = "boolean default true", nullable = false)
+    @Column(name = "status", nullable = false)
     private boolean status;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

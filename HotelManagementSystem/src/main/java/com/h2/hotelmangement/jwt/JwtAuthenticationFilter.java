@@ -60,30 +60,30 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         String currentUrl = request.getRequestURI();
-        filterChain.doFilter(request,response);
-//        if (checkAuthorizedURL(currentUrl)) {
-//            String jwt = getJWTViaRequest(request);
-//            if (jwtTokenProvider.validateToken(jwt)) {
-//                Long accountId = jwtTokenProvider.getUserIdFromJWT(jwt);
-//                Optional<Account> account = accountService.getAccountByAccountId(accountId);
-//                if (account.isPresent()) {
-//                    ArrayList<GrantedAuthority> grantedAuthorities = (ArrayList<GrantedAuthority>) account.get().getRoles().stream()
-//                            .map(JwtAuthenticationFilter::getRole)
-//                            .collect(Collectors.toList());
-//                    UserDetails userDetails = new User(account.get().getUsername(),
-//                            account.get().getPassword(),
-//                            grantedAuthorities);
-//                    UsernamePasswordAuthenticationToken authenticationToken =
-//                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-//                    filterChain.doFilter(request,response);
-//                } else {
-//                    response.sendError(403);
-//                }
-//            }
-//        } else {
-//            filterChain.doFilter(request,response);
-//        }
+       // filterChain.doFilter(request,response);
+        if (checkAuthorizedURL(currentUrl)) {
+            String jwt = getJWTViaRequest(request);
+            if (jwtTokenProvider.validateToken(jwt)) {
+                Long accountId = jwtTokenProvider.getUserIdFromJWT(jwt);
+                Optional<Account> account = accountService.getAccountByAccountId(accountId);
+                if (account.isPresent()) {
+                    ArrayList<GrantedAuthority> grantedAuthorities = (ArrayList<GrantedAuthority>) account.get().getRoles().stream()
+                            .map(JwtAuthenticationFilter::getRole)
+                            .collect(Collectors.toList());
+                    UserDetails userDetails = new User(account.get().getUsername(),
+                            account.get().getPassword(),
+                            grantedAuthorities);
+                    UsernamePasswordAuthenticationToken authenticationToken =
+                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    filterChain.doFilter(request,response);
+                } else {
+                    response.sendError(403);
+                }
+            }
+        } else {
+            filterChain.doFilter(request,response);
+        }
     }
 
     private static GrantedAuthority getRole(Role role) {
