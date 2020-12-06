@@ -11,6 +11,15 @@ public class RoomDTO {
     private String roomCode;
     private Long branchId;
     private Set<String> thumbnailList;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Long getRoomId() {
         return roomId;

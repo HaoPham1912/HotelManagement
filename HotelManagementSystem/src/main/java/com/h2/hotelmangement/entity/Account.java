@@ -25,8 +25,8 @@ public class Account extends BaseEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "status", nullable = false)
-    private boolean status;
+    @Column(name = "status", columnDefinition = "boolean default true")
+    private Boolean status;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "account_role",
@@ -58,11 +58,11 @@ public class Account extends BaseEntity {
         this.password = password;
     }
 
-    public boolean isStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

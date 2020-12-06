@@ -30,8 +30,8 @@ public class Branch {
     @Column(name = "rating", columnDefinition = "float default 0")
     private float rating;
 
-    @Column(name = "status", nullable = false)
-    private boolean status;
+    @Column(name = "status", nullable = false, columnDefinition = "boolean default true")
+    private Boolean status;
 
     @Column(name = "description")
     @Type(type = "text")
@@ -80,14 +80,13 @@ public class Branch {
         this.rating = rating;
     }
 
-    public boolean isStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
-
 
     public Set<Employee> getEmployeeSet() {
         return employeeSet;

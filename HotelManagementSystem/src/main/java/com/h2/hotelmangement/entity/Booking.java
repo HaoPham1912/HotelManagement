@@ -25,8 +25,8 @@ public class Booking {
     @Column(name = "paidprice", nullable = false)
     private double paidPrice;
 
-    @Column(name = "status")
-    private boolean status;
+    @Column(name = "status", columnDefinition = "boolean default true")
+    private Boolean status;
 
     public BookingKey getBookingKey() {
         return bookingKey;
@@ -68,11 +68,11 @@ public class Booking {
         this.paidPrice = paidPrice;
     }
 
-    public boolean isStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

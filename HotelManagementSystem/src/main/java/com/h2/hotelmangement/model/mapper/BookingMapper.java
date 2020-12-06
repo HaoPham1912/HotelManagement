@@ -17,7 +17,7 @@ public class BookingMapper {
         bookingDTO.setCheckinDate(booking.getBookingKey().getCheckinDate());
         bookingDTO.setCheckoutDate(booking.getCheckoutDate());
         bookingDTO.setPaidPrice(booking.getPaidPrice());
-        bookingDTO.setStatus(booking.isStatus());
+        bookingDTO.setStatus(booking.getStatus());
 
         return bookingDTO;
     }

@@ -24,6 +24,9 @@ public class Bill {
     @Column(name = "totalprice", nullable = false)
     private double totalprice;
 
+    @Column(name = "status", columnDefinition = "boolean default true")
+    private Boolean status;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bills")
     private Set<Booking> billBookingSet;
 
@@ -88,6 +91,14 @@ public class Bill {
 
     public void setBookingList(List<Booking> bookingList) {
         this.bookingList = bookingList;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     @Override

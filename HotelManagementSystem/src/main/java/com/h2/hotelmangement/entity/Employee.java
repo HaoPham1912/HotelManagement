@@ -37,6 +37,8 @@ public class Employee {
     @JoinColumn(name = "branchid")
     private Branch empBranch;
 
+    @Column(name = "status", columnDefinition = "boolean default true")
+    private Boolean status;
 
     public String getName() {
         return name;
@@ -100,5 +102,13 @@ public class Employee {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

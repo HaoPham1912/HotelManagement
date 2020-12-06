@@ -8,9 +8,9 @@ INSERT INTO `bookinghotel`.`roles` (`roleid`, `rolename`) VALUES ('2', 'ADMIN');
 INSERT INTO `bookinghotel`.`roles` (`roleid`, `rolename`) VALUES ('3', 'EMPLOYEE');
 
 
-INSERT INTO `bookinghotel`.`accounts` (`password`, `status`, `username`) VALUES ('admin', b'1', 'admin');
-INSERT INTO `bookinghotel`.`accounts` (`password`, `status`, `username`) VALUES ('customer', b'1', 'customer');
-INSERT INTO `bookinghotel`.`accounts` (`password`, `status`, `username`) VALUES ('employee', b'1', 'employee');
+INSERT INTO `bookinghotel`.`accounts` (`password`, `status`, `username`) VALUES ('$2a$10$od0SURdtxoXztnc93Ybo/uKg/.rljLd48P4zqLVuINQC95dx5Xv0W', b'1', 'admin');
+INSERT INTO `bookinghotel`.`accounts` (`password`, `status`, `username`) VALUES ('$2a$10$od0SURdtxoXztnc93Ybo/uKg/.rljLd48P4zqLVuINQC95dx5Xv0W', b'1', 'customer');
+INSERT INTO `bookinghotel`.`accounts` (`password`, `status`, `username`) VALUES ('$2a$10$od0SURdtxoXztnc93Ybo/uKg/.rljLd48P4zqLVuINQC95dx5Xv0W', b'1', 'employee');
 
 INSERT INTO `bookinghotel`.`account_role` (`account_id`, `role_id`) VALUES ('1', '2');
 INSERT INTO `bookinghotel`.`account_role` (`account_id`, `role_id`) VALUES ('2', '1');
@@ -25,8 +25,8 @@ INSERT INTO `bookinghotel`.`branchs` (`address`, `branchcode`,`location`, `name`
 
 INSERT INTO `bookinghotel`.`employees` (`empcode`, `idcard`, `name`, `email` , `phone`, `accountid`, `branchid`) VALUES ('EMP1', '456456897', 'Nguyen Thi Nhan Vien','emp@gmail.com', '0223321456', '3', '2');
 
-INSERT INTO `bookinghotel`.`cancelpolicy` (`code`, `title`, `detail`) VALUES ('PL1', 'Cancellation should be made at least 07 days prior to arrival date','Cancellation should be made at least 07 days prior to arrival date to avoid the penalty charge. No-show or late cancellation, the hotel reserves the right to charge full nights of the booking.');
-INSERT INTO `bookinghotel`.`cancelpolicy` (`code`, `title`) VALUES ('PL2', 'Non-refundable');
+INSERT INTO `bookinghotel`.`cancelpolicy` (`code`, `title`, `detail`,`daylong`) VALUES ('PL1', 'Cancellation should be made at least 07 days prior to arrival date','Cancellation should be made at least 07 days prior to arrival date to avoid the penalty charge. No-show or late cancellation, the hotel reserves the right to charge full nights of the booking.','7');
+INSERT INTO `bookinghotel`.`cancelpolicy` (`code`, `title`,`daylong`) VALUES ('PL2', 'Non-refundable','0');
 
 INSERT INTO `bookinghotel`.`rooms` (`name`, `price`, `roomcode`,`policyid`, `branchid`) VALUES ('Peace1', '1000000', 'RHCM1', '1', '2');
 INSERT INTO `bookinghotel`.`rooms` (`name`, `price`, `roomcode`,`policyid`, `branchid`) VALUES ('Peace2', '500000', 'RHCM2','2', '2');

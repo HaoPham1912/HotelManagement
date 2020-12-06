@@ -30,8 +30,8 @@ public class Room {
     @Type(type = "text")
     private String description;
 
-        @Column(name = "status",  columnDefinition = "boolean default true")
-    private boolean status;
+    @Column(name = "status",  columnDefinition = "boolean default true")
+    private Boolean status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branchid")
@@ -144,11 +144,11 @@ public class Room {
         this.bookingList = bookingList;
     }
 
-    public boolean isStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
