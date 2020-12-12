@@ -28,10 +28,10 @@ INSERT INTO `bookinghotel`.`employees` (`empcode`, `idcard`, `name`, `email` , `
 INSERT INTO `bookinghotel`.`cancelpolicy` (`code`, `title`, `detail`,`daylong`) VALUES ('PL1', 'Cancellation should be made at least 07 days prior to arrival date','Cancellation should be made at least 07 days prior to arrival date to avoid the penalty charge. No-show or late cancellation, the hotel reserves the right to charge full nights of the booking.','7');
 INSERT INTO `bookinghotel`.`cancelpolicy` (`code`, `title`,`daylong`) VALUES ('PL2', 'Non-refundable','0');
 
-INSERT INTO `bookinghotel`.`rooms` (`name`, `price`, `roomcode`,`policyid`, `branchid`) VALUES ('Peace1', '1000000', 'RHCM1', '1', '2');
-INSERT INTO `bookinghotel`.`rooms` (`name`, `price`, `roomcode`,`policyid`, `branchid`) VALUES ('Peace2', '500000', 'RHCM2','2', '2');
-INSERT INTO `bookinghotel`.`rooms` (`name`, `price`, `roomcode`,`policyid`, `branchid`) VALUES ('Peach3', '500000', 'RHN1','1', '3');
-INSERT INTO `bookinghotel`.`rooms` (`name`, `price`, `roomcode`,`policyid`, `branchid`) VALUES ('Peach4', '800000', 'RDN1','2', '1');
+INSERT INTO `bookinghotel`.`rooms` (`name`, `amountpeople`, `price`, `roomcode`,`policyid`, `branchid`) VALUES ('Peace1', '3','1000000', 'RHCM1', '1', '2');
+INSERT INTO `bookinghotel`.`rooms` (`name`, `amountpeople`,`price`, `roomcode`,`policyid`, `branchid`) VALUES ('Peace2', '1','500000', 'RHCM2','2', '2');
+INSERT INTO `bookinghotel`.`rooms` (`name`, `amountpeople`,`price`, `roomcode`,`policyid`, `branchid`) VALUES ('Peach3', '2','500000', 'RHN1','1', '3');
+INSERT INTO `bookinghotel`.`rooms` (`name`, `amountpeople`,`price`, `roomcode`,`policyid`, `branchid`) VALUES ('Peach4', '4','800000', 'RDN1','2', '1');
 
 INSERT INTO `bookinghotel`.`beds` (`ammountpeople`, `name`, `price`) VALUES ('2', 'Couple', '200000');
 INSERT INTO `bookinghotel`.`beds` (`ammountpeople`, `name`, `price`) VALUES ('1', 'Single', '150000');

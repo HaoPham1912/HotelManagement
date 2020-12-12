@@ -3,6 +3,11 @@
     <mdb-row>
       <mdb-col md="12">
         <mdb-card cascade narrow class="mt-5">
+          <div class="link-add">
+            <a href="/customer/add" type="button" class="btn btn-success">
+              Add new Customer
+            </a>
+          </div>
           <mdb-card-body>
             <mdb-tbl>
               <thead class="blue-grey lighten-4">

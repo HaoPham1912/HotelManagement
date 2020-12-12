@@ -87,6 +87,14 @@
           Revenue</mdb-list-group-item
         >
       </router-link>
+      <router-link to="/promotion" @click.native="activeItem = 11">
+        <mdb-list-group-item
+          :action="true"
+          :class="activeItem === 11 && 'active'"
+          ><mdb-icon icon="table" class="mr-3" />Manage
+          Promotion</mdb-list-group-item
+        >
+      </router-link>
     </mdb-list-group>
   </div>
   <!-- /Sidebar -->

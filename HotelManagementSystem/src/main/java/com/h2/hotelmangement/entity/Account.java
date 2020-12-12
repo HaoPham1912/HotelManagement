@@ -28,6 +28,14 @@ public class Account extends BaseEntity {
     @Column(name = "status", columnDefinition = "boolean default true")
     private Boolean status;
 
+    @OneToOne(mappedBy = "accountEmp",fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Employee employee;
+
+    @OneToOne(mappedBy = "accountCus",fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Customer customer;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "account_role",
             joinColumns = { @JoinColumn(name = "account_id")},
@@ -72,6 +80,35 @@ public class Account extends BaseEntity {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountId=" + accountId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", status=" + status +
+                ", employee=" + employee +
+                ", customer=" + customer +
+                ", roles=" + roles +
+                '}';
     }
 }
 

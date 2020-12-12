@@ -6,15 +6,25 @@ import CustomerTable from '../components/table/CustomerTable.vue';
 import AccountTable from '../components/table/AccountTable.vue';
 import EmployeeTable from '../components/table/EmployeeTable.vue';
 import BookingTable from '../components/table/BookingTable.vue'
-import Chart from '../components/views/Chart.vue';
-import Login from '../components/form/Login.vue';
-import Register from '../components/form/Register.vue';
-import AddNewEmployee from '../components/form/Add.vue';
 import BranchTable from '../components/table/BranchTable.vue';
 import RoomTable from '../components/table/RoomTable.vue'
 import PolicyTable from '../components/table/PolicyTable.vue'
 import BedTable from '../components/table/BedTable.vue';
 import ServicesTable from '../components/table/ServicesTable.vue';
+import PromotionTable from '../components/table/PromotionTable.vue';
+
+
+import Chart from '../components/views/Chart.vue';
+import Login from '../components/form/Login.vue';
+import Register from '../components/form/Register.vue';
+import AddNewEmployee from '../components/form/AddEmployee.vue';
+import AddCustomer from '../components/form/AddCustomer.vue';
+import AddPolicy from '../components/form/AddPolicy.vue';
+import AddRoom from '../components/form/AddRoom.vue';
+import AddBed from '../components/form/AddBed.vue';
+import AddService from '../components/form/AddService.vue';
+import AddPromo from '../components/form/AddPromo.vue';
+import AddBranch from '../components/form/AddBranch.vue';
 
 Vue.use(Router);
 
@@ -85,9 +95,50 @@ export default new Router({
           props: { page: 10 },
         },
         {
+          path: '/promotion',
+          name: 'Promotion',
+          component: PromotionTable,
+          props: { page: 11 },
+        },
+        {
           path: '/employee/add',
           name: 'Add New Emp',
           component: AddNewEmployee,
+        },
+        {
+          path: '/customer/add',
+          name: 'Add New Customer',
+          component: AddCustomer,
+        },
+        {
+          path: '/policy/add',
+          name: 'Add New Policy',
+          component: AddPolicy,
+        },
+        {
+          path: '/room/add',
+          name: 'Add New Room',
+          component: AddRoom,
+        },
+        {
+          path: '/bed/add',
+          name: 'Add New Bed',
+          component: AddBed,
+        },
+        {
+          path: '/service/add',
+          name: 'Add New Service',
+          component: AddService,
+        },
+        {
+          path: '/promo/add',
+          name: 'Add New Promotion',
+          component: AddPromo,
+        },
+        {
+          path: '/branch/add',
+          name: 'Add New Branch',
+          component: AddBranch,
         },
       ]
       },

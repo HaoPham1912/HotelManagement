@@ -92,4 +92,9 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.action {
+  display: flex;
+  justify-content: space-evenly;
+}
+</style>

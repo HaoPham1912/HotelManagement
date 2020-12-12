@@ -4,6 +4,11 @@
       <mdb-col md="12">
         <mdb-card cascade narrow class="mt-5">
           <mdb-card-body>
+            <div class="link-add">
+              <a href="/room/add" type="button" class="btn btn-success">
+                Add new Room
+              </a>
+            </div>
             <mdb-tbl>
               <thead class="blue-grey lighten-4">
                 <tr>

@@ -2,6 +2,7 @@ package com.h2.hotelmangement.api;
 
 import com.h2.hotelmangement.entity.Account;
 import com.h2.hotelmangement.jwt.JwtTokenProvider;
+import com.h2.hotelmangement.model.dto.AccountDTO;
 import com.h2.hotelmangement.payload.LoginResponse;
 import com.h2.hotelmangement.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,12 +56,11 @@ public class AuthorizationAPI {
     }
 
     @PostMapping("")
-    public LoginResponse login(@RequestParam(required = true) String userName,
-                               @RequestParam(required = true) String password) {
+    public LoginResponse login(@RequestBody AccountDTO accountDTO) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        userName,
-                        password
+                        accountDTO.getUsername(),
+                        accountDTO.getPassword()
                 )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -1,7 +1,7 @@
 <template>
   <form class="form-add">
     <!-- 2 column grid layout with text inputs for the first and last names -->
-    <h3>Add New Employee</h3>
+    <h3>Add New Customer</h3>
     <br />
     <div class="row mb-4">
       <div class="col">
@@ -13,7 +13,7 @@
             v-model="employee.employeeCode"
             required
           />
-          <label class="form-label" for="employeeCode">Employee Code</label>
+          <label class="form-label" for="employeeCode">Customer Code</label>
         </div>
       </div>
       <div class="col">
@@ -96,29 +96,25 @@
 
     <!-- Message input -->
     <div class="form-outline mb-4">
-      <select
-        name="branchCode"
-        class="browser-default custom-select"
-        v-model="employee.branchCode"
-      >
-        <option value="CN1">CN1</option>
-        <option value="CN2">CN2</option>
-        <option value="CN3">CN3</option>
-        <option value="CN4">CN4</option>
+      <select class="browser-default custom-select">
+        <option selected value="NORMAL">NORMAL</option>
+        <option value="GOLD">GOLD</option>
+        <option value="DIAMOND">DIAMOND</option>
       </select>
-      <label class="form-label" for="branchCode">Branch Code</label>
+      <label class="form-label" for="branchCode">Select Customer Type</label>
     </div>
     <button
       type="submit"
       class="btn btn-primary btn-block mb-4"
       @click="saveEmployee"
     >
-      Add New Employee
+      Add New Cutomer
     </button>
   </form>
 </template>
 <script>
 import EmployeeService from '../../services/EmployeeService';
+import BranchService from '../../services/BranchService';
 export default {
   methods: {
     saveEmployee() {
@@ -147,6 +143,16 @@ export default {
       this.submitted = false;
       this.employee = {};
     },
+    retrieveBranchCode() {
+      BranchService.getAll()
+        .then((response) => {
+          this.branchs = response.data;
+          console.log(this.branchs);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
   },
   name: 'add-employee',
   data() {
@@ -163,7 +169,11 @@ export default {
         branchCode: '',
       },
       submitted: false,
+      branchs: [],
     };
+  },
+  mounted() {
+    this.retrieveBranchCode();
   },
 };
 </script>

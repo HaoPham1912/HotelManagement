@@ -4,44 +4,42 @@
       <mdb-col md="12">
         <mdb-card cascade narrow class="mt-5">
           <div class="link-add">
-            <a href="/policy/add" type="button" class="btn btn-success">
-              Add new Policy
+            <a href="/promo/add" type="button" class="btn btn-success">
+              Add new Promotion
             </a>
           </div>
           <mdb-card-body>
             <mdb-tbl>
               <thead class="blue-grey lighten-4">
                 <tr>
-                  <th>Policy ID</th>
-                  <th>Policy Code</th>
-                  <th>Title</th>
-                  <th>Detail</th>
+                  <th>PromotionId</th>
+                  <th>Promotion Code</th>
+                  <th>Percent Discount</th>
+                  <th>Customer Type</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(data, index) in policies" :key="index">
-                  <td>{{ data.policyId }}</td>
-                  <td>{{ data.policyCode }}</td>
-                  <td>{{ data.title }}</td>
-                  <td>{{ data.detail }}</td>
+                <tr v-for="(data, index) in promos" :key="index">
+                  <td>{{ data.promoId }}</td>
+                  <td>{{ data.promotionCode }}</td>
+                  <td>{{ data.percent }}</td>
+                  <td>{{ data.cusType }}</td>
+                  <td>{{ data.startDate }}</td>
+                  <td>{{ data.endDate }}</td>
                   <td class="action">
                     <div>
                       <button class="btn-warning">
-                        <a
-                          class="btn-link-edit action-button"
-                          @click="edit(scope.row)"
-                        >
+                        <a class="btn-link-edit action-button">
                           <i class="fas fa-pencil-alt"></i> </a
                         >EDIT
                       </button>
                     </div>
                     <div>
                       <button class="btn-danger">
-                        <a
-                          class="btn-link-delete action-button"
-                          @click="remove(scope.row)"
-                        >
+                        <a class="btn-link-delete action-button">
                           <i class="fas fa-trash"></i>
                         </a>
                         DELETE
@@ -60,7 +58,7 @@
 <script>
 import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl } from 'mdbvue';
 
-import CancelPolicyService from '../../services/CancelPolicyService';
+import PromotionService from '../../services/PromotionService';
 export default {
   components: {
     mdbRow,
@@ -70,24 +68,24 @@ export default {
     mdbTbl,
   },
   methods: {
-    retrieveAll() {
-      CancelPolicyService.getAll()
+    retrievePromo() {
+      PromotionService.getAll()
         .then((response) => {
-          this.policies = response.data;
+          this.promos = response.data;
           console.log(response.data);
         })
         .catch((e) => {
-          console.log(e);
+          console.log('error' + e);
         });
     },
   },
   data() {
     return {
-      policies: [],
+      promos: [],
     };
   },
   mounted() {
-    this.retrieveAll();
+    this.retrievePromo();
   },
 };
 </script>
