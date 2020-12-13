@@ -1,6 +1,7 @@
 package com.h2.hotelmangement.Request;
 
 public class LoginRequest {
+
     private String userName;
     private String pass;
 

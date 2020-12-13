@@ -20,9 +20,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
+
 @CrossOrigin(origins = "http://localhost:3454")
 @RestController
-@RequestMapping("/api")
+@RequestMapping(PREFIX_API)
 public class EmployeeAPI {
 
     @Autowired

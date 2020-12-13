@@ -5,6 +5,8 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -48,12 +50,12 @@ public class ValidateTokenFilter extends OncePerRequestFilter {
             } catch (JwtException e) {
                 if(e.getCause() instanceof ExpiredJwtException) {
                     System.out.println("ExpiredJwtException Token has expired");
+                    ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("ExpiredJwtException Token has expired");
                 }else {
                     System.out.println("Unable to parse JWT Token");
+                    ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unable to parse JWT Token");
                 }
             }
-
-
         } else {
             logger.warn("JWT Token does not begin with Bearer String");
             chain.doFilter(request, response);

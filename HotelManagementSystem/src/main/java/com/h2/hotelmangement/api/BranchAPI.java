@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
+
 @CrossOrigin(origins = "http://localhost:3454")
 @RestController
-@RequestMapping("/api")
+@RequestMapping(PREFIX_API)
 public class BranchAPI {
 
     @Autowired

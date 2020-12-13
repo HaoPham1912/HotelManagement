@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
+
 @RestController
-@RequestMapping("/")
+@RequestMapping(PREFIX_API)
 public class RoleAPI {
 
     @Autowired
