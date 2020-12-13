@@ -33,7 +33,6 @@ public class UserDetailsServiceImpl {
             Set<String> roles = accountEntity.get().getRoles().stream().map(role -> role.getRoleName()).collect(Collectors.toSet());
             Set<SimpleGrantedAuthority> authorities = roles.stream().map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toSet());
-
             User userDetails = new User(accountEntity.get().getUsername(), "", authorities);
             userDetails.eraseCredentials();
             return userDetails;

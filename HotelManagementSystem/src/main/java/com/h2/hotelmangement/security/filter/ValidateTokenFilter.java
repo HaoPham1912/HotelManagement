@@ -1,6 +1,6 @@
 package com.h2.hotelmangement.security.filter;
 
-import com.h2.hotelmangement.util.TokenParser;
+import com.h2.hotelmangement.common.util.TokenParser;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 

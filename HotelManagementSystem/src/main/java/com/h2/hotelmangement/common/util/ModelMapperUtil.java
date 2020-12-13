@@ -1,4 +1,4 @@
-package com.h2.hotelmangement.util;
+package com.h2.hotelmangement.common.util;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

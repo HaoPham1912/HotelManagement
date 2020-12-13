@@ -1,6 +1,7 @@
-package com.h2.hotelmangement.util;
+package com.h2.hotelmangement.common.util;
 
 import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -21,6 +22,7 @@ public class TokenParser implements Serializable {
     public static final long JWT_TOKEN_VALIDITY = 5;
     public static final String AUTHORITIES_KEY = "AUTHORITIES_KEY";
 
+    @Value("${JWT_SECRET}")
     private String secret;
 
     public String getUsernameFromToken(String token) {

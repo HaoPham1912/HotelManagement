@@ -1,4 +1,4 @@
-package com.h2.hotelmangement.util;
+package com.h2.hotelmangement.common.util;
 
 import com.h2.hotelmangement.service.impl.UserDetailsImpl;
 import org.springframework.stereotype.Component;
@@ -24,21 +24,21 @@ public class JwUtils {
     @Value("${JWT_SECRET}")
     private String jwtSecret;
 
-    @Value("${JWT_EXPIRATION}")
-    private long jwtExpirationMs;
+//    @Value("${JWT_EXPIRATION}")
+    private final long JWT_EXPIRATION = 604800000L;
 
-    @Value("${JWT_REFRESH_SECRET}")
-    private String jwtRefreshSecret;
-
-    @Value("${JWT_REFRESH_EXPIRATION}")
-    private long jwtRefreshExpirationMs;
+//    @Value("${JWT_REFRESH_SECRET}")
+//    private String jwtRefreshSecret;
+//
+//    @Value("${JWT_REFRESH_EXPIRATION}")
+//    private long jwtRefreshExpirationMs;
 
     public String generateJwtToken(Authentication authentication) {
 
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
         return Jwts.builder().setSubject((userPrincipal.getUsername())).setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .setExpiration(new Date((new Date()).getTime() + JWT_EXPIRATION))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
     }
 

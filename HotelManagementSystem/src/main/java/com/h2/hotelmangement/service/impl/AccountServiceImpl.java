@@ -1,6 +1,8 @@
 package com.h2.hotelmangement.service.impl;
 
+import com.h2.hotelmangement.common.util.ModelMapperUtil;
 import com.h2.hotelmangement.entity.Account;
+import com.h2.hotelmangement.model.dto.AccountDTO;
 import com.h2.hotelmangement.repository.AccountRepository;
 import com.h2.hotelmangement.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,12 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepository;
 
     @Override
-    public Account getAccountByUsername(String username) {
-        return accountRepository.findAccountByUsername(username);
+    public Optional<AccountDTO> getAccountByUsername(String username) {
+        Optional<Account> account = accountRepository.findAccountByUsername(username);
+        if (account.isPresent()) {
+            return Optional.ofNullable(ModelMapperUtil.map(account, new AccountDTO()));
+        }
+        return Optional.empty();
     }
 
     @Override

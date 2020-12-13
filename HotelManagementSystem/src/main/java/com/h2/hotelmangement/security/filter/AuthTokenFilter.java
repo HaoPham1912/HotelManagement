@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.h2.hotelmangement.service.impl.UserDetailsServiceImpl;
-import com.h2.hotelmangement.util.JwUtils;
+import com.h2.hotelmangement.common.util.JwUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
