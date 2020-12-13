@@ -96,16 +96,11 @@
 
     <!-- Message input -->
     <div class="form-outline mb-4">
-      <select
+      <b-form-select
         v-model="employee.branchCode"
-        class="browser-default custom-select"
-      >
-        <option selected>Select Branch Code</option>
-        <option value="HCM1">HCM1</option>
-        <option value="NT1">NT1</option>
-        <option value="DN1">DN1</option>
-      </select>
-      <label class="form-label" for="branchCode">Branch Code</label>
+        :options="branchCodes"
+      ></b-form-select>
+      <label class="form-label" for="branchCode">Choose Branch Code</label>
     </div>
     <button
       type="submit"
@@ -147,11 +142,24 @@ export default {
       this.submitted = false;
       this.employee = {};
     },
-    retrieveBranchCode() {
+    setBracnhCodes() {
       BranchService.getAll()
         .then((response) => {
           this.branchs = response.data;
+
           console.log(this.branchs);
+
+          for (var i = 0; i < this.branchs.length; i++) {
+            var options = [];
+            for (var key in this.branchs[i]) {
+              if (key == 'branchCode') {
+                options['value'] = this.branchs[i][key];
+                options['text'] = this.branchs[i][key];
+              }
+            }
+            this.branchCodes.push(Object.assign({}, options));
+          }
+          console.log(this.branchCodes);
         })
         .catch((e) => {
           console.log(e);
@@ -173,10 +181,11 @@ export default {
       },
       submitted: false,
       branchs: [],
+      branchCodes: [],
     };
   },
   mounted() {
-    this.retrieveBranchCode();
+    this.setBracnhCodes();
   },
 };
 </script>

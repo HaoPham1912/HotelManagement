@@ -8,7 +8,7 @@ public class AccountDTO {
     private Long accountId;
     private String username;
     private String password;
-    private boolean status;
+    private String status;
     private Set<Role> roleSet;
     private Set<String> roleName;
 
@@ -36,11 +36,11 @@ public class AccountDTO {
         this.password = password;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

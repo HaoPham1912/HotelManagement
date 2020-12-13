@@ -25,7 +25,9 @@
                 <tr v-for="(data, index) in branchs" :key="index">
                   <td>{{ data.branchId }}</td>
                   <td>
-                    <a href="">{{ data.branchCode }}</a>
+                    <a :href="'branch/' + data.branchCode">{{
+                      data.branchCode
+                    }}</a>
                   </td>
                   <td>{{ data.address }}</td>
                   <td class="description">{{ data.description }}</td>

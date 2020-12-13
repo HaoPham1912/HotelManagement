@@ -42,8 +42,6 @@ public class AuthorizationAPI {
             produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<InputStreamResource> getImage(@RequestParam(required = true) String imgId, HttpSession session) throws IOException {
 
-
-
         ServletContext context = session.getServletContext();
         String path = context.getRealPath("images");
 

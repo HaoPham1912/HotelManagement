@@ -104,4 +104,11 @@ export default {
   display: flex;
   justify-content: space-evenly;
 }
+a {
+  right: 0;
+  width: 200px;
+}
+.link-add {
+  margin-right: auto;
+}
 </style>

@@ -77,7 +77,7 @@ public class EmployeeAPI {
         account.setUsername(employeeDTO.getUsername());
         account.setPassword(employeeDTO.getPassword());
         account.setRoles(roleSet);
-        accountService.save(account);
+
         //accountService.save(account);
         Employee employee = new Employee();
         employee.setEmpCode(employeeDTO.getEmployeeCode());
@@ -86,12 +86,15 @@ public class EmployeeAPI {
         employee.setName(employeeDTO.getEmpName());
         employee.setEmail(employeeDTO.getEmail());
 
+
         Branch branch = branchService.getBranchByBranchCode(employeeDTO.getBranchCode());
 
         employee.setEmpBranch(branch);
+
         employee.setAccountEmp(account);
 
-        employeeService.save(employee);
+         accountService.save(account);
+         employeeService.save(employee);
 
         System.out.println(employeeDTO.toString());
 

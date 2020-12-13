@@ -13,7 +13,6 @@ import BedTable from '../components/table/BedTable.vue';
 import ServicesTable from '../components/table/ServicesTable.vue';
 import PromotionTable from '../components/table/PromotionTable.vue';
 
-
 import Chart from '../components/views/Chart.vue';
 import Login from '../components/form/Login.vue';
 import Register from '../components/form/Register.vue';
@@ -25,6 +24,8 @@ import AddBed from '../components/form/AddBed.vue';
 import AddService from '../components/form/AddService.vue';
 import AddPromo from '../components/form/AddPromo.vue';
 import AddBranch from '../components/form/AddBranch.vue';
+
+import DetailBranch from '../components/page/DetailBranch.vue';
 
 Vue.use(Router);
 
@@ -139,6 +140,11 @@ export default new Router({
           path: '/branch/add',
           name: 'Add New Branch',
           component: AddBranch,
+        },
+        {
+          path: '/branch/:branchCode',
+          name: 'Branch Detail',
+          component: DetailBranch,
         },
       ]
       },

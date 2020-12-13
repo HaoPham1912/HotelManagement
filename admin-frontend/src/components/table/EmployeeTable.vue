@@ -36,23 +36,17 @@
                     <td>{{ data.branchCode }}</td>
                     <td class="action">
                       <div>
-                        <button class="btn-warning">
-                          <a
-                            class="btn-link-edit action-button"
-                            @click="edit(scope.row)"
-                          >
-                            <i class="fas fa-pencil-alt"></i> </a
-                          >EDIT
+                        <button
+                          class="btn-warning"
+                          @click="getIdEmp(data.employeeId)"
+                        >
+                          <i class="fas fa-pencil-alt"></i>
+                          EDIT
                         </button>
                       </div>
                       <div>
-                        <button class="btn-danger">
-                          <a
-                            class="btn-link-delete action-button"
-                            @click="remove(scope.row)"
-                          >
-                            <i class="fas fa-trash"></i>
-                          </a>
+                        <button class="btn-danger" @click="remove(scope.row)">
+                          <i class="fas fa-trash"></i>
                           DELETE
                         </button>
                       </div>
@@ -90,6 +84,9 @@ export default {
           console.log(e);
         });
     },
+    getIdEmp(id) {
+      console.log(`id is ${id}`);
+    },
   },
   data() {
     return {
@@ -101,7 +98,7 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style>
 a {
   right: 0;
   width: 200px;

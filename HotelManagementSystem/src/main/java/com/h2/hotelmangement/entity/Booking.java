@@ -1,9 +1,14 @@
 package com.h2.hotelmangement.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "bookings")
+@DynamicInsert
+@DynamicUpdate
 public class Booking {
 
     @EmbeddedId
