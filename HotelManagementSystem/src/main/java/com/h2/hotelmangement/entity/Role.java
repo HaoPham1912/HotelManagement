@@ -34,7 +34,6 @@ public class Role {
         this.roleName = roleName;
     }
 
-
     public Set<Account> getAccounts() {
         return accounts;
     }

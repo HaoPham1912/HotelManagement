@@ -22,7 +22,7 @@ public class BranchMapper {
         branchDTO.setDescription(branch.getDescription());
         branchDTO.setBranchName(branch.getName());
         branchDTO.setRating(String.valueOf(branch.getRating()));
-        branchDTO.setStatus(String.valueOf(branch.isStatus()));
+        branchDTO.setStatus(String.valueOf(branch.getStatus()));
         for ( Employee employee: branch.getEmployeeSet()) {
             empCodes.add(employee.getEmpCode());
         }

@@ -24,7 +24,7 @@ public class Customer {
     @Column(name = "email", length =100, nullable = false, unique = true)
     private String email;
 
-    @Column(name = "idcard", length = 12, nullable = false)
+    @Column(name = "idcard", length = 12)
     private String idCard;
 
     @OneToOne

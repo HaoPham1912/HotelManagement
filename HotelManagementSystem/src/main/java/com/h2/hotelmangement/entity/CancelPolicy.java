@@ -24,6 +24,9 @@ public class CancelPolicy {
     @Type(type = "text")
     private String detail;
 
+    @Column(name = "daylong", nullable = false)
+    private int dayLong;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cancelPolicy")
     private Set<Room> roomSet;
 
@@ -65,5 +68,13 @@ public class CancelPolicy {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getDayLong() {
+        return dayLong;
+    }
+
+    public void setDayLong(int dayLong) {
+        this.dayLong = dayLong;
     }
 }

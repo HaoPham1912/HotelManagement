@@ -17,7 +17,7 @@ public class AccountMapper {
         accountDTO.setAccountId(account.getAccountId());
         accountDTO.setUsername(account.getUsername());
         accountDTO.setPassword(account.getPassword());
-        accountDTO.setStatus(account.isStatus());
+        accountDTO.setStatus(String.valueOf(account.getStatus()));
         for (Role role: account.getRoles()) {
             roleName.add(role.getRoleName());
         }

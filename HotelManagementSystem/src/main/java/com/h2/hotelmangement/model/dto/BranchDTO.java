@@ -13,6 +13,7 @@ public class BranchDTO {
     private String status;
     private String location;
     private Set<String> empCodeSet = new HashSet<>();
+    private Set<String> thumbnailsBranchSet = new HashSet<>();
 
     public String getLocation() {
         return location;
@@ -84,5 +85,29 @@ public class BranchDTO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Set<String> getThumbnailsBranchSet() {
+        return thumbnailsBranchSet;
+    }
+
+    public void setThumbnailsBranchSet(Set<String> thumbnailsBranchSet) {
+        this.thumbnailsBranchSet = thumbnailsBranchSet;
+    }
+
+    @Override
+    public String toString() {
+        return "BranchDTO{" +
+                "branchId='" + branchId + '\'' +
+                ", address='" + address + '\'' +
+                ", branchCode='" + branchCode + '\'' +
+                ", description='" + description + '\'' +
+                ", branchName='" + branchName + '\'' +
+                ", rating='" + rating + '\'' +
+                ", status='" + status + '\'' +
+                ", location='" + location + '\'' +
+                ", empCodeSet=" + empCodeSet +
+                ", thumbnailsBranchSet=" + thumbnailsBranchSet +
+                '}';
     }
 }

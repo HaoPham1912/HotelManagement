@@ -1,6 +1,11 @@
 package com.h2.hotelmangement.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +13,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "bills")
+@DynamicInsert
+@DynamicUpdate
 public class Bill {
 
     @Id
@@ -23,6 +30,11 @@ public class Bill {
 
     @Column(name = "totalprice", nullable = false)
     private double totalprice;
+
+    @Column(name = "status", columnDefinition = "int default 1")
+    @Min(1)
+    @Max(3)
+    private int status;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bills")
     private Set<Booking> billBookingSet;
@@ -88,6 +100,14 @@ public class Bill {
 
     public void setBookingList(List<Booking> bookingList) {
         this.bookingList = bookingList;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Override

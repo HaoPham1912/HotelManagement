@@ -34,14 +34,11 @@
                       </button>
                     </div>
                     <div>
-                      <button class="btn-danger">
-                        <a
-                          class="btn-link-delete action-button"
-                          @click="remove(scope.row)"
-                        >
+                      <button class="btn-danger" @click="disableAccount">
+                        <a class="btn-link-delete action-button">
                           <i class="fas fa-trash"></i>
                         </a>
-                        DELETE
+                        {{ data.status ? 'DISABLE' : 'ENABLE' }}
                       </button>
                     </div>
                   </td>
@@ -75,6 +72,15 @@ export default {
         })
         .catch((e) => {
           console.log('error' + e);
+        });
+    },
+    disableAccount() {
+      AccountService.disableAccount(this.accounts.accountId, this.accounts)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
         });
     },
   },

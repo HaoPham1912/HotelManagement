@@ -1,28 +1,36 @@
 <template>
   <!-- Default form login -->
   <div class="login-form">
-    <form class="text-center border border-light p-5" action="#!">
+    <form
+      class="text-center border border-light p-5"
+      @submit.prevent="handleLogin"
+    >
       <p class="h4 mb-4">Sign in</p>
 
       <!-- Email -->
       <input
-        type="email"
-        id="defaultLoginFormEmail"
+        v-model="user.username"
+        v-validate="'required'"
+        type="text"
+        id="username"
+        name="username"
         class="form-control mb-4"
-        placeholder="E-mail"
+        placeholder="User Name"
       />
 
       <!-- Password -->
       <input
+        v-model="user.password"
+        v-validate="'required'"
         type="password"
-        id="defaultLoginFormPassword"
+        id="password"
+        name="password"
         class="form-control mb-4"
         placeholder="Password"
       />
-
-      <div class="d-flex justify-content-around">
+      <!-- <div class="d-flex justify-content-around">
         <div>
-          <!-- Remember me -->
+          Remember me
           <div class="custom-control custom-checkbox">
             <input
               type="checkbox"
@@ -35,18 +43,24 @@
           </div>
         </div>
         <div>
-          <!-- Forgot password -->
           <a href="">Forgot password?</a>
         </div>
-      </div>
+      </div> -->
 
       <!-- Sign in button -->
-      <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
+      <button
+        class="btn btn-info btn-block my-4"
+        type="submit"
+        :disabled="loading"
+      >
+        <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+        <span>Login</span>
+      </button>
 
       <!-- Register -->
       <p>
         Not a member?
-        <a href="">Register</a>
+        <a href="/register">Register</a>
       </p>
 
       <!-- Social login -->
@@ -68,6 +82,54 @@
   </div>
   <!-- Default form login -->
 </template>
+<script>
+import User from '../../model/user';
+export default {
+  name: 'Login',
+  data() {
+    return {
+      user: new User('', ''),
+      loading: false,
+      message: '',
+    };
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+  },
+  created() {
+    if (this.loggedIn) {
+      this.$router.push('/');
+    }
+  },
+  methods: {
+    handleLogin() {
+      this.loading = true;
+      this.$validation.validateAll().then((isValid) => {
+        if (!isValid) {
+          this.loading = false;
+          return;
+        }
+        if (this.user.username && this.user.password) {
+          this.$store.dispatch('login', this.user).then(
+            () => {
+              this.$router.push('/');
+            },
+            (error) => {
+              this.loading = false;
+              this.message =
+                (error.response && error.response.data) ||
+                error.message ||
+                error.toString();
+            }
+          );
+        }
+      });
+    },
+  },
+};
+</script>
 <style scoped>
 .login-form {
   margin: auto;

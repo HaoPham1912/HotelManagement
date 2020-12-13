@@ -1,5 +1,7 @@
 package com.h2.hotelmangement.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -10,6 +12,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "rooms")
+@DynamicInsert
+@DynamicUpdate
 public class Room {
 
     @Id
@@ -30,8 +34,11 @@ public class Room {
     @Type(type = "text")
     private String description;
 
-        @Column(name = "status",  columnDefinition = "boolean default true")
-    private boolean status;
+    @Column(name = "status",  columnDefinition = "boolean default true")
+    private Boolean status;
+
+    @Column(name = "amountpeople", nullable = false)
+    private int amountPeople;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branchid")
@@ -144,12 +151,20 @@ public class Room {
         this.bookingList = bookingList;
     }
 
-    public boolean isStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public int getAmountPeople() {
+        return amountPeople;
+    }
+
+    public void setAmountPeople(int amountPeople) {
+        this.amountPeople = amountPeople;
     }
 
     @Override

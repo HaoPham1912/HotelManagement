@@ -1,5 +1,7 @@
 package com.h2.hotelmangement.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -7,6 +9,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "branchs")
+@DynamicInsert
+@DynamicUpdate
 public class Branch {
 
     @Id
@@ -30,8 +34,8 @@ public class Branch {
     @Column(name = "rating", columnDefinition = "float default 0")
     private float rating;
 
-    @Column(name = "status", nullable = false)
-    private boolean status;
+    @Column(name = "status", nullable = false, columnDefinition = "boolean default true")
+    private Boolean status;
 
     @Column(name = "description")
     @Type(type = "text")
@@ -80,14 +84,13 @@ public class Branch {
         this.rating = rating;
     }
 
-    public boolean isStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
-
 
     public Set<Employee> getEmployeeSet() {
         return employeeSet;

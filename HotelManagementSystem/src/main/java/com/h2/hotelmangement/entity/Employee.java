@@ -1,10 +1,15 @@
 package com.h2.hotelmangement.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 
 
 @Entity
 @Table(name = "employees")
+@DynamicInsert
+@DynamicUpdate
 public class Employee {
 
     @Id
@@ -37,6 +42,8 @@ public class Employee {
     @JoinColumn(name = "branchid")
     private Branch empBranch;
 
+    @Column(name = "status", columnDefinition = "boolean default true")
+    private Boolean statusEmp;
 
     public String getName() {
         return name;
@@ -100,5 +107,13 @@ public class Employee {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Boolean getStatusEmp() {
+        return statusEmp;
+    }
+
+    public void setStatusEmp(Boolean statusEmp) {
+        this.statusEmp = statusEmp;
     }
 }

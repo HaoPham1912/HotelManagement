@@ -1,24 +1,37 @@
 <template>
-  <div class="flexible-content">
-    <!--Navbar-->
-    <Header />
-    <!--/.Navbar-->
-    <!-- Sidebar -->
-    <SlideBar />
-    <!-- /Sidebar -->
-    <Footer />
-  </div>
+  <b-container class="bv-example-row">
+    <b-row>
+      <b-col cols="6"><SlideBar /></b-col>
+      <b-col>
+        <Header />
+      </b-col>
+    </b-row>
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="content-main">
+      <b-row>
+        <b-col></b-col>
+      </b-row>
+    </div>
+    <div class="content-main">
+      <b-row>
+        <b-col> <Content /></b-col>
+      </b-row>
+    </div>
+  </b-container>
 </template>
 <script>
 import { waves } from 'mdbvue';
 import Header from '../../components/layout/Header';
 import SlideBar from '../../components/layout/SlideBar';
-import Footer from '../../components/layout/Footer';
+import Content from '../../components/layout/Content';
 export default {
   components: {
     Header,
     SlideBar,
-    Footer,
+    Content,
   },
   mixins: [waves],
 };
@@ -44,17 +57,4 @@ export default {
 }
 </style>
 
-<style scoped>
-.card.card-cascade .view.gradient-card-header {
-  padding: 1rem 1rem;
-  text-align: center;
-}
-.card.card-cascade h3,
-.card.card-cascade h4 {
-  margin-bottom: 0;
-}
-.flexible-content {
-  transition: padding-left 0.3s;
-  padding-left: 270px;
-}
-</style>
+<style scoped></style>
