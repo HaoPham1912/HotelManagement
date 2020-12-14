@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/api")
+import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
+
+@RequestMapping(PREFIX_API)
 @RestController
 public class BillAPI {
 

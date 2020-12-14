@@ -1,3 +1,4 @@
+/*
 package com.h2.hotelmangement.jwt;
 
 import com.h2.hotelmangement.entity.Account;
@@ -94,3 +95,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return Objects.isNull(unauthorizedURL.stream().filter(url::startsWith).findFirst().orElse(null));
     }
 }
+*/

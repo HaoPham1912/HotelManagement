@@ -1,36 +1,40 @@
 package com.h2.hotelmangement.api;
 
-import com.h2.hotelmangement.entity.Account;
+import com.h2.hotelmangement.Request.LoginRequest;
+import com.h2.hotelmangement.common.util.CommonConstants;
 import com.h2.hotelmangement.jwt.JwtTokenProvider;
 import com.h2.hotelmangement.model.dto.AccountDTO;
 import com.h2.hotelmangement.payload.LoginResponse;
 import com.h2.hotelmangement.service.AccountService;
+import com.h2.hotelmangement.service.impl.UserDetailsServiceImpl;
+import com.h2.hotelmangement.common.util.TokenParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import java.io.File;
+import javax.validation.Valid;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/login")
 public class AuthorizationAPI {
 
-    @Autowired
-    AuthenticationManager authenticationManager;
+//    @Autowired
+//    AuthenticationManager authenticationManager;
 
     @Autowired
     AccountService accountService;
@@ -38,9 +42,16 @@ public class AuthorizationAPI {
     @Autowired
     JwtTokenProvider jwtTokenProvider;
 
+    @Autowired
+    UserDetailsServiceImpl userDetailsServiceImpl;
+
+    @Autowired
+    TokenParser tokenParser;
+
     @RequestMapping(value = "/sid", method = RequestMethod.GET,
             produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<InputStreamResource> getImage(@RequestParam(required = true) String imgId, HttpSession session) throws IOException {
+
 
         ServletContext context = session.getServletContext();
         String path = context.getRealPath("images");
@@ -53,29 +64,48 @@ public class AuthorizationAPI {
                 .body(new InputStreamResource(imgFile));
     }
 
+    //    @PostMapping("")
+//    public LoginResponse login(@RequestParam(required = true) String userName,
+//                               @RequestParam(required = true) String password) {
+//        Authentication authentication = authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(
+//                        userName,
+//                        password
+//                )
+//        );
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        return handleLoginResponse(authentication);
+//    }
     @PostMapping("")
-    public LoginResponse login(@RequestBody AccountDTO accountDTO) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        accountDTO.getUsername(),
-                        accountDTO.getPassword()
-                )
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return handleLoginResponse(authentication);
+    public ResponseEntity<Object> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        UserDetails userDetails = userDetailsServiceImpl.loadUserDetails(loginRequest.getUserName(),
+                loginRequest.getPass());
+        if (null != userDetails) {
+            String token = tokenParser.generateToken(userDetails);
+            Map<String, String> items = new HashMap<>();
+            items.put("token", token);
+            items.put("type", CommonConstants.PREFIX_BEARER.trim());
+            return ResponseEntity.ok().body(items);
+        }
+        Map<String, Object> errors = new HashMap<>();
+        errors.put("status", Integer.valueOf(HttpStatus.BAD_REQUEST.value()));
+        errors.put("message", "Email or passsword is correct");
+        return ResponseEntity.badRequest().body(errors);
     }
 
     private LoginResponse handleLoginResponse(Authentication authentication) {
-        Account account = accountService.getAccountByUsername(authentication.getName());
-        String jwt = jwtTokenProvider.generateToken(account.getAccountId());
-        String refreshToken = jwtTokenProvider.generateRefreshToken(account.getAccountId());
         LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setAuthorities((Collection<GrantedAuthority>) authentication.getAuthorities());
-        loginResponse.setUserName(authentication.getName());
-        loginResponse.setAccessToken(jwt);
-        loginResponse.setRefreshToken(refreshToken);
-        loginResponse.setId(account.getAccountId());
-        loginResponse.setSocialAccount(false);
+        Optional<AccountDTO> account = accountService.getAccountByUsername(authentication.getName());
+        if(account.isPresent()){
+            String jwt = jwtTokenProvider.generateToken(account.get().getAccountId());
+            String refreshToken = jwtTokenProvider.generateRefreshToken(account.get().getAccountId());
+            loginResponse.setAuthorities((Collection<GrantedAuthority>) authentication.getAuthorities());
+            loginResponse.setUserName(authentication.getName());
+            loginResponse.setAccessToken(jwt);
+            loginResponse.setRefreshToken(refreshToken);
+            loginResponse.setId(account.get().getAccountId());
+            loginResponse.setSocialAccount(false);
+        }
 
         return loginResponse;
     }
