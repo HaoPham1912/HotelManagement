@@ -2,10 +2,13 @@ package com.h2.hotelmangement.api;
 
 import com.h2.hotelmangement.Request.LoginRequest;
 import com.h2.hotelmangement.common.util.CommonConstants;
+import com.h2.hotelmangement.entity.Account;
+import com.h2.hotelmangement.entity.Role;
 import com.h2.hotelmangement.jwt.JwtTokenProvider;
 import com.h2.hotelmangement.model.dto.AccountDTO;
 import com.h2.hotelmangement.payload.LoginResponse;
 import com.h2.hotelmangement.service.AccountService;
+import com.h2.hotelmangement.service.RoleService;
 import com.h2.hotelmangement.service.impl.UserDetailsServiceImpl;
 import com.h2.hotelmangement.common.util.TokenParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +27,11 @@ import javax.validation.Valid;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/login")
+@CrossOrigin(origins = "http://localhost:3454")
 public class AuthorizationAPI {
 
 //    @Autowired
@@ -38,6 +39,9 @@ public class AuthorizationAPI {
 
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    RoleService roleService;
 
     @Autowired
     JwtTokenProvider jwtTokenProvider;
@@ -78,8 +82,11 @@ public class AuthorizationAPI {
 //    }
     @PostMapping("")
     public ResponseEntity<Object> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+
         UserDetails userDetails = userDetailsServiceImpl.loadUserDetails(loginRequest.getUserName(),
                 loginRequest.getPass());
+        System.out.println("User detail "+ userDetails.getUsername());
+
         if (null != userDetails) {
             String token = tokenParser.generateToken(userDetails);
             Map<String, String> items = new HashMap<>();
@@ -108,5 +115,19 @@ public class AuthorizationAPI {
         }
 
         return loginResponse;
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<HttpStatus> register(@RequestBody LoginRequest loginRequest){
+        Account account = new Account();
+        account.setUsername(loginRequest.getUserName());
+        account.setPassword(loginRequest.getPass());
+        Role role = roleService.findByRoleName("ADMIN");
+        Set<Role> roleSet = new HashSet<>();
+        roleSet.add(role);
+        account.setRoles(roleSet);
+        accountService.save(account);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

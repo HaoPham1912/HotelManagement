@@ -20,7 +20,7 @@ import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
 
 @RestController
 @RequestMapping(PREFIX_API)
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = {"http://localhost:3454"})
 public class BookingAPI {
 
     private BookingMapper bookingMapper = new BookingMapper();

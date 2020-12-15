@@ -31,6 +31,9 @@ public class ValidateTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         final String requestTokenHeader = request.getHeader("Authorization");
+
+        System.out.println("TOlennnn "+ requestTokenHeader);
+
         UserDetails userDetails = null;
 
         // JWT Token is in the form "Bearer token". Remove Bearer word and get only the Token

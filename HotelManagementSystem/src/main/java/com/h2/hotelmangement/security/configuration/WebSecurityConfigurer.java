@@ -25,16 +25,14 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter  {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-
-        httpSecurity
-                // don't need CSRF for api
-                .csrf().disable()
+        // don't need CSRF for api
+        httpSecurity.cors().and().csrf().disable()
                 // handle unauthorized
                 .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint).and()
                 // make sure we use stateless session, session won't be used to  store user's state.
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 // all other requests need to be authenticated
-                .authorizeRequests().antMatchers("/login","/login/sid","/customerUnauthenticated/**").permitAll()
+                .authorizeRequests().antMatchers("/login","/login/register","/customerUnauthenticated/**").permitAll()
                                     .anyRequest().authenticated();
 
 

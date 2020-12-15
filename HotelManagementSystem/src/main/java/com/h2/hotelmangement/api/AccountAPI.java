@@ -62,6 +62,7 @@ public class AccountAPI {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //only for testing
     @PutMapping("/account/{id}")
     public ResponseEntity<HttpStatus> updateStatusAccount(@PathVariable("id") String id) {
         System.out.println("dsasdasdasd");
