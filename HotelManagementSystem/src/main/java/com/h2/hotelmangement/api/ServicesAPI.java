@@ -14,9 +14,9 @@ import java.util.List;
 
 import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
 
+@CrossOrigin(origins = "http://localhost:3454")
 @RestController
 @RequestMapping(PREFIX_API)
-@CrossOrigin(origins = "http://localhost:3454")
 public class ServicesAPI {
 
     private ServiceMapper serviceMapper = new ServiceMapper();
