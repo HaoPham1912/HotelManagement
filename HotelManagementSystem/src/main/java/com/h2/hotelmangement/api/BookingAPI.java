@@ -37,4 +37,5 @@ public class BookingAPI {
         List<BookingDTO> bookingDTOList = bookingMapper.convertBookingListEntityToDto(bookingList);
         return new ResponseEntity<>(bookingDTOList, HttpStatus.OK);
     }
+
 }

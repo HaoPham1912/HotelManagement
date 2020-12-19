@@ -5,8 +5,11 @@ import com.h2.hotelmangement.repository.BranchRepository;
 import com.h2.hotelmangement.service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.thymeleaf.util.ObjectUtils;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -38,5 +41,15 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public Branch getBranchByBranchCode(String branchCode) {
         return branchRepository.findBranchByBranchCode(branchCode);
+    }
+
+    @Override
+    public Optional<Set<String>> getListLocation() {
+        Set<String> listLocation = new HashSet<>();
+        List<Branch> listBranch = getAllBranch();
+        if(!CollectionUtils.isEmpty(listBranch)){
+            listLocation = listBranch.stream().map(branch -> branch.getLocation()).collect(Collectors.toSet());
+        }
+        return Optional.ofNullable(listLocation);
     }
 }

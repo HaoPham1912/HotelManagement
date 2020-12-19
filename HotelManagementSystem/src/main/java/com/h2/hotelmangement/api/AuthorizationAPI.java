@@ -4,7 +4,6 @@ import com.h2.hotelmangement.Request.LoginRequest;
 import com.h2.hotelmangement.common.util.CommonConstants;
 import com.h2.hotelmangement.entity.Account;
 import com.h2.hotelmangement.entity.Role;
-import com.h2.hotelmangement.jwt.JwtTokenProvider;
 import com.h2.hotelmangement.model.dto.AccountDTO;
 import com.h2.hotelmangement.payload.LoginResponse;
 import com.h2.hotelmangement.service.AccountService;
@@ -43,8 +42,8 @@ public class AuthorizationAPI {
     @Autowired
     RoleService roleService;
 
-    @Autowired
-    JwtTokenProvider jwtTokenProvider;
+//    @Autowired
+//    JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     UserDetailsServiceImpl userDetailsServiceImpl;
@@ -104,12 +103,12 @@ public class AuthorizationAPI {
         LoginResponse loginResponse = new LoginResponse();
         Optional<AccountDTO> account = accountService.getAccountByUsername(authentication.getName());
         if(account.isPresent()){
-            String jwt = jwtTokenProvider.generateToken(account.get().getAccountId());
-            String refreshToken = jwtTokenProvider.generateRefreshToken(account.get().getAccountId());
+//            String jwt = tokenParser.generateToken(account.get().getAccountId());
+//            String refreshToken = tokenParser.generateRefreshToken(account.get().getAccountId());
             loginResponse.setAuthorities((Collection<GrantedAuthority>) authentication.getAuthorities());
             loginResponse.setUserName(authentication.getName());
-            loginResponse.setAccessToken(jwt);
-            loginResponse.setRefreshToken(refreshToken);
+//            loginResponse.setAccessToken(jwt);
+//            loginResponse.setRefreshToken(refreshToken);
             loginResponse.setId(account.get().getAccountId());
             loginResponse.setSocialAccount(false);
         }
