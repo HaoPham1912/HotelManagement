@@ -8,4 +8,5 @@ public interface CustomerTypeService {
 
     List<CustomerType> findAllCustomerType();
 
+    CustomerType findCustomerTypeByName(String typeName);
 }

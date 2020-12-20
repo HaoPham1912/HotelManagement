@@ -7,9 +7,10 @@ public class ServicesDTO extends BaseDTO{
     private Long serviceId;
     private String serviceCode;
     private String name;
-    private double price;
+    private String price;
     private String description;
     private Set<Long> roomIdSet = new HashSet<>();
+    private Boolean status;
 
     public Long getServiceId() {
         return serviceId;
@@ -35,16 +36,16 @@ public class ServicesDTO extends BaseDTO{
         this.name = name;
     }
 
-    public double getPrice() {
+    public String getDescription() {
+        return description;
+    }
+
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public void setDescription(String description) {
@@ -57,5 +58,25 @@ public class ServicesDTO extends BaseDTO{
 
     public void setRoomIdSet(Set<Long> roomIdSet) {
         this.roomIdSet = roomIdSet;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "ServicesDTO{" +
+                "serviceId=" + serviceId +
+                ", serviceCode='" + serviceCode + '\'' +
+                ", name='" + name + '\'' +
+                ", price='" + price + '\'' +
+                ", description='" + description + '\'' +
+                ", roomIdSet=" + roomIdSet +
+                '}';
     }
 }

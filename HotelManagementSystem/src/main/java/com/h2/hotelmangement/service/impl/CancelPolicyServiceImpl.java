@@ -18,4 +18,9 @@ public class CancelPolicyServiceImpl implements CancelPolicyService {
     public List<CancelPolicy> findAll() {
         return cancelPolicyRepository.findAll();
     }
+
+    @Override
+    public CancelPolicy save(CancelPolicy cancelPolicy) {
+        return cancelPolicyRepository.save(cancelPolicy);
+    }
 }

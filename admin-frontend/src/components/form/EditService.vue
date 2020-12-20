@@ -1,6 +1,6 @@
 <template>
-  <form class="form-add" v-on:submit.prevent="saveService">
-    <h3>Add New Service</h3>
+  <form class="form-add" v-on:submit.prevent="updateService">
+    <h3>Update Service</h3>
     <div class="form-outline mb-4">
       <label for="serviceCode">Service Code</label>
       <input
@@ -9,6 +9,7 @@
         class="form-control"
         v-model="services.serviceCode"
         required
+        :disabled="true"
       />
     </div>
     <div class="form-outline mb-4">
@@ -45,52 +46,70 @@
     <button
       type="submit"
       class="btn btn-primary btn-block mb-4"
-      @submit="saveService"
+      @submit="updateService"
     >
-      Add New Service
+      Update Service
     </button>
   </form>
 </template>
 
 <script>
 import ServicesService from '../../services/ServicesService';
+import commonConstant from '../../utils/commonConstant';
 export default {
   name: 'add-services',
   data() {
     return {
       services: {
+        serviceId: '',
         serviceCode: '',
         name: '',
         price: '',
         description: '',
       },
       submitted: false,
+      code: this.$route.params.code,
     };
   },
 
   methods: {
-    saveService() {
+    getServiceCode() {
+      console.log(this.code);
+    },
+    getServiceByServiceCode(code) {
+      ServicesService.get(code).then((response) => {
+        this.services.serviceId = response.data.serviceId;
+        this.services.serviceCode = response.data.serviceCode;
+        this.services.name = response.data.name;
+        this.services.price = response.data.price;
+        this.services.description = response.data.description;
+        console.log(this.services);
+      });
+    },
+
+    updateService() {
       var data = {
+        serviceId: this.services.serviceId,
         serviceCode: this.services.serviceCode,
         name: this.services.name,
         price: this.services.price,
         description: this.services.description,
       };
-
       ServicesService.create(data)
         .then((response) => {
           console.log(response.data);
-          this.submitted = true;
+          alert(commonConstant.MessageConstant.UPDATE_SUCCESS_MSG);
           this.$router.push('/reloadService');
         })
         .catch((e) => {
           console.log(e);
+          alert('Update failed');
         });
     },
-    newServices() {
-      this.submitted = false;
-      this.services = {};
-    },
+  },
+  mounted() {
+    this.getServiceCode();
+    this.getServiceByServiceCode(this.code);
   },
 };
 </script>

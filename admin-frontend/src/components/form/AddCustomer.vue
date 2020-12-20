@@ -95,12 +95,12 @@
     </div>
 
     <!-- Message input -->
+    <!-- Message input -->
     <div class="form-outline mb-4">
-      <select class="browser-default custom-select">
-        <option selected value="NORMAL">NORMAL</option>
-        <option value="GOLD">GOLD</option>
-        <option value="DIAMOND">DIAMOND</option>
-      </select>
+      <b-form-select
+        v-model="employee.branchCode"
+        :options="branchCodes"
+      ></b-form-select>
       <label class="form-label" for="branchCode">Select Customer Type</label>
     </div>
     <button

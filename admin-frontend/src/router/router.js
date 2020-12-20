@@ -25,6 +25,8 @@ import AddService from '../components/form/AddService.vue';
 import AddPromo from '../components/form/AddPromo.vue';
 import AddBranch from '../components/form/AddBranch.vue';
 
+import EditService from '../components/form/EditService.vue';
+
 import DetailBranch from '../components/page/DetailBranch.vue';
 
 Vue.use(Router);
@@ -84,7 +86,7 @@ export default new Router({
           props: { page: 8 },
         },
         {
-          path: '/service',
+          path: '/services',
           name: 'Services',
           component: ServicesTable,
           props: { page: 9 },
@@ -146,6 +148,14 @@ export default new Router({
           name: 'Branch Detail',
           component: DetailBranch,
         },
+        {
+          path: '/services/:code',
+          name: 'Update Service',
+          component: EditService,
+          props: true,
+        },
+        { path: '/reloadService', redirect: '/services' },
+        { path: '/reloadPolicy', redirect: '/policy' }
       ]
       },
         {

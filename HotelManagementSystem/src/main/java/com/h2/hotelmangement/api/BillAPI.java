@@ -13,6 +13,7 @@ import java.util.List;
 
 import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(PREFIX_API)
 @RestController
 public class BillAPI {

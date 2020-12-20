@@ -40,6 +40,9 @@ public class Room {
     @Column(name = "amountpeople", nullable = false)
     private int amountPeople;
 
+    @Column(name = "mainimage")
+    private String mainImage;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branchid")
     private Branch roomBranch;
@@ -165,6 +168,14 @@ public class Room {
 
     public void setAmountPeople(int amountPeople) {
         this.amountPeople = amountPeople;
+    }
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
     }
 
     @Override

@@ -1,6 +1,6 @@
 <template>
   <!-- Sidebar -->
-  <div class="sidebar-fixed position-fixed">
+  <div class="sidebar-fixed position-fixed col-4">
     <a class="logo-wrapper"
       ><img alt="" class="img-fluid" src="../../assets/h2logo.png"
     /></a>
@@ -71,7 +71,7 @@
           ><mdb-icon icon="table" class="mr-3" />Manage Bed</mdb-list-group-item
         >
       </router-link>
-      <router-link to="/service" @click.native="activeItem = 9">
+      <router-link to="/services" @click.native="activeItem = 9">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 9 && 'active'"
@@ -79,20 +79,20 @@
           Service</mdb-list-group-item
         >
       </router-link>
-      <router-link to="/revenue" @click.native="activeItem = 10">
+      <router-link to="/promotion" @click.native="activeItem = 10">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 10 && 'active'"
           ><mdb-icon icon="table" class="mr-3" />Manage
-          Revenue</mdb-list-group-item
+          Promotion</mdb-list-group-item
         >
       </router-link>
-      <router-link to="/promotion" @click.native="activeItem = 11">
+      <router-link to="/revenue" @click.native="activeItem = 11">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 11 && 'active'"
           ><mdb-icon icon="table" class="mr-3" />Manage
-          Promotion</mdb-list-group-item
+          Revenue</mdb-list-group-item
         >
       </router-link>
     </mdb-list-group>

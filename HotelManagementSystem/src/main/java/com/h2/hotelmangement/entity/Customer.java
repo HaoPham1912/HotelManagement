@@ -27,6 +27,10 @@ public class Customer {
     @Column(name = "idcard", length = 12)
     private String idCard;
 
+
+    @Column(name = "status",  columnDefinition = "boolean default true")
+    private Boolean status;
+
     @OneToOne
     @JoinColumn(name = "accountid")
     private Account accountCus;
@@ -109,5 +113,13 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

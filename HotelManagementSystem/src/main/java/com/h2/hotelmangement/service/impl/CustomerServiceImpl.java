@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -17,6 +18,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> findAllCustomer() {
         return customerRepository.findAll();
+    }
+
+    @Override
+    public List<Customer> getCusByCusType(String customerType) {
+        return customerRepository.findByCustomerType_TypeName(customerType);
     }
 
     @Override
