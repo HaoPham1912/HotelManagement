@@ -1,12 +1,27 @@
 package com.h2.hotelmangement.model.mapper;
 
+import com.h2.hotelmangement.entity.Account;
 import com.h2.hotelmangement.entity.Customer;
+import com.h2.hotelmangement.entity.CustomerType;
+import com.h2.hotelmangement.entity.Role;
 import com.h2.hotelmangement.model.dto.CustomerDTO;
+import com.h2.hotelmangement.service.CustomerTypeService;
+import com.h2.hotelmangement.service.RoleService;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.management.relation.RoleStatus;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CustomerMapper {
+
+    @Autowired
+    CustomerTypeService customerTypeService;
+
+    @Autowired
+    RoleService roleService;
 
     public CustomerDTO customerEntityToDto(Customer customer){
         CustomerDTO customerDTO = new CustomerDTO();
@@ -30,5 +45,31 @@ public class CustomerMapper {
             customerDTOList.add(customerDTO);
         }
         return customerDTOList;
+    }
+
+    public Customer convertCusDtoToEntity(CustomerDTO customerDTO){
+        Customer customer = new Customer();
+        Account account = new Account();
+        Role role = roleService.findByRoleName("CUSTOMER");
+
+        CustomerType customerType = customerTypeService.findCustomerTypeByName(customerDTO.getCustomerType());
+        customer.setCustomerId(Long.parseLong(customerDTO.getCustomerId()));
+        customer.setCusCode(customerDTO.getCustomerCode());
+        customer.setIdCard(customerDTO.getIdCard());
+        customer.setName(customerDTO.getName());
+        customer.setPhone(customerDTO.getPhone());
+        customer.setEmail(customerDTO.getEmail());
+
+        customer.setCustomerType(customerType);
+
+        account.setUsername(customerDTO.getUserName());
+        account.setPassword(customerDTO.getPassWord());
+        Set<Role> roleSet = new HashSet<>();
+        roleSet.add(role);
+        account.setRoles(roleSet);
+
+        customer.setAccountCus(account);
+
+        return customer;
     }
 }

@@ -1,5 +1,7 @@
 package com.h2.hotelmangement.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -8,6 +10,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "services")
+@DynamicInsert
+@DynamicUpdate
 public class Services extends BaseEntity {
 
     @Id
@@ -27,6 +31,9 @@ public class Services extends BaseEntity {
     @Column(name = "description")
     @Type(type = "text")
     private String description;
+
+    @Column(name = "status",  columnDefinition = "boolean default true")
+    private Boolean status;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "service_room",
@@ -80,6 +87,14 @@ public class Services extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     @Override

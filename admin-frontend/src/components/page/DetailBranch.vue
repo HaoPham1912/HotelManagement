@@ -1,7 +1,32 @@
 <template>
   <div>
+    <h3>Employee Of Branch</h3>
     <b-table bordered hover :items="items" :fields="fields"></b-table>
-    <img src="http://localhost:9090/login/sid/?imgId=a(1)" alt="" />
+    <h3>Image Of Branch</h3>
+    <div class="img-branch">
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/h2hotel-7b674.appspot.com/o/image-branch%2Fhinhtest.jpg?alt=media&token=ab04cbf5-315f-4aad-94b0-f5ee9e76bd28"
+        alt=""
+      />
+    </div>
+    <div class="img-branch">
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/h2hotel-7b674.appspot.com/o/image-branch%2Fhinhtest.jpg?alt=media&token=ab04cbf5-315f-4aad-94b0-f5ee9e76bd28"
+        alt=""
+      />
+    </div>
+    <div class="img-branch">
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/h2hotel-7b674.appspot.com/o/image-branch%2Fhinhtest.jpg?alt=media&token=ab04cbf5-315f-4aad-94b0-f5ee9e76bd28"
+        alt=""
+      />
+    </div>
+    <div class="img-branch">
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/h2hotel-7b674.appspot.com/o/image-branch%2Fhinhtest.jpg?alt=media&token=ab04cbf5-315f-4aad-94b0-f5ee9e76bd28"
+        alt=""
+      />
+    </div>
   </div>
 </template>
 
@@ -14,31 +39,54 @@ export default {
       branchCode: '',
       fields: [
         {
-          key: 'last_name',
+          key: 'employeeCode',
+          label: 'Employee Code',
           sortable: true,
         },
         {
-          key: 'first_name',
+          key: 'empIdCard',
+          label: 'Id Card',
           sortable: false,
         },
         {
-          key: 'age',
-          label: 'Person age',
+          key: 'empName',
+          label: 'Employee Name',
           sortable: true,
           // Variant applies to the whole column, including the header and footer
-          variant: 'danger',
+          // /variant: 'danger',
+        },
+        {
+          key: 'empPhone',
+          label: 'Employee Phone',
+          sortable: false,
+          // Variant applies to the whole column, including the header and footer
+          // /variant: 'danger',
+        },
+        {
+          key: 'email',
+          label: 'Employee Email',
+          sortable: false,
+          // Variant applies to the whole column, including the header and footer
+          // /variant: 'danger',
         },
       ],
       items: [
         {
           isActive: false,
-          age: 40,
-          first_name: 'Dickerson',
-          last_name: 'Macdonald',
+          employeeCode: 'EMP1',
+          empIdCard: '123123123',
+          empName: 'Macdonald',
+          empPhone: '090909090909',
+          email: 'emp1@gmail.com',
         },
-        { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-        { isActive: false, age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-        { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' },
+        {
+          isActive: false,
+          employeeCode: 'EMP2',
+          empIdCard: '213123123',
+          empName: 'AScdonald2',
+          empPhone: '1231231231',
+          email: 'emp2@gmail.com',
+        },
       ],
     };
   },
@@ -53,3 +101,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+img {
+  width: 300px;
+  height: 150px;
+}
+
+.img-branch {
+  margin: 10px;
+}
+</style>

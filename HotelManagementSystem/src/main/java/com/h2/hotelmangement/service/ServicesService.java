@@ -10,5 +10,7 @@ public interface ServicesService {
 
     void save(Services services);
 
-    void deleteService(Long id);
+    void deleteService(Long id) throws Exception;
+
+    Services findServiceByCode(String serviceCode);
 }

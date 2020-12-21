@@ -14,7 +14,7 @@ import java.util.List;
 
 import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
 
-@CrossOrigin(origins = "http://localhost:3454")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(PREFIX_API)
 public class ServicesAPI {
@@ -32,9 +32,32 @@ public class ServicesAPI {
         return new ResponseEntity<>(servicesDTOList, HttpStatus.OK);
     }
 
-    @PostMapping("services")
-    public Long addNewServices(@RequestBody Services services){
+    @PostMapping("/services")
+    public Long addNewServices(@RequestBody ServicesDTO servicesDTO){
+
+        Services services = serviceMapper.convertServiceDTOtoEntity(servicesDTO);
+
+        System.out.println(services.toString());
         servicesService.save(services);
+
         return services.getServicesId();
+    }
+
+    @GetMapping("/services/{code}")
+    public ResponseEntity<ServicesDTO> getServicesByCode(@PathVariable("code") String serviceCode){
+        Services services = servicesService.findServiceByCode(serviceCode);
+        ServicesDTO servicesDTO = serviceMapper.serviceEntityToDTO(services);
+        return new ResponseEntity<>(servicesDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/services/{id}")
+    public ResponseEntity<HttpStatus> deleteService(@PathVariable("id") String id){
+        Long serviceId = Long.valueOf(id);
+        try {
+            servicesService.deleteService(serviceId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

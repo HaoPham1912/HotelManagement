@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface CancelPolicyService {
     List<CancelPolicy> findAll();
+
+    CancelPolicy save(CancelPolicy cancelPolicy);
+
 }

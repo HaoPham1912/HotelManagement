@@ -26,6 +26,9 @@ public class Bed {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "status",  columnDefinition = "boolean default true")
+    private Boolean status;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "bed_room",
             joinColumns = { @JoinColumn(name = "bed_id")},
@@ -80,5 +83,13 @@ public class Bed {
 
     public void setRooms(Set<Room> rooms) {
         this.rooms = rooms;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

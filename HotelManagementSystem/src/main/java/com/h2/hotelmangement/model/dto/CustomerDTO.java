@@ -9,6 +9,15 @@ public class CustomerDTO {
     private String phone;
     private String customerType;
     private String userName;
+    private String passWord;
+
+    public String getPassWord() {
+        return passWord;
+    }
+
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
+    }
 
     public String getCustomerId() {
         return customerId;
@@ -72,5 +81,20 @@ public class CustomerDTO {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomerDTO{" +
+                "customerId='" + customerId + '\'' +
+                ", customerCode='" + customerCode + '\'' +
+                ", email='" + email + '\'' +
+                ", idCard='" + idCard + '\'' +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", customerType='" + customerType + '\'' +
+                ", userName='" + userName + '\'' +
+                ", passWord='" + passWord + '\'' +
+                '}';
     }
 }

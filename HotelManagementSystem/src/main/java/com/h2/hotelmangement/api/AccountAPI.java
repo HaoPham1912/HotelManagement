@@ -23,7 +23,7 @@ import java.util.Set;
 
 import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
 
-@CrossOrigin(origins = "http://localhost:3454")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(PREFIX_API)
 public class AccountAPI {

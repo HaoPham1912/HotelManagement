@@ -81,4 +81,16 @@ public class Promotion {
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
+
+    @Override
+    public String toString() {
+        return "Promotion{" +
+                "promoId=" + promoId +
+                ", promotionCode='" + promotionCode + '\'' +
+                ", percent=" + percent +
+                ", cusType='" + cusType + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                '}';
+    }
 }

@@ -7,10 +7,7 @@ import com.h2.hotelmangement.service.CancelPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,7 +15,7 @@ import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
 
 @RestController
 @RequestMapping(PREFIX_API)
-@CrossOrigin(origins = "http://localhost:3454")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CancelPolicyAPI {
 
     @Autowired
@@ -32,4 +29,17 @@ public class CancelPolicyAPI {
         List<CancelPolicyDTO> cancelPolicyDTOList = cancelPolicyMapper.convertListEntityToDto(cancelPolicyList);
         return new ResponseEntity<>(cancelPolicyDTOList, HttpStatus.OK);
     }
+
+    @PostMapping("/policy")
+    public ResponseEntity<HttpStatus> addCancelPolicy(@RequestBody CancelPolicyDTO cancelPolicyDTO){
+        System.out.println(cancelPolicyDTO.toString());
+        CancelPolicy cancelPolicy = cancelPolicyMapper.covertDtoToEntity(cancelPolicyDTO);
+
+        System.out.println(cancelPolicy.toString());
+
+        cancelPolicyService.save(cancelPolicy);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

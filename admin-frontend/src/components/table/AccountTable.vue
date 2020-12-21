@@ -24,21 +24,38 @@
                   <td>{{ data.roleName }}</td>
                   <td class="action">
                     <div>
-                      <button class="btn-warning">
+                      <button
+                        class="btn-warning"
+                        @click="getServiceCode(data.serviceCode)"
+                        v-tooltip.top-center="{
+                          content: 'Edit this account',
+                        }"
+                      >
+                        <i class="fas fa-pencil-alt"></i>
                         <a
                           class="btn-link-edit action-button"
-                          @click="edit(scope.row)"
+                          :href="'account/' + data.accountId"
                         >
-                          <i class="fas fa-pencil-alt"></i> </a
-                        >EDIT
+                        </a>
                       </button>
                     </div>
                     <div>
-                      <button class="btn-danger" @click="disableAccount">
-                        <a class="btn-link-delete action-button">
-                          <i class="fas fa-trash"></i>
-                        </a>
-                        {{ data.status ? 'DISABLE' : 'ENABLE' }}
+                      <button
+                        :class="{
+                          'btn-danger': data.status === 'true',
+                          'btn-success': data.status === 'false',
+                        }"
+                        v-tooltip.top-center="{
+                          content: setTextTooltip(data.status),
+                        }"
+                      >
+                        <a :href="'services/' + data.accountId"> </a>
+                        <i
+                          :class="{
+                            'fas fa-ban': data.status === 'true',
+                            'fas fa-plus': data.status === 'false',
+                          }"
+                        ></i>
                       </button>
                     </div>
                   </td>
@@ -82,6 +99,13 @@ export default {
         .catch((e) => {
           console.log(e);
         });
+    },
+    setTextTooltip(text) {
+      if (text === true) {
+        return 'Disable this acoount';
+      } else {
+        return 'Enable this account';
+      }
     },
   },
   data() {

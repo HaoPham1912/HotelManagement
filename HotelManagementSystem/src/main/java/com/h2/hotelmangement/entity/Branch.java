@@ -3,6 +3,7 @@ package com.h2.hotelmangement.entity;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
+import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -33,6 +34,9 @@ public class Branch {
 
     @Column(name = "rating", columnDefinition = "float default 0")
     private float rating;
+
+    @Column(name = "mainimage")
+    private String mainImage;
 
     @Column(name = "status", nullable = false, columnDefinition = "boolean default true")
     private Boolean status;
@@ -138,6 +142,14 @@ public class Branch {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
     }
 
     @Override
