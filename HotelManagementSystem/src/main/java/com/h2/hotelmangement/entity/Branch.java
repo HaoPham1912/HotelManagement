@@ -36,6 +36,7 @@ public class Branch {
     private float rating;
 
     @Column(name = "mainimage")
+    @Type(type = "text")
     private String mainImage;
 
     @Column(name = "status", nullable = false, columnDefinition = "boolean default true")
@@ -159,9 +160,14 @@ public class Branch {
                 ", branchCode='" + branchCode + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
+                ", location='" + location + '\'' +
                 ", rating=" + rating +
+                ", mainImage='" + mainImage + '\'' +
                 ", status=" + status +
                 ", description='" + description + '\'' +
+                ", employeeSet=" + employeeSet +
+                ", roomSet=" + roomSet +
+                ", thumbnailsHotelList=" + thumbnailsHotelList +
                 '}';
     }
 }

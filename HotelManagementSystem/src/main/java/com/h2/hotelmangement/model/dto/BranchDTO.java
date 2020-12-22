@@ -1,6 +1,8 @@
 package com.h2.hotelmangement.model.dto;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class BranchDTO {
@@ -12,8 +14,27 @@ public class BranchDTO {
     private String rating;
     private String status;
     private String location;
+    private String mainImage;
+
     private Set<String> empCodeSet = new HashSet<>();
-    private Set<String> thumbnailsBranchSet = new HashSet<>();
+    private List<String> thumbnailsBranchSet = new ArrayList<>();
+    private List<EmployeeDTO> employeeDTOSet = new ArrayList<>();
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
+    }
+
+    public List<EmployeeDTO> getEmployeeDTOSet() {
+        return employeeDTOSet;
+    }
+
+    public void setEmployeeDTOSet(List<EmployeeDTO> employeeDTOSet) {
+        this.employeeDTOSet = employeeDTOSet;
+    }
 
     public String getLocation() {
         return location;
@@ -87,11 +108,11 @@ public class BranchDTO {
         this.status = status;
     }
 
-    public Set<String> getThumbnailsBranchSet() {
+    public List<String> getThumbnailsBranchSet() {
         return thumbnailsBranchSet;
     }
 
-    public void setThumbnailsBranchSet(Set<String> thumbnailsBranchSet) {
+    public void setThumbnailsBranchSet(List<String> thumbnailsBranchSet) {
         this.thumbnailsBranchSet = thumbnailsBranchSet;
     }
 
@@ -106,8 +127,10 @@ public class BranchDTO {
                 ", rating='" + rating + '\'' +
                 ", status='" + status + '\'' +
                 ", location='" + location + '\'' +
+                ", mainImage='" + mainImage + '\'' +
                 ", empCodeSet=" + empCodeSet +
-                ", thumbnailsBranchSet=" + thumbnailsBranchSet +
+                ", thumbnailsBranchSet=" + thumbnailsBranchSet.toString() +
+                ", employeeDTOSet=" + employeeDTOSet +
                 '}';
     }
 }

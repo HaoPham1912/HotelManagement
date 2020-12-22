@@ -8,6 +8,10 @@ class BranchService{
     getBranchByCode(branchCode){
         return http.get(`/branch/${branchCode}`);
     }
+
+    createNewBranch(data){
+        return http.post("/branch", data);
+    }
 }
 
 export default new BranchService();

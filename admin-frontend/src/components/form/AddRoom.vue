@@ -45,7 +45,7 @@
       />
     </div>
     <div class="form-outline mb-4">
-      <label for="image">Choose Image Of Room</label>
+      <label for="image">Choose Main Image Of Room</label>
       <div class="input-group">
         <div>
           <b-button variant="success" @click="onPickFile">
@@ -65,63 +65,6 @@
       </div>
       <div>
         <img :src="imageUrl" alt="" height="150" />
-      </div>
-      <br />
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroupFileAddon01"
-            >Upload</span
-          >
-        </div>
-        <div class="custom-file">
-          <input
-            type="file"
-            class="custom-file-input"
-            id="inputGroupFile01"
-            aria-describedby="inputGroupFileAddon01"
-          />
-          <label class="custom-file-label" for="inputGroupFile01"
-            >Choose file</label
-          >
-        </div>
-      </div>
-      <br />
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroupFileAddon01"
-            >Upload</span
-          >
-        </div>
-        <div class="custom-file">
-          <input
-            type="file"
-            class="custom-file-input"
-            id="inputGroupFile01"
-            aria-describedby="inputGroupFileAddon01"
-          />
-          <label class="custom-file-label" for="inputGroupFile01"
-            >Choose file</label
-          >
-        </div>
-      </div>
-      <br />
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroupFileAddon01"
-            >Upload</span
-          >
-        </div>
-        <div class="custom-file">
-          <input
-            type="file"
-            class="custom-file-input"
-            id="inputGroupFile01"
-            aria-describedby="inputGroupFileAddon01"
-          />
-          <label class="custom-file-label" for="inputGroupFile01"
-            >Choose file</label
-          >
-        </div>
       </div>
     </div>
     <button type="submit" class="btn btn-primary btn-block mb-4">

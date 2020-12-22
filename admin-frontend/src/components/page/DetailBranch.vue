@@ -1,103 +1,81 @@
 <template>
   <div>
     <h3>Employee Of Branch</h3>
-    <b-table bordered hover :items="items" :fields="fields"></b-table>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Employee Code</th>
+          <th scope="col">Id Card</th>
+          <th scope="col">EmployeeName</th>
+          <th scope="col">Employee Phone</th>
+          <th scope="col">Employee Email</th>
+          <th scope="col">UserName</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(data, index) in branchs.employees" :key="index">
+          <td>{{ data.employeeCode }}</td>
+          <td>{{ data.empIdCard }}</td>
+          <td>{{ data.empName }}</td>
+          <td>{{ data.empPhone }}</td>
+          <td>{{ data.email }}</td>
+          <td>{{ data.username }}</td>
+          <td class="action">
+            <div>
+              <button
+                class="btn-warning"
+                @click="getIdEmp(data.employeeId)"
+                data-mdb-toggle="modal"
+                data-mdb-target="#exampleModal"
+              >
+                <i class="fas fa-pencil-alt"></i>
+                EDIT
+              </button>
+            </div>
+            <div>
+              <button class="btn-danger" @click="remove(scope.row)">
+                <i class="fas fa-trash"></i>
+                DELETE
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <h3>Image Of Branch</h3>
     <div class="img-branch">
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/h2hotel-7b674.appspot.com/o/image-branch%2Fhinhtest.jpg?alt=media&token=ab04cbf5-315f-4aad-94b0-f5ee9e76bd28"
-        alt=""
-      />
-    </div>
-    <div class="img-branch">
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/h2hotel-7b674.appspot.com/o/image-branch%2Fhinhtest.jpg?alt=media&token=ab04cbf5-315f-4aad-94b0-f5ee9e76bd28"
-        alt=""
-      />
-    </div>
-    <div class="img-branch">
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/h2hotel-7b674.appspot.com/o/image-branch%2Fhinhtest.jpg?alt=media&token=ab04cbf5-315f-4aad-94b0-f5ee9e76bd28"
-        alt=""
-      />
-    </div>
-    <div class="img-branch">
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/h2hotel-7b674.appspot.com/o/image-branch%2Fhinhtest.jpg?alt=media&token=ab04cbf5-315f-4aad-94b0-f5ee9e76bd28"
-        alt=""
-      />
+      <img :src="branchs.mainImage" />
     </div>
   </div>
 </template>
 
 <script>
-//import BranchService from '../../services/BranchService';
+import BranchService from '../../services/BranchService';
 export default {
   name: 'branch',
   data() {
     return {
-      branchCode: '',
-      fields: [
-        {
-          key: 'employeeCode',
-          label: 'Employee Code',
-          sortable: true,
-        },
-        {
-          key: 'empIdCard',
-          label: 'Id Card',
-          sortable: false,
-        },
-        {
-          key: 'empName',
-          label: 'Employee Name',
-          sortable: true,
-          // Variant applies to the whole column, including the header and footer
-          // /variant: 'danger',
-        },
-        {
-          key: 'empPhone',
-          label: 'Employee Phone',
-          sortable: false,
-          // Variant applies to the whole column, including the header and footer
-          // /variant: 'danger',
-        },
-        {
-          key: 'email',
-          label: 'Employee Email',
-          sortable: false,
-          // Variant applies to the whole column, including the header and footer
-          // /variant: 'danger',
-        },
-      ],
-      items: [
-        {
-          isActive: false,
-          employeeCode: 'EMP1',
-          empIdCard: '123123123',
-          empName: 'Macdonald',
-          empPhone: '090909090909',
-          email: 'emp1@gmail.com',
-        },
-        {
-          isActive: false,
-          employeeCode: 'EMP2',
-          empIdCard: '213123123',
-          empName: 'AScdonald2',
-          empPhone: '1231231231',
-          email: 'emp2@gmail.com',
-        },
-      ],
+      branchCode: this.$route.params.branchCode,
+      branchs: {
+        employees: [],
+        mainImage: '',
+      },
     };
   },
   methods: {
-    getBranch(branchCode) {
-      this.branchCode = branchCode;
+    getDetailBranch(branchCode) {
+      BranchService.getBranchByCode(branchCode).then((response) => {
+        console.log(response.data);
+        this.branchs.employees = response.data.employeeDTOSet;
+        this.branchs.mainImage = response.data.mainImage;
+        console.log(this.branchs.employees);
+      });
     },
   },
 
   mounted() {
-    this.getBranch(this.$route.params.branchCode);
+    this.getDetailBranch(this.branchCode);
   },
 };
 </script>

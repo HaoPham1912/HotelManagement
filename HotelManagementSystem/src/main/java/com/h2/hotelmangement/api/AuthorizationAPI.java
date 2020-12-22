@@ -16,6 +16,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,7 +32,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/login")
-@CrossOrigin(origins = "http://localhost:3454")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthorizationAPI {
 
 //    @Autowired
@@ -52,22 +53,6 @@ public class AuthorizationAPI {
     @Autowired
     TokenParser tokenParser;
 
-    @RequestMapping(value = "/sid", method = RequestMethod.GET,
-            produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<InputStreamResource> getImage(@RequestParam(required = true) String imgId, HttpSession session) throws IOException {
-
-
-        ServletContext context = session.getServletContext();
-        String path = context.getRealPath("images");
-
-        InputStream imgFile = new FileInputStream(path + "/" + imgId + ".jpg");
-
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(new InputStreamResource(imgFile));
-    }
-
     //    @PostMapping("")
 //    public LoginResponse login(@RequestParam(required = true) String userName,
 //                               @RequestParam(required = true) String password) {
@@ -82,7 +67,7 @@ public class AuthorizationAPI {
 //    }
     @PostMapping("")
     public ResponseEntity<Object> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
+        System.out.println(loginRequest.getUserName() + " " +loginRequest.getPass());
         UserDetails userDetails = userDetailsServiceImpl.loadUserDetails(loginRequest.getUserName(),
                 loginRequest.getPass());
         System.out.println("User detail "+ userDetails.getUsername());

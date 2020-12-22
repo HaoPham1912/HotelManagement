@@ -43,6 +43,7 @@
         required
       />
     </div>
+
     <button
       type="submit"
       class="btn btn-primary btn-block mb-4"
@@ -66,6 +67,7 @@ export default {
         name: '',
         price: '',
         description: '',
+        status: '',
       },
       submitted: false,
       code: this.$route.params.code,
@@ -82,6 +84,7 @@ export default {
         this.services.serviceCode = response.data.serviceCode;
         this.services.name = response.data.name;
         this.services.price = response.data.price;
+        this.services.status = response.data.status;
         this.services.description = response.data.description;
         console.log(this.services);
       });
@@ -94,6 +97,7 @@ export default {
         name: this.services.name,
         price: this.services.price,
         description: this.services.description,
+        status: this.services.status,
       };
       ServicesService.create(data)
         .then((response) => {
