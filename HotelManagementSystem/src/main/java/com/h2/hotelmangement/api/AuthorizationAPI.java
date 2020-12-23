@@ -31,7 +31,7 @@ import java.io.InputStream;
 import java.util.*;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthorizationAPI {
 
@@ -53,19 +53,7 @@ public class AuthorizationAPI {
     @Autowired
     TokenParser tokenParser;
 
-    //    @PostMapping("")
-//    public LoginResponse login(@RequestParam(required = true) String userName,
-//                               @RequestParam(required = true) String password) {
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(
-//                        userName,
-//                        password
-//                )
-//        );
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        return handleLoginResponse(authentication);
-//    }
-    @PostMapping("")
+    @PostMapping("/login")
     public ResponseEntity<Object> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         System.out.println(loginRequest.getUserName() + " " +loginRequest.getPass());
         UserDetails userDetails = userDetailsServiceImpl.loadUserDetails(loginRequest.getUserName(),
