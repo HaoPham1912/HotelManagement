@@ -1,31 +1,37 @@
 <template>
   <div>
-    <section id="tables">
+    <section id="dashboard">
       <mdb-row>
-        <mdb-col md="12">
-          <mdb-card cascade narrow class="mt-5">
-            <div class="link-add">
-              <a href="/bed/add" type="button" class="btn btn-success">
-                Add new Bed
-              </a>
-            </div>
-            <div class="list row">
-              <div class="col-md-8">
-                <div class="input-group mb-3">
+        <mdb-col md="2"></mdb-col>
+        <mdb-col md="10">
+          <mdb-card class="mb-4">
+            <div class="row">
+              <div class="col-md-9">
+                <a href="/bed/add" type="button" class="btn btn-success">
+                  Add new Bed
+                </a>
+              </div>
+              <div class="col-md-3">
+                <div class="input-group md-form form-sm form-2 pl-0">
                   <input
+                    class="form-control my-0 py-1 lime-border"
                     type="text"
-                    class="form-control"
-                    placeholder="Search by title"
+                    placeholder="Search by Name"
+                    aria-label="Search"
                     name="searchName"
                     v-model="searchName"
+                    @keyup.enter="handelSearch"
                   />
                   <div class="input-group-append">
                     <button
-                      class="btn btn-outline-secondary"
+                      class="input-group-text lime lighten-2"
+                      id="basic-text1"
                       type="submit"
                       @click="handelSearch"
                     >
-                      Search
+                      <span>
+                        <mdbIcon icon="search" />
+                      </span>
                     </button>
                   </div>
                 </div>
@@ -52,24 +58,23 @@
                     <td>{{ data.roomCodeSet }}</td>
                     <td class="action">
                       <div>
-                        <button class="btn-warning">
+                        <button class="btn-sm btn-warning">
                           <a
                             class="btn-link-edit action-button"
                             @click="edit(scope.row)"
                           >
-                            <i class="fas fa-pencil-alt"></i> </a
-                          >EDIT
+                            <i class="fas fa-pencil-alt"></i>
+                          </a>
                         </button>
                       </div>
                       <div>
-                        <button class="btn-danger">
+                        <button class="btn-sm btn-danger">
                           <a
                             class="btn-link-delete action-button"
                             @click="remove(scope.row)"
                           >
                             <i class="fas fa-trash"></i>
                           </a>
-                          DELETE
                         </button>
                       </div>
                     </td>
@@ -77,30 +82,37 @@
                 </tbody>
               </mdb-tbl>
             </mdb-card-body>
+            <br />
+            <div id="paging">
+              <b-pagination
+                v-model="page"
+                :total-rows="count"
+                :per-page="pageSize"
+                first-text="First"
+                prev-text="Prev"
+                next-text="Next"
+                last-text="Last"
+                @change="handlePageChange"
+              ></b-pagination>
+            </div>
           </mdb-card>
         </mdb-col>
       </mdb-row>
-      <br />
-      <div>
-        <b-pagination
-          v-model="page"
-          :total-rows="count"
-          :per-page="pageSize"
-          first-text="First"
-          prev-text="Prev"
-          next-text="Next"
-          last-text="Last"
-          @change="handlePageChange"
-        ></b-pagination>
-      </div>
     </section>
   </div>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl } from 'mdbvue';
-
+import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
 import BedService from '../../services/BedService';
 export default {
+  components: {
+    mdbRow,
+    mdbCol,
+    mdbCard,
+    mdbCardBody,
+    mdbTbl,
+    mdbIcon,
+  },
   data() {
     return {
       beds: [],
@@ -115,13 +127,7 @@ export default {
       pageSizes: [3, 6, 9],
     };
   },
-  components: {
-    mdbRow,
-    mdbCol,
-    mdbCard,
-    mdbCardBody,
-    mdbTbl,
-  },
+
   methods: {
     getRequestParams(searchName, page, pageSize) {
       let params = {};
@@ -177,9 +183,34 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style>
 .action {
   display: flex;
   justify-content: space-evenly;
+}
+.input-group.md-form.form-sm.form-1 input {
+  border: 1px solid #bdbdbd;
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+.input-group.md-form.form-sm.form-2 input {
+  border: 1px solid #bdbdbd;
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+.input-group.md-form.form-sm.form-2 input.red-border {
+  border: 1px solid #ef9a9a;
+}
+.input-group.md-form.form-sm.form-2 input.lime-border {
+  border: 1px solid #cddc39;
+}
+.input-group.md-form.form-sm.form-2 input.amber-border {
+  border: 1px solid #ffca28;
+}
+
+#paging {
+  position: absolute;
+  bottom: 0;
+  right: 700px;
 }
 </style>

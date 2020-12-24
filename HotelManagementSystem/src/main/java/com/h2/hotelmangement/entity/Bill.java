@@ -31,10 +31,8 @@ public class Bill {
     @Column(name = "totalprice", nullable = false)
     private double totalprice;
 
-    @Column(name = "status", columnDefinition = "int default 1")
-    @Min(1)
-    @Max(3)
-    private int status;
+    @Column(name = "status", columnDefinition = "boolean default true")
+    private Boolean status;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bills")
     private Set<Booking> billBookingSet;
@@ -102,11 +100,11 @@ public class Bill {
         this.bookingList = bookingList;
     }
 
-    public int getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

@@ -1,5 +1,5 @@
 <template>
-  <b-container class="bv-example-row">
+  <!-- <b-container class="bv-example-row">
     <b-row>
       <b-col cols="6"><SlideBar /></b-col>
       <b-col>
@@ -20,20 +20,26 @@
         <b-col> <Content /></b-col>
       </b-row>
     </div>
-  </b-container>
+  </b-container> -->
+  <mdb-container fluid>
+    <Header />
+    <SlideBar />
+    <Content />
+  </mdb-container>
 </template>
 <script>
-import { waves } from 'mdbvue';
 import Header from '../../components/layout/Header';
 import SlideBar from '../../components/layout/SlideBar';
 import Content from '../../components/layout/Content';
+
+import { mdbContainer } from 'mdbvue';
 export default {
   components: {
     Header,
     SlideBar,
     Content,
+    mdbContainer,
   },
-  mixins: [waves],
 };
 </script>
 <style>
@@ -56,5 +62,3 @@ export default {
   }
 }
 </style>
-
-<style scoped></style>

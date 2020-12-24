@@ -4,35 +4,58 @@
       <mdb-col md="2"></mdb-col>
       <mdb-col md="10">
         <mdb-card class="mb-4">
-          <div class="link-add">
-            <a href="/branch/add" type="button" class="btn btn-success">
-              Add new Branch
-            </a>
+          <div class="row">
+            <div class="col-md-9">
+              <a href="/bed/add" type="button" class="btn btn-success">
+                Add new Bed
+              </a>
+            </div>
+            <div class="col-md-3">
+              <div class="input-group md-form form-sm form-2 pl-0">
+                <input
+                  class="form-control my-0 py-1 lime-border"
+                  type="text"
+                  placeholder="Search by Name"
+                  aria-label="Search"
+                  name="searchName"
+                  v-model="searchName"
+                />
+                <div class="input-group-append">
+                  <button
+                    class="input-group-text lime lighten-2"
+                    id="basic-text1"
+                    type="submit"
+                  >
+                    <span>
+                      <mdbIcon icon="search" />
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
           <mdb-card-body>
             <mdb-tbl>
               <thead class="blue-grey lighten-4">
                 <tr>
-                  <th>BranchID</th>
-                  <th>Branch Code</th>
-                  <th>Address</th>
-                  <th>Description</th>
-                  <th>Branch Name</th>
+                  <th>Bill Id</th>
+                  <th>Customer Code</th>
+                  <th>Customer Name</th>
+                  <th>Create Date</th>
+                  <th>Promo Code</th>
+                  <th>Total Price</th>
                   <th>Status</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(data, index) in branchs" :key="index">
-                  <td>{{ data.branchId }}</td>
-                  <td>
-                    <a :href="'branch/' + data.branchCode">{{
-                      data.branchCode
-                    }}</a>
-                  </td>
-                  <td>{{ data.address }}</td>
-                  <td class="description">{{ data.description }}</td>
-                  <td>{{ data.branchName }}</td>
+                <tr v-for="(data, index) in bookings" :key="index">
+                  <td>{{ data.billId }}</td>
+                  <td>{{ data.billId }}</td>
+                  <td>{{ data.bookDate }}</td>
+                  <td>{{ data.checkinDate }}</td>
+                  <td>{{ data.checkoutDate }}</td>
+                  <td>{{ data.paidPrice }}</td>
                   <td>{{ data.status }}</td>
                   <td class="action">
                     <div>
@@ -66,9 +89,9 @@
   </section>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl } from 'mdbvue';
+import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
 
-import BranchService from '../../services/BranchService';
+import BillService from '../../services/BillService';
 export default {
   components: {
     mdbRow,
@@ -76,12 +99,13 @@ export default {
     mdbCard,
     mdbCardBody,
     mdbTbl,
+    mdbIcon,
   },
   methods: {
-    retrieveBranch() {
-      BranchService.getAll()
+    retrieveBill() {
+      BillService.getAll()
         .then((response) => {
-          this.branchs = response.data;
+          this.bills = response.data;
           console.log(response.data);
         })
         .catch((e) => {
@@ -91,28 +115,16 @@ export default {
   },
   data() {
     return {
-      branchs: [],
+      bills: [],
     };
   },
   mounted() {
-    this.retrieveBranch();
+    this.retrieveBill();
   },
 };
 </script>
 <style scoped>
-a {
-  right: 0;
-  width: 200px;
-}
-.link-add {
-  margin-right: auto;
-}
 .action {
   display: flex;
-  justify-content: space-around;
-}
-
-.description {
-  overflow-wrap: break-word;
 }
 </style>

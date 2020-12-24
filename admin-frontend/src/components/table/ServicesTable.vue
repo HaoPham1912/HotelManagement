@@ -1,8 +1,9 @@
 <template>
-  <section id="tables">
+  <section id="dashboard">
     <mdb-row>
-      <mdb-col md="12">
-        <mdb-card cascade narrow class="mt-5">
+      <mdb-col md="2"></mdb-col>
+      <mdb-col md="10">
+        <mdb-card class="mb-4">
           <div class="link-add">
             <a href="/service/add" type="button" class="btn btn-success">
               Add new Service
@@ -32,7 +33,7 @@
                   <td class="action">
                     <div>
                       <button
-                        class="btn-warning"
+                        class="btn-sm btn-warning"
                         @click="getServiceCode(data.serviceCode)"
                         v-tooltip.top-center="{
                           content: 'Edit this service',
@@ -49,8 +50,8 @@
                     <div>
                       <button
                         :class="{
-                          'btn-danger': data.status === true,
-                          'btn-success': data.status === false,
+                          'btn-sm btn-danger': data.status === true,
+                          'btn-sm btn-success': data.status === false,
                         }"
                         @click="deleteService(data.serviceId)"
                         v-tooltip.top-center="{

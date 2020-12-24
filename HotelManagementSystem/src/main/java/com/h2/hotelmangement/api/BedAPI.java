@@ -43,6 +43,7 @@ public class BedAPI {
                bedPages = bedService.findAllBedByName(name, pageNo, size);
            }
            bedList = bedPages.getContent();
+           System.out.println(bedList.get(0).toString());
            List<BedDTO> bedDTOList = bedMapper.listBedEntityToDto(bedList);
            Map<String, Object> response = new HashMap<>();
            response.put("beds", bedDTOList);
