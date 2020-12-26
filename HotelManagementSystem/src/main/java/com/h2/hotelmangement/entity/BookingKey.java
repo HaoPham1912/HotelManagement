@@ -15,10 +15,10 @@ public class BookingKey implements Serializable {
     private Long billId;
 
     @Column(name = "bookdate", nullable = false)
-    private String bookDate;
+    private Date bookDate;
 
     @Column(name = "checkindate", nullable = false)
-    private String checkinDate;
+    private Date checkinDate;
 
     public Long getRoomId() {
         return roomId;
@@ -36,19 +36,19 @@ public class BookingKey implements Serializable {
         this.billId = billId;
     }
 
-    public String getBookDate() {
+    public Date getBookDate() {
         return bookDate;
     }
 
-    public void setBookDate(String bookDate) {
+    public void setBookDate(Date bookDate) {
         this.bookDate = bookDate;
     }
 
-    public String getCheckinDate() {
+    public Date getCheckinDate() {
         return checkinDate;
     }
 
-    public void setCheckinDate(String checkinDate) {
+    public void setCheckinDate(Date checkinDate) {
         this.checkinDate = checkinDate;
     }
 

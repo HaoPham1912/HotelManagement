@@ -8,9 +8,9 @@ INSERT INTO `bookinghotel`.`roles` (`roleid`, `rolename`) VALUES ('2', 'ADMIN');
 INSERT INTO `bookinghotel`.`roles` (`roleid`, `rolename`) VALUES ('3', 'EMPLOYEE');
 
 
-INSERT INTO `bookinghotel`.`accounts` (`password`, `status`, `username`) VALUES ('$2a$10$od0SURdtxoXztnc93Ybo/uKg/.rljLd48P4zqLVuINQC95dx5Xv0W', b'1', 'admin');
-INSERT INTO `bookinghotel`.`accounts` (`password`, `status`, `username`) VALUES ('$2a$10$od0SURdtxoXztnc93Ybo/uKg/.rljLd48P4zqLVuINQC95dx5Xv0W', b'1', 'customer');
-INSERT INTO `bookinghotel`.`accounts` (`password`, `status`, `username`) VALUES ('$2a$10$od0SURdtxoXztnc93Ybo/uKg/.rljLd48P4zqLVuINQC95dx5Xv0W', b'1', 'employee');
+INSERT INTO `bookinghotel`.`accounts` (`password`, `status`, `username`) VALUES ('12345', b'1', 'admin');
+INSERT INTO `bookinghotel`.`accounts` (`password`, `status`, `username`) VALUES ('12345', b'1', 'customer');
+INSERT INTO `bookinghotel`.`accounts` (`password`, `status`, `username`) VALUES ('12345', b'1', 'employee');
 
 INSERT INTO `bookinghotel`.`account_role` (`account_id`, `role_id`) VALUES ('1', '2');
 INSERT INTO `bookinghotel`.`account_role` (`account_id`, `role_id`) VALUES ('2', '1');

@@ -1,7 +1,9 @@
 <template>
   <!--Navbar-->
   <mdb-navbar class="flexible-navbar white" light position="top" scrolling>
-    <mdb-navbar-brand href="" target="_blank">Admin Dashboard</mdb-navbar-brand>
+    <mdb-navbar-brand href="" target="_blank"
+      >Manage Dashboard</mdb-navbar-brand
+    >
     <mdb-navbar-toggler>
       <mdb-navbar-nav left>
         <!-- <mdb-nav-item to="/account" waves-fixed>Home</mdb-nav-item> -->

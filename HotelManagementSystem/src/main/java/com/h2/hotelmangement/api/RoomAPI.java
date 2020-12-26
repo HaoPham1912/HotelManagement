@@ -1,5 +1,6 @@
 package com.h2.hotelmangement.api;
 
+import com.h2.hotelmangement.Request.BookRoomDTO;
 import com.h2.hotelmangement.entity.Room;
 import com.h2.hotelmangement.model.dto.RoomDTO;
 import com.h2.hotelmangement.model.mapper.RoomMapper;
@@ -58,5 +59,10 @@ public class RoomAPI {
         RoomDTO roomDTO = roomMapper.roomEntityToDto(room);
 
         return new ResponseEntity<>(roomDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("room/book")
+    public ResponseEntity<?> getAllRoomAvailable(@RequestBody BookRoomDTO bookRoomDTO){
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

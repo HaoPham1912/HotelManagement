@@ -2,6 +2,7 @@ package com.h2.hotelmangement.api;
 
 import com.h2.hotelmangement.Request.LoginRequest;
 import com.h2.hotelmangement.common.util.CommonConstants;
+import com.h2.hotelmangement.common.util.ResponseTemplate;
 import com.h2.hotelmangement.entity.Account;
 import com.h2.hotelmangement.entity.Role;
 import com.h2.hotelmangement.model.dto.AccountDTO;
@@ -15,6 +16,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,8 +31,8 @@ import java.io.InputStream;
 import java.util.*;
 
 @RestController
-@RequestMapping("/login")
-@CrossOrigin(origins = "http://localhost:3454")
+@RequestMapping("/")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthorizationAPI {
 
 //    @Autowired
@@ -51,52 +53,25 @@ public class AuthorizationAPI {
     @Autowired
     TokenParser tokenParser;
 
-    @RequestMapping(value = "/sid", method = RequestMethod.GET,
-            produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<InputStreamResource> getImage(@RequestParam(required = true) String imgId, HttpSession session) throws IOException {
-
-
-        ServletContext context = session.getServletContext();
-        String path = context.getRealPath("images");
-
-        InputStream imgFile = new FileInputStream(path + "/" + imgId + ".jpg");
-
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(new InputStreamResource(imgFile));
-    }
-
-    //    @PostMapping("")
-//    public LoginResponse login(@RequestParam(required = true) String userName,
-//                               @RequestParam(required = true) String password) {
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(
-//                        userName,
-//                        password
-//                )
-//        );
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        return handleLoginResponse(authentication);
-//    }
-    @PostMapping("")
-    public ResponseEntity<Object> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
+    @PostMapping("/login")
+    public ResponseTemplate authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        System.out.println(loginRequest.getUserName() + " " +loginRequest.getPass());
         UserDetails userDetails = userDetailsServiceImpl.loadUserDetails(loginRequest.getUserName(),
                 loginRequest.getPass());
         System.out.println("User detail "+ userDetails.getUsername());
-
+        ResponseTemplate responseTemplate = new ResponseTemplate();
         if (null != userDetails) {
             String token = tokenParser.generateToken(userDetails);
-            Map<String, String> items = new HashMap<>();
-            items.put("token", token);
-            items.put("type", CommonConstants.PREFIX_BEARER.trim());
-            return ResponseEntity.ok().body(items);
+            Map<String, Object> items = new HashMap<>();
+            items.put("accessToken", token);
+            items.put("user", userDetails.getUsername());
+            responseTemplate.setData(items);
+            responseTemplate.setStatus(HttpStatus.OK.value());
+            return responseTemplate;
         }
-        Map<String, Object> errors = new HashMap<>();
-        errors.put("status", Integer.valueOf(HttpStatus.BAD_REQUEST.value()));
-        errors.put("message", "Email or passsword is correct");
-        return ResponseEntity.badRequest().body(errors);
+        responseTemplate.setStatus(HttpStatus.BAD_REQUEST.value());
+        responseTemplate.setData("message","Email or passsword is correct");
+        return responseTemplate;
     }
 
     private LoginResponse handleLoginResponse(Authentication authentication) {

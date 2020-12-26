@@ -1,6 +1,8 @@
 package com.h2.hotelmangement.service.impl;
 
+import com.h2.hotelmangement.common.util.ModelMapperUtil;
 import com.h2.hotelmangement.entity.Branch;
+import com.h2.hotelmangement.model.dto.BranchDTO;
 import com.h2.hotelmangement.repository.BranchRepository;
 import com.h2.hotelmangement.service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +36,19 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public List<Branch> getBranchByLocation(String address) {
-        return branchRepository.findBranchByAddress(address);
+    public Optional<List<BranchDTO>> getBranchByLocation(String location) {
+        Optional<Set<Branch>> listBranch = branchRepository.findBranchByAddress(location);
+        if(listBranch.isPresent()){
+            return Optional.ofNullable(ModelMapperUtil.mapAll(listBranch.get(),BranchDTO.class));
+        }
+        return Optional.empty();
     }
+
+//    @Override
+//    public List<Branch> getBranchByLocation(String address) {
+//        return branchRepository.findBranchByAddress(address);
+//    }
+
 
     @Override
     public Branch getBranchByBranchCode(String branchCode) {

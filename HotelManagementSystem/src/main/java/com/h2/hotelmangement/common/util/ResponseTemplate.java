@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Template for Controller return type
  */
-public class ResponseTemplate extends BaseResponse {
+public class ResponseTemplate {
 
     /**
      * Data
@@ -21,6 +21,24 @@ public class ResponseTemplate extends BaseResponse {
      */
     private Map<String, String> fieldErrors = new HashedMap<>();
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    private Integer status;
+    private String message;
     /**
      * Default constructor
      */
@@ -28,13 +46,13 @@ public class ResponseTemplate extends BaseResponse {
         super();
     }
 
-    /**
-     * Call this when init response with status
-     * @param result is "success"(true) or "error"(false)
-     */
-    public ResponseTemplate(boolean result) {
-        super(result);
-    }
+//    /**
+//     * Call this when init response with status
+//     * @param result is "success"(true) or "error"(false)
+//     */
+//    public ResponseTemplate(boolean result) {
+//        super(result);
+//    }
 
     /**
      * Set data as whole HashMap

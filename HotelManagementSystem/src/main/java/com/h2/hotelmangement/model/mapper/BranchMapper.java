@@ -21,6 +21,7 @@ public class BranchMapper {
         branchDTO.setBranchCode(branch.getBranchCode());
         branchDTO.setDescription(branch.getDescription());
         branchDTO.setBranchName(branch.getName());
+        branchDTO.setMainImage(branch.getMainImage());
         branchDTO.setRating(String.valueOf(branch.getRating()));
         branchDTO.setStatus(String.valueOf(branch.getStatus()));
         for ( Employee employee: branch.getEmployeeSet()) {
@@ -41,4 +42,17 @@ public class BranchMapper {
         return branchDTOList;
     }
 
+    public Branch convertDtoToEntity(BranchDTO branchDTO){
+        Branch branch = new Branch();
+
+        branch.setLocation(branchDTO.getLocation());
+        branch.setBranchCode(branchDTO.getBranchCode());
+        branch.setAddress(branchDTO.getAddress());
+        branch.setDescription(branchDTO.getDescription());
+        branch.setMainImage(branchDTO.getMainImage());
+        branch.setName(branchDTO.getBranchName());
+        Set<String> branchImage =  new HashSet<>(branchDTO.getThumbnailsBranchSet());
+        branch.setThumbnailsHotelList(branchImage);
+        return branch;
+    }
 }

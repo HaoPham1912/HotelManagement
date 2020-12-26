@@ -26,6 +26,7 @@ import AddPromo from '../components/form/AddPromo.vue';
 import AddBranch from '../components/form/AddBranch.vue';
 
 import EditService from '../components/form/EditService.vue';
+import EditCustomer from '../components/form/EditCustomer.vue';
 
 import DetailBranch from '../components/page/DetailBranch.vue';
 
@@ -152,6 +153,12 @@ export default new Router({
           path: '/services/:code',
           name: 'Update Service',
           component: EditService,
+          props: true,
+        },
+        {
+          path: '/customer/:id',
+          name: 'Update Customer',
+          component: EditCustomer,
           props: true,
         },
         { path: '/reloadService', redirect: '/services' },

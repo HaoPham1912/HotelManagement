@@ -1,86 +1,54 @@
 <template>
   <!-- Default form login -->
-  <div class="login-form">
-    <form
-      class="text-center border border-light p-5"
-      @submit.prevent="handleLogin"
-    >
-      <p class="h4 mb-4">Sign in</p>
-
-      <!-- Email -->
-      <input
-        v-model="user.username"
-        v-validate="'required'"
-        type="text"
-        id="username"
-        name="username"
-        class="form-control mb-4"
-        placeholder="User Name"
-      />
-
-      <!-- Password -->
-      <input
-        v-model="user.password"
-        v-validate="'required'"
-        type="password"
-        id="password"
-        name="password"
-        class="form-control mb-4"
-        placeholder="Password"
-      />
-      <!-- <div class="d-flex justify-content-around">
-        <div>
-          Remember me
-          <div class="custom-control custom-checkbox">
-            <input
-              type="checkbox"
-              class="custom-control-input"
-              id="defaultLoginFormRemember"
-            />
-            <label class="custom-control-label" for="defaultLoginFormRemember"
-              >Remember me</label
-            >
-          </div>
-        </div>
-        <div>
-          <a href="">Forgot password?</a>
-        </div>
-      </div> -->
-
-      <!-- Sign in button -->
-      <button
-        class="btn btn-info btn-block my-4"
-        type="submit"
-        :disabled="loading"
+  <div>
+    <div class="login-form">
+      <!-- /<div class="img-login"><img src="../../assets/h2logo.png" alt="" /></div> -->
+      <form
+        class="text-center border border-light p-5"
+        @submit.prevent="handleLogin"
       >
-        <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-        <span>Login</span>
-      </button>
+        <p class="h4 mb-4">Sign in</p>
 
-      <!-- Register -->
-      <p>
-        Not a member?
-        <a href="/register">Register</a>
-      </p>
+        <!-- Email -->
+        <input
+          v-model="user.username"
+          v-validate="'required'"
+          type="text"
+          id="username"
+          name="username"
+          class="form-control mb-4"
+          placeholder="User Name"
+        />
 
-      <!-- Social login -->
-      <p>or sign in with:</p>
+        <!-- Password -->
+        <input
+          v-model="user.password"
+          v-validate="'required'"
+          type="password"
+          id="password"
+          name="password"
+          class="form-control mb-4"
+          placeholder="Password"
+        />
 
-      <a href="#" class="mx-2" role="button"
-        ><i class="fab fa-facebook-f light-blue-text"></i
-      ></a>
-      <a href="#" class="mx-2" role="button"
-        ><i class="fab fa-twitter light-blue-text"></i
-      ></a>
-      <a href="#" class="mx-2" role="button"
-        ><i class="fab fa-linkedin-in light-blue-text"></i
-      ></a>
-      <a href="#" class="mx-2" role="button"
-        ><i class="fab fa-github light-blue-text"></i
-      ></a>
-    </form>
+        <!-- Sign in button -->
+        <button
+          class="btn btn-info btn-block my-4"
+          type="submit"
+          :disabled="loading"
+        >
+          <span
+            v-show="loading"
+            class="spinner-border spinner-border-sm"
+          ></span>
+          <span>Login</span>
+        </button>
+
+        <!-- Register -->
+      </form>
+    </div>
+    <!-- Default form login -->
   </div>
-  <!-- Default form login -->
 </template>
 <script>
 import User from '../../model/user';
@@ -135,7 +103,7 @@ export default {
   margin: auto;
 
   margin-top: 200px;
-  width: 30%;
+  width: 25%;
 
   border: 5px solid lightskyblue;
 

@@ -1,5 +1,7 @@
 package com.h2.hotelmangement.entity;
 
+import com.h2.hotelmangement.model.dto.BaseDTO;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -7,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "promotions")
-public class Promotion {
+public class Promotion extends BaseEntity {
 
     //khuyen mai nay t nghi la minh tao ra xong roi se send code cho khach hang than thiet hay VIP gi do quan email hay sdt roi khi nguoi ta book hoac thanh toan
     //thi nhap vo xong khuyen mai cho ho de giam do phuc tap

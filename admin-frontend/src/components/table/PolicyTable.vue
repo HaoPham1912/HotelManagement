@@ -1,8 +1,9 @@
 <template>
-  <section id="tables">
+  <section id="dashboard">
     <mdb-row>
-      <mdb-col md="12">
-        <mdb-card cascade narrow class="mt-5">
+      <mdb-col md="2"></mdb-col>
+      <mdb-col md="10">
+        <mdb-card class="mb-4">
           <div class="link-add">
             <a href="/policy/add" type="button" class="btn btn-success">
               Add new Policy
@@ -27,24 +28,23 @@
                   <td>{{ data.detail }}</td>
                   <td class="action">
                     <div>
-                      <button class="btn-warning">
+                      <button class="btn-sm btn-warning">
                         <a
                           class="btn-link-edit action-button"
                           @click="edit(scope.row)"
                         >
-                          <i class="fas fa-pencil-alt"></i> </a
-                        >EDIT
+                          <i class="fas fa-pencil-alt"></i>
+                        </a>
                       </button>
                     </div>
                     <div>
-                      <button class="btn-danger">
+                      <button class="btn-sm btn-danger">
                         <a
                           class="btn-link-delete action-button"
                           @click="remove(scope.row)"
                         >
                           <i class="fas fa-trash"></i>
                         </a>
-                        DELETE
                       </button>
                     </div>
                   </td>

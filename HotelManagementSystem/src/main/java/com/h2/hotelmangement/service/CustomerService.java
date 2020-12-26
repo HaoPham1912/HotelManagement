@@ -1,5 +1,6 @@
 package com.h2.hotelmangement.service;
 
+import com.h2.hotelmangement.Request.UserInfoUpdateDTO;
 import com.h2.hotelmangement.entity.Customer;
 
 import java.util.List;
@@ -14,4 +15,8 @@ public interface CustomerService {
     void save(Customer customer);
 
     void deleteCustomer(Long id);
+
+    Customer getCustomerById(Long id);
+
+    void updateCustomerInfo(UserInfoUpdateDTO userUnfoUpdate);
 }

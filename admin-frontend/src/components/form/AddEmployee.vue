@@ -115,6 +115,23 @@
 import EmployeeService from '../../services/EmployeeService';
 import BranchService from '../../services/BranchService';
 export default {
+  data() {
+    return {
+      employee: {
+        employeeCode: '',
+        empIdCard: '',
+        empName: '',
+        empPhone: '',
+        username: '',
+        password: '',
+        email: '',
+        branchCode: '',
+      },
+      submitted: false,
+      branchs: [],
+      branchCodes: [],
+    };
+  },
   methods: {
     saveEmployee() {
       var data = {
@@ -167,23 +184,7 @@ export default {
     },
   },
   name: 'add-employee',
-  data() {
-    return {
-      employee: {
-        employeeCode: '',
-        empIdCard: '',
-        empName: '',
-        empPhone: '',
-        username: '',
-        password: '',
-        email: '',
-        branchCode: '',
-      },
-      submitted: false,
-      branchs: [],
-      branchCodes: [],
-    };
-  },
+
   mounted() {
     this.setBracnhCodes();
   },

@@ -30,4 +30,31 @@ public class CustomerAPI {
         return new ResponseEntity<>(customerMapper.listCustomerEnittyToDto(customerList), HttpStatus.OK);
     }
 
+    @GetMapping("/customer/{id}")
+    public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable String id){
+        Long cusId = Long.valueOf(id);
+        Customer customer = customerService.getCustomerById(cusId);
+
+        CustomerDTO customerDTO = customerMapper.customerEntityToDto(customer);
+
+        return new ResponseEntity<>(customerDTO, HttpStatus.OK);
+    }
+
+    @PutMapping("/customer/{id}")
+    public ResponseEntity<HttpStatus> updateCustomerInfor(@PathVariable String id, @RequestBody CustomerDTO customerDTO){
+        Long cusId = Long.valueOf(id);
+        Customer customer = customerService.getCustomerById(cusId);
+        if(customer != null){
+            customer.setEmail(customerDTO.getEmail());
+            customer.setIdCard(customerDTO.getIdCard());
+            customer.setName(customerDTO.getName());
+            customer.setPhone(customerDTO.getPhone());
+
+            customerService.save(customer);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
 }

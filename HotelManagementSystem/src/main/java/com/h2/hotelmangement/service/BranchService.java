@@ -1,6 +1,7 @@
 package com.h2.hotelmangement.service;
 
 import com.h2.hotelmangement.entity.Branch;
+import com.h2.hotelmangement.model.dto.BranchDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,9 +15,10 @@ public interface BranchService {
 
     List<Branch> getAllBranch();
 
-    List<Branch> getBranchByLocation(String location);
+    Optional<List<BranchDTO>> getBranchByLocation(String location);
 
     Branch getBranchByBranchCode(String branchCode);
 
     Optional<Set<String>> getListLocation();
+
 }

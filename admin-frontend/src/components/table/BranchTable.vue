@@ -1,8 +1,9 @@
 <template>
-  <section id="tables">
+  <section id="dashboard">
     <mdb-row>
-      <mdb-col md="12">
-        <mdb-card cascade narrow class="mt-5">
+      <mdb-col md="2"></mdb-col>
+      <mdb-col md="10">
+        <mdb-card class="mb-4">
           <div class="link-add">
             <a href="/branch/add" type="button" class="btn btn-success">
               Add new Branch
@@ -18,7 +19,7 @@
                   <th>Description</th>
                   <th>Branch Name</th>
                   <th>Status</th>
-                  <th colspan="2"></th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -35,7 +36,7 @@
                   <td>{{ data.status }}</td>
                   <td class="action">
                     <div>
-                      <button class="btn-warning">
+                      <button class="btn-sm btn-warning">
                         <a
                           class="btn-link-edit action-button"
                           @click="edit(scope.row)"
@@ -45,7 +46,7 @@
                       </button>
                     </div>
                     <div>
-                      <button class="btn-danger">
+                      <button class="btn-sm btn-danger">
                         <a
                           class="btn-link-delete action-button"
                           @click="remove(scope.row)"

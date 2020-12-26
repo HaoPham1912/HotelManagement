@@ -92,4 +92,17 @@ public class Bed {
     public void setStatus(Boolean status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Bed{" +
+                "bedId=" + bedId +
+                ", name='" + name + '\'' +
+                ", amountPeople=" + amountPeople +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", rooms=" + rooms +
+                '}';
+    }
 }

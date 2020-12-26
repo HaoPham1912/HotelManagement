@@ -1,8 +1,35 @@
 <template>
-  <section id="tables">
+  <section id="dashboard">
     <mdb-row>
-      <mdb-col md="12">
-        <mdb-card cascade narrow class="mt-5">
+      <mdb-col md="2"></mdb-col>
+      <mdb-col md="10">
+        <mdb-card class="mb-4">
+          <div class="row">
+            <div class="col-md-9"></div>
+            <div class="col-md-3">
+              <div class="input-group md-form form-sm form-2 pl-0">
+                <input
+                  class="form-control my-0 py-1 lime-border"
+                  type="text"
+                  placeholder="Search by Username"
+                  aria-label="Search"
+                  name="searchName"
+                  v-model="searchName"
+                />
+                <div class="input-group-append">
+                  <button
+                    class="input-group-text lime lighten-2"
+                    id="basic-text1"
+                    type="submit"
+                  >
+                    <span>
+                      <mdbIcon icon="search" />
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
           <mdb-card-body>
             <mdb-tbl>
               <thead class="blue-grey lighten-4">
@@ -25,7 +52,7 @@
                   <td class="action">
                     <div>
                       <button
-                        class="btn-warning"
+                        class="btn-sm btn-warning"
                         @click="getServiceCode(data.serviceCode)"
                         v-tooltip.top-center="{
                           content: 'Edit this account',
@@ -42,8 +69,8 @@
                     <div>
                       <button
                         :class="{
-                          'btn-danger': data.status === 'true',
-                          'btn-success': data.status === 'false',
+                          'btn-sm btn-danger': data.status === 'true',
+                          'btn-sm btn-success': data.status === 'false',
                         }"
                         v-tooltip.top-center="{
                           content: setTextTooltip(data.status),
@@ -69,7 +96,7 @@
   </section>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl } from 'mdbvue';
+import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
 
 import AccountService from '../../services/AccountService';
 export default {
@@ -79,6 +106,7 @@ export default {
     mdbCard,
     mdbCardBody,
     mdbTbl,
+    mdbIcon,
   },
   methods: {
     retrieveAccount() {
@@ -118,9 +146,8 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style>
 .action {
   display: flex;
-  justify-content: space-evenly;
 }
 </style>

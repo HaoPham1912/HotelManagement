@@ -6,10 +6,11 @@ import Vue from 'vue'
 import VeeValidate  from 'vee-validate'
 import { VTooltip, VPopover, VClosePopover } from 'v-tooltip'
 
-
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+import firebase from 'firebase'
 
 import router from './router/router'
 import App from './App.vue'
@@ -28,5 +29,20 @@ Vue.config.productionTip = false;
 new Vue({
   router,
 
-  render: h => h(App)
+  render: h => h(App),
+  created () {
+    var firebaseConfig = {
+      apiKey: 'AIzaSyAF6fHzPK8nDH0YyuhOPLrUvQw-F1KZMIM',
+      authDomain: 'h2hotel-7b674.firebaseapp.com',
+      databaseURL: 'https://h2hotel-7b674-default-rtdb.firebaseio.com',
+      projectId: 'h2hotel-7b674',
+      storageBucket: 'h2hotel-7b674.appspot.com',
+      messagingSenderId: '940644779162',
+      appId: '1:940644779162:web:5d9c8d36a45f67f3c70b23',
+      measurementId: 'G-2TVP58Z3KJ',
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  }
 }).$mount('#app')

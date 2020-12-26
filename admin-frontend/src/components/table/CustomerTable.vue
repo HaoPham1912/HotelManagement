@@ -1,8 +1,9 @@
 <template>
-  <section id="tables">
+  <section id="dashboard">
     <mdb-row>
-      <mdb-col md="12">
-        <mdb-card cascade narrow class="mt-5">
+      <mdb-col md="2"></mdb-col>
+      <mdb-col md="10">
+        <mdb-card class="mb-4">
           <div class="link-add">
             <a href="/customer/add" type="button" class="btn btn-success">
               Add new Customer
@@ -35,24 +36,26 @@
                   <td>{{ data.userName }}</td>
                   <td class="action">
                     <div>
-                      <button class="btn-warning">
+                      <button
+                        class="btn-sm btn-warning"
+                        @click="getCustomerId(data.customerId)"
+                      >
                         <a
                           class="btn-link-edit action-button"
-                          @click="edit(scope.row)"
+                          :href="'customer/' + data.customerId"
                         >
-                          <i class="fas fa-pencil-alt"></i> </a
-                        >EDIT
+                          <i class="fas fa-pencil-alt"></i>
+                        </a>
                       </button>
                     </div>
                     <div>
-                      <button class="btn-danger">
+                      <button class="btn-sm btn-danger">
                         <a
                           class="btn-link-delete action-button"
                           @click="remove(scope.row)"
                         >
                           <i class="fas fa-trash"></i>
                         </a>
-                        DELETE
                       </button>
                     </div>
                   </td>
@@ -87,6 +90,9 @@ export default {
         .catch((e) => {
           console.log(e);
         });
+    },
+    getCustomerId(id) {
+      console.log(id);
     },
   },
   data() {

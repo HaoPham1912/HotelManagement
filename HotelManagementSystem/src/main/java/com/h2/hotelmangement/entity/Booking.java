@@ -4,6 +4,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "bookings")
@@ -25,7 +26,7 @@ public class Booking {
     private Bill bills;
 
     @Column(name = "checkoutdate", nullable = false)
-    private String checkoutDate;
+    private Date checkoutDate;
 
     @Column(name = "paidprice", nullable = false)
     private double paidPrice;
@@ -57,11 +58,11 @@ public class Booking {
         this.bills = bills;
     }
 
-    public String getCheckoutDate() {
+    public Date getCheckoutDate() {
         return checkoutDate;
     }
 
-    public void setCheckoutDate(String checkoutDate) {
+    public void setCheckoutDate(Date checkoutDate) {
         this.checkoutDate = checkoutDate;
     }
 
