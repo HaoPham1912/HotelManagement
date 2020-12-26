@@ -21,7 +21,7 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     @Query("SELECT r FROM Room r WHERE r.roomId not in :roomIdList and r.roomBranch.branchCode in :branchCode")
     Optional<Set<Room>> findRoomAvailable(Set<Long> roomIdList, String branchCode);
 
-    Optional<Set<Room>> findRoomByRoomBranch(String branchCode);
+    Optional<Set<Room>> findRoomByRoomBranch_BranchCode(String branchCode);
 
 
     Page<Room> findAllByRoomCodeContains(String roomCode, Pageable pageable);

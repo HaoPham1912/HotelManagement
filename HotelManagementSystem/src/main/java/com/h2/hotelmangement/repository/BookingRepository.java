@@ -21,4 +21,6 @@ public interface BookingRepository extends JpaRepository<Booking, BookingKey> {
 
     @Query("SELECT b.room from Booking b where b.bookingKey.checkinDate > :checkOut and b.checkoutDate < :checkIn ")
     Optional<Set<Room>> findRoomAvailableTime(Date checkIn, Date checkOut);
+
+    Optional<Booking> findByBills_Billid(String billId);
 }

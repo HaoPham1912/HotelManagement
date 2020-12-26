@@ -1,6 +1,8 @@
 package com.h2.hotelmangement.service.impl;
 
+import com.h2.hotelmangement.common.util.ModelMapperUtil;
 import com.h2.hotelmangement.entity.Bill;
+import com.h2.hotelmangement.model.dto.BillDTO;
 import com.h2.hotelmangement.repository.BillRepository;
 import com.h2.hotelmangement.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class BillServiceImpl implements BillService {
@@ -37,5 +41,11 @@ public class BillServiceImpl implements BillService {
     public Page<Bill> findPageBillByCusCode(String customerCode, int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         return billRepository.findAllByCustomer_CusCode(customerCode,pageable);
+    }
+
+    @Override
+    public Optional<Set<BillDTO>> findBillByCustomer(Long customerId) {
+        Optional<Set<Bill>> billList = billRepository.findByCustomer_CustomerId(customerId);
+        return Optional.ofNullable(ModelMapperUtil.mapAllToSet(billList.get(),BillDTO.class));
     }
 }
