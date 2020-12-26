@@ -4,6 +4,9 @@ import com.h2.hotelmangement.entity.Services;
 import com.h2.hotelmangement.repository.ServiceRepository;
 import com.h2.hotelmangement.service.ServicesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +45,18 @@ public class ServicesServiceImpl implements ServicesService {
     @Override
     public Services findServiceByCode(String serviceCode) {
         return serviceRepository.findByServiceCode(serviceCode);
+    }
+
+    @Override
+    public Page<Services> findPageSerives(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        return serviceRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Services> findPageServicesByName(String name, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        return serviceRepository.findAllByNameContains(name, pageable);
     }
 }
 

@@ -1,8 +1,8 @@
 import http from '../http-common';
 
 class ServicesService{
-    getAll(){
-        return http.get("/services");
+    getAll(params){
+        return http.get("/services",{params});
     }
 
     create(data){

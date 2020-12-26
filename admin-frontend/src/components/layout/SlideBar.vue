@@ -96,7 +96,7 @@
         >
       </router-link>
       <br />
-      <router-link to="/revenue" @click.native="activeItem = 11">
+      <router-link to="/bill" @click.native="activeItem = 11">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 11 && 'active'"
@@ -122,7 +122,7 @@ export default {
     };
   },
   beforeMount() {
-    this.activeItem = this.$route.matched[0].props.default.page;
+    this.activeItem = this.$route.matched[0];
   },
 };
 </script>

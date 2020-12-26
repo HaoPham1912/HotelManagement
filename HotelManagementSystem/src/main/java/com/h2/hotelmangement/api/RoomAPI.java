@@ -1,18 +1,21 @@
 package com.h2.hotelmangement.api;
 
+
 import com.h2.hotelmangement.Request.BookRoomDTO;
 import com.h2.hotelmangement.entity.Room;
 import com.h2.hotelmangement.model.dto.RoomDTO;
 import com.h2.hotelmangement.model.mapper.RoomMapper;
 import com.h2.hotelmangement.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
 
@@ -41,15 +44,28 @@ public class RoomAPI {
     }
 
     @GetMapping("room")
-    public ResponseEntity<List<RoomDTO>> getListRoom(){
-        List<Room> roomList = roomService.findAllRoom();
-        List<RoomDTO> roomDTOList = new ArrayList<>();
-
-        for (Room room : roomList) {
-            RoomDTO roomDTO = roomMapper.roomEntityToDto(room);
-            roomDTOList.add(roomDTO);
+    public ResponseEntity<Map<String, Object>> getListRoom(@RequestParam(required = false) String roomCode,
+                                           @RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
+                                           @RequestParam(value = "size", defaultValue = "3") int size){
+        try{
+            List<Room> roomList = new ArrayList<>();
+            Page<Room>  roomPage;
+            if(roomCode == null){
+                roomPage = roomService.getPageRoom(pageNo, size);
+            }else{
+                roomPage = roomService.getPageRoomByCode(roomCode,pageNo,size);
+            }
+            roomList = roomPage.getContent();
+            List<RoomDTO> roomDTOList = roomMapper.convertListRoomEntityToDto(roomList);
+            Map<String, Object> response = new HashMap<>();
+            response.put("rooms", roomDTOList);
+            response.put("currentPage", roomPage.getNumber());
+            response.put("totalItems", roomPage.getTotalElements());
+            response.put("totalPages", roomPage.getTotalPages());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(roomDTOList, HttpStatus.OK);
     }
 
     @GetMapping("room/{code}")

@@ -211,6 +211,6 @@ export default {
 #paging {
   position: absolute;
   bottom: 0;
-  right: 700px;
+  right: 80px;
 }
 </style>

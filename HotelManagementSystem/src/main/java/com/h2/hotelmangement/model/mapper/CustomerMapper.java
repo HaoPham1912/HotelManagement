@@ -26,11 +26,21 @@ public class CustomerMapper {
         customerDTO.setCustomerId(customer.getCustomerId().toString());
         customerDTO.setCustomerCode(customer.getCusCode());
         customerDTO.setEmail(customer.getEmail());
-        customerDTO.setUserName(customer.getAccountCus().getUsername());
+        if(customer.getAccountCus() != null){
+            customerDTO.setUserName(customer.getAccountCus().getUsername());
+        }else{
+            customerDTO.setUserName("");
+        }
+
         customerDTO.setIdCard(customer.getIdCard());
         customerDTO.setName(customer.getName());
         customerDTO.setPhone(customer.getPhone());
-        customerDTO.setCustomerType(customer.getCustomerType().getTypeName());
+        if(customer.getCustomerType() != null){
+            customerDTO.setCustomerType(customer.getCustomerType().getTypeName());
+        }else{
+            customerDTO.setCustomerType("");
+        }
+
 
         return customerDTO;
     }

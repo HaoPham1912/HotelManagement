@@ -5,6 +5,9 @@ import com.h2.hotelmangement.entity.Customer;
 import com.h2.hotelmangement.repository.CustomerRepository;
 import com.h2.hotelmangement.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +20,18 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
+
     @Override
-    public List<Customer> findAllCustomer() {
-        return customerRepository.findAll();
+    public Page<Customer> findAllCustomer(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Customer> customerPage = customerRepository.findAll(pageable);
+        return customerPage;
+    }
+
+    @Override
+    public Page<Customer> findAllCustomerByName(String name, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        return customerRepository.findAllByNameContains(name,pageable);
     }
 
     @Override

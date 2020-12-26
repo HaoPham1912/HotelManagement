@@ -35,11 +35,7 @@ public class Branch {
     @Column(name = "rating", columnDefinition = "float default 0")
     private float rating;
 
-    @Column(name = "mainimage")
-    @Type(type = "text")
-    private String mainImage;
-
-    @Column(name = "status", nullable = false, columnDefinition = "boolean default true")
+    @Column(name = "status", columnDefinition = "boolean default true")
     private Boolean status;
 
     @Column(name = "description")
@@ -145,13 +141,6 @@ public class Branch {
         this.description = description;
     }
 
-    public String getMainImage() {
-        return mainImage;
-    }
-
-    public void setMainImage(String mainImage) {
-        this.mainImage = mainImage;
-    }
 
     @Override
     public String toString() {
@@ -162,7 +151,6 @@ public class Branch {
                 ", address='" + address + '\'' +
                 ", location='" + location + '\'' +
                 ", rating=" + rating +
-                ", mainImage='" + mainImage + '\'' +
                 ", status=" + status +
                 ", description='" + description + '\'' +
                 ", employeeSet=" + employeeSet +

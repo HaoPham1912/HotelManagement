@@ -1,11 +1,16 @@
 package com.h2.hotelmangement.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "customers")
-public class Customer extends BaseEntity {
+@DynamicInsert
+@DynamicUpdate
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

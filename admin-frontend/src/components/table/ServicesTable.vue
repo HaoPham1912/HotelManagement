@@ -4,10 +4,35 @@
       <mdb-col md="2"></mdb-col>
       <mdb-col md="10">
         <mdb-card class="mb-4">
-          <div class="link-add">
-            <a href="/service/add" type="button" class="btn btn-success">
-              Add new Service
-            </a>
+          <div class="row">
+            <div class="col-md-9">
+              <a href="/service/add" type="button" class="btn btn-success">
+                Add new Service
+              </a>
+            </div>
+            <div class="col-md-3">
+              <div class="input-group md-form form-sm form-2 pl-0">
+                <input
+                  class="form-control my-0 py-1 lime-border"
+                  type="text"
+                  placeholder="Search by Name"
+                  aria-label="Search"
+                  name="searchName"
+                  v-model="searchName"
+                />
+                <div class="input-group-append">
+                  <button
+                    class="input-group-text lime lighten-2"
+                    id="basic-text1"
+                    type="submit"
+                  >
+                    <span>
+                      <mdbIcon icon="search" />
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
           <mdb-card-body>
             <mdb-tbl>
@@ -72,13 +97,26 @@
               </tbody>
             </mdb-tbl>
           </mdb-card-body>
+          <br />
+          <div id="paging">
+            <b-pagination
+              v-model="page"
+              :total-rows="count"
+              :per-page="pageSize"
+              first-text="First"
+              prev-text="Prev"
+              next-text="Next"
+              last-text="Last"
+              @change="handlePageChange"
+            ></b-pagination>
+          </div>
         </mdb-card>
       </mdb-col>
     </mdb-row>
   </section>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl } from 'mdbvue';
+import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
 
 import ServicesService from '../../services/ServicesService';
 export default {
@@ -88,18 +126,49 @@ export default {
     mdbCard,
     mdbCardBody,
     mdbTbl,
+    mdbIcon,
   },
   data() {
     return {
       services: [],
       currentService: {},
+      currentIndex: -1,
+      searchName: '',
+
+      page: 1,
+      count: 0,
+      pageSize: 3,
+
+      pageSizes: [3, 6, 9],
     };
   },
   methods: {
+    getRequestParams(searchName, page, pageSize) {
+      let params = {};
+
+      if (searchName) {
+        params['name'] = searchName;
+      }
+      if (page) {
+        params['pageNo'] = page - 1;
+      }
+      if (pageSize) {
+        params['size'] = pageSize;
+      }
+
+      return params;
+    },
     retrieveAll() {
-      ServicesService.getAll()
+      const params = this.getRequestParams(
+        this.searchName,
+        this.page,
+        this.pageSize
+      );
+      ServicesService.getAll(params)
         .then((response) => {
-          this.services = response.data;
+          const { services, totalItems } = response.data;
+          this.services = services;
+          this.count = totalItems;
           console.log(response.data);
           if (this.services.status === true) {
             this.messageTooltip = 'Disable this service';
@@ -135,6 +204,21 @@ export default {
         .catch((e) => {
           console.log(e);
         });
+    },
+    handlePageChange(value) {
+      this.page = value;
+      this.retrieveAll();
+    },
+
+    handlePageSizeChange(event) {
+      this.pageSize = event.target.value;
+      this.page = 1;
+      this.retrieveAll();
+    },
+
+    handelSearch() {
+      this.page = 1;
+      this.retrieveAll();
     },
     setTextTooltip(text) {
       if (text === true) {

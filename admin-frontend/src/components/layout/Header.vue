@@ -1,23 +1,22 @@
 <template>
   <!--Navbar-->
   <mdb-navbar class="flexible-navbar white" light position="top" scrolling>
-    <mdb-navbar-brand href="" target="_blank"
-      >Manage Dashboard</mdb-navbar-brand
-    >
+    <mdb-navbar-brand href="" target="_blank">Admin Dashboard</mdb-navbar-brand>
     <mdb-navbar-toggler>
-      <mdb-navbar-nav left>
-        <!-- <mdb-nav-item to="/account" waves-fixed>Home</mdb-nav-item> -->
-      </mdb-navbar-nav>
       <mdb-navbar-nav right>
-        <mdb-nav-item to="/" waves-fixed>Logout</mdb-nav-item>
-        <!--Avatar-->
-        <div class="avatar mx-auto white">
-          <img
-            src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg"
-            alt="avatar mx-auto white"
-            class="rounded-circle img-fluid"
-          />
-        </div>
+        <mdb-dropdown>
+          <mdb-dropdown-toggle slot="toggle"
+            ><img
+              src="https://cdn1.iconfinder.com/data/icons/avatar-97/32/avatar-02-512.png"
+              alt=""
+          /></mdb-dropdown-toggle>
+
+          <mdb-dropdown-menu>
+            <mdb-dropdown-item to="/editProfie">Profie</mdb-dropdown-item>
+            <div class="dropdown-divider"></div>
+            <mdb-dropdown-item>Log out</mdb-dropdown-item>
+          </mdb-dropdown-menu>
+        </mdb-dropdown>
       </mdb-navbar-nav>
     </mdb-navbar-toggler>
   </mdb-navbar>
@@ -26,15 +25,21 @@
 <script>
 import {
   mdbNavbarBrand,
-  mdbNavItem,
   mdbNavbarNav,
   mdbNavbarToggler,
   mdbNavbar,
+  mdbDropdown,
+  mdbDropdownItem,
+  mdbDropdownMenu,
+  mdbDropdownToggle,
 } from 'mdbvue';
 export default {
   components: {
     mdbNavbarBrand,
-    mdbNavItem,
+    mdbDropdown,
+    mdbDropdownItem,
+    mdbDropdownMenu,
+    mdbDropdownToggle,
     mdbNavbarNav,
     mdbNavbarToggler,
     mdbNavbar,
@@ -49,6 +54,16 @@ export default {
 
 .avatar {
   width: 50px;
+  height: 50px;
+}
+.bg-custom-1 {
+  background-color: #85144b;
+}
+
+.bg-custom-2 {
+  background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+}
+img {
   height: 50px;
 }
 </style>

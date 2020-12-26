@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BedRepository extends PagingAndSortingRepository<Bed, Long> {
-    Page<Bed> findByName(String name, Pageable pageable);
+    Page<Bed> findAllByNameContains(String name, Pageable pageable);
 }

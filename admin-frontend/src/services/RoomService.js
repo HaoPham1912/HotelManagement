@@ -1,8 +1,8 @@
 import http from '../http-common';
 
 class RoomService{
-    getAll(){
-        return http.get("/room");
+    getAll(params){
+        return http.get("/room",{params});
     }
 }
 

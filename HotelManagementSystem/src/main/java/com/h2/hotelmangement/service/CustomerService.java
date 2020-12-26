@@ -2,13 +2,16 @@ package com.h2.hotelmangement.service;
 
 import com.h2.hotelmangement.Request.UserInfoUpdateDTO;
 import com.h2.hotelmangement.entity.Customer;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Set;
 
 public interface CustomerService {
 
-    List<Customer> findAllCustomer();
+    Page<Customer> findAllCustomer(int pageNo, int pageSize);
+
+    Page<Customer> findAllCustomerByName(String name, int pageNo, int pageSize);
 
     List<Customer> getCusByCusType(String customerType);
 

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="190.85297619047623" y="467.0">com.h2.hotelmangement.service.AccountService</node>
+    <node x="919.8529761904763" y="511.0">com.h2.hotelmangement.repository.AccountRepository</node>
+    <node x="28.408333333333303" y="731.0">com.h2.hotelmangement.service.impl.AccountServiceImpl</node>
+    <node x="542.9083333333333" y="720.0">com.h2.hotelmangement.api.AccountAPI</node>
+    <node x="870.0875000000001" y="0.0">com.h2.hotelmangement.entity.BaseEntity</node>
+    <node x="167.2458333333334" y="191.5">com.h2.hotelmangement.model.dto.AccountDTO</node>
+    <node x="549.8529761904763" y="511.0">com.h2.hotelmangement.model.mapper.AccountMapper</node>
+    <node x="865.5875000000001" y="169.0">com.h2.hotelmangement.entity.Account</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.h2.hotelmangement.api.AccountAPI" target="com.h2.hotelmangement.model.mapper.AccountMapper">
+      <point x="-33.25" y="-104.0" />
+      <point x="709.1583333333333" y="650.0" />
+      <point x="637.3529761904763" y="650.0" />
+      <point x="-87.5" y="37.5" />
+    </edge>
+    <edge source="com.h2.hotelmangement.model.mapper.AccountMapper" target="com.h2.hotelmangement.entity.Account">
+      <point x="116.66666666666669" y="-37.5" />
+      <point x="841.5196428571429" y="447.0" />
+      <point x="923.0875000000001" y="447.0" />
+      <point x="-11.5" y="104.0" />
+    </edge>
+    <edge source="com.h2.hotelmangement.service.AccountService" target="com.h2.hotelmangement.model.dto.AccountDTO">
+      <point x="-84.75" y="-81.5" />
+      <point x="275.6029761904762" y="417.0" />
+      <point x="252.41250000000014" y="417.0" />
+      <point x="12.166666666666742" y="81.5" />
+    </edge>
+    <edge source="com.h2.hotelmangement.service.AccountService" target="com.h2.hotelmangement.entity.Account">
+      <point x="84.75" y="-81.5" />
+      <point x="445.1029761904762" y="437.0" />
+      <point x="900.0875000000001" y="437.0" />
+      <point x="-34.5" y="104.0" />
+    </edge>
+    <edge source="com.h2.hotelmangement.service.impl.AccountServiceImpl" target="com.h2.hotelmangement.model.dto.AccountDTO">
+      <point x="-135.60000000000002" y="-93.0" />
+      <point x="62.30833333333328" y="700.0" />
+      <point x="15.0" y="700.0" />
+      <point x="15.0" y="397.0" />
+      <point x="179.41250000000002" y="397.0" />
+      <point x="-60.83333333333337" y="81.5" />
+    </edge>
+    <edge source="com.h2.hotelmangement.service.impl.AccountServiceImpl" target="com.h2.hotelmangement.entity.Account">
+      <point x="0.0" y="-93.0" />
+      <point x="197.9083333333333" y="700.0" />
+      <point x="180.35297619047623" y="700.0" />
+      <point x="180.35297619047623" y="427.0" />
+      <point x="877.0875000000001" y="427.0" />
+      <point x="-57.5" y="104.0" />
+    </edge>
+    <edge source="com.h2.hotelmangement.api.AccountAPI" target="com.h2.hotelmangement.model.dto.AccountDTO">
+      <point x="-166.25" y="-104.0" />
+      <point x="576.1583333333333" y="670.0" />
+      <point x="120.74166666666667" y="670.0" />
+      <point x="120.74166666666667" y="417.0" />
+      <point x="228.07916666666665" y="417.0" />
+      <point x="-12.166666666666742" y="81.5" />
+    </edge>
+    <edge source="com.h2.hotelmangement.entity.Account" target="com.h2.hotelmangement.entity.BaseEntity">
+      <point x="0.0" y="-104.0" />
+      <point x="0.0" y="59.5" />
+    </edge>
+    <edge source="com.h2.hotelmangement.api.AccountAPI" target="com.h2.hotelmangement.service.AccountService">
+      <point x="-99.75" y="-104.0" />
+      <point x="642.6583333333333" y="660.0" />
+      <point x="445.1029761904762" y="660.0" />
+      <point x="84.75" y="81.5" />
+    </edge>
+    <edge source="com.h2.hotelmangement.service.impl.AccountServiceImpl" target="com.h2.hotelmangement.service.AccountService">
+      <point x="67.79999999999995" y="-93.0" />
+      <point x="265.70833333333326" y="700.0" />
+      <point x="275.6029761904762" y="700.0" />
+      <point x="-84.75" y="81.5" />
+    </edge>
+    <edge source="com.h2.hotelmangement.service.impl.AccountServiceImpl" target="com.h2.hotelmangement.repository.AccountRepository">
+      <point x="135.5999999999999" y="-93.0" />
+      <point x="333.5083333333332" y="680.0" />
+      <point x="1104.3529761904763" y="680.0" />
+      <point x="0.0" y="37.5" />
+    </edge>
+    <edge source="com.h2.hotelmangement.model.mapper.AccountMapper" target="com.h2.hotelmangement.model.dto.AccountDTO">
+      <point x="-116.66666666666669" y="-37.5" />
+      <point x="608.1863095238095" y="407.0" />
+      <point x="276.7458333333334" y="407.0" />
+      <point x="36.5" y="81.5" />
+    </edge>
+    <edge source="com.h2.hotelmangement.api.AccountAPI" target="com.h2.hotelmangement.entity.Account">
+      <point x="99.75" y="-104.0" />
+      <point x="842.1583333333333" y="690.0" />
+      <point x="1367.8291666666667" y="690.0" />
+      <point x="1367.8291666666667" y="437.0" />
+      <point x="969.0875000000001" y="437.0" />
+      <point x="34.5" y="104.0" />
+    </edge>
+    <edge source="com.h2.hotelmangement.repository.AccountRepository" target="com.h2.hotelmangement.entity.Account">
+      <point x="0.0" y="-37.5" />
+      <point x="1104.3529761904763" y="447.0" />
+      <point x="946.0875000000001" y="447.0" />
+      <point x="11.5" y="104.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="653.5" y="521.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

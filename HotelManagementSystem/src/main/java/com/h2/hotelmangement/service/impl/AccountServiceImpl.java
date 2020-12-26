@@ -6,6 +6,9 @@ import com.h2.hotelmangement.model.dto.AccountDTO;
 import com.h2.hotelmangement.repository.AccountRepository;
 import com.h2.hotelmangement.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,14 +40,30 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> findAll() {
-        return accountRepository.findAll();
+    public Page<Account> findAll(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Account> accountPage = accountRepository.findAll(pageable);
+        return accountPage;
     }
 
 
     @Override
-    public void delete(Long accountId) {
-        accountRepository.deleteById(accountId);
+    public void delete(Long accountId) throws Exception {
+        Account account = accountRepository.getOne(accountId);
+        if(account != null){
+            Boolean accountStatus = account.getStatus();
+            account.setStatus(!accountStatus);
+            accountRepository.save(account);
+        }else{
+            throw new Exception("Can noi find account with id "+accountId);
+        }
+    }
+
+    @Override
+    public Page<Account> getAllAccountPagination(String username, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Account> accountPage = accountRepository.findAllByUsernameContains(username, pageable);
+        return accountPage;
     }
 
 }

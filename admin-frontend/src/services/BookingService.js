@@ -1,8 +1,8 @@
 import http from '../http-common';
 
 class BookingService{
-    getAll(){
-        return http.get("/booking");
+    getAll(params){
+        return http.get("/booking", {params});
     }
 }
 

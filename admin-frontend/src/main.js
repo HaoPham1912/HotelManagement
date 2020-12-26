@@ -2,6 +2,12 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import 'bootstrap-css-only/css/bootstrap.min.css'
 import 'mdbvue/lib/css/mdb.min.css'
 
+import VuejsDialog from 'vuejs-dialog';
+
+ 
+// include the default style
+import 'vuejs-dialog/dist/vuejs-dialog.min.css';
+
 import Vue from 'vue'
 import VeeValidate  from 'vee-validate'
 import { VTooltip, VPopover, VClosePopover } from 'v-tooltip'
@@ -23,6 +29,8 @@ Vue.component('v-popover', VPopover)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 Vue.use(VeeValidate)
+
+Vue.use(VuejsDialog);
 
 Vue.config.productionTip = false;
 

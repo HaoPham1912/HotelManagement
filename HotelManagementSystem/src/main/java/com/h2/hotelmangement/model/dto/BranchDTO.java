@@ -12,7 +12,7 @@ public class BranchDTO {
     private String description;
     private String branchName;
     private String rating;
-    private String status;
+    private Boolean status;
     private String location;
     private String mainImage;
 
@@ -100,11 +100,11 @@ public class BranchDTO {
         this.rating = rating;
     }
 
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

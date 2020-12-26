@@ -1,10 +1,8 @@
 package com.h2.hotelmangement.api;
 
-import com.h2.hotelmangement.entity.Account;
-import com.h2.hotelmangement.entity.Branch;
-import com.h2.hotelmangement.entity.Employee;
-import com.h2.hotelmangement.entity.Role;
+import com.h2.hotelmangement.entity.*;
 
+import com.h2.hotelmangement.model.dto.CustomerDTO;
 import com.h2.hotelmangement.model.dto.EmployeeDTO;
 import com.h2.hotelmangement.model.mapper.EmployeeMapper;
 import com.h2.hotelmangement.service.AccountService;
@@ -14,14 +12,12 @@ import com.h2.hotelmangement.service.RoleService;
 import org.jboss.weld.context.http.Http;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
 
@@ -45,9 +41,30 @@ public class EmployeeAPI {
     private EmployeeMapper employeeMapper = new EmployeeMapper();
 
     @GetMapping("/employee")
-    public ResponseEntity<List<EmployeeDTO>> getAllEmployee() {
-        List<EmployeeDTO> employeeDTOList = employeeMapper.listEmpEntityToDto(employeeService.findAllEmployee());
-        return new ResponseEntity<>(employeeDTOList, HttpStatus.OK);
+    public ResponseEntity<Map<String, Object>> getAllEmployee(@RequestParam(required = false) String name,
+                                                              @RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
+                                                              @RequestParam(value = "size", defaultValue = "3") int size) {
+        try {
+            List<Employee> employeeList = new ArrayList<Employee>();
+            Page<Employee> employeePage;
+            if (name == null) {
+                employeePage = employeeService.findAllEmployee(pageNo, size);
+            } else {
+                employeePage = employeeService.findAllEmployeeByName(name, pageNo, size);
+            }
+            employeeList = employeePage.getContent();
+            System.out.println(employeeList.get(0).toString());
+            List<EmployeeDTO> employeeDTOList = employeeMapper.listEmpEntityToDto(employeeList);
+            Map<String, Object> response = new HashMap<>();
+            response.put("employees", employeeDTOList);
+            response.put("currentPage", employeePage.getNumber());
+            response.put("totalItems", employeePage.getTotalElements());
+            response.put("totalPages", employeePage.getTotalPages());
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
     }
 
     @GetMapping("/employee/branch")

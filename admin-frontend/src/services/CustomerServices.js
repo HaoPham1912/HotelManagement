@@ -1,7 +1,7 @@
 import http from '../http-common';
 class CustomerService{
-    getAll(){
-        return http.get("/customer");
+    getAll(params){
+        return http.get("/customer",{params});
     }
 
     getCustomerById(id){

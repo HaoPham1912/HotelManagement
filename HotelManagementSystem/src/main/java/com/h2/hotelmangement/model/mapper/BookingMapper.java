@@ -13,9 +13,9 @@ public class BookingMapper {
 
         bookingDTO.setBillId(booking.getBookingKey().getBillId());
         bookingDTO.setRoomId(booking.getBookingKey().getRoomId());
-        bookingDTO.setBookDate(booking.getBookingKey().getBookDate());
-        bookingDTO.setCheckinDate(booking.getBookingKey().getCheckinDate());
-        bookingDTO.setCheckoutDate(booking.getCheckoutDate());
+        bookingDTO.setBookDate(booking.getBookingKey().getBookDate().toString());
+        bookingDTO.setCheckinDate(booking.getBookingKey().getCheckinDate().toString());
+        bookingDTO.setCheckoutDate(booking.getCheckoutDate().toString());
         bookingDTO.setPaidPrice(booking.getPaidPrice());
         bookingDTO.setStatus(booking.getStatus());
 

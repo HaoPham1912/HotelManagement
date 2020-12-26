@@ -5,11 +5,7 @@
       <mdb-col md="10">
         <mdb-card class="mb-4">
           <div class="row">
-            <div class="col-md-9">
-              <a href="/bed/add" type="button" class="btn btn-success">
-                Add new Bed
-              </a>
-            </div>
+            <div class="col-md-9"></div>
             <div class="col-md-3">
               <div class="input-group md-form form-sm form-2 pl-0">
                 <input
@@ -19,12 +15,14 @@
                   aria-label="Search"
                   name="searchName"
                   v-model="searchName"
+                  @keyup.enter="handelSearch"
                 />
                 <div class="input-group-append">
                   <button
                     class="input-group-text lime lighten-2"
                     id="basic-text1"
                     type="submit"
+                    @click="handelSearch"
                   >
                     <span>
                       <mdbIcon icon="search" />
@@ -43,21 +41,31 @@
                   <th>Customer Name</th>
                   <th>Create Date</th>
                   <th>Promo Code</th>
-                  <th>Total Price</th>
                   <th>Status</th>
+                  <th>Total Price</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(data, index) in bookings" :key="index">
+                <tr v-for="(data, index) in bills" :key="index">
                   <td>{{ data.billId }}</td>
-                  <td>{{ data.billId }}</td>
-                  <td>{{ data.bookDate }}</td>
-                  <td>{{ data.checkinDate }}</td>
-                  <td>{{ data.checkoutDate }}</td>
-                  <td>{{ data.paidPrice }}</td>
+                  <td>{{ data.customerCode }}</td>
+                  <td>{{ data.customerName }}</td>
+                  <td>{{ data.createDate }}</td>
+                  <td>{{ data.promoCode }}</td>
                   <td>{{ data.status }}</td>
+                  <td>{{ data.totalPrice }}</td>
                   <td class="action">
+                    <div>
+                      <button class="btn-sm btn-primary">
+                        <a
+                          class="btn-link-edit action-button"
+                          href="/detailBill"
+                        >
+                          <i class="fas fa-file-export"></i>
+                        </a>
+                      </button>
+                    </div>
                     <div>
                       <button class="btn-sm btn-warning">
                         <a
@@ -83,6 +91,19 @@
               </tbody>
             </mdb-tbl>
           </mdb-card-body>
+          <br />
+          <div id="paging">
+            <b-pagination
+              v-model="page"
+              :total-rows="count"
+              :per-page="pageSize"
+              first-text="First"
+              prev-text="Prev"
+              next-text="Next"
+              last-text="Last"
+              @change="handlePageChange"
+            ></b-pagination>
+          </div>
         </mdb-card>
       </mdb-col>
     </mdb-row>
@@ -93,6 +114,20 @@ import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
 
 import BillService from '../../services/BillService';
 export default {
+  data() {
+    return {
+      bills: [],
+      currentBill: null,
+      currentIndex: -1,
+      searchName: '',
+
+      page: 1,
+      count: 0,
+      pageSize: 3,
+
+      pageSizes: [3, 6, 9],
+    };
+  },
   components: {
     mdbRow,
     mdbCol,
@@ -102,22 +137,55 @@ export default {
     mdbIcon,
   },
   methods: {
+    getRequestParams(searchName, page, pageSize) {
+      let params = {};
+
+      if (searchName) {
+        params['customerCode'] = searchName;
+      }
+      if (page) {
+        params['pageNo'] = page - 1;
+      }
+      if (pageSize) {
+        params['size'] = pageSize;
+      }
+
+      return params;
+    },
     retrieveBill() {
-      BillService.getAll()
+      const params = this.getRequestParams(
+        this.searchName,
+        this.page,
+        this.pageSize
+      );
+      BillService.getAll(params)
         .then((response) => {
-          this.bills = response.data;
+          const { bills, totalItems } = response.data;
+          this.bills = bills;
+          this.count = totalItems;
           console.log(response.data);
         })
         .catch((e) => {
           console.log(e);
         });
     },
+    handlePageChange(value) {
+      this.page = value;
+      this.retrieveBill();
+    },
+
+    handlePageSizeChange(event) {
+      this.pageSize = event.target.value;
+      this.page = 1;
+      this.retrieveBill();
+    },
+
+    handelSearch() {
+      this.page = 1;
+      this.retrieveBill();
+    },
   },
-  data() {
-    return {
-      bills: [],
-    };
-  },
+
   mounted() {
     this.retrieveBill();
   },

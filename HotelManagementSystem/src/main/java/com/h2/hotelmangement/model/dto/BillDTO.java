@@ -7,6 +7,15 @@ public class BillDTO {
     private String totalPrice;
     private String customerCode;
     private String customerName;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getCustomerName() {
         return customerName;

@@ -8,6 +8,9 @@ import com.h2.hotelmangement.repository.BookingRepository;
 import com.h2.hotelmangement.repository.RoomRepository;
 import com.h2.hotelmangement.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -62,6 +65,18 @@ public class RoomServiceImpl implements RoomService {
         }
         Optional<Set<Room>> listRoomInBranch = roomRepository.findRoomByRoomBranch(bookRoomDTO.getBranch().getBranchCode());
         return Optional.ofNullable(ModelMapperUtil.mapAllToSet(listRoomInBranch.get(),RoomDTO.class));
+    }
+
+
+    public Page<Room> getPageRoom(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        return roomRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Room> getPageRoomByCode(String roomCode, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        return roomRepository.findAllByRoomCodeContains(roomCode,pageable);
     }
 
 }

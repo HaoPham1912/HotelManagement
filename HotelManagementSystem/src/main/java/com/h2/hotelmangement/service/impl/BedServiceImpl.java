@@ -38,7 +38,7 @@ public class BedServiceImpl implements BedService {
     @Override
     public Page<Bed> findAllBedByName(String name, int pageNo, int pageSize) {
        Pageable pageable = PageRequest.of(pageNo, pageSize);
-       Page<Bed> bedPage = bedRepository.findByName(name, pageable);
+       Page<Bed> bedPage = bedRepository.findAllByNameContains(name, pageable);
        return bedPage;
     }
 

@@ -1,5 +1,7 @@
 package com.h2.hotelmangement.config;
 
+import com.h2.hotelmangement.Request.AppUserDAO;
+import com.h2.hotelmangement.service.impl.ConnectionSignUpImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +21,8 @@ import org.springframework.social.connect.web.ConnectController;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableSocial
@@ -45,13 +49,13 @@ public class SocialConfig implements SocialConfigurer {
         }
 
         // Twitter
-        TwitterConnectionFactory tfactory = new TwitterConnectionFactory(//
-                env.getProperty("twitter.consumer.key"), //
-                env.getProperty("twitter.consumer.secret"));
-
-        // tfactory.setScope(env.getProperty("twitter.scope"));
-
-        cfConfig.addConnectionFactory(tfactory);
+//        TwitterConnectionFactory tfactory = new TwitterConnectionFactory(//
+//                env.getProperty("twitter.consumer.key"), //
+//                env.getProperty("twitter.consumer.secret"));
+//
+//        // tfactory.setScope(env.getProperty("twitter.scope"));
+//
+//        cfConfig.addConnectionFactory(tfactory);
 
         // Facebook
         FacebookConnectionFactory ffactory = new FacebookConnectionFactory(//
@@ -65,13 +69,13 @@ public class SocialConfig implements SocialConfigurer {
         cfConfig.addConnectionFactory(ffactory);
 
         // Linkedin
-        LinkedInConnectionFactory lfactory = new LinkedInConnectionFactory(//
-                env.getProperty("linkedin.consumer.key"), //
-                env.getProperty("linkedin.consumer.secret"));
-
-        lfactory.setScope(env.getProperty("linkedin.scope"));
-
-        cfConfig.addConnectionFactory(lfactory);
+//        LinkedInConnectionFactory lfactory = new LinkedInConnectionFactory(//
+//                env.getProperty("linkedin.consumer.key"), //
+//                env.getProperty("linkedin.consumer.secret"));
+//
+//        lfactory.setScope(env.getProperty("linkedin.scope"));
+//
+//        cfConfig.addConnectionFactory(lfactory);
 
         // Google
         GoogleConnectionFactory gfactory = new GoogleConnectionFactory(//

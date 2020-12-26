@@ -6,9 +6,12 @@ import com.h2.hotelmangement.model.dto.BranchDTO;
 import com.h2.hotelmangement.repository.BranchRepository;
 import com.h2.hotelmangement.service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.thymeleaf.util.ObjectUtils;
+
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -59,9 +62,21 @@ public class BranchServiceImpl implements BranchService {
     public Optional<Set<String>> getListLocation() {
         Set<String> listLocation = new HashSet<>();
         List<Branch> listBranch = getAllBranch();
-        if(!CollectionUtils.isEmpty(listBranch)){
+        if (!CollectionUtils.isEmpty(listBranch)) {
             listLocation = listBranch.stream().map(branch -> branch.getLocation()).collect(Collectors.toSet());
         }
         return Optional.ofNullable(listLocation);
+    }
+
+    public Page<Branch> getAllBranchPage(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        return branchRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Branch> getAllBranchPageByName(String name, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        return branchRepository.findAllByBranchCodeContains(name, pageable);
+
     }
 }

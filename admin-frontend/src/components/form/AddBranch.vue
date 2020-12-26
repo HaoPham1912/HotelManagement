@@ -51,74 +51,79 @@
         required
       />
     </div>
-    <div class="form-outline mb-4">
-      <label for="image">Choose Main Image</label>
-      <div>
-        <v-btn @click="click1">choose photo</v-btn>
-        <input
-          type="file"
-          ref="input1"
-          style="display: none"
-          @change="previewImage"
-          accept="image/*"
-          required
-        />
+    <div class="image-list">
+      <div class="group-img">
+        <div v-if="imageData != null">
+          <img class="preview" height="268" width="356" :src="imageShow" />
+        </div>
+
+        <div class="form-outline mb-4">
+          <v-btn class="btn-add-img" @click="click1">choose photo</v-btn>
+          <input
+            type="file"
+            ref="input1"
+            style="display: none"
+            @change="previewImage"
+            accept="image/*"
+            required
+          />
+        </div>
       </div>
       <br />
-      <div v-if="imageData != null">
-        <img class="preview" height="268" width="356" :src="imageShow" />
+      <div class="group-img">
+        <div v-if="imageData2 != null">
+          <img class="preview" height="268" width="356" :src="imageShow2" />
+          <br />
+        </div>
+        <div>
+          <v-btn class="btn-add-img" @click="click2">choose photo</v-btn>
+          <input
+            type="file"
+            ref="input2"
+            style="display: none"
+            @change="previewImage2"
+            accept="image/*"
+          />
+        </div>
         <br />
       </div>
       <br />
-      <label for="image">Choose Sub Image</label>
-      <div>
-        <v-btn @click="click2">choose photo</v-btn>
-        <input
-          type="file"
-          ref="input2"
-          style="display: none"
-          @change="previewImage2"
-          accept="image/*"
-        />
-      </div>
-      <br />
-      <div v-if="imageData != null">
-        <img class="preview" height="268" width="356" :src="imageShow2" />
+      <div class="group-img">
+        <div v-if="imageData3 != null">
+          <img class="preview" height="268" width="356" :src="imageShow3" />
+          <br />
+        </div>
+        <div>
+          <v-btn class="btn-add-img" @click="click3">choose photo</v-btn>
+          <input
+            type="file"
+            ref="input3"
+            style="display: none"
+            @change="previewImage3"
+            accept="image/*"
+          />
+        </div>
         <br />
       </div>
       <br />
-      <div>
-        <v-btn @click="click3">choose photo</v-btn>
-        <input
-          type="file"
-          ref="input3"
-          style="display: none"
-          @change="previewImage3"
-          accept="image/*"
-        />
-      </div>
-      <br />
-      <div v-if="imageData != null">
-        <img class="preview" height="268" width="356" :src="imageShow3" />
-        <br />
-      </div>
-      <br />
-      <div>
-        <v-btn @click="click4">choose photo</v-btn>
-        <input
-          type="file"
-          ref="input4"
-          style="display: none"
-          @change="previewImage4"
-          accept="image/*"
-        />
-      </div>
-      <br />
-      <div v-if="imageData != null">
-        <img class="preview" height="268" width="356" :src="imageShow4" />
-        <br />
+      <div class="group-img">
+        <div v-if="imageData4 != null">
+          <img class="preview" height="268" width="356" :src="imageShow4" />
+          <br />
+        </div>
+        <div>
+          <v-btn class="btn-add-img" @click="click4">choose photo</v-btn>
+          <input
+            type="file"
+            ref="input4"
+            style="display: none"
+            @change="previewImage4"
+            accept="image/*"
+          />
+        </div>
       </div>
     </div>
+    <br />
     <button type="submit" class="btn btn-primary btn-block mb-4">
       Add New Branch
     </button>
@@ -143,6 +148,9 @@ export default {
       imgSubList: [],
       img1: '',
       imageData: null,
+      imageData2: null,
+      imageData3: null,
+      imageData4: null,
       imageShow: '',
       imageShow2: '',
       imageShow3: '',
@@ -198,7 +206,7 @@ export default {
         await this.onUpload();
       });
       fileReader.readAsDataURL(files[0]);
-      this.imageData = event.target.files[0];
+      this.imageData2 = event.target.files[0];
     },
     previewImage3(event) {
       // this.uploadValue = 0;
@@ -217,7 +225,7 @@ export default {
         await this.onUpload();
       });
       fileReader.readAsDataURL(files[0]);
-      this.imageData = event.target.files[0];
+      this.imageData3 = event.target.files[0];
     },
     previewImage4(event) {
       // this.uploadValue = 0;
@@ -236,7 +244,7 @@ export default {
         await this.onUpload();
       });
       fileReader.readAsDataURL(files[0]);
-      this.imageData = event.target.files[0];
+      this.imageData4 = event.target.files[0];
     },
     onUpload() {
       const storageRef = firebase
@@ -307,5 +315,18 @@ export default {
 <style scoped>
 h3 {
   text-align: center;
+}
+
+.img-list {
+  display: flex;
+}
+
+.group-img {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-add-img {
+  margin-left: 10px;
 }
 </style>

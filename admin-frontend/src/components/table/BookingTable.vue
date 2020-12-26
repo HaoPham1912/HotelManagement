@@ -5,13 +5,9 @@
       <mdb-col md="10">
         <mdb-card class="mb-4">
           <div class="row">
-            <div class="col-md-9">
-              <a href="/bed/add" type="button" class="btn btn-success">
-                Add new Bed
-              </a>
-            </div>
+            <div class="col-md-9"></div>
             <div class="col-md-3">
-              <div class="input-group md-form form-sm form-2 pl-0">
+              <!-- <div class="input-group md-form form-sm form-2 pl-0">
                 <input
                   class="form-control my-0 py-1 lime-border"
                   type="text"
@@ -31,7 +27,7 @@
                     </span>
                   </button>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <mdb-card-body>
@@ -89,7 +85,7 @@
   </section>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
+import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl } from 'mdbvue';
 
 import BookingService from '../../services/BookingService';
 export default {
@@ -99,7 +95,6 @@ export default {
     mdbCard,
     mdbCardBody,
     mdbTbl,
-    mdbIcon,
   },
   methods: {
     retrieveBookings() {

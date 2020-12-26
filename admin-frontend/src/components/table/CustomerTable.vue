@@ -4,10 +4,33 @@
       <mdb-col md="2"></mdb-col>
       <mdb-col md="10">
         <mdb-card class="mb-4">
-          <div class="link-add">
-            <a href="/customer/add" type="button" class="btn btn-success">
-              Add new Customer
-            </a>
+          <div class="row">
+            <div class="col-md-9"></div>
+            <div class="col-md-3">
+              <div class="input-group md-form form-sm form-2 pl-0">
+                <input
+                  class="form-control my-0 py-1 lime-border"
+                  type="text"
+                  placeholder="Search by Customer Name"
+                  aria-label="Search"
+                  name="searchName"
+                  v-model="searchName"
+                  @keyup.enter="handelSearch"
+                />
+                <div class="input-group-append">
+                  <button
+                    class="input-group-text lime lighten-2"
+                    id="basic-text1"
+                    type="submit"
+                    @click="handelSearch"
+                  >
+                    <span>
+                      <mdbIcon icon="search" />
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
           <mdb-card-body>
             <mdb-tbl>
@@ -25,15 +48,23 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(data, index) in results" :key="index">
+                <tr v-for="(data, index) in customers" :key="index">
                   <td>{{ data.customerId }}</td>
                   <td>{{ data.customerCode }}</td>
                   <td>{{ data.email }}</td>
                   <td>{{ data.idCard }}</td>
                   <td>{{ data.name }}</td>
                   <td>{{ data.phone }}</td>
-                  <td>{{ data.customerType }}</td>
-                  <td>{{ data.userName }}</td>
+                  <td v-if="data.customerType != ''">
+                    {{ data.customerType }}
+                  </td>
+                  <td class="spec" v-if="data.customerType == ''">
+                    No register
+                  </td>
+                  <td v-if="data.userName != ''">{{ data.userName }}</td>
+                  <td class="spec" v-if="data.userName == ''">
+                    No have account
+                  </td>
                   <td class="action">
                     <div>
                       <button
@@ -63,43 +94,102 @@
               </tbody>
             </mdb-tbl>
           </mdb-card-body>
+          <br />
+          <div id="paging">
+            <b-pagination
+              v-model="page"
+              :total-rows="count"
+              :per-page="pageSize"
+              first-text="First"
+              prev-text="Prev"
+              next-text="Next"
+              last-text="Last"
+              @change="handlePageChange"
+            ></b-pagination>
+          </div>
         </mdb-card>
       </mdb-col>
     </mdb-row>
   </section>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl } from 'mdbvue';
+import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
 
 import CustomerServices from '../../services/CustomerServices';
 export default {
+  data() {
+    return {
+      customers: [],
+      currentIndex: -1,
+      searchName: '',
+
+      page: 1,
+      count: 0,
+      pageSize: 3,
+
+      pageSizes: [3, 6, 9],
+    };
+  },
   components: {
     mdbRow,
     mdbCol,
     mdbCard,
     mdbCardBody,
     mdbTbl,
+    mdbIcon,
   },
   methods: {
+    getRequestParams(searchName, page, pageSize) {
+      let params = {};
+
+      if (searchName) {
+        params['name'] = searchName;
+      }
+      if (page) {
+        params['pageNo'] = page - 1;
+      }
+      if (pageSize) {
+        params['size'] = pageSize;
+      }
+
+      return params;
+    },
     retrieveCustomer() {
-      CustomerServices.getAll()
+      const params = this.getRequestParams(
+        this.searchName,
+        this.page,
+        this.pageSize
+      );
+      CustomerServices.getAll(params)
         .then((response) => {
-          this.results = response.data;
-          console.log(response.data);
+          const { customers, totalItems } = response.data;
+          this.customers = customers;
+          this.totalItems = totalItems;
         })
         .catch((e) => {
           console.log(e);
         });
     },
+    handlePageChange(value) {
+      this.page = value;
+      this.retrieveCustomer();
+    },
+
+    handlePageSizeChange(event) {
+      this.pageSize = event.target.value;
+      this.page = 1;
+      this.retrieveCustomer();
+    },
+
+    handelSearch() {
+      this.page = 1;
+      this.retrieveCustomer();
+    },
     getCustomerId(id) {
       console.log(id);
     },
   },
-  data() {
-    return {
-      results: [],
-    };
-  },
+
   mounted() {
     this.retrieveCustomer();
   },
@@ -116,5 +206,10 @@ a {
 }
 .link-add {
   margin-right: auto;
+}
+
+.spec {
+  color: red;
+  font-weight: bold;
 }
 </style>

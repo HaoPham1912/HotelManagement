@@ -13,14 +13,16 @@
                   type="text"
                   placeholder="Search by Username"
                   aria-label="Search"
-                  name="searchName"
-                  v-model="searchName"
+                  name="usernameSearch"
+                  v-model="usernameSearch"
+                  @keyup.enter="handelSearch"
                 />
                 <div class="input-group-append">
                   <button
                     class="input-group-text lime lighten-2"
                     id="basic-text1"
                     type="submit"
+                    @click="handelSearch"
                   >
                     <span>
                       <mdbIcon icon="search" />
@@ -51,12 +53,13 @@
                   <td>{{ data.roleName }}</td>
                   <td class="action">
                     <div>
-                      <button
+                      <mdb-btn
+                        color="warning"
                         class="btn-sm btn-warning"
-                        @click="getServiceCode(data.serviceCode)"
                         v-tooltip.top-center="{
                           content: 'Edit this account',
                         }"
+                        @click="bindingDataToModal(data.accountId)"
                       >
                         <i class="fas fa-pencil-alt"></i>
                         <a
@@ -64,42 +67,136 @@
                           :href="'account/' + data.accountId"
                         >
                         </a>
-                      </button>
+                      </mdb-btn>
                     </div>
                     <div>
-                      <button
+                      <mdb-btn
                         :class="{
                           'btn-sm btn-danger': data.status === 'true',
                           'btn-sm btn-success': data.status === 'false',
                         }"
+                        color="data.status : danger ? success"
+                        @click="deleteAccount(data.accountId)"
                         v-tooltip.top-center="{
                           content: setTextTooltip(data.status),
                         }"
                       >
-                        <a :href="'services/' + data.accountId"> </a>
+                        <a :href="'account/' + data.accountId"> </a>
                         <i
                           :class="{
                             'fas fa-ban': data.status === 'true',
                             'fas fa-plus': data.status === 'false',
                           }"
                         ></i>
-                      </button>
+                      </mdb-btn>
                     </div>
                   </td>
                 </tr>
               </tbody>
             </mdb-tbl>
+            <div>
+              <mdb-modal centered :show="modal" @close="modal = false">
+                <mdb-modal-header>
+                  <mdb-modal-title>Update Account Information</mdb-modal-title>
+                </mdb-modal-header>
+                <mdb-modal-body>
+                  <div>
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        id="username"
+                        class="form-control form-control-md"
+                        v-model="currentAccount.accountId"
+                        hidden
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="username">Username</label>
+                      <input
+                        type="text"
+                        id="username"
+                        class="form-control form-control-md"
+                        v-model="currentAccount.username"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="password">Password</label>
+                      <input
+                        type="text"
+                        id="password"
+                        class="form-control form-control-md"
+                        v-model="currentAccount.password"
+                      />
+                    </div></div
+                ></mdb-modal-body>
+                <mdb-modal-footer>
+                  <mdb-btn color="danger" @click.native="modal = false"
+                    >Close</mdb-btn
+                  >
+                  <mdb-btn
+                    color="primary"
+                    @click="updateAcount(currentAccount.accountId)"
+                    >Save changes</mdb-btn
+                  >
+                </mdb-modal-footer>
+              </mdb-modal>
+            </div>
           </mdb-card-body>
+          <br />
+          <div id="paging">
+            <b-pagination
+              v-model="page"
+              :total-rows="count"
+              :per-page="pageSize"
+              first-text="First"
+              prev-text="Prev"
+              next-text="Next"
+              last-text="Last"
+              @change="handlePageChange"
+            ></b-pagination>
+          </div>
         </mdb-card>
       </mdb-col>
     </mdb-row>
   </section>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
-
+import {
+  mdbRow,
+  mdbCol,
+  mdbCard,
+  mdbCardBody,
+  mdbTbl,
+  mdbIcon,
+  mdbModal,
+  mdbModalHeader,
+  mdbModalTitle,
+  mdbModalBody,
+  mdbModalFooter,
+  mdbBtn,
+} from 'mdbvue';
 import AccountService from '../../services/AccountService';
+
 export default {
+  data() {
+    return {
+      accounts: [],
+      currentAccount: {
+        accountId: '',
+        username: '',
+        password: '',
+      },
+      currentIndex: -1,
+      usernameSearch: '',
+
+      page: 1,
+      count: 0,
+      pageSize: 3,
+
+      pageSizes: [3, 6, 9],
+      modal: false,
+    };
+  },
   components: {
     mdbRow,
     mdbCol,
@@ -107,40 +204,140 @@ export default {
     mdbCardBody,
     mdbTbl,
     mdbIcon,
+    mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn,
   },
   methods: {
-    retrieveAccount() {
-      AccountService.getAll()
-        .then((response) => {
-          this.accounts = response.data;
-          console.log(response.data);
-        })
-        .catch((e) => {
-          console.log('error' + e);
-        });
+    getRequestParams(usernameSearch, page, pageSize) {
+      let params = {};
+
+      if (usernameSearch) {
+        params['username'] = usernameSearch;
+      }
+      if (page) {
+        params['pageNo'] = page - 1;
+      }
+      if (pageSize) {
+        params['size'] = pageSize;
+      }
+
+      return params;
     },
-    disableAccount() {
-      AccountService.disableAccount(this.accounts.accountId, this.accounts)
+
+    bindingDataToModal(id) {
+      console.log(id);
+      this.modal = true;
+      AccountService.getById(id)
         .then((response) => {
-          console.log(response.data);
+          this.currentAccount = response.data;
         })
         .catch((e) => {
           console.log(e);
         });
     },
+
+    retrieveAccount() {
+      const params = this.getRequestParams(
+        this.usernameSearch,
+        this.page,
+        this.pageSize
+      );
+      AccountService.getAll(params)
+        .then((response) => {
+          const { accounts, totalItems } = response.data;
+          this.accounts = accounts;
+          this.count = totalItems;
+          console.log(response.data);
+          if (this.accounts.status === 'true') {
+            this.messageTooltip = 'Disable this account';
+          } else {
+            this.messageTooltip = 'Enable this account';
+          }
+        })
+        .catch((e) => {
+          console.log('error' + e);
+        });
+    },
+
+    retrieveAvailAccount() {
+      AccountService.getAll()
+        .then((response) => {
+          for (var i = 0, l = response.data.length; i < l; i++) {
+            var obj = response.data[i];
+            if (obj.status === 'true') {
+              this.accounts.push(obj);
+            }
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+
+    deleteAccount(id) {
+      AccountService.disableAccount(id)
+        .then(() => {
+          AccountService.getAll().then((response) => {
+            const { accounts, totalItems } = response.data;
+            this.accounts = accounts;
+            this.count = totalItems;
+            console.log(response.data);
+            if (this.accounts.status === 'true') {
+              this.messageTooltip = 'Disable this account';
+            } else {
+              this.messageTooltip = 'Enable this account';
+            }
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+
+    updateAcount(id) {
+      var data = {
+        accountId: this.currentAccount.accountId,
+        username: this.currentAccount.username,
+        password: this.currentAccount.password,
+      };
+
+      AccountService.updateAccount(id, data)
+        .then(() => {
+          this.modal = false;
+          this.retrieveAccount();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+
+    handlePageChange(value) {
+      this.page = value;
+      this.retrieveAccount();
+    },
+
+    handlePageSizeChange(event) {
+      this.pageSize = event.target.value;
+      this.page = 1;
+      this.retrieveAccount();
+    },
+    handelSearch() {
+      this.page = 1;
+      this.retrieveAccount();
+    },
     setTextTooltip(text) {
-      if (text === true) {
+      if (text === 'true') {
         return 'Disable this acoount';
       } else {
         return 'Enable this account';
       }
     },
   },
-  data() {
-    return {
-      accounts: [],
-    };
-  },
+
   mounted() {
     this.retrieveAccount();
   },

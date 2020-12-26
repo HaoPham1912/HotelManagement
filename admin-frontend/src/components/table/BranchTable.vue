@@ -4,10 +4,37 @@
       <mdb-col md="2"></mdb-col>
       <mdb-col md="10">
         <mdb-card class="mb-4">
-          <div class="link-add">
-            <a href="/branch/add" type="button" class="btn btn-success">
-              Add new Branch
-            </a>
+          <div class="row">
+            <div class="col-md-9">
+              <a href="/branch/add" type="button" class="btn btn-success">
+                Add new Branch
+              </a>
+            </div>
+            <div class="col-md-3">
+              <div class="input-group md-form form-sm form-2 pl-0">
+                <input
+                  class="form-control my-0 py-1 lime-border"
+                  type="text"
+                  placeholder="Search by Branch Code"
+                  aria-label="Search"
+                  name="branchCode"
+                  v-model="branchCode"
+                  @keyup.enter="handelSearch"
+                />
+                <div class="input-group-append">
+                  <button
+                    class="input-group-text lime lighten-2"
+                    id="basic-text1"
+                    type="submit"
+                    @click="handelSearch"
+                  >
+                    <span>
+                      <mdbIcon icon="search" />
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
           <mdb-card-body>
             <mdb-tbl>
@@ -30,8 +57,12 @@
                       data.branchCode
                     }}</a>
                   </td>
-                  <td>{{ data.address }}</td>
-                  <td class="description">{{ data.description }}</td>
+                  <td>
+                    <p class="address">{{ data.address }}</p>
+                  </td>
+                  <td class="description">
+                    <p>{{ data.description }}</p>
+                  </td>
                   <td>{{ data.branchName }}</td>
                   <td>{{ data.status }}</td>
                   <td class="action">
@@ -60,40 +91,101 @@
               </tbody>
             </mdb-tbl>
           </mdb-card-body>
+          <br />
+          <div id="paging">
+            <b-pagination
+              v-model="page"
+              :total-rows="count"
+              :per-page="pageSize"
+              first-text="First"
+              prev-text="Prev"
+              next-text="Next"
+              last-text="Last"
+              @change="handlePageChange"
+            ></b-pagination>
+          </div>
         </mdb-card>
       </mdb-col>
     </mdb-row>
   </section>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl } from 'mdbvue';
+import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
 
 import BranchService from '../../services/BranchService';
 export default {
+  data() {
+    return {
+      branchs: [],
+      currentBranch: null,
+      currentIndex: -1,
+      branchCode: '',
+
+      page: 1,
+      count: 0,
+      pageSize: 3,
+
+      pageSizes: [3, 6, 9],
+    };
+  },
   components: {
     mdbRow,
     mdbCol,
     mdbCard,
     mdbCardBody,
     mdbTbl,
+    mdbIcon,
   },
   methods: {
+    getRequestParams(branchCode, page, pageSize) {
+      let params = {};
+
+      if (branchCode) {
+        params['branchCode'] = branchCode;
+      }
+      if (page) {
+        params['pageNo'] = page - 1;
+      }
+      if (pageSize) {
+        params['size'] = pageSize;
+      }
+
+      return params;
+    },
     retrieveBranch() {
-      BranchService.getAll()
+      const params = this.getRequestParams(
+        this.branchCode,
+        this.page,
+        this.pageSize
+      );
+      BranchService.getAll(params)
         .then((response) => {
-          this.branchs = response.data;
+          const { branchs, totalItems } = response.data;
+          this.branchs = branchs;
+          this.count = totalItems;
           console.log(response.data);
         })
         .catch((e) => {
           console.log(e);
         });
     },
+    handlePageChange(value) {
+      this.page = value;
+      this.retrieveBranch();
+    },
+
+    handlePageSizeChange(event) {
+      this.pageSize = event.target.value;
+      this.page = 1;
+      this.retrieveBranch();
+    },
+
+    handelSearch() {
+      this.page = 1;
+      this.retrieveBranch();
+    },
   },
-  data() {
-    return {
-      branchs: [],
-    };
-  },
+
   mounted() {
     this.retrieveBranch();
   },
@@ -114,5 +206,15 @@ a {
 
 .description {
   overflow-wrap: break-word;
+}
+
+.description {
+  word-wrap: break-word;
+  width: 300px;
+}
+
+.address {
+  word-wrap: break-word;
+  width: 200px;
 }
 </style>

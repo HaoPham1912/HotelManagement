@@ -1,8 +1,8 @@
 import http from '../http-common';
 
 class BillService{
-    getAll(){
-        return http.get("/bill");
+    getAll(params){
+        return http.get("/bill",{params});
     }
 }
 export default new BillService();

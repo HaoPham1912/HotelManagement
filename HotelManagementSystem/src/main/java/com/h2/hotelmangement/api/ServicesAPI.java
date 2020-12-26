@@ -1,14 +1,22 @@
 package com.h2.hotelmangement.api;
 
+
+import com.h2.hotelmangement.entity.Services;
 import com.h2.hotelmangement.model.dto.ServicesDTO;
-import org.jboss.weld.util.Services;
+import com.h2.hotelmangement.model.mapper.ServiceMapper;
+import com.h2.hotelmangement.service.ServicesService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
 
@@ -23,11 +31,28 @@ public class ServicesAPI {
     private ServicesService servicesService;
 
     @GetMapping("/services")
-    public ResponseEntity<List<ServicesDTO>> getAllService(){
-        List<Services> servicesList = servicesService.findAllService();
-        List<ServicesDTO> servicesDTOList = serviceMapper.convertListServiceEntityToDto(servicesList);
-
-        return new ResponseEntity<>(servicesDTOList, HttpStatus.OK);
+    public ResponseEntity<Map<String, Object>> getAllService(@RequestParam(required = false) String name,
+                                                             @RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
+                                                             @RequestParam(value = "size", defaultValue = "3") int size){
+        try{
+            List<Services> servicesList = new ArrayList<>();
+            Page<Services> servicesPage;
+            if(name == null){
+                servicesPage = servicesService.findPageSerives(pageNo, size);
+            }else{
+                servicesPage = servicesService.findPageServicesByName(name,pageNo,size);
+            }
+            servicesList = servicesPage.getContent();
+            List<ServicesDTO> servicesDTOList = serviceMapper.convertListServiceEntityToDto(servicesList);
+            Map<String, Object> response = new HashMap<>();
+            response.put("services", servicesDTOList);
+            response.put("currentPage", servicesPage.getNumber());
+            response.put("totalItems", servicesPage.getTotalElements());
+            response.put("totalPages", servicesPage.getTotalPages());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/services")

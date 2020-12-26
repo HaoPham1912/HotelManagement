@@ -4,6 +4,9 @@ import com.h2.hotelmangement.entity.Employee;
 import com.h2.hotelmangement.repository.EmployeeRepository;
 import com.h2.hotelmangement.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +18,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
 
     @Override
-    public List<Employee> findAllEmployee() {
-        return employeeRepository.findAll();
+    public Page<Employee> findAllEmployee(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        return employeeRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Employee> findAllEmployeeByName(String name, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        return employeeRepository.findAllByNameContains(name, pageable);
     }
 
     @Override

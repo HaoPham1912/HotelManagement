@@ -12,8 +12,9 @@ import PolicyTable from '../components/table/PolicyTable.vue'
 import BedTable from '../components/table/BedTable.vue';
 import ServicesTable from '../components/table/ServicesTable.vue';
 import PromotionTable from '../components/table/PromotionTable.vue';
+import BillTable from '../components/table/BillTable.vue';
 
-import Chart from '../components/views/Chart.vue';
+
 import Login from '../components/form/Login.vue';
 import Register from '../components/form/Register.vue';
 import AddNewEmployee from '../components/form/AddEmployee.vue';
@@ -27,8 +28,10 @@ import AddBranch from '../components/form/AddBranch.vue';
 
 import EditService from '../components/form/EditService.vue';
 import EditCustomer from '../components/form/EditCustomer.vue';
+import EditProfie from '../components/form/EditProfie.vue';
 
 import DetailBranch from '../components/page/DetailBranch.vue';
+import DetailBill from '../components/form/DetailBill.vue';
 
 Vue.use(Router);
 
@@ -62,9 +65,9 @@ export default new Router({
           props: { page: 4 },
         },
         {
-          path: '/revenue',
-          name: 'Chart',
-          component: Chart,
+          path: '/bill',
+          name: 'BillTable',
+          component: BillTable,
           props: { page: 5 },
         },
         
@@ -161,7 +164,20 @@ export default new Router({
           component: EditCustomer,
           props: true,
         },
+        {
+          path: '/detailBill',
+          name: 'DetailBill',
+          component: DetailBill,
+          props: true,
+        },
+        {
+          path: '/editProfie',
+          name: 'editProfie',
+          component: EditProfie,
+          props: true,
+        },
         { path: '/reloadService', redirect: '/services' },
+        { path: '/reloadAccount', redirect: '/account' },
         { path: '/reloadPolicy', redirect: '/policy' }
       ]
       },

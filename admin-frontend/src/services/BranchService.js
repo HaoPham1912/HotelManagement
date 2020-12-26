@@ -1,8 +1,8 @@
 import http from '../http-common';
 
 class BranchService{
-    getAll(){
-        return http.get("/branch");
+    getAll(params){
+        return http.get("/branch",{params});
     }
 
     getBranchByCode(branchCode){

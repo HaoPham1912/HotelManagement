@@ -16,6 +16,7 @@ public class BillMapper {
         billDTO.setTotalPrice(String.valueOf(bill.getTotalprice()));
         billDTO.setCustomerCode(bill.getCustomer().getCusCode());
         billDTO.setCustomerName(bill.getCustomer().getName());
+        billDTO.setStatus(String.valueOf(bill.getStatus()));
         return billDTO;
     }
 

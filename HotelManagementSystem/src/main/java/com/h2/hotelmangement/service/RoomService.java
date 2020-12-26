@@ -2,7 +2,11 @@ package com.h2.hotelmangement.service;
 
 import com.h2.hotelmangement.Request.BookRoomDTO;
 import com.h2.hotelmangement.entity.Room;
+
 import com.h2.hotelmangement.model.dto.RoomDTO;
+
+import org.springframework.data.domain.Page;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -19,5 +23,12 @@ public interface RoomService {
     Room getRoomById(Long id);
 
     Room getRoomByRoomCode(String roomCode);
+
     Optional<Set<RoomDTO>> getListAllRoomAvailable (BookRoomDTO bookRoomDTO);
+
+
+    Page<Room> getPageRoom(int pageNo, int pageSize);
+
+    Page<Room> getPageRoomByCode(String roomCode, int pageNo, int pageSize);
+
 }
