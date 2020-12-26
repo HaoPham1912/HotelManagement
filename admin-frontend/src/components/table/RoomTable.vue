@@ -106,7 +106,7 @@
   </section>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl } from 'mdbvue';
+import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
 
 import RoomService from '../../services/RoomService';
 export default {
@@ -130,6 +130,7 @@ export default {
     mdbCard,
     mdbCardBody,
     mdbTbl,
+    mdbIcon,
   },
   methods: {
     getRequestParams(roomCode, page, pageSize) {

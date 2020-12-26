@@ -1,5 +1,6 @@
 package com.h2.hotelmangement.model.mapper;
 
+import com.h2.hotelmangement.common.util.DateParsing;
 import com.h2.hotelmangement.entity.Booking;
 import com.h2.hotelmangement.model.dto.BookingDTO;
 
@@ -13,9 +14,9 @@ public class BookingMapper {
 
         bookingDTO.setBillId(booking.getBookingKey().getBillId());
         bookingDTO.setRoomId(booking.getBookingKey().getRoomId());
-        bookingDTO.setBookDate(booking.getBookingKey().getBookDate().toString());
-        bookingDTO.setCheckinDate(booking.getBookingKey().getCheckinDate().toString());
-        bookingDTO.setCheckoutDate(booking.getCheckoutDate().toString());
+        bookingDTO.setBookDate(DateParsing.convertDateToString(booking.getBookingKey().getBookDate()));
+        bookingDTO.setCheckinDate(DateParsing.convertDateToString(booking.getBookingKey().getCheckinDate()));
+        bookingDTO.setCheckoutDate(DateParsing.convertDateToString(booking.getCheckoutDate()));
         bookingDTO.setPaidPrice(booking.getPaidPrice());
         bookingDTO.setStatus(booking.getStatus());
 
