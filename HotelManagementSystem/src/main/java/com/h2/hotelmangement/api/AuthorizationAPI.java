@@ -2,9 +2,9 @@ package com.h2.hotelmangement.api;
 
 import com.h2.hotelmangement.Request.LoginRequest;
 import com.h2.hotelmangement.common.util.CommonConstants;
+import com.h2.hotelmangement.common.util.ResponseTemplate;
 import com.h2.hotelmangement.entity.Account;
 import com.h2.hotelmangement.entity.Role;
-import com.h2.hotelmangement.jwt.JwtTokenProvider;
 import com.h2.hotelmangement.model.dto.AccountDTO;
 import com.h2.hotelmangement.payload.LoginResponse;
 import com.h2.hotelmangement.service.AccountService;
@@ -44,8 +44,8 @@ public class AuthorizationAPI {
     @Autowired
     RoleService roleService;
 
-    @Autowired
-    JwtTokenProvider jwtTokenProvider;
+//    @Autowired
+//    JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     UserDetailsServiceImpl userDetailsServiceImpl;
@@ -54,35 +54,36 @@ public class AuthorizationAPI {
     TokenParser tokenParser;
 
     @PostMapping("/login")
-    public ResponseEntity<Object> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseTemplate authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         System.out.println(loginRequest.getUserName() + " " +loginRequest.getPass());
         UserDetails userDetails = userDetailsServiceImpl.loadUserDetails(loginRequest.getUserName(),
                 loginRequest.getPass());
         System.out.println("User detail "+ userDetails.getUsername());
-
+        ResponseTemplate responseTemplate = new ResponseTemplate();
         if (null != userDetails) {
             String token = tokenParser.generateToken(userDetails);
-            Map<String, String> items = new HashMap<>();
-            items.put("token", token);
-            items.put("type", CommonConstants.PREFIX_BEARER.trim());
-            return ResponseEntity.ok().body(items);
+            Map<String, Object> items = new HashMap<>();
+            items.put("accessToken", token);
+            items.put("user", userDetails.getUsername());
+            responseTemplate.setData(items);
+            responseTemplate.setStatus(HttpStatus.OK.value());
+            return responseTemplate;
         }
-        Map<String, Object> errors = new HashMap<>();
-        errors.put("status", Integer.valueOf(HttpStatus.BAD_REQUEST.value()));
-        errors.put("message", "Email or passsword is correct");
-        return ResponseEntity.badRequest().body(errors);
+        responseTemplate.setStatus(HttpStatus.BAD_REQUEST.value());
+        responseTemplate.setData("message","Email or passsword is correct");
+        return responseTemplate;
     }
 
     private LoginResponse handleLoginResponse(Authentication authentication) {
         LoginResponse loginResponse = new LoginResponse();
         Optional<AccountDTO> account = accountService.getAccountByUsername(authentication.getName());
         if(account.isPresent()){
-            String jwt = jwtTokenProvider.generateToken(account.get().getAccountId());
-            String refreshToken = jwtTokenProvider.generateRefreshToken(account.get().getAccountId());
+//            String jwt = tokenParser.generateToken(account.get().getAccountId());
+//            String refreshToken = tokenParser.generateRefreshToken(account.get().getAccountId());
             loginResponse.setAuthorities((Collection<GrantedAuthority>) authentication.getAuthorities());
             loginResponse.setUserName(authentication.getName());
-            loginResponse.setAccessToken(jwt);
-            loginResponse.setRefreshToken(refreshToken);
+//            loginResponse.setAccessToken(jwt);
+//            loginResponse.setRefreshToken(refreshToken);
             loginResponse.setId(account.get().getAccountId());
             loginResponse.setSocialAccount(false);
         }

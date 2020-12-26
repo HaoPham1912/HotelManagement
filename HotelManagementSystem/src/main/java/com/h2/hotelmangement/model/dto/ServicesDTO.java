@@ -3,7 +3,7 @@ package com.h2.hotelmangement.model.dto;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ServicesDTO extends BaseDTO{
+public class ServicesDTO extends BaseDTO {
     private Long serviceId;
     private String serviceCode;
     private String name;

@@ -1,5 +1,6 @@
 package com.h2.hotelmangement.service.impl;
 
+import com.h2.hotelmangement.Request.UserInfoUpdateDTO;
 import com.h2.hotelmangement.entity.Customer;
 import com.h2.hotelmangement.repository.CustomerRepository;
 import com.h2.hotelmangement.service.CustomerService;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -38,5 +40,13 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer getCustomerById(Long id) {
         return customerRepository.getOne(id);
+    }
+
+    @Override
+    public void updateCustomerInfo(UserInfoUpdateDTO userUnfoUpdate) {
+        Optional<Customer> customer = customerRepository.findByEmail(userUnfoUpdate.getEmail());
+        customer.get().setName(userUnfoUpdate.getUserName());
+        customer.get().setPhone(userUnfoUpdate.getPhone());
+        customerRepository.save(customer.get());
     }
 }

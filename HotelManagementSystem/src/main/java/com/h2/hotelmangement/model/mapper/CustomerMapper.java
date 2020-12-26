@@ -5,11 +5,9 @@ import com.h2.hotelmangement.entity.Customer;
 import com.h2.hotelmangement.entity.CustomerType;
 import com.h2.hotelmangement.entity.Role;
 import com.h2.hotelmangement.model.dto.CustomerDTO;
-import com.h2.hotelmangement.service.CustomerTypeService;
 import com.h2.hotelmangement.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.management.relation.RoleStatus;
+import  com.h2.hotelmangement.service.CustomerTypeService;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

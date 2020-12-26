@@ -1,6 +1,6 @@
 package com.h2.hotelmangement.api;
 
-
+import com.h2.hotelmangement.common.util.ResponseTemplate;
 import com.h2.hotelmangement.entity.Branch;
 import com.h2.hotelmangement.entity.Employee;
 import com.h2.hotelmangement.model.dto.BranchDTO;
@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
 
@@ -64,6 +66,12 @@ public class BranchAPI {
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
         }
+    }
+
+    @GetMapping("/branch/{location}")
+    public ResponseEntity<?> showBranchByLocation(@PathVariable("location") String location){
+        Optional<List<BranchDTO>> listBranch = branchService.getBranchByLocation(location);
+        return new ResponseEntity<>(listBranch,HttpStatus.OK);
     }
 
 }

@@ -2,17 +2,15 @@ package com.h2.hotelmangement.model.mapper;
 
 import com.h2.hotelmangement.entity.Room;
 import com.h2.hotelmangement.entity.Services;
-import com.h2.hotelmangement.model.dto.BaseDTO;
 import com.h2.hotelmangement.model.dto.ServicesDTO;
 
-import javax.xml.ws.Service;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 
-public class ServiceMapper extends BaseDTO {
+public class ServiceMapper {
     public ServicesDTO serviceEntityToDTO(Services services){
         ServicesDTO servicesDTO = new ServicesDTO();
         Set<Long> rommIdSet = new HashSet<>();

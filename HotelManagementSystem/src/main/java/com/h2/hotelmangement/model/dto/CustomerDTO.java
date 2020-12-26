@@ -1,6 +1,6 @@
 package com.h2.hotelmangement.model.dto;
 
-public class CustomerDTO {
+public class CustomerDTO extends BaseDTO {
     private String customerId;
     private String customerCode;
     private String email;
