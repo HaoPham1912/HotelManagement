@@ -6,17 +6,16 @@ import com.h2.hotelmangement.model.dto.ServicesDTO;
 import com.h2.hotelmangement.model.mapper.ServiceMapper;
 import com.h2.hotelmangement.service.ServicesService;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.NumberUtils;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
 
@@ -80,6 +79,16 @@ public class ServicesAPI {
             servicesService.deleteService(serviceId);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/services/{roomID}")
+    public  ResponseEntity<?> getAllServiceForRoom(@PathVariable("roomID") String roomID){
+        if(StringUtils.isNumeric(roomID)){
+            Long room = Long.valueOf(roomID);
+            Optional<Set<ServicesDTO>> listService = servicesService.findServiceByRoom(room);
+            return new ResponseEntity<>(listService,HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

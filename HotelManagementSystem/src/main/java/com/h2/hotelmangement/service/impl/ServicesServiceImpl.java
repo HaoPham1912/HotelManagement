@@ -1,6 +1,8 @@
 package com.h2.hotelmangement.service.impl;
 
+import com.h2.hotelmangement.common.util.ModelMapperUtil;
 import com.h2.hotelmangement.entity.Services;
+import com.h2.hotelmangement.model.dto.ServicesDTO;
 import com.h2.hotelmangement.repository.ServiceRepository;
 import com.h2.hotelmangement.service.ServicesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ServicesServiceImpl implements ServicesService {
@@ -57,6 +61,12 @@ public class ServicesServiceImpl implements ServicesService {
     public Page<Services> findPageServicesByName(String name, int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         return serviceRepository.findAllByNameContains(name, pageable);
+    }
+
+    @Override
+    public Optional<Set<ServicesDTO>> findServiceByRoom(Long roomId) {
+        Optional<Set<Services>> listServices = serviceRepository.findByRooms(roomId);
+        return Optional.ofNullable(ModelMapperUtil.mapAllToSet(listServices.get(),ServicesDTO.class));
     }
 }
 

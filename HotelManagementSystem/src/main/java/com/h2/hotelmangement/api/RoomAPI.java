@@ -12,10 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
 
@@ -79,6 +76,8 @@ public class RoomAPI {
 
     @GetMapping("room/book")
     public ResponseEntity<?> getAllRoomAvailable(@RequestBody BookRoomDTO bookRoomDTO){
-        return new ResponseEntity<>(HttpStatus.OK);
+        Optional<Set<RoomDTO>> listRoom = roomService.getListAllRoomAvailable(bookRoomDTO);
+        return new ResponseEntity<>(listRoom,HttpStatus.OK);
     }
+
 }

@@ -63,7 +63,7 @@ public class RoomServiceImpl implements RoomService {
             Optional<Set<Room>> listRoomAvailable = roomRepository.findRoomAvailable(listRoomId,bookRoomDTO.getBranch().getBranchCode());
             return Optional.ofNullable(ModelMapperUtil.mapAllToSet(listRoomAvailable.get(),RoomDTO.class));
         }
-        Optional<Set<Room>> listRoomInBranch = roomRepository.findRoomByRoomBranch(bookRoomDTO.getBranch().getBranchCode());
+        Optional<Set<Room>> listRoomInBranch = roomRepository.findRoomByRoomBranch_BranchCode(bookRoomDTO.getBranch().getBranchCode());
         return Optional.ofNullable(ModelMapperUtil.mapAllToSet(listRoomInBranch.get(),RoomDTO.class));
     }
 
