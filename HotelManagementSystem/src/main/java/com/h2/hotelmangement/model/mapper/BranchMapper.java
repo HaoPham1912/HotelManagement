@@ -47,7 +47,7 @@ public class BranchMapper {
 
     public Branch convertDtoToEntity(BranchDTO branchDTO){
         Branch branch = new Branch();
-        branch.setBranchId(Long.valueOf(branchDTO.getBranchId()));
+        //branch.setBranchId(Long.valueOf(branchDTO.getBranchId()));
         branch.setLocation(branchDTO.getLocation());
         branch.setBranchCode(branchDTO.getBranchCode());
         branch.setAddress(branchDTO.getAddress());

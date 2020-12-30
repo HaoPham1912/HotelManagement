@@ -4,6 +4,7 @@ import com.h2.hotelmangement.entity.Bed;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BedService {
 
@@ -11,7 +12,11 @@ public interface BedService {
 
     void save(Bed bed);
 
-    void delete(Long id);
+    void delete(Long id) throws Exception;
 
     Page<Bed> findAllBedByName(String name, int pageNo, int pageSize);
+
+    List<Bed> getAllBedList();
+
+    Bed getBedById(Long id);
 }

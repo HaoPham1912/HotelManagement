@@ -3,7 +3,9 @@ package com.h2.hotelmangement.common.util;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.collections4.map.HashedMap;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,6 +17,7 @@ public class ResponseTemplate {
      * Data
      */
     private Map<String, Object> data = new HashedMap<>();
+
 
     /**
      * fieldErrors

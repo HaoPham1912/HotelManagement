@@ -1,20 +1,20 @@
 <template>
   <form action="" class="form-add">
     <h3>Add New Room</h3>
+    <!-- Message input -->
     <div class="form-outline mb-4">
-      <label for="location">Choose Branch</label>
-      <select class="browser-default custom-select">
-        <option selected value="HCM1">HCM1</option>
-        <option value="NT1">NT1</option>
-        <option value="DN1">DN1</option>
-      </select>
+      <b-form-select
+        v-model="rooms.branchCode"
+        :options="branchCodes"
+      ></b-form-select>
+      <label class="form-label" for="branchCode">Choose Branch Code</label>
     </div>
     <div class="form-outline mb-4">
-      <label for="policy">Choose Cancel Policy</label>
-      <select class="browser-default custom-select">
-        <option selected value="PL1">PL1</option>
-        <option value="PL2">PL2</option>
-      </select>
+      <b-form-select
+        v-model="rooms.policyCode"
+        :options="policyCodes"
+      ></b-form-select>
+      <label class="form-label" for="policyCode">Choose Branch Code</label>
     </div>
     <div class="form-outline mb-4">
       <label for="roomCode">Room Code</label>
@@ -26,8 +26,13 @@
       <input type="text" id="name" class="form-control" required />
     </div>
     <div class="form-outline mb-4">
-      <label for="amount">Amount People</label>
-      <input type="text" id="address" class="form-control" required />
+      <label for="policy">Choose Ammount People</label>
+      <select class="browser-default custom-select">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
     </div>
     <div class="form-outline mb-4">
       <label for="price">Price</label>
@@ -45,7 +50,7 @@
       />
     </div>
     <div class="form-outline mb-4">
-      <label for="image">Choose Main Image Of Room</label>
+      <label for="image">Choose Image Of Room</label>
       <div class="input-group">
         <div>
           <b-button variant="success" @click="onPickFile">
@@ -74,11 +79,26 @@
 </template>
 
 <script>
+import BranchService from '../../services/BranchService';
+import CancelPolicyService from '../../services/CancelPolicyService';
 export default {
   data() {
     return {
       imageUrl: '',
       image: null,
+      rooms: {
+        branchCode: '',
+        roomCode: '',
+        policyCode: '',
+        name: '',
+        ammountPeople: '',
+        price: '',
+        description: '',
+      },
+      branchs: [],
+      branchCodes: [],
+      policies: [],
+      policyCodes: [],
     };
   },
   methods: {
@@ -100,6 +120,57 @@ export default {
       fileReader.readAsDataURL(files[0]);
       this.image = files[0];
     },
+    setBracnhCodes() {
+      BranchService.getAllBranchInfor()
+        .then((response) => {
+          this.branchs = response.data;
+
+          console.log(this.branchs);
+
+          for (var i = 0; i < this.branchs.length; i++) {
+            var options = [];
+            for (var key in this.branchs[i]) {
+              if (key == 'branchCode') {
+                options['value'] = this.branchs[i][key];
+                options['text'] = this.branchs[i][key];
+              }
+            }
+            this.branchCodes.push(Object.assign({}, options));
+          }
+          console.log(this.branchCodes);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    setPolicyCode() {
+      CancelPolicyService.getAll()
+        .then((response) => {
+          this.policies = response.data;
+
+          console.log(this.policies);
+
+          for (var i = 0; i < this.policies.length; i++) {
+            var options = [];
+            for (var key in this.policies[i]) {
+              if (key == 'policyCode') {
+                options['value'] = this.policies[i][key];
+                options['text'] = this.policies[i][key];
+              }
+            }
+            this.policyCodes.push(Object.assign({}, options));
+          }
+          console.log(this.policyCodes);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+  },
+
+  mounted() {
+    this.setBracnhCodes();
+    this.setPolicyCode();
   },
 };
 </script>

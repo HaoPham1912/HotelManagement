@@ -12,6 +12,34 @@ public class RoomDTO {
     private Long branchId;
     private Set<String> thumbnailList;
     private String status;
+    private String policyCode;
+    private String branchCode;
+    private String ammountPeople;
+
+
+    public String getAmmountPeople() {
+        return ammountPeople;
+    }
+
+    public void setAmmountPeople(String ammountPeople) {
+        this.ammountPeople = ammountPeople;
+    }
+
+    public String getBranchCode() {
+        return branchCode;
+    }
+
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
+    }
+
+    public String getPolicyCode() {
+        return policyCode;
+    }
+
+    public void setPolicyCode(String policyCode) {
+        this.policyCode = policyCode;
+    }
 
     public String getStatus() {
         return status;

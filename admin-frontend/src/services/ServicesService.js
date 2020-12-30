@@ -9,12 +9,15 @@ class ServicesService{
         return http.post("/services", data);
     }
 
-    get(code){
-        return http.get(`/services/${code}`);
+    get(id){
+        return http.get(`/services/${id}`);
     }
 
     delete(id){
         return http.delete(`services/${id}`);
+    }
+    update(id, data){
+        return http.put(`/services/${id}`,data);
     }
 }
 

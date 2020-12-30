@@ -1,10 +1,13 @@
 package com.h2.hotelmangement.api;
 
+import com.h2.hotelmangement.entity.Account;
 import com.h2.hotelmangement.entity.Bed;
 import com.h2.hotelmangement.entity.Customer;
+import com.h2.hotelmangement.entity.Employee;
 import com.h2.hotelmangement.model.dto.BedDTO;
 import com.h2.hotelmangement.model.dto.CustomerDTO;
 import com.h2.hotelmangement.model.mapper.CustomerMapper;
+import com.h2.hotelmangement.service.AccountService;
 import com.h2.hotelmangement.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +29,9 @@ public class CustomerAPI {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private AccountService accountService;
 
     private CustomerMapper customerMapper = new CustomerMapper();
 
@@ -94,5 +100,28 @@ public class CustomerAPI {
         customerService.save(customer);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/customer/{id}")
+    public ResponseEntity<HttpStatus> deleteEmp(@PathVariable("id") String id) {
+        Long cusId = Long.valueOf(id);
+        Customer customer = customerService.getCustomerById(cusId);
+        if(customer != null){
+            try {
+                customerService.deleteCustomer(cusId);
+                Account account = customer.getAccountCus();
+                if(account != null){
+                    Boolean status = account.getStatus();
+                    account.setStatus(!status);
+                    accountService.save(account);
+                }
+                return new ResponseEntity<>(HttpStatus.OK);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        }else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 }

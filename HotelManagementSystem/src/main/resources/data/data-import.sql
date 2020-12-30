@@ -55,8 +55,8 @@ INSERT INTO `bookinghotel`.`service_room` (`service_id`, `room_id`) VALUES ('4',
 INSERT INTO `bookinghotel`.`service_room` (`service_id`, `room_id`) VALUES ('4', '3');
 INSERT INTO `bookinghotel`.`service_room` (`service_id`, `room_id`) VALUES ('4', '4');
 
-INSERT INTO `bookinghotel`.`promotions` (`custype`, `enddate`, `percent`, `code`, `startdate`) VALUES ('GOLD', '2020/12/19', '10', 'KM1', '2020/12/10');
-INSERT INTO `bookinghotel`.`promotions` (`custype`, `enddate`, `percent`, `code`, `startdate`) VALUES ('DIAMOND', '2020/12/31', '15', 'NY1', '2020/12/25');
+INSERT INTO `bookinghotel`.`promotions` (`custype`, `enddate`, `percent`, `code`, `startdate`) VALUES ('GOLD', '2020-12-19', '10', 'KM1', '2020-12-10');
+INSERT INTO `bookinghotel`.`promotions` (`custype`, `enddate`, `percent`, `code`, `startdate`) VALUES ('DIAMOND', '2020-12-31', '15', 'NY1', '2020-12-25');
 
 INSERT INTO `bookinghotel`.`bills` (`createdate`, `totalprice`, `customerid`) VALUES ('2020/11/01', '2000000', '1');
 INSERT INTO `bookinghotel`.`bills` (`createdate`, `totalprice`, `customerid`) VALUES ('2020/11/05', '2500000', '1');

@@ -1,17 +1,17 @@
 package com.h2.hotelmangement.api;
 
 
+import com.h2.hotelmangement.entity.Promotion;
 import com.h2.hotelmangement.entity.Services;
 import com.h2.hotelmangement.model.dto.ServicesDTO;
 import com.h2.hotelmangement.model.mapper.ServiceMapper;
-import com.h2.hotelmangement.service.ServicesService;
 
+import com.h2.hotelmangement.service.ServiceHotel;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.NumberUtils;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -27,7 +27,7 @@ public class ServicesAPI {
     private ServiceMapper serviceMapper = new ServiceMapper();
 
     @Autowired
-    private ServicesService servicesService;
+    private ServiceHotel servicesService;
 
     @GetMapping("/services")
     public ResponseEntity<Map<String, Object>> getAllService(@RequestParam(required = false) String name,
@@ -65,9 +65,10 @@ public class ServicesAPI {
         return services.getServicesId();
     }
 
-    @GetMapping("/services/{code}")
-    public ResponseEntity<ServicesDTO> getServicesByCode(@PathVariable("code") String serviceCode){
-        Services services = servicesService.findServiceByCode(serviceCode);
+    @GetMapping("/services/{id}")
+    public ResponseEntity<ServicesDTO> getServicesByCode(@PathVariable("id") String id){
+        Long serviceId = Long.valueOf(id);
+        Services services = servicesService.getServicesById(serviceId);
         ServicesDTO servicesDTO = serviceMapper.serviceEntityToDTO(services);
         return new ResponseEntity<>(servicesDTO, HttpStatus.OK);
     }
@@ -83,13 +84,20 @@ public class ServicesAPI {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/services/{roomID}")
-    public  ResponseEntity<?> getAllServiceForRoom(@PathVariable("roomID") String roomID){
-        if(StringUtils.isNumeric(roomID)){
-            Long room = Long.valueOf(roomID);
-            Optional<Set<ServicesDTO>> listService = servicesService.findServiceByRoom(room);
-            return new ResponseEntity<>(listService,HttpStatus.OK);
+    @PutMapping("/services/{id}")
+    public ResponseEntity<HttpStatus> updatePromotion(@PathVariable String id,@RequestBody ServicesDTO servicesDTO){
+        Long serviceId = Long.valueOf(id);
+        Services servicesCurrent = servicesService.getServicesById(serviceId);
+        if(servicesCurrent !=null){
+            servicesCurrent.setServiceCode(servicesDTO.getServiceCode());
+            servicesCurrent.setPrice(Double.valueOf(servicesDTO.getPrice()));
+            servicesCurrent.setName(servicesDTO.getName());
+            servicesCurrent.setDescription(servicesDTO.getDescription());
+
+            servicesService.save(servicesCurrent);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -18,7 +18,7 @@ import BillTable from '../components/table/BillTable.vue';
 import Login from '../components/form/Login.vue';
 import Register from '../components/form/Register.vue';
 import AddNewEmployee from '../components/form/AddEmployee.vue';
-import AddCustomer from '../components/form/AddCustomer.vue';
+
 import AddPolicy from '../components/form/AddPolicy.vue';
 import AddRoom from '../components/form/AddRoom.vue';
 import AddBed from '../components/form/AddBed.vue';
@@ -29,6 +29,7 @@ import AddBranch from '../components/form/AddBranch.vue';
 import EditService from '../components/form/EditService.vue';
 import EditCustomer from '../components/form/EditCustomer.vue';
 import EditProfie from '../components/form/EditProfie.vue';
+import EditEmployee from '../components/form/EditEmployee.vue';
 
 import DetailBranch from '../components/page/DetailBranch.vue';
 import DetailBill from '../components/form/DetailBill.vue';
@@ -113,11 +114,6 @@ export default new Router({
           component: AddNewEmployee,
         },
         {
-          path: '/customer/add',
-          name: 'Add New Customer',
-          component: AddCustomer,
-        },
-        {
           path: '/policy/add',
           name: 'Add New Policy',
           component: AddPolicy,
@@ -148,7 +144,7 @@ export default new Router({
           component: AddBranch,
         },
         {
-          path: '/branch/:branchCode',
+          path: '/detail-branch/:branchCode',
           name: 'Branch Detail',
           component: DetailBranch,
         },
@@ -165,6 +161,12 @@ export default new Router({
           props: true,
         },
         {
+          path: '/employee/:id',
+          name: 'Update Employee',
+          component: EditEmployee,
+          props: true,
+        },
+        {
           path: '/detailBill',
           name: 'DetailBill',
           component: DetailBill,
@@ -178,7 +180,9 @@ export default new Router({
         },
         { path: '/reloadService', redirect: '/services' },
         { path: '/reloadAccount', redirect: '/account' },
-        { path: '/reloadPolicy', redirect: '/policy' }
+        { path: '/reloadPolicy', redirect: '/policy' },
+        { path: '/reloadEmployee', redirect: '/employee' },
+        { path: '/reloadPromo', redirect: '/promotion' }
       ]
       },
         {

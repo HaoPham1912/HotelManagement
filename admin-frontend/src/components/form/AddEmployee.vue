@@ -1,5 +1,5 @@
 <template>
-  <form class="form-add">
+  <form class="form-add" v-on:submit.prevent="saveEmployee">
     <!-- 2 column grid layout with text inputs for the first and last names -->
     <h3>Add New Employee</h3>
     <br />
@@ -58,6 +58,7 @@
         id="email"
         class="form-control"
         v-model="employee.email"
+        v-validate="'required|email'"
       />
       <label class="form-label" for="email">Email</label>
     </div>
@@ -105,7 +106,7 @@
     <button
       type="submit"
       class="btn btn-primary btn-block mb-4"
-      v-on:click="saveEmployee"
+      @submit="saveEmployee"
     >
       Add New Employee
     </button>
@@ -127,7 +128,6 @@ export default {
         email: '',
         branchCode: '',
       },
-      submitted: false,
       branchs: [],
       branchCodes: [],
     };
@@ -149,10 +149,11 @@ export default {
         .then((response) => {
           this.employee.employeeId = response.data.employeeId;
           console.log(response.data);
-          this.submitted = true;
+          this.$router.push('/reloadEmployee');
         })
         .catch((e) => {
           console.log(e);
+          alert('Can not add employee!');
         });
     },
     newEmployee() {
@@ -160,7 +161,7 @@ export default {
       this.employee = {};
     },
     setBracnhCodes() {
-      BranchService.getAll()
+      BranchService.getAllBranchInfor()
         .then((response) => {
           this.branchs = response.data;
 

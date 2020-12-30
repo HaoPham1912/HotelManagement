@@ -55,44 +55,60 @@
                   <td>{{ data.idCard }}</td>
                   <td>{{ data.name }}</td>
                   <td>{{ data.phone }}</td>
-                  <td v-if="data.customerType != ''">
+                  <td>
                     {{ data.customerType }}
                   </td>
-                  <td class="spec" v-if="data.customerType == ''">
-                    No register
-                  </td>
-                  <td v-if="data.userName != ''">{{ data.userName }}</td>
-                  <td class="spec" v-if="data.userName == ''">
-                    No have account
-                  </td>
+
+                  <td>{{ data.userName }}</td>
+
                   <td class="action">
                     <div>
-                      <button
-                        class="btn-sm btn-warning"
-                        @click="getCustomerId(data.customerId)"
+                      <mdb-btn
+                        :class="{
+                          'btn-sm btn-danger': data.status === 'true',
+                          'btn-sm btn-success': data.status === 'false',
+                        }"
+                        color="data.status : danger ? success"
+                        @click="ShowModalDisable(data.customerId)"
+                        v-tooltip.top-center="{
+                          content: setTextTooltip(data.status),
+                        }"
                       >
-                        <a
-                          class="btn-link-edit action-button"
-                          :href="'customer/' + data.customerId"
-                        >
-                          <i class="fas fa-pencil-alt"></i>
-                        </a>
-                      </button>
-                    </div>
-                    <div>
-                      <button class="btn-sm btn-danger">
-                        <a
-                          class="btn-link-delete action-button"
-                          @click="remove(scope.row)"
-                        >
-                          <i class="fas fa-trash"></i>
-                        </a>
-                      </button>
+                        <a :href="'customer/' + data.customerId"> </a>
+                        <i
+                          :class="{
+                            'fas fa-ban': data.status === 'true',
+                            'fas fa-plus': data.status === 'false',
+                          }"
+                        ></i>
+                      </mdb-btn>
                     </div>
                   </td>
                 </tr>
               </tbody>
             </mdb-tbl>
+            <div>
+              <mdb-modal
+                centered
+                :show="modalDelete"
+                @close="modalDelete = false"
+              >
+                <mdb-modal-header>
+                  <mdb-modal-title>ARE YOU SURE?</mdb-modal-title>
+                </mdb-modal-header>
+                <mdb-modal-body>PLEASE CHECK BEFORE ACTION</mdb-modal-body>
+                <mdb-modal-footer>
+                  <mdb-btn color="danger" @click.native="modalDelete = false"
+                    >Close</mdb-btn
+                  >
+                  <mdb-btn
+                    color="primary"
+                    @click="deleteAccount(currentCustomer.customerId)"
+                    >OK</mdb-btn
+                  >
+                </mdb-modal-footer>
+              </mdb-modal>
+            </div>
           </mdb-card-body>
           <br />
           <div id="paging">
@@ -113,7 +129,20 @@
   </section>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
+import {
+  mdbRow,
+  mdbCol,
+  mdbCard,
+  mdbCardBody,
+  mdbTbl,
+  mdbIcon,
+  mdbModal,
+  mdbModalHeader,
+  mdbModalTitle,
+  mdbModalBody,
+  mdbModalFooter,
+  mdbBtn,
+} from 'mdbvue';
 
 import CustomerServices from '../../services/CustomerServices';
 export default {
@@ -123,6 +152,9 @@ export default {
       currentIndex: -1,
       searchName: '',
 
+      modalDelete: false,
+
+      currentCustomer: {},
       page: 1,
       count: 0,
       pageSize: 3,
@@ -137,6 +169,12 @@ export default {
     mdbCardBody,
     mdbTbl,
     mdbIcon,
+    mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn,
   },
   methods: {
     getRequestParams(searchName, page, pageSize) {
@@ -170,6 +208,38 @@ export default {
           console.log(e);
         });
     },
+    ShowModalDisable(id) {
+      console.log(id);
+      this.modalDelete = true;
+      CustomerServices.getCustomerById(id)
+        .then((response) => {
+          this.currentCustomer = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    deleteAccount(id) {
+      console.log(id);
+      CustomerServices.disableCustomer(id)
+        .then(() => {
+          CustomerServices.getAll().then((response) => {
+            const { customers, totalItems } = response.data;
+            this.customers = customers;
+            this.count = totalItems;
+            console.log(response.data);
+            if (this.customers.status === 'true') {
+              this.messageTooltip = 'Disable this customer';
+            } else {
+              this.messageTooltip = 'Enable this customer';
+            }
+            this.modalDelete = false;
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
     handlePageChange(value) {
       this.page = value;
       this.retrieveCustomer();
@@ -187,6 +257,13 @@ export default {
     },
     getCustomerId(id) {
       console.log(id);
+    },
+    setTextTooltip(text) {
+      if (text === 'true') {
+        return 'Disable this customer';
+      } else {
+        return 'Enable this customer';
+      }
     },
   },
 

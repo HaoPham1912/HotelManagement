@@ -63,27 +63,65 @@
                   <td>{{ data.branchCode }}</td>
                   <td class="action">
                     <div>
-                      <button
+                      <mdb-btn
+                        color="warning"
                         class="btn-sm btn-warning"
+                        v-tooltip.top-center="{
+                          content: 'Edit this account',
+                        }"
                         @click="getIdEmp(data.employeeId)"
-                        data-mdb-toggle="modal"
-                        data-mdb-target="#exampleModal"
                       >
                         <i class="fas fa-pencil-alt"></i>
-                      </button>
+                        <a class="btn-link-edit action-button"> </a>
+                      </mdb-btn>
                     </div>
                     <div>
-                      <button
-                        class="btn-sm btn-danger"
-                        @click="remove(scope.row)"
+                      <mdb-btn
+                        :class="{
+                          'btn-sm btn-danger': data.status === 'true',
+                          'btn-sm btn-success': data.status === 'false',
+                        }"
+                        color="data.status : danger ? success"
+                        @click="ShowModalDisable(data.employeeId)"
+                        v-tooltip.top-center="{
+                          content: setTextTooltip(data.status),
+                        }"
                       >
-                        <i class="fas fa-trash"></i>
-                      </button>
+                        <a :href="'employee/' + data.employeeId"> </a>
+                        <i
+                          :class="{
+                            'fas fa-ban': data.status === 'true',
+                            'fas fa-plus': data.status === 'false',
+                          }"
+                        ></i>
+                      </mdb-btn>
                     </div>
                   </td>
                 </tr>
               </tbody>
             </mdb-tbl>
+            <div>
+              <mdb-modal
+                centered
+                :show="modalDelete"
+                @close="modalDelete = false"
+              >
+                <mdb-modal-header>
+                  <mdb-modal-title>ARE YOU SURE?</mdb-modal-title>
+                </mdb-modal-header>
+                <mdb-modal-body>Please check before action</mdb-modal-body>
+                <mdb-modal-footer>
+                  <mdb-btn color="danger" @click.native="modalDelete = false"
+                    >Close</mdb-btn
+                  >
+                  <mdb-btn
+                    color="success"
+                    @click="disableEmployee(currentEmployee.employeeId)"
+                    >OK</mdb-btn
+                  >
+                </mdb-modal-footer>
+              </mdb-modal>
+            </div>
           </mdb-card-body>
           <br />
           <div id="paging">
@@ -104,7 +142,20 @@
   </section>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
+import {
+  mdbRow,
+  mdbCol,
+  mdbCard,
+  mdbCardBody,
+  mdbTbl,
+  mdbIcon,
+  mdbModal,
+  mdbModalHeader,
+  mdbModalTitle,
+  mdbModalBody,
+  mdbModalFooter,
+  mdbBtn,
+} from 'mdbvue';
 
 import EmployeeService from '../../services/EmployeeService';
 
@@ -112,6 +163,9 @@ export default {
   data() {
     return {
       employees: [],
+      currentEmployee: {},
+
+      modalDelete: false,
 
       currentIndex: -1,
       searchName: '',
@@ -130,6 +184,12 @@ export default {
     mdbCardBody,
     mdbTbl,
     mdbIcon,
+    mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn,
   },
   methods: {
     getRequestParams(searchName, page, pageSize) {
@@ -164,6 +224,18 @@ export default {
           console.log(e);
         });
     },
+
+    getCurrentEmployee(id) {
+      EmployeeService.getEmployeeById(id)
+        .then((response) => {
+          this.currentEmployee = response.data;
+          console.log(this.currentEmployee);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+
     handlePageChange(value) {
       this.page = value;
       this.retrieveEmployee();
@@ -181,6 +253,42 @@ export default {
     },
     getIdEmp(id) {
       console.log(`id is ${id}`);
+      this.$router.push(`employee/${id}`);
+    },
+    setTextTooltip(text) {
+      if (text === 'true') {
+        return 'Disable this employee';
+      } else {
+        return 'Enable this employee';
+      }
+    },
+    ShowModalDisable(id) {
+      console.log(id);
+      this.modalDelete = true;
+      EmployeeService.getEmployeeById(id)
+        .then((response) => {
+          this.currentEmployee = response.data;
+          console.log(this.currentEmployee);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    disableEmployee(id) {
+      EmployeeService.disableEmployee(id).then(() => {
+        EmployeeService.getAll().then((response) => {
+          const { employees, totalItems } = response.data;
+          this.employees = employees;
+          this.count = totalItems;
+          console.log(response.data);
+          if (this.employees.status === 'true') {
+            this.messageTooltip = 'Disable this employee';
+          } else {
+            this.messageTooltip = 'Enable this employee';
+          }
+          this.modalDelete = false;
+        });
+      });
     },
   },
 

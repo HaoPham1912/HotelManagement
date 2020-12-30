@@ -1,7 +1,7 @@
 package com.h2.hotelmangement.model.dto;
 
 public class CancelPolicyDTO {
-    private int policyId;
+    private String policyId;
     private String policyCode;
     private String title;
     private String detail;
@@ -15,11 +15,11 @@ public class CancelPolicyDTO {
         this.rangeDate = rangeDate;
     }
 
-    public int getPolicyId() {
+    public String getPolicyId() {
         return policyId;
     }
 
-    public void setPolicyId(int policyId) {
+    public void setPolicyId(String policyId) {
         this.policyId = policyId;
     }
 

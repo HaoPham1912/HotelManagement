@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -62,7 +63,7 @@ public class EmployeeAPI {
             response.put("totalPages", employeePage.getTotalPages());
 
             return new ResponseEntity<>(response, HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
     }
@@ -76,15 +77,37 @@ public class EmployeeAPI {
 
     @GetMapping("/employee/{id}")
     public ResponseEntity<EmployeeDTO> getEmpById(@PathVariable("id") Long empId) {
-        Employee employee = employeeService.findEmpById(empId);
-        EmployeeDTO employeeDTO = employeeMapper.empEntityToDto(employee);
-        return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
+        try {
+            Employee employee = employeeService.findEmpById(empId);
+            EmployeeDTO employeeDTO = employeeMapper.empEntityToDto(employee);
+            return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 
     @DeleteMapping("/employee/{id}")
-    public ResponseEntity<HttpStatus> deleteEmp(@PathVariable("id") Long id) {
-        employeeService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<HttpStatus> deleteEmp(@PathVariable("id") String id) {
+        Long empId = Long.valueOf(id);
+        Employee employee = employeeService.findEmpById(empId);
+        if(employee != null){
+            try {
+                employeeService.delete(empId);
+                Account account = employee.getAccountEmp();
+                if(account != null){
+                    Boolean status = account.getStatus();
+                    account.setStatus(!status);
+                    accountService.save(account);
+                }
+                return new ResponseEntity<>(HttpStatus.OK);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        }else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 
     @PostMapping("/employee")
@@ -112,8 +135,8 @@ public class EmployeeAPI {
 
         employee.setAccountEmp(account);
 
-         accountService.save(account);
-         employeeService.save(employee);
+        accountService.save(account);
+        employeeService.save(employee);
 
         System.out.println(employeeDTO.toString());
 
@@ -122,6 +145,7 @@ public class EmployeeAPI {
 
     @PutMapping("/employee/{id}")
     public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable("id") String id, @RequestBody EmployeeDTO employeeDTO) {
+        System.out.println(employeeDTO.toString());
         Long idEmp = Long.valueOf(id);
         System.out.println("id emp" + idEmp);
 
@@ -129,11 +153,20 @@ public class EmployeeAPI {
 
         if (employee != null) {
             employee.setName(employeeDTO.getEmpName());
-            employee.setEmail(employeeDTO.getEmail());
-            employee.setPhone(employeeDTO.getEmpPhone());
             employee.setIdCard(employeeDTO.getEmpIdCard());
+            employee.setPhone(employeeDTO.getEmpPhone());
+            employee.setEmail(employeeDTO.getEmail());
+            Branch branch = branchService.getBranchByBranchCode(employeeDTO.getBranchCode());
+            if(branch!=null){
+                employee.setEmpBranch(branch);
+            }else {
+                employee.setEmpBranch(null);
+            }
+           Employee employeeUpdate = employeeService.save(employee);
+            return new ResponseEntity<>(employeeMapper.empEntityToDto(employeeUpdate), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        Employee employee1 = employeeService.save(employee);
-        return new ResponseEntity<>(employeeMapper.empEntityToDto(employee1), HttpStatus.NO_CONTENT);
+
     }
 }

@@ -34,31 +34,82 @@ public class BedAPI {
     public ResponseEntity<Map<String, Object>> getAllBed(@RequestParam(required = false) String name,
                                                          @RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
                                                          @RequestParam(value = "size", defaultValue = "3") int size) {
-       try {
-           List<Bed> bedList = new ArrayList<Bed>();
-           Page<Bed> bedPages;
-           if (name == null) {
-               bedPages = bedService.findAllBed(pageNo, size);
-           } else {
-               bedPages = bedService.findAllBedByName(name, pageNo, size);
-           }
-           bedList = bedPages.getContent();
-           System.out.println(bedList.get(0).toString());
-           List<BedDTO> bedDTOList = bedMapper.listBedEntityToDto(bedList);
-           Map<String, Object> response = new HashMap<>();
-           response.put("beds", bedDTOList);
-           response.put("currentPage", bedPages.getNumber());
-           response.put("totalItems", bedPages.getTotalElements());
-           response.put("totalPages", bedPages.getTotalPages());
-           //List<BedDTO> bedDTOList = bedMapper.listBedEntityToDto(bedList);
-           return new ResponseEntity<>(response, HttpStatus.OK);
-       }catch (Exception e){
-           return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-       }
+        try {
+            List<Bed> bedList = new ArrayList<Bed>();
+            Page<Bed> bedPages;
+            if (name == null) {
+                bedPages = bedService.findAllBed(pageNo, size);
+            } else {
+                bedPages = bedService.findAllBedByName(name, pageNo, size);
+            }
+            bedList = bedPages.getContent();
+            System.out.println(bedList.get(0).toString());
+            List<BedDTO> bedDTOList = bedMapper.listBedEntityToDto(bedList);
+            Map<String, Object> response = new HashMap<>();
+            response.put("beds", bedDTOList);
+            response.put("currentPage", bedPages.getNumber());
+            response.put("totalItems", bedPages.getTotalElements());
+            response.put("totalPages", bedPages.getTotalPages());
+            //List<BedDTO> bedDTOList = bedMapper.listBedEntityToDto(bedList);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
     }
 
     @PostMapping("/bed")
-    public void addBed(@RequestBody Bed bed) {
-        bedService.save(bed);
+    public ResponseEntity<HttpStatus> addBed(@RequestBody BedDTO bedDTO) {
+        try {
+            Bed bed = bedMapper.convetBedDTOToEntity(bedDTO);
+            bedService.save(bed);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @PutMapping("/bed/{id}")
+    public ResponseEntity<HttpStatus> updateBedInfor(@PathVariable String id, @RequestBody BedDTO bedDTO) {
+        Long bedId = Long.valueOf(id);
+        Bed bed = bedService.getBedById(bedId);
+        if (bed != null) {
+            bed.setName(bedDTO.getName());
+            bed.setPrice(Double.valueOf(bedDTO.getPrice()));
+            bed.setAmountPeople(Integer.valueOf(bedDTO.getAmountPeople()));
+            bed.setDescription(bedDTO.getDescription());
+
+            bedService.save(bed);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @DeleteMapping("/bed/{id}")
+    public ResponseEntity<HttpStatus> disableBed(@PathVariable String id) {
+        Long bedId = Long.valueOf(id);
+        Bed bed = bedService.getBedById(bedId);
+        try {
+            bedService.delete(bedId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @GetMapping("/bed/{id}")
+    public ResponseEntity<BedDTO> getBedById(@PathVariable String id){
+        Long bedId = Long.valueOf(id);
+        Bed bed = bedService.getBedById(bedId);
+        if(bed != null){
+            BedDTO bedDTO= bedMapper.bedEntityToDto(bed);
+            return  new ResponseEntity<>(bedDTO, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 }

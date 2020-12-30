@@ -7,6 +7,9 @@ class CustomerService{
     getCustomerById(id){
         return http.get(`customer/${id}`);
     }
+    disableCustomer(id){
+        return http.delete(`/customer/${id}`);
+    }
 }
 
 export default new CustomerService();

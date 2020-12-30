@@ -57,45 +57,126 @@
                   <td>{{ data.status }}</td>
                   <td class="action">
                     <div>
-                      <button
+                      <mdb-btn
+                        color="warning"
                         class="btn-sm btn-warning"
-                        @click="getServiceCode(data.serviceCode)"
                         v-tooltip.top-center="{
-                          content: 'Edit this service',
+                          content: 'Edit this account',
                         }"
+                        @click="bindingDataToModal(data.serviceId)"
                       >
                         <i class="fas fa-pencil-alt"></i>
-                        <a
-                          class="btn-link-edit action-button"
-                          :href="'services/' + data.serviceCode"
-                        >
-                        </a>
-                      </button>
+                        <a class="btn-link-edit action-button"> </a>
+                      </mdb-btn>
                     </div>
                     <div>
-                      <button
+                      <mdb-btn
                         :class="{
                           'btn-sm btn-danger': data.status === true,
                           'btn-sm btn-success': data.status === false,
                         }"
-                        @click="deleteService(data.serviceId)"
+                        color="data.status : danger ? success"
+                        @click="ShowModalDisable(data.serviceId)"
                         v-tooltip.top-center="{
                           content: setTextTooltip(data.status),
                         }"
                       >
-                        <a :href="'services/' + data.serviceId"> </a>
+                        <a :href="'service/' + data.serviceId"> </a>
                         <i
                           :class="{
                             'fas fa-ban': data.status === true,
                             'fas fa-plus': data.status === false,
                           }"
                         ></i>
-                      </button>
+                      </mdb-btn>
                     </div>
                   </td>
                 </tr>
               </tbody>
             </mdb-tbl>
+            <div>
+              <mdb-modal centered :show="modal" @close="modal = false">
+                <mdb-modal-header>
+                  <mdb-modal-title>Update Account Information</mdb-modal-title>
+                </mdb-modal-header>
+                <mdb-modal-body>
+                  <div>
+                    <div class="form-outline mb-4">
+                      <label for="serviceCode">Service Code</label>
+                      <input
+                        type="text"
+                        id="serviceCode"
+                        class="form-control"
+                        v-model="currentService.serviceCode"
+                        required
+                      />
+                    </div>
+                    <div class="form-outline mb-4">
+                      <label for="name">Service Name</label>
+                      <input
+                        type="text"
+                        id="name"
+                        class="form-control"
+                        v-model="currentService.name"
+                        required
+                      />
+                    </div>
+                    <div class="form-outline mb-4">
+                      <label for="price">Price</label>
+                      <input
+                        type="text"
+                        id="price"
+                        class="form-control"
+                        v-model="currentService.price"
+                        required
+                      />
+                    </div>
+                    <div class="form-outline mb-4">
+                      <label for="description">Description</label>
+                      <textarea
+                        id="description"
+                        rows="4"
+                        cols="50"
+                        class="form-control"
+                        v-model="currentService.description"
+                        required
+                      />
+                    </div></div
+                ></mdb-modal-body>
+                <mdb-modal-footer>
+                  <mdb-btn color="danger" @click.native="modal = false"
+                    >Close</mdb-btn
+                  >
+                  <mdb-btn
+                    color="primary"
+                    @click="updateService(currentService.serviceId)"
+                    >Save changes</mdb-btn
+                  >
+                </mdb-modal-footer>
+              </mdb-modal>
+            </div>
+            <div>
+              <mdb-modal
+                centered
+                :show="modalDelete"
+                @close="modalDelete = false"
+              >
+                <mdb-modal-header>
+                  <mdb-modal-title>ARE YOU SURE?</mdb-modal-title>
+                </mdb-modal-header>
+                <mdb-modal-body>PLEASE CHECK BEFORE ACTION</mdb-modal-body>
+                <mdb-modal-footer>
+                  <mdb-btn color="danger" @click.native="modalDelete = false"
+                    >Close</mdb-btn
+                  >
+                  <mdb-btn
+                    color="primary"
+                    @click="deleteService(currentService.serviceId)"
+                    >OK</mdb-btn
+                  >
+                </mdb-modal-footer>
+              </mdb-modal>
+            </div>
           </mdb-card-body>
           <br />
           <div id="paging">
@@ -116,7 +197,20 @@
   </section>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
+import {
+  mdbRow,
+  mdbCol,
+  mdbCard,
+  mdbCardBody,
+  mdbTbl,
+  mdbIcon,
+  mdbModal,
+  mdbModalHeader,
+  mdbModalTitle,
+  mdbModalBody,
+  mdbModalFooter,
+  mdbBtn,
+} from 'mdbvue';
 
 import ServicesService from '../../services/ServicesService';
 export default {
@@ -127,11 +221,22 @@ export default {
     mdbCardBody,
     mdbTbl,
     mdbIcon,
+    mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn,
   },
   data() {
     return {
       services: [],
-      currentService: {},
+      currentService: {
+        serviceCode: '',
+        name: '',
+        price: '',
+        description: '',
+      },
       currentIndex: -1,
       searchName: '',
 
@@ -140,6 +245,8 @@ export default {
       pageSize: 3,
 
       pageSizes: [3, 6, 9],
+      modal: false,
+      modalDelete: false,
     };
   },
   methods: {
@@ -157,6 +264,17 @@ export default {
       }
 
       return params;
+    },
+    bindingDataToModal(id) {
+      console.log(id);
+      this.modal = true;
+      ServicesService.get(id)
+        .then((response) => {
+          this.currentService = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
     retrieveAll() {
       const params = this.getRequestParams(
@@ -180,27 +298,44 @@ export default {
           console.log(e);
         });
     },
-    getServiceCode(code) {
-      console.log(code);
-      ServicesService.get(code)
-        .then((response) => {
-          console.log(response.data);
-          this.currentService = response.data;
-          this.$router.push(`/services/${code}`);
+
+    updateService(id) {
+      var data = {
+        serviceCode: this.currentService.serviceCode,
+        name: this.currentService.name,
+        price: this.currentService.price,
+        description: this.currentService.description,
+      };
+
+      ServicesService.update(id, data)
+        .then(() => {
+          this.modal = false;
+          alert('Update Success!');
+          this.retrieveAll();
         })
         .catch((e) => {
           console.log(e);
+          alert('Update Failed!');
         });
     },
     deleteService(id) {
       console.log(id);
       ServicesService.delete(id)
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           ServicesService.getAll().then((response) => {
-            this.services = response.data;
+            const { services, totalItems } = response.data;
+            this.services = services;
+            this.count = totalItems;
+            console.log(response.data);
+            if (this.services.status === true) {
+              this.messageTooltip = 'Disable this service';
+            } else {
+              this.messageTooltip = 'Enable this service';
+            }
+            this.modalDelete = false;
           });
         })
+
         .catch((e) => {
           console.log(e);
         });
@@ -226,6 +361,17 @@ export default {
       } else {
         return 'Enable this service';
       }
+    },
+    ShowModalDisable(id) {
+      console.log(id);
+      this.modalDelete = true;
+      ServicesService.get(id)
+        .then((response) => {
+          this.currentService = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
   },
 

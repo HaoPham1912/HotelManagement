@@ -17,7 +17,7 @@ public interface EmployeeService {
 
     Employee save(Employee employee);
 
-    void delete(Long id);
+    void delete(Long id) throws Exception;
 
     Employee findEmpByAccountId(Long id);
 }

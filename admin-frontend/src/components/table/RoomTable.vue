@@ -45,7 +45,7 @@
                   <th>RoomCode</th>
                   <th>Name</th>
                   <th>Price</th>
-                  <th>Branch ID</th>
+                  <th>In Room</th>
                   <th>Description</th>
                   <th></th>
                 </tr>
@@ -58,7 +58,7 @@
                   </td>
                   <td>{{ data.name }}</td>
                   <td>{{ data.price }}</td>
-                  <td>{{ data.branchId }}</td>
+                  <td>{{ data.branchCode }}</td>
                   <td>{{ data.description }}</td>
                   <td class="action">
                     <div>

@@ -32,7 +32,7 @@ public class BillAPI {
     @GetMapping("/bill")
     public ResponseEntity<Map<String, Object>> getAllBill(@RequestParam(required = false) String customerCode,
                                                           @RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
-                                                          @RequestParam(value = "size", defaultValue = "3") int size){
+                                                          @RequestParam(value = "size", defaultValue = "5") int size){
         try{
             List<Bill> billList = new ArrayList<>();
             Page<Bill> billPage;

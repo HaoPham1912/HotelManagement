@@ -53,7 +53,7 @@
                 <tr v-for="(data, index) in branchs" :key="index">
                   <td>{{ data.branchId }}</td>
                   <td>
-                    <a :href="'branch/' + data.branchCode">{{
+                    <a :href="'detail-branch/' + data.branchCode">{{
                       data.branchCode
                     }}</a>
                   </td>
@@ -206,15 +206,11 @@ a {
 
 .description {
   overflow-wrap: break-word;
-}
-
-.description {
-  word-wrap: break-word;
-  width: 300px;
+  width: 400px;
 }
 
 .address {
   word-wrap: break-word;
-  width: 200px;
+  width: 100px;
 }
 </style>

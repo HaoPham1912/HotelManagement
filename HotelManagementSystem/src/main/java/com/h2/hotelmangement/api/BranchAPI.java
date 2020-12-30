@@ -9,6 +9,8 @@ import com.h2.hotelmangement.model.mapper.BranchMapper;
 import com.h2.hotelmangement.model.mapper.EmployeeMapper;
 import com.h2.hotelmangement.service.BranchService;
 import com.h2.hotelmangement.service.EmployeeService;
+import com.sun.org.apache.bcel.internal.generic.LUSHR;
+import jdk.nashorn.internal.ir.BreakableNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -61,7 +63,14 @@ public class BranchAPI {
         }
     }
 
-    @GetMapping("/branch/{code}")
+    @GetMapping("/all-branch")
+    public ResponseEntity<List<BranchDTO>> getAllBranchNoPaging(){
+        List<Branch> branchList = branchService.getAllBranch();
+        List<BranchDTO> branchDTOList = branchMapper.convertListBranchEntityToDto(branchList);
+        return new ResponseEntity<>(branchDTOList, HttpStatus.OK);
+    }
+
+    @GetMapping("/detail-branch/{code}")
     public ResponseEntity<BranchDTO> getBranchByBranchCode(@PathVariable("code") String branchCode){
         BranchDTO branchDTO = new BranchDTO();
         try{

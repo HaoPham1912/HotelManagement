@@ -5,8 +5,12 @@ class BranchService{
         return http.get("/branch",{params});
     }
 
+    getAllBranchInfor(){
+        return http.get("/all-branch");
+    }
+
     getBranchByCode(branchCode){
-        return http.get(`/branch/${branchCode}`);
+        return http.get(`/detail-branch/${branchCode}`);
     }
 
     createNewBranch(data){

@@ -35,6 +35,7 @@ public class CustomerMapper {
         customerDTO.setIdCard(customer.getIdCard());
         customerDTO.setName(customer.getName());
         customerDTO.setPhone(customer.getPhone());
+        customerDTO.setStatus(String.valueOf(customer.getStatus()));
         if(customer.getCustomerType() != null){
             customerDTO.setCustomerType(customer.getCustomerType().getTypeName());
         }else{

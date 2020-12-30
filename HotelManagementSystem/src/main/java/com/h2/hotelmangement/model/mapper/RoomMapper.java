@@ -15,8 +15,10 @@ public class RoomMapper {
         roomDTO.setName(room.getName());
         roomDTO.setRoomCode(room.getRoomCode());
         roomDTO.setPrice(room.getPrice());
-        roomDTO.setBranchId(room.getRoomBranch().getBranchId());
+        roomDTO.setBranchCode(room.getRoomBranch().getBranchCode());
         roomDTO.setThumbnailList(room.getThumbnailsRoomList());
+        roomDTO.setPolicyCode(room.getCancelPolicy().getCode());
+        roomDTO.setAmmountPeople(String.valueOf(room.getAmountPeople()));
         return roomDTO;
     }
 
