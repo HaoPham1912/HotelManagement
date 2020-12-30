@@ -91,7 +91,7 @@
               <br />
             </div>
             <div class="form-group">
-              <button type="submit" @submit="onUpload">
+              <button type="submit">
                 Add New Branch
               </button>
             </div>
@@ -179,34 +179,20 @@ export default {
             // this.img1 = url;
             console.log('=------------------');
             console.log(url);
-            this.branch.mainImage = url;
-            if (this.branch.mainImage !== '') {
-              this.branch.thumbnailsBranchSet.push(url);
-              if (this.branch.thumbnailsBranchSet.length > 0) {
-                var data = {
-                  branchCode: this.branch.branchCode,
-                  branchName: this.branch.branchName,
-                  location: this.branch.location,
-                  address: this.branch.address,
-                  description: this.branch.description,
-                  mainImage: this.branch.mainImage,
-                  thumbnailsBranchSet: this.branch.thumbnailsBranchSet,
-                };
+            if (url !== '') {
+              this.branch.mainImage = url;
 
-                BranchService.createNewBranch(data)
-                  .then((response) => {
-                    console.log(response.data);
-                  })
-                  .catch((e) => {
-                    console.log(e);
-                  });
-              }
+              this.branch.thumbnailsBranchSet.push(url);
+              console.log('dasdasdasd');
+
+              console.log(this.branch.thumbnailsBranchSet);
             }
           });
         }
       );
     },
-    createNewBranch() {
+    async createNewBranch() {
+      await this.onUpload();
       var data = {
         branchCode: this.branch.branchCode,
         branchName: this.branch.branchName,
