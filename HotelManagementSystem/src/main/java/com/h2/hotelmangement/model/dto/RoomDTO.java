@@ -16,6 +16,15 @@ public class RoomDTO {
     private String branchCode;
     private String ammountPeople;
 
+    private String mainImage;
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
+    }
 
     public String getAmmountPeople() {
         return ammountPeople;

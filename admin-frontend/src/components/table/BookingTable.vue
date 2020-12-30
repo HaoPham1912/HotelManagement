@@ -34,8 +34,8 @@
                   <td class="action">
                     <div>
                       <mdb-btn
-                        color="warning"
-                        class="btn-sm btn-warning"
+                        color="success"
+                        class="btn-sm btn-success"
                         v-tooltip.top-center="{
                           content: 'View booking detail',
                         }"

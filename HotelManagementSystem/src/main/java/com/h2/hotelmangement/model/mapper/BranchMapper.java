@@ -56,6 +56,7 @@ public class BranchMapper {
         branch.setStatus(branchDTO.getStatus());
         Set<String> branchImage =  new HashSet<>(branchDTO.getThumbnailsBranchSet());
         branch.setThumbnailsHotelList(branchImage);
+        branch.setMainImage(branchDTO.getMainImage());
         return branch;
     }
 }

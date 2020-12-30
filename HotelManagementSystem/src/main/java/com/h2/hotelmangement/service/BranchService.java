@@ -31,4 +31,6 @@ public interface BranchService {
 
     Page<Branch> getAllBranchPageByName(String name, int pageNo, int pageSize);
 
+    Branch getBranchById(Long id);
+
 }
