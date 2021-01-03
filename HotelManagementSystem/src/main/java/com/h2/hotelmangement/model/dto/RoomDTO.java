@@ -1,5 +1,6 @@
 package com.h2.hotelmangement.model.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -15,8 +16,26 @@ public class RoomDTO {
     private String policyCode;
     private String branchCode;
     private String ammountPeople;
-
     private String mainImage;
+
+    private List<BedDTO> bedDTOList = new ArrayList<>();
+    private List<ServicesDTO> servicesDTOList = new ArrayList<>();
+
+    public List<BedDTO> getBedDTOList() {
+        return bedDTOList;
+    }
+
+    public void setBedDTOList(List<BedDTO> bedDTOList) {
+        this.bedDTOList = bedDTOList;
+    }
+
+    public List<ServicesDTO> getServicesDTOList() {
+        return servicesDTOList;
+    }
+
+    public void setServicesDTOList(List<ServicesDTO> servicesDTOList) {
+        this.servicesDTOList = servicesDTOList;
+    }
 
     public String getMainImage() {
         return mainImage;
@@ -112,5 +131,23 @@ public class RoomDTO {
 
     public void setThumbnailList(Set<String> thumbnailList) {
         this.thumbnailList = thumbnailList;
+    }
+
+    @Override
+    public String toString() {
+        return "RoomDTO{" +
+                "roomId=" + roomId +
+                ", description='" + description + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", roomCode='" + roomCode + '\'' +
+                ", branchId=" + branchId +
+                ", thumbnailList=" + thumbnailList +
+                ", status='" + status + '\'' +
+                ", policyCode='" + policyCode + '\'' +
+                ", branchCode='" + branchCode + '\'' +
+                ", ammountPeople='" + ammountPeople + '\'' +
+                ", mainImage='" + mainImage + '\'' +
+                '}';
     }
 }

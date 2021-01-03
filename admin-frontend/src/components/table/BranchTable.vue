@@ -6,7 +6,7 @@
         <mdb-card class="mb-4">
           <div class="row">
             <div class="col-md-9">
-              <a href="/branch/add" type="button" class="btn btn-success">
+              <a href="/admin/branch/add" type="button" class="btn btn-success">
                 Add new Branch
               </a>
             </div>
@@ -71,21 +71,21 @@
                   </td>
                   <td class="action">
                     <div>
-                      <button class="btn-sm btn-warning">
-                        <a
-                          class="btn-link-edit action-button"
-                          @click="edit(scope.row)"
-                        >
+                      <button
+                        class="btn-sm btn-warning"
+                        @click="editBranch(data.branchId)"
+                      >
+                        <a class="btn-link-edit action-button">
                           <i class="fas fa-pencil-alt"></i>
                         </a>
                       </button>
                     </div>
                     <div>
-                      <button class="btn-sm btn-danger">
-                        <a
-                          class="btn-link-delete action-button"
-                          @click="remove(scope.row)"
-                        >
+                      <button
+                        class="btn-sm btn-danger"
+                        @click="disableBranch(data.branchId)"
+                      >
+                        <a class="btn-link-delete action-button">
                           <i class="fas fa-trash"></i>
                         </a>
                       </button>
@@ -173,6 +173,14 @@ export default {
           console.log(e);
         });
     },
+
+    disableBranch(id) {
+      console.log(id);
+
+      BranchService.disableBranch(id).then((response) => {
+        console.log(response.data);
+      });
+    },
     handlePageChange(value) {
       this.page = value;
       this.retrieveBranch();
@@ -182,6 +190,11 @@ export default {
       this.pageSize = event.target.value;
       this.page = 1;
       this.retrieveBranch();
+    },
+
+    editBranch(id) {
+      console.log(`id is ${id}`);
+      this.$router.push(`branch/${id}`);
     },
 
     handelSearch() {

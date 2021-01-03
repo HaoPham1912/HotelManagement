@@ -6,7 +6,11 @@
         <mdb-card class="mb-4">
           <div class="row">
             <div class="col-md-6">
-              <a href="/employee/add" type="button" class="btn btn-success">
+              <a
+                href="/admin/employee/add"
+                type="button"
+                class="btn btn-success"
+              >
                 ADD NEW EMPLOYEE
               </a>
             </div>

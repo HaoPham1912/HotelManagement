@@ -2,9 +2,13 @@ package com.h2.hotelmangement.api;
 
 
 import com.h2.hotelmangement.Request.BookRoomDTO;
+import com.h2.hotelmangement.entity.Branch;
+import com.h2.hotelmangement.entity.CancelPolicy;
 import com.h2.hotelmangement.entity.Room;
 import com.h2.hotelmangement.model.dto.RoomDTO;
 import com.h2.hotelmangement.model.mapper.RoomMapper;
+import com.h2.hotelmangement.service.BranchService;
+import com.h2.hotelmangement.service.CancelPolicyService;
 import com.h2.hotelmangement.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,21 +28,15 @@ public class RoomAPI {
     @Autowired
     private RoomService roomService;
 
-    @PostMapping("/room")
-    public void addRoom(@RequestBody Room room){
-        roomService.save(room);
-    }
+    @Autowired
+    private CancelPolicyService cancelPolicyService;
+
+    @Autowired
+    private BranchService branchService;
 
    public  RoomMapper roomMapper = new RoomMapper();
 
-    @PutMapping("/room/{id}")
-    public void updateRoom(@RequestBody Room room, @PathVariable Long id){
-        Room existRoom = roomService.getRoomById(id);
-        if(existRoom != null){
-            //existRoom.setThumbnailsRoomList(room.getThumbnailsRoomList());
-            roomService.save(room);
-        }
-    }
+
 
     @GetMapping("room")
     public ResponseEntity<Map<String, Object>> getListRoom(@RequestParam(required = false) String roomCode,
@@ -80,4 +78,67 @@ public class RoomAPI {
         return new ResponseEntity<>(listRoom,HttpStatus.OK);
     }
 
+    @PostMapping("/room")
+    public ResponseEntity<HttpStatus> addNewRoom(@RequestBody RoomDTO roomDTO){
+        try{
+            Room room = roomMapper.convertRoomDtoToEntity(roomDTO);
+            CancelPolicy cancelPolicy = cancelPolicyService.getCancelPolicyByCode(roomDTO.getPolicyCode());
+            room.setCancelPolicy(cancelPolicy);
+            Branch branch = branchService.getBranchByBranchCode(roomDTO.getBranchCode());
+            room.setRoomBranch(branch);
+            roomService.save(room);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @GetMapping("/current-room/{id}")
+    public ResponseEntity<RoomDTO> getRoomById(@PathVariable String id){
+        Long roomId = Long.valueOf(id);
+
+        Room room = roomService.getRoomById(roomId);
+
+        if(room != null){
+            RoomDTO roomDTO = roomMapper.roomEntityToDto(room);
+
+            return new ResponseEntity<>(roomDTO, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+    @PutMapping("/room/{id}")
+    public void updateRoom(@RequestBody RoomDTO roomDTO, @PathVariable String id){
+        System.out.println("dasdasdasdsad");
+        Long roomId = Long.valueOf(id);
+        Room existRoom = roomService.getRoomById(roomId);
+        if(existRoom != null){
+            existRoom.setAmountPeople(Integer.parseInt(roomDTO.getAmmountPeople()));
+            System.out.println(roomDTO.getPolicyCode());
+            existRoom.setName(roomDTO.getName());
+            existRoom.setPrice(roomDTO.getPrice());
+            existRoom.setMainImage(roomDTO.getMainImage());
+            existRoom.setDescription(roomDTO.getDescription());
+            CancelPolicy cancelPolicy = cancelPolicyService.getCancelPolicyByCode(roomDTO.getPolicyCode());
+            existRoom.setCancelPolicy(cancelPolicy);
+            Branch branch = branchService.getBranchByBranchCode(roomDTO.getBranchCode());
+            existRoom.setRoomBranch(branch);
+            roomService.save(existRoom);
+        }
+    }
+
+    @DeleteMapping("/room/{id}")
+    public ResponseEntity<HttpStatus> disableRoom(@PathVariable String id){
+        Long roomId = Long.valueOf(id);
+        Room room = roomService.getRoomById(roomId);
+        if(room != null){
+            Boolean roomStatus = room.getStatus();
+            room.setStatus(!roomStatus);
+            roomService.save(room);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
 }

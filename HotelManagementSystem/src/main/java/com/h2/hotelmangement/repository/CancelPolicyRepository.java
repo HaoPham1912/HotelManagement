@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CancelPolicyRepository extends JpaRepository<CancelPolicy, Integer> {
     Page<CancelPolicy> findAllByCodeContains(String code, Pageable pageable);
+
+    CancelPolicy findCancelPolicyByCode(String code);
 }

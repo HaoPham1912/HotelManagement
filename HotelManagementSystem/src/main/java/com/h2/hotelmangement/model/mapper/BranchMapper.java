@@ -3,7 +3,9 @@ package com.h2.hotelmangement.model.mapper;
 import com.google.api.client.util.Lists;
 import com.h2.hotelmangement.entity.Branch;
 import com.h2.hotelmangement.entity.Employee;
+import com.h2.hotelmangement.entity.Room;
 import com.h2.hotelmangement.model.dto.BranchDTO;
+import com.h2.hotelmangement.model.dto.RoomDTO;
 
 import javax.swing.text.html.CSS;
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ public class BranchMapper {
 
     public BranchDTO convertEntityToDto(Branch branch){
         BranchDTO branchDTO = new BranchDTO();
-
+        RoomMapper roomMapper =  new RoomMapper();
         Set<String> empCodes = new HashSet<>();
 
         branchDTO.setBranchId(branch.getBranchId().toString());
@@ -32,6 +34,10 @@ public class BranchMapper {
         branchDTO.setEmpCodeSet(empCodes);
         Set<String> setImages = branch.getThumbnailsHotelList();
         branchDTO.setThumbnailsBranchSet(Lists.newArrayList(setImages));
+        Set<Room> roomSet = branch.getRoomSet();
+        List<Room> roomList = Lists.newArrayList(roomSet);
+        List<RoomDTO> roomDTOList = roomMapper.convertListRoomEntityToDto(roomList);
+        branchDTO.setRoomDTOList(roomDTOList);
         branchDTO.setMainImage(branch.getMainImage());
         return branchDTO;
     }

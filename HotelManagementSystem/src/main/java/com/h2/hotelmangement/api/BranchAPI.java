@@ -1,6 +1,7 @@
 package com.h2.hotelmangement.api;
 
 
+import com.h2.hotelmangement.entity.Booking;
 import com.h2.hotelmangement.entity.Branch;
 import com.h2.hotelmangement.entity.Employee;
 import com.h2.hotelmangement.model.dto.BranchDTO;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -89,14 +91,30 @@ public class BranchAPI {
 
     }
 
+    @GetMapping("/current-branch/{id}")
+    public ResponseEntity<BranchDTO> getBranchById(@PathVariable String id){
+        Long branchId = Long.valueOf(id);
+
+        Branch branch = branchService.getBranchById(branchId);
+        try {
+            if(branch == null) throw new Exception("Can not find branch with id "+ id);
+            else {
+                BranchDTO branchDTO = branchMapper.convertEntityToDto(branch);
+                return new ResponseEntity<>(branchDTO, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
     @PostMapping("/branch")
     public ResponseEntity<HttpStatus> addNewBranch(@RequestBody BranchDTO branchDTO) {
         System.out.println(branchDTO.toString());
         Branch branch = branchMapper.convertDtoToEntity(branchDTO);
         System.out.println(branch.toString());
         try {
-
-            //branchService.save(branch);
+            branchService.save(branch);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
@@ -121,14 +139,27 @@ public class BranchAPI {
             branch.setDescription(branchDTO.getDescription());
             branch.setName(branchDTO.getBranchName());
             branch.setStatus(branchDTO.getStatus());
-            Set<String> branchImage =  new HashSet<>(branchDTO.getThumbnailsBranchSet());
-            branch.setThumbnailsHotelList(branchImage);
             branch.setMainImage(branchDTO.getMainImage());
-            // branchService.save(branch);
+            branchService.save(branch);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
 
+    @DeleteMapping("/branch/{id}")
+    public ResponseEntity<HttpStatus> diableBranch(@PathVariable String id){
+        Long branchId = Long.parseLong(id);
+
+        Branch branch = branchService.getBranchById(branchId);
+        if(branch!=null){
+            Boolean branchStatus = branch.getStatus();
+            branch.setStatus(!branchStatus);
+            branchService.save(branch);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 }

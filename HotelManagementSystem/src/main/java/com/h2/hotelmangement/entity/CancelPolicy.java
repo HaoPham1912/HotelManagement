@@ -77,4 +77,16 @@ public class CancelPolicy {
     public void setDayLong(int dayLong) {
         this.dayLong = dayLong;
     }
+
+    @Override
+    public String toString() {
+        return "CancelPolicy{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", title='" + title + '\'' +
+                ", detail='" + detail + '\'' +
+                ", dayLong=" + dayLong +
+                ", roomSet=" + roomSet +
+                '}';
+    }
 }

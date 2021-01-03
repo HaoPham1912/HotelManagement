@@ -15,4 +15,6 @@ public interface CancelPolicyService {
     Page<CancelPolicy> getPagePolicy(int pageNo, int pageSize);
 
     Page<CancelPolicy> getPagePolicyByCode(String code, int pageNo, int pageSize);
+
+    CancelPolicy getCancelPolicyByCode(String code);
 }

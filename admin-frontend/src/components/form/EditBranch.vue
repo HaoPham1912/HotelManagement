@@ -4,17 +4,15 @@
       <mdb-col md="3"></mdb-col>
       <mdb-col md="6">
         <mdb-card class="mb-4"
-          ><form
-            action=""
-            class="form-add-branch"
-            v-on:submit.prevent="createNewBranch"
-          >
-            <h3>Add New Branch</h3>
+          ><form class="form-add-branch">
+            >
+            <h3>Update Branch</h3>
             <div class="form-outline mb-4">
               <label for="location">Choose Location</label>
               <select
                 v-model="branch.location"
                 class="browser-default custom-select"
+                disabled
               >
                 <option selected value="Ho Chi Minh">Ho Chi Minh</option>
                 <option value="Nha Trang">Nha Trang</option>
@@ -28,14 +26,15 @@
                 id="branchCode"
                 class="form-control"
                 required
+                disabled
                 v-model="branch.branchCode"
               />
             </div>
             <div class="form-outline mb-4">
-              <label for="name">Branch Name</label>
+              <label for="branchName">Branch Name</label>
               <input
                 type="text"
-                id="name"
+                id="branchName"
                 class="form-control"
                 required
                 v-model="branch.branchName"
@@ -55,7 +54,6 @@
               <label for="description">Description</label>
               <textarea
                 id="description"
-                name="description"
                 rows="4"
                 cols="50"
                 class="form-control"
@@ -71,6 +69,14 @@
                     height="268"
                     width="356"
                     :src="imageShow"
+                  />
+                </div>
+                <div v-if="imageData == null">
+                  <img
+                    class="preview"
+                    height="268"
+                    width="356"
+                    :src="branch.mainImage"
                   />
                 </div>
 
@@ -94,8 +100,10 @@
               <button
                 class="btn btn-outline-success btn-rounded"
                 data-mdb-ripple-color="dark"
+                type="button"
+                @click="updateBranch(branch.branchId)"
               >
-                Add New Branch
+                Update Branch
               </button>
             </div>
             <mdb-container>
@@ -120,9 +128,7 @@
                   </p>
                 </mdb-modal-body>
                 <mdb-modal-footer center>
-                  <mdb-btn outline="primary" @click="createNewBranch"
-                    >Yes</mdb-btn
-                  >
+                  <mdb-btn outline="primary">Yes</mdb-btn>
                   <mdb-btn color="primary" @click="push = false">No</mdb-btn>
                 </mdb-modal-footer>
               </mdb-modal>
@@ -182,10 +188,23 @@ export default {
 
       buttonText: 'Choose Image',
 
+      idUpdate: '',
+
       push: false,
     };
   },
   methods: {
+    getCurrentBranch() {
+      let branchId = this.$route.params.id;
+      console.log(branchId);
+      BranchService.getBranchById(branchId).then((response) => {
+        console.log(response.data);
+        this.branch = response.data;
+        this.idUpdate = this.branch.branchId;
+        this.branch.mainImage = response.data.mainImage;
+      });
+    },
+
     click1() {
       this.$refs.input1.click();
     },
@@ -240,8 +259,7 @@ export default {
         );
       });
     },
-    async createNewBranch() {
-      await this.onUpload();
+    updateBranch(id) {
       var data = {
         branchCode: this.branch.branchCode,
         branchName: this.branch.branchName,
@@ -249,13 +267,12 @@ export default {
         address: this.branch.address,
         description: this.branch.description,
         mainImage: this.branch.mainImage,
-        thumbnailsBranchSet: this.branch.thumbnailsBranchSet,
       };
-
-      BranchService.createNewBranch(data)
+      console.log(id);
+      BranchService.updateBranchInfo(id, data)
         .then((response) => {
           console.log(response.data);
-          alert('New branch have been added');
+          alert('Branch information have been updated');
           this.$router.push('/reloadBranch');
         })
         .catch((e) => {
@@ -267,24 +284,24 @@ export default {
       this.push = true;
     },
 
-    decode() {
-      let jwt =
-        'eyJhbGciOiJIUzUxMiJ9.eyJBVVRIT1JJVElFU19LRVkiOiJFTVBMT1lFRSIsInN1YiI6ImZvbyIsImlhdCI6MTYwOTI2MDEzMywiZXhwIjoxNjA5MjYwNDMzfQ.c9gixHSqKiWwDSDgsbR7dAvi5-epdhucsqb6hvyUhKakIUYgL3QP49UMSSKb4r28sAXwFslhxHHfDETq1_kZJg';
+    // decode() {
+    //   let jwt =
+    //     'eyJhbGciOiJIUzUxMiJ9.eyJBVVRIT1JJVElFU19LRVkiOiJFTVBMT1lFRSIsInN1YiI6ImZvbyIsImlhdCI6MTYwOTI2MDEzMywiZXhwIjoxNjA5MjYwNDMzfQ.c9gixHSqKiWwDSDgsbR7dAvi5-epdhucsqb6hvyUhKakIUYgL3QP49UMSSKb4r28sAXwFslhxHHfDETq1_kZJg';
 
-      let jwtData = jwt.split('.')[1];
-      let decodedJwtJsonData = window.atob(jwtData);
-      let decodedJwtData = JSON.stringify(decodedJwtJsonData);
+    //   let jwtData = jwt.split('.')[1];
+    //   let decodedJwtJsonData = window.atob(jwtData);
+    //   let decodedJwtData = JSON.stringify(decodedJwtJsonData);
 
-      //let isAdmin = decodedJwtData.admin;
+    //   //let isAdmin = decodedJwtData.admin;
 
-      console.log('jwtData: ' + jwtData);
-      console.log('decodedJwtJsonData: ' + decodedJwtJsonData);
-      console.log('decodedJwtData: ' + decodedJwtData);
-      console.log(decodedJwtJsonData.AUTHORITIES_KEY);
-    },
+    //   console.log('jwtData: ' + jwtData);
+    //   console.log('decodedJwtJsonData: ' + decodedJwtJsonData);
+    //   console.log('decodedJwtData: ' + decodedJwtData);
+    //   console.log(decodedJwtJsonData.AUTHORITIES_KEY);
+    // },
   },
   mounted() {
-    this.decode();
+    this.getCurrentBranch();
   },
 };
 </script>

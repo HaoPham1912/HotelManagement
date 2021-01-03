@@ -7,7 +7,7 @@
           <div class="link-add"></div>
           <div class="row">
             <div class="col-md-9">
-              <a href="/room/add" type="button" class="btn btn-success">
+              <a href="/admin/room/add" type="button" class="btn btn-success">
                 Add new Room
               </a>
             </div>
@@ -62,17 +62,17 @@
                   <td>{{ data.branchCode }}</td>
                   <td class="descrip-room">{{ data.description }}</td>
                   <td>
-                    <dir class="img-table">
+                    <div class="img-table">
                       <img :src="data.mainImage" alt="" />
-                    </dir>
+                    </div>
                   </td>
                   <td class="action">
                     <div>
-                      <button class="btn-sm btn-warning">
-                        <a
-                          class="btn-link-edit action-button"
-                          @click="edit(scope.row)"
-                        >
+                      <button
+                        class="btn-sm btn-warning"
+                        @click="editRoom(data.roomId)"
+                      >
+                        <a class="btn-link-edit action-button">
                           <i class="fas fa-pencil-alt"></i> </a
                         >EDIT
                       </button>
@@ -179,6 +179,11 @@ export default {
       this.pageSize = event.target.value;
       this.page = 1;
       this.retrieveRoom();
+    },
+
+    editRoom(id) {
+      console.log(`id is ${id}`);
+      this.$router.push(`room/${id}`);
     },
 
     handelSearch() {

@@ -43,4 +43,9 @@ public class CancelPolicyServiceImpl implements CancelPolicyService {
         Pageable pageable = PageRequest.of(pageNo,pageSize);
         return cancelPolicyRepository.findAllByCodeContains(code, pageable);
     }
+
+    @Override
+    public CancelPolicy getCancelPolicyByCode(String code) {
+        return cancelPolicyRepository.findCancelPolicyByCode(code);
+    }
 }

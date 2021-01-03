@@ -32,6 +32,8 @@ import EditService from '../components/form/EditService.vue';
 import EditCustomer from '../components/form/EditCustomer.vue';
 import EditProfie from '../components/form/EditProfie.vue';
 import EditEmployee from '../components/form/EditEmployee.vue';
+import EditBranch from '../components/form/EditBranch.vue';
+import EditRoom from '../components/form/EditRoom.vue';
 
 import DetailBranch from '../components/page/DetailBranch.vue';
 import DetailBill from '../components/form/DetailBill.vue';
@@ -79,6 +81,12 @@ export default new Router({
           name: 'Room',
           component: RoomTable,
           props: { page: 6 },
+        },
+        {
+          path: '/admin/room/:id',
+          name: 'EditRoom',
+          component: EditRoom,
+        
         },
         {
           path: '/admin/policy',
@@ -146,6 +154,11 @@ export default new Router({
           component: AddBranch,
         },
         {
+          path: '/admin/branch/:id',
+          name: 'Update Branch',
+          component: EditBranch,
+        },
+        {
           path: '/admin/detail-branch/:branchCode',
           name: 'Branch Detail',
           component: DetailBranch,
@@ -180,11 +193,13 @@ export default new Router({
           component: EditProfie,
           props: true,
         },
-        { path: '/reloadService', redirect: '/services' },
-        { path: '/reloadAccount', redirect: '/account' },
-        { path: '/reloadPolicy', redirect: '/policy' },
-        { path: '/reloadEmployee', redirect: '/employee' },
-        { path: '/reloadPromo', redirect: '/promotion' }
+        { path: '/reloadService', redirect: '/admin/services' },
+        { path: '/reloadAccount', redirect: '/admin/account' },
+        { path: '/reloadPolicy', redirect: '/admin/policy' },
+        { path: '/reloadEmployee', redirect: '/admin/employee' },
+        { path: '/reloadPromo', redirect: '/admin/promotion' },
+        { path: '/reloadBranch', redirect: '/admin/branch' },
+        { path: '/reloadRoom', redirect: '/admin/room' }
       ]
       },
         {

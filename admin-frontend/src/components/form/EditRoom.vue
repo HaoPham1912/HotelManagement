@@ -1,19 +1,13 @@
 <template>
-  <form action="" class="form-add" v-on:submit.prevent="createNewRoom">
-    <h3>Add New Room</h3>
+  <form action="" class="form-add">
+    <h3>Update Room information</h3>
     <!-- Message input -->
     <div class="form-outline mb-4">
       <label class="form-label" for="branchCode">Choose Branch Code</label>
       <b-form-select
         v-model="rooms.branchCode"
         :options="branchCodes"
-      ></b-form-select>
-    </div>
-    <div class="form-outline mb-4">
-      <label class="form-label" for="policyCode">Choose Cancel Policy</label>
-      <b-form-select
-        v-model="rooms.policyCode"
-        :options="policyCodes"
+        disabled
       ></b-form-select>
     </div>
     <div class="form-outline mb-4">
@@ -23,8 +17,16 @@
         id="roomCode"
         class="form-control"
         v-model="rooms.roomCode"
+        disabled
         required
       />
+    </div>
+    <div class="form-outline mb-4">
+      <label class="form-label" for="policyCode">Choose Cancel Policy</label>
+      <b-form-select
+        v-model="rooms.policyCode"
+        :options="policyCodes"
+      ></b-form-select>
     </div>
 
     <div class="form-outline mb-4">
@@ -63,7 +65,6 @@
       <label for="description">Description</label>
       <textarea
         id="description"
-        name="description"
         rows="4"
         cols="50"
         class="form-control"
@@ -94,8 +95,12 @@
         <img :src="imageUrl" alt="" height="150" />
       </div>
     </div>
-    <button type="submit" class="btn btn-primary btn-block mb-4">
-      Add New Room
+    <button
+      type="button"
+      class="btn btn-primary btn-block mb-4"
+      @click="updateRoom(rooms.roomId)"
+    >
+      Update Room
     </button>
   </form>
 </template>
@@ -128,6 +133,16 @@ export default {
     };
   },
   methods: {
+    getCurrentRoom() {
+      let roomId = this.$route.params.id;
+      console.log(roomId);
+      RoomService.getRoomById(roomId).then((response) => {
+        this.rooms = response.data;
+        this.imageUrl = response.data.mainImage;
+        this.rooms.mainImage = response.data.mainImage;
+      });
+    },
+
     onPickFile() {
       this.$refs.fileInput.click();
     },
@@ -182,8 +197,7 @@ export default {
       });
     },
 
-    async createNewRoom() {
-      await this.onUpload();
+    updateRoom(id) {
       var data = {
         roomCode: this.rooms.roomCode,
         policyCode: this.rooms.policyCode,
@@ -195,8 +209,10 @@ export default {
         mainImage: this.rooms.mainImage,
       };
 
-      RoomService.addRoom(data).then((response) => {
+      RoomService.updateRoom(id, data).then((response) => {
         console.log(response.data);
+        alert('Room information have been updated');
+        this.$router.push('/reloadRoom');
       });
     },
 
@@ -251,6 +267,7 @@ export default {
   mounted() {
     this.setBracnhCodes();
     this.setPolicyCode();
+    this.getCurrentRoom();
   },
 };
 </script>

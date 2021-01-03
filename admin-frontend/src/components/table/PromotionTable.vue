@@ -7,7 +7,11 @@
           <div class="row">
             <div class="col-md-9">
               <div class="link-add">
-                <a href="/promo/add" type="button" class="btn btn-success">
+                <a
+                  href="/admin/promo/add"
+                  type="button"
+                  class="btn btn-success"
+                >
                   Add new Promotion
                 </a>
               </div>

@@ -5,7 +5,7 @@
       <mdb-col md="10">
         <mdb-card class="mb-4">
           <div class="link-add">
-            <a href="/policy/add" type="button" class="btn btn-success">
+            <a href="/admin/policy/add" type="button" class="btn btn-success">
               Add new Policy
             </a>
           </div>
