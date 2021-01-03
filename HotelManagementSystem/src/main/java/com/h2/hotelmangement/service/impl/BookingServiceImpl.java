@@ -83,4 +83,9 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.findBookingByBookingKey_BillId(id);
     }
 
+    @Override
+    public Long deleteBooking(Long billId, Long roomId) {
+        return bookingRepository.deleteBookingByBills_BillidAndRoom_RoomId(billId,roomId);
+    }
+
 }

@@ -39,7 +39,7 @@
                         v-tooltip.top-center="{
                           content: 'View booking detail',
                         }"
-                        @click="bindingDataToModal(data.bedId)"
+                        @click="viewBookingDetail(data.billId, data.roomId)"
                       >
                         <b-icon icon="exclamation-circle"></b-icon>
                         <a class="btn-link-edit action-button"> </a>
@@ -49,7 +49,7 @@
                       <mdb-btn
                         :class="'btn-sm btn-danger'"
                         color="data.status : danger ? success"
-                        @click="ShowModalDisable(data.bedId)"
+                        @click="showConfirmation(data.billId, data.roomId)"
                         v-tooltip.top-center="{
                           content: setTextTooltip(data.status),
                         }"
@@ -63,22 +63,6 @@
               </tbody>
             </mdb-tbl>
             <div>
-              <mdb-modal centered :show="modal" @close="modal = false">
-                <mdb-modal-header>
-                  <mdb-modal-title>Update Bed Information</mdb-modal-title>
-                </mdb-modal-header>
-                <mdb-modal-body> </mdb-modal-body>
-                <mdb-modal-footer>
-                  <mdb-btn color="danger" @click.native="modal = false"
-                    >Close</mdb-btn
-                  >
-                  <mdb-btn color="primary" @click="updateBed(currentBed.bedId)"
-                    >Save changes</mdb-btn
-                  >
-                </mdb-modal-footer>
-              </mdb-modal>
-            </div>
-            <div>
               <mdb-modal
                 centered
                 :show="modalDelete"
@@ -87,13 +71,62 @@
                 <mdb-modal-header>
                   <mdb-modal-title>ARE YOU SURE?</mdb-modal-title>
                 </mdb-modal-header>
-                <mdb-modal-body>PLEASE CHECK BEFORE ACTION</mdb-modal-body>
+                <mdb-modal-body>
+                  <strong
+                    >Are you sure delete this booking information? <br />
+                    Data Deleted can not restore!!!!</strong
+                  >
+                </mdb-modal-body>
                 <mdb-modal-footer>
                   <mdb-btn color="danger" @click.native="modalDelete = false"
-                    >Close</mdb-btn
+                    >Cancel</mdb-btn
                   >
-                  <mdb-btn color="primary" @click="deleteBed(currentBed.bedId)"
+                  <mdb-btn
+                    color="success"
+                    @click="deleteBooking(billId, roomId)"
                     >OK</mdb-btn
+                  >
+                </mdb-modal-footer>
+              </mdb-modal>
+            </div>
+            <div>
+              <mdb-modal
+                centered
+                :show="modalDetail"
+                @close="modalDetail = false"
+              >
+                <mdb-modal-header>
+                  <mdb-modal-title>CUSTOMER INFORMATION</mdb-modal-title>
+                </mdb-modal-header>
+                <mdb-modal-body>
+                  <div style="display: flex; justify-content:space-around">
+                    <strong>Customer Code: </strong>
+                    <p>{{ detailBooking.customerCode }}</p>
+                  </div>
+                  <div style="display: flex; justify-content:space-around">
+                    <strong>Customer Name: </strong>
+                    <p>{{ detailBooking.customerName }}</p>
+                  </div>
+                  <div style="display: flex; justify-content:space-around">
+                    <strong>Customer Phone: </strong>
+                    <p>{{ detailBooking.customerPhone }}</p>
+                  </div>
+                  <div style="display: flex; justify-content:space-around">
+                    <strong>Customer Email: </strong>
+                    <p>{{ detailBooking.customerEmail }}</p>
+                  </div>
+                  <div style="display: flex; justify-content:space-around">
+                    <strong>Room Code: </strong>
+                    <p>{{ detailBooking.roomCode }}</p>
+                  </div>
+                  <div style="display: flex; justify-content:space-around">
+                    <strong>Room Name: </strong>
+                    <p>{{ detailBooking.roomName }}</p>
+                  </div>
+                </mdb-modal-body>
+                <mdb-modal-footer>
+                  <mdb-btn color="primary" @click.native="modalDetail = false"
+                    >Ok</mdb-btn
                   >
                 </mdb-modal-footer>
               </mdb-modal>
@@ -151,12 +184,17 @@ export default {
   data() {
     return {
       bookings: [],
-      modal: false,
       modalDelete: false,
+      modalDetail: false,
       currentIndex: -1,
       page: 1,
       count: 0,
       pageSize: 5,
+
+      detailBooking: {},
+
+      billId: '',
+      roomId: '',
 
       pageSizes: [5, 10, 15],
     };
@@ -173,6 +211,12 @@ export default {
       }
 
       return params;
+    },
+
+    showConfirmation(billId, roomId) {
+      this.billId = billId;
+      this.roomId = roomId;
+      this.modalDelete = true;
     },
 
     retrieveBookings() {
@@ -199,6 +243,26 @@ export default {
       this.pageSize = event.target.value;
       this.page = 1;
       this.retrieveBookings();
+    },
+
+    viewBookingDetail(billId, roomId) {
+      BookingService.getDetailBooking(billId, roomId).then((response) => {
+        console.log(response.data);
+        this.detailBooking = response.data;
+        this.modalDetail = true;
+      });
+    },
+
+    deleteBooking(billId, roomId) {
+      console.log(billId);
+      console.log(roomId);
+
+      BookingService.deleteBooking(billId, roomId).then((response) => {
+        console.log(response.data);
+        alert('This booking information have been deleted!!!');
+        this.retrieveBookings();
+        this.modalDelete = false;
+      });
     },
   },
 

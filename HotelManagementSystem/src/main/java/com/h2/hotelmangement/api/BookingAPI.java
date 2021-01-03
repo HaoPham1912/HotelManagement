@@ -3,10 +3,13 @@ package com.h2.hotelmangement.api;
 import com.h2.hotelmangement.Request.ResponseHistoryBookDTO;
 import com.h2.hotelmangement.entity.Bill;
 import com.h2.hotelmangement.entity.Booking;
+import com.h2.hotelmangement.entity.Customer;
 import com.h2.hotelmangement.entity.Room;
 import com.h2.hotelmangement.model.dto.BookingDTO;
+import com.h2.hotelmangement.model.dto.DetailsBillDTO;
 import com.h2.hotelmangement.model.mapper.BookingMapper;
 import com.h2.hotelmangement.repository.BookingRepository;
+import com.h2.hotelmangement.service.BillService;
 import com.h2.hotelmangement.service.BookingService;
 import com.h2.hotelmangement.service.RoomService;
 import org.apache.commons.lang3.StringUtils;
@@ -29,6 +32,9 @@ public class BookingAPI {
 
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private BillService billService;
 
     @Autowired
     private RoomService roomService;
@@ -63,4 +69,39 @@ public class BookingAPI {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    @GetMapping("/detail-booking/{billId}/{roomId}")
+    public ResponseEntity<DetailsBillDTO> getDetailBill(@PathVariable String billId, @PathVariable String roomId){
+        Long id = Long.valueOf(billId);
+        Long idRoom = Long.valueOf(roomId);
+        DetailsBillDTO detailsBillDTO = new DetailsBillDTO();
+        try {
+            Customer customer = billService.getCustomerByBillId(id);
+            Room room = roomService.getRoomById(idRoom);
+            detailsBillDTO.setCustomerCode(customer.getCusCode());
+            detailsBillDTO.setCustomerName(customer.getName());
+            detailsBillDTO.setCustomerPhone(customer.getPhone());
+            detailsBillDTO.setCustomerEmail(customer.getEmail());
+            detailsBillDTO.setRoomCode(room.getRoomCode());
+            detailsBillDTO.setRoomName(room.getName());
+            return new ResponseEntity<>(detailsBillDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @DeleteMapping("/booking/{billId}/{roomId}")
+    public ResponseEntity<HttpStatus> deleteBooking(@PathVariable String billId, @PathVariable String roomId){
+        Long idBill = Long.valueOf(billId);
+        Long idRoom = Long.valueOf(roomId);
+        bookingService.deleteBooking(idBill,idRoom);
+        Set<Booking> bookingSet = bookingService.getBookingByBillId(idBill);
+        if(bookingSet.isEmpty()){
+            Bill bill = billService.getBillByBillId(idBill);
+            if(bill.getStatus()){
+                billService.deleteBillById(idBill);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

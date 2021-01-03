@@ -83,4 +83,20 @@ public class BillAPI {
     public Bill addBill(@RequestBody Bill bill){
         return billService.save(bill);
     }
+
+    @PutMapping("/bill/{id}")
+    public ResponseEntity<HttpStatus> updateStatusBill(@PathVariable String id){
+        Long billId = Long.valueOf(id);
+
+        Bill bill = billService.getBillByBillId(billId);
+        if(bill!= null){
+            Boolean billStatus = bill.getStatus();
+            bill.setStatus(!billStatus);
+
+            billService.save(bill);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
 }

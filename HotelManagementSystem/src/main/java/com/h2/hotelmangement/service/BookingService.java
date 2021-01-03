@@ -21,4 +21,6 @@ public interface BookingService {
     Page<Booking> getPageBookingPagination(int pageNo, int pageSize);
 
     Set<Booking> getBookingByBillId(Long id);
+
+    Long deleteBooking(Long billId, Long roomId);
 }

@@ -8,17 +8,10 @@
         </div>
         <hr />
         <div class="row">
-          <!-- <div class="col-xs-6">
-            <address>
-              <strong>Payment Method:</strong><br />
-              Visa ending **** 4242<br />
-              jsmith@email.com
-            </address>
-          </div> -->
           <div class="col-xs-6 text-right">
             <address>
-              <strong>Order Date:</strong><br />
-              March 7, 2014<br /><br />
+              <strong>Export Date:</strong><br />
+              {{ printDate }}<br /><br />
             </address>
           </div>
         </div>
@@ -36,10 +29,10 @@
               <table class="table table-condensed">
                 <thead>
                   <tr>
-                    <td><strong>Bill Id</strong></td>
+                    <td class="text-center"><strong>Bill Id</strong></td>
                     <td class="text-center"><strong>Room Id</strong></td>
-                    <td class="text-center"><strong>Book Date</strong></td>
-                    <td class="text-center"><strong>Check In Date</strong></td>
+                    <td class="text-right"><strong>Book Date</strong></td>
+                    <td class="text-right"><strong>Check In Date</strong></td>
                     <td class="text-right"><strong>Check Out Date</strong></td>
                     <td class="text-right">
                       <strong>Total Price Paid</strong>
@@ -81,7 +74,7 @@
                     <td class="no-line"></td>
                     <td class="no-line"></td>
                     <td class="no-line text-center"><strong>Total</strong></td>
-                    <td class="no-line text-right">$670.48</td>
+                    <td class="no-line text-right">{{ totalPrice }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -104,7 +97,9 @@ export default {
       bookingList: [],
       bookDate: '',
 
-      totalPrice: '',
+      totalPrice: 0,
+
+      printDate: '',
     };
   },
 
@@ -113,12 +108,25 @@ export default {
       BillService.getBookingByBillId(this.billId).then((response) => {
         console.log(response.data);
         this.bookingList = response.data;
+        this.bookingList.forEach((element) => {
+          this.totalPrice += element.paidPrice;
+        });
       });
+    },
+
+    getPrintDate() {
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+
+      this.printDate = mm + '/' + dd + '/' + yyyy;
     },
   },
 
   mounted() {
     this.getBookingList();
+    this.getPrintDate();
   },
 };
 </script>

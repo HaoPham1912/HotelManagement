@@ -5,10 +5,15 @@
       <mdb-col md="10">
         <mdb-card class="mb-4">
           <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-6">
               <a href="/admin/branch/add" type="button" class="btn btn-success">
                 Add new Branch
               </a>
+            </div>
+            <div class="col-md-3">
+              <mdb-btn class="btn-showall" color="info" @click="showAll"
+                >Show All</mdb-btn
+              >
             </div>
             <div class="col-md-3">
               <div class="input-group md-form form-sm form-2 pl-0">
@@ -114,7 +119,15 @@
   </section>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
+import {
+  mdbRow,
+  mdbCol,
+  mdbCard,
+  mdbCardBody,
+  mdbTbl,
+  mdbIcon,
+  mdbBtn,
+} from 'mdbvue';
 
 import BranchService from '../../services/BranchService';
 export default {
@@ -139,6 +152,7 @@ export default {
     mdbCardBody,
     mdbTbl,
     mdbIcon,
+    mdbBtn,
   },
   methods: {
     getRequestParams(branchCode, page, pageSize) {
@@ -172,6 +186,11 @@ export default {
         .catch((e) => {
           console.log(e);
         });
+    },
+
+    showAll() {
+      this.branchCode = '';
+      this.retrieveBranch();
     },
 
     disableBranch(id) {

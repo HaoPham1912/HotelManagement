@@ -37,6 +37,7 @@ import EditRoom from '../components/form/EditRoom.vue';
 
 import DetailBranch from '../components/page/DetailBranch.vue';
 import DetailBill from '../components/form/DetailBill.vue';
+import DetailRoom from '../components/page/DetailRoom.vue';
 
 Vue.use(Router);
 
@@ -162,6 +163,11 @@ export default new Router({
           path: '/admin/detail-branch/:branchCode',
           name: 'Branch Detail',
           component: DetailBranch,
+        },
+        {
+          path: '/admin/detail-room/:roomCode',
+          name: 'Room Detail',
+          component: DetailRoom,
         },
         {
           path: '/admin/services/:code',

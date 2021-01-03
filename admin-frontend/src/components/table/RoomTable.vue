@@ -6,10 +6,15 @@
         <mdb-card class="mb-4">
           <div class="link-add"></div>
           <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-6">
               <a href="/admin/room/add" type="button" class="btn btn-success">
                 Add new Room
               </a>
+            </div>
+            <div class="col-md-3">
+              <mdb-btn class="btn-showall" color="info" @click="showAll"
+                >Show All</mdb-btn
+              >
             </div>
             <div class="col-md-3">
               <div class="input-group md-form form-sm form-2 pl-0">
@@ -45,7 +50,7 @@
                   <th>RoomCode</th>
                   <th>Name</th>
                   <th>Price</th>
-                  <th>In Room</th>
+                  <th>In Branch</th>
                   <th>Description</th>
                   <th>Room Image</th>
                   <th></th>
@@ -55,7 +60,9 @@
                 <tr v-for="(data, index) in rooms" :key="index">
                   <td>{{ data.roomId }}</td>
                   <td>
-                    <a href="">{{ data.roomCode }}</a>
+                    <a :href="'detail-room/' + data.roomCode">{{
+                      data.roomCode
+                    }}</a>
                   </td>
                   <td>{{ data.name }}</td>
                   <td>{{ data.price }}</td>
@@ -112,7 +119,15 @@
   </section>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
+import {
+  mdbRow,
+  mdbCol,
+  mdbCard,
+  mdbCardBody,
+  mdbTbl,
+  mdbIcon,
+  mdbBtn,
+} from 'mdbvue';
 
 import RoomService from '../../services/RoomService';
 export default {
@@ -137,6 +152,7 @@ export default {
     mdbCardBody,
     mdbTbl,
     mdbIcon,
+    mdbBtn,
   },
   methods: {
     getRequestParams(roomCode, page, pageSize) {
@@ -188,6 +204,11 @@ export default {
 
     handelSearch() {
       this.page = 1;
+      this.retrieveRoom();
+    },
+
+    showAll() {
+      this.roomCode = '';
       this.retrieveRoom();
     },
   },

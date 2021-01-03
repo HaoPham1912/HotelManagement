@@ -8,5 +8,9 @@ class BillService{
     getBookingByBillId(id){
         return http.get(`/bill/${id}`);
     }
+
+    updateBill(id){
+        return http.put(`/bill/${id}`);
+    }
 }
 export default new BillService();

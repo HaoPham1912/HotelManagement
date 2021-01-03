@@ -20,6 +20,10 @@ class RoomService{
     getRoomById(id){
         return http.get(`/current-room/${id}`);
     }
+    
+    getRoomByRoomCode(code){
+        return http.get(`/room/${code}`);
+    }
 }
 
 export default new RoomService();

@@ -15,12 +15,6 @@ import java.util.Set;
 
 public class RoomMapper {
 
-    @Autowired
-    CancelPolicyService cancelPolicyService;
-
-    @Autowired
-    BranchService branchService;
-
     public RoomDTO roomEntityToDto(Room room) {
         RoomDTO roomDTO = new RoomDTO();
         BedMapper bedMapper = new BedMapper();

@@ -5,7 +5,6 @@
       <mdb-col md="6">
         <mdb-card class="mb-4"
           ><form class="form-add-branch">
-            >
             <h3>Update Branch</h3>
             <div class="form-outline mb-4">
               <label for="location">Choose Location</label>

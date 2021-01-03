@@ -82,6 +82,7 @@
                         v-tooltip.top-center="{
                           content: setTextTooltip(data.status),
                         }"
+                        disable
                       >
                         <a :href="'account/' + data.accountId"> </a>
                         <i

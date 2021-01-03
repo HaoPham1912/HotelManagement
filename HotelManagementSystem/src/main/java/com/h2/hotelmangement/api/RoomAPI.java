@@ -67,7 +67,9 @@ public class RoomAPI {
     public ResponseEntity<RoomDTO> getRoomByCode(@PathVariable(value = "code") String roomCode){
 
         Room room = roomService.getRoomByRoomCode(roomCode);
+        //RoomDTO roomDTO = new RoomDTO();
         RoomDTO roomDTO = roomMapper.roomEntityToDto(room);
+        System.out.println(room.toString());
 
         return new ResponseEntity<>(roomDTO, HttpStatus.OK);
     }

@@ -2,6 +2,7 @@ package com.h2.hotelmangement.service.impl;
 
 import com.h2.hotelmangement.common.util.ModelMapperUtil;
 import com.h2.hotelmangement.entity.Bill;
+import com.h2.hotelmangement.entity.Customer;
 import com.h2.hotelmangement.model.dto.BillDTO;
 import com.h2.hotelmangement.repository.BillRepository;
 import com.h2.hotelmangement.service.BillService;
@@ -48,4 +49,26 @@ public class BillServiceImpl implements BillService {
         Optional<Set<Bill>> billList = billRepository.findByCustomer_CustomerId(customerId);
         return Optional.ofNullable(ModelMapperUtil.mapAllToSet(billList.get(),BillDTO.class));
     }
+
+    @Override
+    public Customer getCustomerByBillId(Long id) throws Exception {
+        Bill bill = billRepository.getOne(id);
+        System.out.println(bill.toString());
+        if(bill != null){
+            return bill.getCustomer();
+        }else {
+            throw new Exception("Can not get bill with" + id);
+        }
+    }
+
+    @Override
+    public void deleteBillById(Long id) {
+        billRepository.deleteById(id);
+    }
+
+    @Override
+    public Bill getBillByBillId(Long id) {
+        return billRepository.getOne(id);
+    }
+
 }
