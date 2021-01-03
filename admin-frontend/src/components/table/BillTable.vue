@@ -5,7 +5,12 @@
       <mdb-col md="10">
         <mdb-card class="mb-4">
           <div class="row">
-            <div class="col-md-9"></div>
+            <div class="col-md-6"></div>
+            <div class="col-md-3">
+              <mdb-btn class="btn-showall" color="info" @click="showAll"
+                >Show All</mdb-btn
+              >
+            </div>
             <div class="col-md-3">
               <div class="input-group md-form form-sm form-2 pl-0">
                 <input
@@ -206,7 +211,10 @@ export default {
           console.log(e);
         });
     },
-
+    showAll() {
+      this.searchName = '';
+      this.retrieveBill();
+    },
     showModalConfirm(id) {
       this.modalConfirm = true;
       this.currentBillId = id;

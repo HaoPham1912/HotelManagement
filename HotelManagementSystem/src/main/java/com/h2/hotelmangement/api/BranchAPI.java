@@ -112,6 +112,7 @@ public class BranchAPI {
     public ResponseEntity<HttpStatus> addNewBranch(@RequestBody BranchDTO branchDTO) {
         System.out.println(branchDTO.toString());
         Branch branch = branchMapper.convertDtoToEntity(branchDTO);
+        branch.setStatus(true);
         System.out.println(branch.toString());
         try {
             branchService.save(branch);

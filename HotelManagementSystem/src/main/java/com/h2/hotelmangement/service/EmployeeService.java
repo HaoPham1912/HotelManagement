@@ -20,4 +20,6 @@ public interface EmployeeService {
     void delete(Long id) throws Exception;
 
     Employee findEmpByAccountId(Long id);
+
+    Employee getEmployeeByUsername(String username);
 }

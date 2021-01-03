@@ -81,10 +81,10 @@
                       >
                         <a class="btn-link-edit action-button">
                           <i class="fas fa-pencil-alt"></i> </a
-                        >EDIT
+                        >EDIT ROOM
                       </button>
                     </div>
-                    <div>
+                    <!-- <div>
                       <button class="btn-sm btn-danger">
                         <a
                           class="btn-link-delete action-button"
@@ -94,7 +94,7 @@
                         </a>
                         DELETE
                       </button>
-                    </div>
+                    </div> -->
                   </td>
                 </tr>
               </tbody>

@@ -11,7 +11,7 @@
 
         <!-- Email -->
         <input
-          v-model="user.username"
+          v-model="userName"
           v-validate="'required'"
           type="text"
           id="username"
@@ -22,7 +22,7 @@
 
         <!-- Password -->
         <input
-          v-model="user.password"
+          v-model="pass"
           v-validate="'required'"
           type="password"
           id="password"
@@ -51,49 +51,30 @@
   </div>
 </template>
 <script>
-import User from '../../model/user';
 export default {
   name: 'Login',
   data() {
     return {
-      user: new User('', ''),
+      userName: '',
+      pass: '',
       loading: false,
       message: '',
+      loginError: false,
     };
   },
-  computed: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
-    },
-  },
-  created() {
-    if (this.loggedIn) {
-      this.$router.push('/');
-    }
-  },
+  // computed: {
+  //   loggedIn() {
+  //     return this.$store.state.auth.status.loggedIn;
+  //   },
+  // },
+  // created() {
+  //   if (this.loggedIn) {
+  //     this.$router.push('/');
+  //   }
+  // },
   methods: {
     handleLogin() {
-      this.loading = true;
-      this.$validation.validateAll().then((isValid) => {
-        if (!isValid) {
-          this.loading = false;
-          return;
-        }
-        if (this.user.username && this.user.password) {
-          this.$store.dispatch('login', this.user).then(
-            () => {
-              this.$router.push('/');
-            },
-            (error) => {
-              this.loading = false;
-              this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-            }
-          );
-        }
-      });
+      this.loginError = false;
     },
   },
 };

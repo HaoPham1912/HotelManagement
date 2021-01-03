@@ -83,9 +83,10 @@
                         <a class="btn-link-edit action-button">
                           <i class="fas fa-pencil-alt"></i>
                         </a>
+                        EDIT BRANCH
                       </button>
                     </div>
-                    <div>
+                    <!-- <div>
                       <button
                         class="btn-sm btn-danger"
                         @click="disableBranch(data.branchId)"
@@ -94,7 +95,7 @@
                           <i class="fas fa-trash"></i>
                         </a>
                       </button>
-                    </div>
+                    </div> -->
                   </td>
                 </tr>
               </tbody>

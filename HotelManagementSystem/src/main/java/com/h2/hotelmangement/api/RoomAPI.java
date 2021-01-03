@@ -88,6 +88,7 @@ public class RoomAPI {
             room.setCancelPolicy(cancelPolicy);
             Branch branch = branchService.getBranchByBranchCode(roomDTO.getBranchCode());
             room.setRoomBranch(branch);
+            room.setStatus(true);
             roomService.save(room);
             return new ResponseEntity<>(HttpStatus.OK);
         }catch (Exception e){

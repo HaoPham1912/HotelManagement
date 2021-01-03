@@ -20,6 +20,7 @@ import firebase from 'firebase'
 
 import router from './router/router'
 import App from './App.vue'
+
 // Install BootstrapVue
 Vue.use(BootstrapVue)
 Vue.use(VTooltip)
