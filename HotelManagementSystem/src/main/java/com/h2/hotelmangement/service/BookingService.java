@@ -19,4 +19,6 @@ public interface BookingService {
     Optional<Set<ResponseHistoryBookDTO>> getHistoryBooking(Long customerId);
 
     Page<Booking> getPageBookingPagination(int pageNo, int pageSize);
+
+    Set<Booking> getBookingByBillId(Long id);
 }

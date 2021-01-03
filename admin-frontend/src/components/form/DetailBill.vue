@@ -4,7 +4,7 @@
       <div class="col-xs-12">
         <div class="invoice-title">
           <h2>Invoice</h2>
-          <h3 class="pull-right"># 1</h3>
+          <h3 class="pull-right">{{ `# ${this.billId}` }}</h3>
         </div>
         <hr />
         <div class="row">
@@ -36,7 +36,8 @@
               <table class="table table-condensed">
                 <thead>
                   <tr>
-                    <td><strong>Room Id</strong></td>
+                    <td><strong>Bill Id</strong></td>
+                    <td class="text-center"><strong>Room Id</strong></td>
                     <td class="text-center"><strong>Book Date</strong></td>
                     <td class="text-center"><strong>Check In Date</strong></td>
                     <td class="text-right"><strong>Check Out Date</strong></td>
@@ -47,22 +48,16 @@
                 </thead>
                 <tbody>
                   <!-- foreach ($order->lineItems as $line) or some such thing here -->
-                  <tr>
-                    <td>1</td>
-                    <td class="text-center">19/12/2020</td>
-                    <td class="text-center">21/12/2020</td>
-                    <td class="text-right">22/12/2020</td>
-                    <td class="text-right">$335,45</td>
-                  </tr>
-                  <tr>
-                    <td>5</td>
-                    <td class="text-center">19/12/2020</td>
-                    <td class="text-center">21/12/2020</td>
-                    <td class="text-right">22/12/2020</td>
-                    <td class="text-right">$335,45</td>
+                  <tr v-for="(data, index) in bookingList" :key="index">
+                    <td class="text-center">{{ data.billId }}</td>
+                    <td class="text-center">{{ data.roomId }}</td>
+                    <td class="text-right">{{ data.bookDate }}</td>
+                    <td class="text-right">{{ data.checkinDate }}</td>
+                    <td class="text-right">{{ data.checkoutDate }}</td>
+                    <td class="text-right">{{ data.paidPrice }}</td>
                   </tr>
 
-                  <tr>
+                  <!-- <tr>
                     <td class="thick-line"></td>
                     <td class="thick-line"></td>
                     <td class="thick-line"></td>
@@ -79,8 +74,9 @@
                       <strong>Promotion Price</strong>
                     </td>
                     <td class="no-line text-right">$15</td>
-                  </tr>
+                  </tr> -->
                   <tr>
+                    <td class="no-line"></td>
                     <td class="no-line"></td>
                     <td class="no-line"></td>
                     <td class="no-line"></td>
@@ -94,9 +90,39 @@
         </div>
       </div>
     </div>
-    <button style="float: right;" class="btn btn-primary">EXPORT</button>
+    <button style="float: right;" class="btn btn-primary">PRINT</button>
   </div>
 </template>
+
+<script>
+import BillService from '../../services/BillService';
+
+export default {
+  data() {
+    return {
+      billId: this.$route.params.id,
+      bookingList: [],
+      bookDate: '',
+
+      totalPrice: '',
+    };
+  },
+
+  methods: {
+    getBookingList() {
+      BillService.getBookingByBillId(this.billId).then((response) => {
+        console.log(response.data);
+        this.bookingList = response.data;
+      });
+    },
+  },
+
+  mounted() {
+    this.getBookingList();
+  },
+};
+</script>
+
 <style scoped>
 .invoice-title h2,
 .invoice-title h3 {

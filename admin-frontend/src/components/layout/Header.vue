@@ -12,8 +12,7 @@
           /></mdb-dropdown-toggle>
 
           <mdb-dropdown-menu>
-            <mdb-dropdown-item to="/editProfie">Profie</mdb-dropdown-item>
-            <div class="dropdown-divider"></div>
+            <!-- <div class="dropdown-divider"></div> -->
             <mdb-dropdown-item>Log out</mdb-dropdown-item>
           </mdb-dropdown-menu>
         </mdb-dropdown>

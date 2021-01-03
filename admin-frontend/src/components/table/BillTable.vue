@@ -57,13 +57,11 @@
                   <td>{{ data.totalPrice }}</td>
                   <td class="action">
                     <div>
-                      <button class="btn-sm btn-primary">
-                        <a
-                          class="btn-link-edit action-button"
-                          href="/detailBill"
-                        >
-                          <i class="fas fa-file-export"></i>
-                        </a>
+                      <button
+                        class="btn-sm btn-primary"
+                        @click="gotoDetailBill(data.billId)"
+                      >
+                        <i class="fas fa-file-export"></i>
                       </button>
                     </div>
                     <div>
@@ -126,6 +124,10 @@ export default {
       pageSize: 5,
 
       pageSizes: [5, 10, 15],
+
+      currentURL: '',
+
+      prefix: '',
     };
   },
   components: {
@@ -168,6 +170,19 @@ export default {
         .catch((e) => {
           console.log(e);
         });
+    },
+    gotoDetailBill(id) {
+      this.currentUrl = this.$router.currentRoute.path;
+
+      let url = this.$router.currentRoute.path;
+      let index = url.lastIndexOf('/');
+      let subString = url.slice(0, index);
+
+      this.prefix = subString;
+
+      const newPath = this.prefix + '/detailBill/' + id;
+
+      this.$router.push(newPath);
     },
     handlePageChange(value) {
       this.page = value;

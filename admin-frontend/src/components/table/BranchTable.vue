@@ -45,7 +45,7 @@
                   <th>Address</th>
                   <th>Description</th>
                   <th>Branch Name</th>
-                  <th>Status</th>
+                  <th>Branch Image</th>
                   <th></th>
                 </tr>
               </thead>
@@ -64,7 +64,11 @@
                     <p>{{ data.description }}</p>
                   </td>
                   <td>{{ data.branchName }}</td>
-                  <td>{{ data.status }}</td>
+                  <td>
+                    <dir class="img-table">
+                      <img :src="data.mainImage" alt="" />
+                    </dir>
+                  </td>
                   <td class="action">
                     <div>
                       <button class="btn-sm btn-warning">
@@ -206,11 +210,17 @@ a {
 
 .description {
   overflow-wrap: break-word;
-  width: 400px;
+  width: 300px;
 }
 
 .address {
   word-wrap: break-word;
   width: 100px;
+}
+
+img {
+  width: 200px;
+  height: 120px;
+  text-align: center;
 }
 </style>

@@ -25,5 +25,6 @@ public interface BookingRepository extends JpaRepository<Booking, BookingKey> {
 
     Optional<Booking> findByBills_Billid(String billId);
 
+    Set<Booking> findBookingByBookingKey_BillId(Long id);
 
 }

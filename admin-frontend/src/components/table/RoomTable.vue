@@ -47,6 +47,7 @@
                   <th>Price</th>
                   <th>In Room</th>
                   <th>Description</th>
+                  <th>Room Image</th>
                   <th></th>
                 </tr>
               </thead>
@@ -59,7 +60,12 @@
                   <td>{{ data.name }}</td>
                   <td>{{ data.price }}</td>
                   <td>{{ data.branchCode }}</td>
-                  <td>{{ data.description }}</td>
+                  <td class="descrip-room">{{ data.description }}</td>
+                  <td>
+                    <dir class="img-table">
+                      <img :src="data.mainImage" alt="" />
+                    </dir>
+                  </td>
                   <td class="action">
                     <div>
                       <button class="btn-sm btn-warning">
@@ -197,5 +203,13 @@ a {
 }
 .link-add {
   margin-right: auto;
+}
+img {
+  width: 200px;
+  height: 120px;
+  text-align: center;
+}
+.descrip-room {
+  width: 300px;
 }
 </style>

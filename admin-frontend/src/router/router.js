@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import Dashboard from '../components/views/Dashboard.vue';
+import EmployeeDashboard from '../components/views/EmployeeDashboard.vue';
+
 import CustomerTable from '../components/table/CustomerTable.vue';
 import AccountTable from '../components/table/AccountTable.vue';
 import EmployeeTable from '../components/table/EmployeeTable.vue';
@@ -40,140 +42,140 @@ export default new Router({
     mode: 'history',
     routes: [
         {
-        path:'/', component:Dashboard,
+        path:'/admin', component:Dashboard,
         children:[    {
-          path: '/account',
+          path: '/admin/account',
           name: 'Account',
           component: AccountTable,
           props: { page: 1 },
         },
         {
-          path: '/customer',
+          path: '/admin/customer',
           name: 'Customer',
           component: CustomerTable,
           props: { page: 2 },
         },
         {
-          path: '/employee',
+          path: '/admin/employee',
           name: 'Employee',
           component: EmployeeTable,
           props: { page: 3 },
         },
         {
-          path: '/booking',
+          path: '/admin/booking',
           name: 'Booking',
           component: BookingTable,
           props: { page: 4 },
         },
         {
-          path: '/bill',
+          path: '/admin/bill',
           name: 'BillTable',
           component: BillTable,
           props: { page: 5 },
         },
         
         {
-          path: '/room',
+          path: '/admin/room',
           name: 'Room',
           component: RoomTable,
           props: { page: 6 },
         },
         {
-          path: '/policy',
+          path: '/admin/policy',
           name: 'PolicyTable',
           component: PolicyTable,
           props: { page:  7},
         },
         {
-          path: '/bed',
+          path: '/admin/bed',
           name: 'Bed',
           component: BedTable,
           props: { page: 8 },
         },
         {
-          path: '/services',
+          path: '/admin/services',
           name: 'Services',
           component: ServicesTable,
           props: { page: 9 },
         },
         {
-          path: '/branch',
+          path: '/admin/branch',
           name: 'Branch',
           component: BranchTable,
           props: { page: 10 },
         },
         {
-          path: '/promotion',
+          path: '/admin/promotion',
           name: 'Promotion',
           component: PromotionTable,
           props: { page: 11 },
         },
         {
-          path: '/employee/add',
+          path: '/admin/employee/add',
           name: 'Add New Emp',
           component: AddNewEmployee,
         },
         {
-          path: '/policy/add',
+          path: '/admin/policy/add',
           name: 'Add New Policy',
           component: AddPolicy,
         },
         {
-          path: '/room/add',
+          path: '/admin/room/add',
           name: 'Add New Room',
           component: AddRoom,
         },
         {
-          path: '/bed/add',
+          path: '/admin/bed/add',
           name: 'Add New Bed',
           component: AddBed,
         },
         {
-          path: '/service/add',
+          path: '/admin/service/add',
           name: 'Add New Service',
           component: AddService,
         },
         {
-          path: '/promo/add',
+          path: '/admin/promo/add',
           name: 'Add New Promotion',
           component: AddPromo,
         },
         {
-          path: '/branch/add',
+          path: '/admin/branch/add',
           name: 'Add New Branch',
           component: AddBranch,
         },
         {
-          path: '/detail-branch/:branchCode',
+          path: '/admin/detail-branch/:branchCode',
           name: 'Branch Detail',
           component: DetailBranch,
         },
         {
-          path: '/services/:code',
+          path: '/admin/services/:code',
           name: 'Update Service',
           component: EditService,
           props: true,
         },
         {
-          path: '/customer/:id',
+          path: '/admin/customer/:id',
           name: 'Update Customer',
           component: EditCustomer,
           props: true,
         },
         {
-          path: '/employee/:id',
+          path: '/admin/employee/:id',
           name: 'Update Employee',
           component: EditEmployee,
           props: true,
         },
         {
-          path: '/detailBill',
+          path: '/admin/detailBill/:id',
           name: 'DetailBill',
           component: DetailBill,
           props: true,
         },
         {
-          path: '/editProfie',
+          path: '/admin/editProfie',
           name: 'editProfie',
           component: EditProfie,
           props: true,
@@ -195,5 +197,37 @@ export default new Router({
           name: 'Register',
           component: Register,
         },
+        {
+          path:'/emp',
+          name: 'Employee Dashboard',
+          component:EmployeeDashboard,
+          children:[
+            
+              {
+                path: '/emp/editProfie',
+                name: 'editProfie',
+                component: EditProfie,
+                props: true,
+              },
+              {
+                path: '/emp/detailBill/:id',
+                name: 'DetailBill',
+                component: DetailBill,
+                props: true,
+              },
+              {
+                path: '/emp/booking',
+                name: 'Booking',
+                component: BookingTable,
+                props: { page: 4 },
+              },
+              {
+                path: '/emp/bill',
+                name: 'BillTable',
+                component: BillTable,
+                props: { page: 5 },
+              },
+          ]
+        }
       ]
 });

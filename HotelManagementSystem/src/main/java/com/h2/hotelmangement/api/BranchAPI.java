@@ -96,7 +96,7 @@ public class BranchAPI {
         System.out.println(branch.toString());
         try {
 
-            branchService.save(branch);
+            //branchService.save(branch);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
@@ -124,7 +124,7 @@ public class BranchAPI {
             Set<String> branchImage =  new HashSet<>(branchDTO.getThumbnailsBranchSet());
             branch.setThumbnailsHotelList(branchImage);
             branch.setMainImage(branchDTO.getMainImage());
-             branchService.save(branch);
+            // branchService.save(branch);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

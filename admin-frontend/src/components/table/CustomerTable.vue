@@ -5,7 +5,12 @@
       <mdb-col md="10">
         <mdb-card class="mb-4">
           <div class="row">
-            <div class="col-md-9"></div>
+            <div class="col-md-6"></div>
+            <div class="col-md-3">
+              <mdb-btn class="btn-showall" color="info" @click="showAll"
+                >Show All</mdb-btn
+              >
+            </div>
             <div class="col-md-3">
               <div class="input-group md-form form-sm form-2 pl-0">
                 <input
@@ -64,46 +69,64 @@
                   <td class="action">
                     <div>
                       <mdb-btn
-                        :class="{
-                          'btn-sm btn-danger': data.status === 'true',
-                          'btn-sm btn-success': data.status === 'false',
-                        }"
-                        color="data.status : danger ? success"
-                        @click="ShowModalDisable(data.customerId)"
+                        @click="bindingDataToModal(data.customerId)"
+                        color="light-green"
                         v-tooltip.top-center="{
-                          content: setTextTooltip(data.status),
+                          content: 'Upgrade this customer',
                         }"
                       >
-                        <a :href="'customer/' + data.customerId"> </a>
-                        <i
-                          :class="{
-                            'fas fa-ban': data.status === 'true',
-                            'fas fa-plus': data.status === 'false',
-                          }"
-                        ></i>
+                        <mdb-icon icon="angle-double-up" />
                       </mdb-btn>
                     </div>
                   </td>
+                </tr>
+                <tr>
+                  {{
+                    noDataMessage
+                  }}
                 </tr>
               </tbody>
             </mdb-tbl>
             <div>
               <mdb-modal
                 centered
-                :show="modalDelete"
-                @close="modalDelete = false"
+                :show="modalUpdate"
+                @close="modalUpdate = false"
               >
                 <mdb-modal-header>
                   <mdb-modal-title>ARE YOU SURE?</mdb-modal-title>
                 </mdb-modal-header>
-                <mdb-modal-body>PLEASE CHECK BEFORE ACTION</mdb-modal-body>
+                <mdb-modal-body>
+                  <div class="form-outline">
+                    <label class="form-label" for="employeeCode"
+                      >Customer Code</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="currentCustomer.customerCode"
+                      required
+                      disabled
+                    />
+                  </div>
+                  <br />
+                  <div class="form-outline">
+                    <label class="form-label" for="employeeCode"
+                      >Customer Type</label
+                    >
+                    <b-form-select
+                      v-model="currentCustomer.customerType"
+                      :options="customerType"
+                    ></b-form-select>
+                  </div>
+                </mdb-modal-body>
                 <mdb-modal-footer>
-                  <mdb-btn color="danger" @click.native="modalDelete = false"
+                  <mdb-btn color="danger" @click.native="modalUpdate = false"
                     >Close</mdb-btn
                   >
                   <mdb-btn
                     color="primary"
-                    @click="deleteAccount(currentCustomer.customerId)"
+                    @click="updateCustomer(currentCustomer.customerId)"
                     >OK</mdb-btn
                   >
                 </mdb-modal-footer>
@@ -145,19 +168,26 @@ import {
 } from 'mdbvue';
 
 import CustomerServices from '../../services/CustomerServices';
+import CustomerTypeService from '../../services/CustomerTypeService';
 export default {
   data() {
     return {
       customers: [],
+
       currentIndex: -1,
       searchName: '',
 
-      modalDelete: false,
+      modalUpdate: false,
 
       currentCustomer: {},
       page: 1,
       count: 0,
       pageSize: 3,
+
+      noDataMessage: '',
+
+      customerTypes: [],
+      customerType: [],
 
       pageSizes: [3, 6, 9],
     };
@@ -192,6 +222,19 @@ export default {
 
       return params;
     },
+
+    bindingDataToModal(id) {
+      console.log(id);
+      CustomerServices.getCustomerById(id)
+        .then((response) => {
+          console.log(response.data);
+          this.currentCustomer = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      this.modalUpdate = true;
+    },
     retrieveCustomer() {
       const params = this.getRequestParams(
         this.searchName,
@@ -202,7 +245,10 @@ export default {
         .then((response) => {
           const { customers, totalItems } = response.data;
           this.customers = customers;
-          this.totalItems = totalItems;
+          this.count = totalItems;
+          if (this.customers.length === 0) {
+            this.noDataMessage = 'No data matching';
+          }
         })
         .catch((e) => {
           console.log(e);
@@ -228,12 +274,6 @@ export default {
             this.customers = customers;
             this.count = totalItems;
             console.log(response.data);
-            if (this.customers.status === 'true') {
-              this.messageTooltip = 'Disable this customer';
-            } else {
-              this.messageTooltip = 'Enable this customer';
-            }
-            this.modalDelete = false;
           });
         })
         .catch((e) => {
@@ -258,17 +298,56 @@ export default {
     getCustomerId(id) {
       console.log(id);
     },
-    setTextTooltip(text) {
-      if (text === 'true') {
-        return 'Disable this customer';
-      } else {
-        return 'Enable this customer';
-      }
+    showAll() {
+      this.searchName = '';
+      this.retrieveCustomer();
+    },
+
+    getAllCustomerType() {
+      CustomerTypeService.getAll()
+        .then((response) => {
+          this.customerTypes = response.data;
+
+          console.log(this.customerTypes);
+          for (var i = 0; i < this.customerTypes.length; i++) {
+            var options = [];
+            for (var key in this.customerTypes[i]) {
+              if (key == 'typeName') {
+                options['value'] = this.customerTypes[i][key];
+                options['text'] = this.customerTypes[i][key];
+              }
+            }
+            this.customerType.push(Object.assign({}, options));
+          }
+          console.log(this.customerType);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+
+    updateCustomer(id) {
+      var data = {
+        customerCode: this.currentCustomer.customerCode,
+        customerType: this.currentCustomer.customerType,
+      };
+
+      CustomerServices.upgradeCustomer(id, data)
+        .then((response) => {
+          console.log(response.data);
+          alert('Update Success!!!!');
+          this.modalUpdate = false;
+          this.retrieveCustomer();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
   },
 
   mounted() {
     this.retrieveCustomer();
+    this.getAllCustomerType();
   },
 };
 </script>

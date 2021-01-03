@@ -90,11 +90,43 @@
               </div>
               <br />
             </div>
-            <div class="form-group">
-              <button type="submit">
+            <div class="btn-submit">
+              <button
+                class="btn btn-outline-success btn-rounded"
+                data-mdb-ripple-color="dark"
+              >
                 Add New Branch
               </button>
             </div>
+            <mdb-container>
+              <!-- cart modal -->
+              <mdb-modal
+                :show="push"
+                @close="push = false"
+                class="text-center"
+                info
+              >
+                <mdb-modal-header center :close="false">
+                  <p class="heading">Notification</p>
+                </mdb-modal-header>
+                <mdb-modal-body>
+                  <mdb-icon
+                    icon="bell"
+                    size="4x"
+                    class="animated rotateIn mb-4"
+                  />
+                  <p>
+                    Do you want to add new branch to system?
+                  </p>
+                </mdb-modal-body>
+                <mdb-modal-footer center>
+                  <mdb-btn outline="primary" @click="createNewBranch"
+                    >Yes</mdb-btn
+                  >
+                  <mdb-btn color="primary" @click="push = false">No</mdb-btn>
+                </mdb-modal-footer>
+              </mdb-modal>
+            </mdb-container>
           </form>
         </mdb-card>
       </mdb-col>
@@ -106,13 +138,30 @@
 <script>
 import firebase from 'firebase';
 import BranchService from '../../services/BranchService';
-import { mdbRow, mdbCol, mdbCard, mdbBtn } from 'mdbvue';
+import {
+  mdbRow,
+  mdbCol,
+  mdbCard,
+  mdbBtn,
+  mdbContainer,
+  mdbIcon,
+  mdbModal,
+  mdbModalHeader,
+  mdbModalBody,
+  mdbModalFooter,
+} from 'mdbvue';
 export default {
   components: {
     mdbRow,
     mdbCol,
     mdbCard,
+    mdbContainer,
     mdbBtn,
+    mdbIcon,
+    mdbModal,
+    mdbModalHeader,
+    mdbModalBody,
+    mdbModalFooter,
   },
   data() {
     return {
@@ -132,6 +181,8 @@ export default {
       imageShow: '',
 
       buttonText: 'Choose Image',
+
+      push: false,
     };
   },
   methods: {
@@ -139,11 +190,6 @@ export default {
       this.$refs.input1.click();
     },
     previewImage(event) {
-      // this.uploadValue = 0;
-      // this.img1 = null;
-      // this.imageData = event.target.files[0];
-      // console.log(event.target.files[0]);
-      //  / this.onUpload();
       const files = event.target.files;
       let fileName = files[0].name;
       if (fileName.lastIndexOf('.') <= 0) {
@@ -152,44 +198,47 @@ export default {
       const fileReader = new FileReader();
       fileReader.addEventListener('load', async () => {
         this.imageShow = fileReader.result;
-        //await this.onUpload();
       });
       fileReader.readAsDataURL(files[0]);
       this.imageData = event.target.files[0];
       this.buttonText = 'Change Image';
+      this.onUpload();
     },
 
     onUpload() {
-      const storageRef = firebase
-        .storage()
-        .ref(`${this.imageData.name}`)
-        .put(this.imageData);
-      storageRef.on(
-        `state_changed`,
-        (snapshot) => {
-          this.uploadValue =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        },
-        (error) => {
-          console.log(error.message);
-        },
-        () => {
-          this.uploadValue = 100;
-          storageRef.snapshot.ref.getDownloadURL().then((url) => {
-            // this.img1 = url;
-            console.log('=------------------');
-            console.log(url);
-            if (url !== '') {
-              this.branch.mainImage = url;
+      return new Promise((resolve, reject) => {
+        const storageRef = firebase
+          .storage()
+          .ref(`${this.imageData.name}`)
+          .put(this.imageData);
+        storageRef.on(
+          `state_changed`,
+          (snapshot) => {
+            this.uploadValue =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          },
+          (error) => {
+            console.log(error.message);
+            reject();
+          },
+          () => {
+            this.uploadValue = 100;
+            storageRef.snapshot.ref.getDownloadURL().then((url) => {
+              console.log('=------------------');
+              console.log(url);
+              if (url !== '') {
+                this.branch.mainImage = url;
 
-              this.branch.thumbnailsBranchSet.push(url);
-              console.log('dasdasdasd');
+                this.branch.thumbnailsBranchSet.push(url);
+                console.log('dasdasdasd');
 
-              console.log(this.branch.thumbnailsBranchSet);
-            }
-          });
-        }
-      );
+                console.log(this.branch.thumbnailsBranchSet);
+              }
+            });
+            resolve();
+          }
+        );
+      });
     },
     async createNewBranch() {
       await this.onUpload();
@@ -206,29 +255,36 @@ export default {
       BranchService.createNewBranch(data)
         .then((response) => {
           console.log(response.data);
+          this.push = false;
         })
         .catch((e) => {
           console.log(e);
         });
     },
 
-    // decode() {
-    //   let jwt =
-    //     'eyJhbGciOiJIUzUxMiJ9.eyJBVVRIT1JJVElFU19LRVkiOiJFTVBMT1lFRSIsInN1YiI6ImZvbyIsImlhdCI6MTYwOTI2MDEzMywiZXhwIjoxNjA5MjYwNDMzfQ.c9gixHSqKiWwDSDgsbR7dAvi5-epdhucsqb6hvyUhKakIUYgL3QP49UMSSKb4r28sAXwFslhxHHfDETq1_kZJg';
+    confirmAddBracnh() {
+      this.push = true;
+    },
 
-    //   let jwtData = jwt.split('.')[1];
-    //   let decodedJwtJsonData = window.atob(jwtData);
-    //   let decodedJwtData = JSON.stringify(decodedJwtJsonData);
+    decode() {
+      let jwt =
+        'eyJhbGciOiJIUzUxMiJ9.eyJBVVRIT1JJVElFU19LRVkiOiJFTVBMT1lFRSIsInN1YiI6ImZvbyIsImlhdCI6MTYwOTI2MDEzMywiZXhwIjoxNjA5MjYwNDMzfQ.c9gixHSqKiWwDSDgsbR7dAvi5-epdhucsqb6hvyUhKakIUYgL3QP49UMSSKb4r28sAXwFslhxHHfDETq1_kZJg';
 
-    //   let isAdmin = decodedJwtData.admin;
+      let jwtData = jwt.split('.')[1];
+      let decodedJwtJsonData = window.atob(jwtData);
+      let decodedJwtData = JSON.stringify(decodedJwtJsonData);
 
-    //   console.log('jwtData: ' + jwtData);
-    //   console.log('decodedJwtJsonData: ' + decodedJwtJsonData);
-    //   console.log('decodedJwtData: ' + decodedJwtData);
-    //   console.log('Is admin: ' + isAdmin);
-    // },
+      //let isAdmin = decodedJwtData.admin;
+
+      console.log('jwtData: ' + jwtData);
+      console.log('decodedJwtJsonData: ' + decodedJwtJsonData);
+      console.log('decodedJwtData: ' + decodedJwtData);
+      console.log(decodedJwtJsonData.AUTHORITIES_KEY);
+    },
   },
-  mounted() {},
+  mounted() {
+    this.decode();
+  },
 };
 </script>
 
@@ -250,7 +306,21 @@ h3 {
   margin-left: 10px;
 }
 .form-add-branch {
-  width: 70%;
-  margin-left: 200px;
+  width: 60%;
+  margin-left: 160px;
+}
+
+.btn-submit {
+  position: relative;
+  left: 110px;
+  top: 10%;
+  height: 100px;
+}
+
+.btn-submit button {
+  height: 50px;
+  width: 300px;
+
+  font-size: 20px;
 }
 </style>

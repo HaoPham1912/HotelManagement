@@ -32,6 +32,7 @@ public class BranchMapper {
         branchDTO.setEmpCodeSet(empCodes);
         Set<String> setImages = branch.getThumbnailsHotelList();
         branchDTO.setThumbnailsBranchSet(Lists.newArrayList(setImages));
+        branchDTO.setMainImage(branch.getMainImage());
         return branchDTO;
     }
 

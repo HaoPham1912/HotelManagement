@@ -149,6 +149,7 @@ export default {
         .then((response) => {
           this.employee.employeeId = response.data.employeeId;
           console.log(response.data);
+          alert('Employee have been added');
           this.$router.push('/reloadEmployee');
         })
         .catch((e) => {

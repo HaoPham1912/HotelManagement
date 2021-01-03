@@ -78,4 +78,9 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.findAll(pageable);
     }
 
+    @Override
+    public Set<Booking> getBookingByBillId(Long id) {
+        return bookingRepository.findBookingByBookingKey_BillId(id);
+    }
+
 }

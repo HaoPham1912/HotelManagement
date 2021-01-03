@@ -10,6 +10,10 @@ class CustomerService{
     disableCustomer(id){
         return http.delete(`/customer/${id}`);
     }
+
+    upgradeCustomer(id, data){
+        return http.put(`/customer/${id}`, data);
+    }
 }
 
 export default new CustomerService();

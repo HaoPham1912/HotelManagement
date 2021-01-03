@@ -6,76 +6,82 @@
     <div class="row mb-4">
       <div class="col">
         <div class="form-outline">
+          <label class="form-label" for="employeeCode">Employee Code</label>
           <input
             type="text"
             id="employeeCode"
             class="form-control"
             v-model="employee.employeeCode"
+            disabled
             required
           />
-          <label class="form-label" for="employeeCode">Employee Code</label>
         </div>
       </div>
       <div class="col">
         <div class="form-outline">
+          <label class="form-label" for="empIdCard">Id Card</label>
           <input
             type="text"
             id="empIdCard"
             class="form-control"
             v-model="employee.empIdCard"
+            required
           />
-          <label class="form-label" for="empIdCard">Id Card</label>
         </div>
       </div>
     </div>
 
     <!-- Text input -->
     <div class="form-outline mb-4">
+      <label class="form-label" for="empName">Employee Name</label>
       <input
         type="text"
         id="empName"
         class="form-control"
         v-model="employee.empName"
+        required
       />
-      <label class="form-label" for="empName">Employee Name</label>
     </div>
 
     <!-- Text input -->
     <div class="form-outline mb-4">
+      <label class="form-label" for="empPhone">Phone</label>
       <input
         type="text"
         id="empPhone"
         class="form-control"
         v-model="employee.empPhone"
+        required
       />
-      <label class="form-label" for="empPhone">Phone</label>
     </div>
 
     <!-- Email input -->
     <div class="form-outline mb-4">
+      <label class="form-label" for="email">Email</label>
       <input
         type="email"
         id="email"
         class="form-control"
         v-model="employee.email"
+        required
       />
-      <label class="form-label" for="email">Email</label>
     </div>
 
     <!-- Number input -->
 
     <!-- Message input -->
     <div class="form-outline mb-4">
+      <label class="form-label" for="branchCode">Choose Branch Code</label>
       <b-form-select
         v-model="employee.branchCode"
         :options="branchCodes"
+        required
       ></b-form-select>
-      <label class="form-label" for="branchCode">Choose Branch Code</label>
     </div>
     <button
       type="submit"
       class="btn btn-primary btn-block mb-4"
-      v-on:click="updateEmployee(idUpdate)"
+      @submit="updateEmployee(idUpdate)"
     >
       Update Employee
     </button>
@@ -127,9 +133,9 @@ export default {
 
       EmployeeService.updateInfo(id, data)
         .then((response) => {
-          this.employee.employeeId = response.data.employeeId;
+          alert('Update Success');
+          this.$router.push('/employee');
           console.log(response.data);
-          this.submitted = true;
         })
         .catch((e) => {
           console.log(e);

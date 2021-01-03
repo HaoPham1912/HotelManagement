@@ -5,10 +5,16 @@
       <mdb-col md="10">
         <mdb-card class="mb-4">
           <div class="row">
-            <div class="col-md-9"></div>
+            <div class="col-md-6"></div>
+            <div class="col-md-3">
+              <mdb-btn class="btn-showall" color="info" @click="showAll"
+                >Show All</mdb-btn
+              >
+            </div>
             <div class="col-md-3">
               <div class="input-group md-form form-sm form-2 pl-0">
                 <input
+                  id="usernameSearch"
                   class="form-control my-0 py-1 lime-border"
                   type="text"
                   placeholder="Search by Username"
@@ -294,6 +300,11 @@ export default {
         });
     },
 
+    showAll() {
+      this.usernameSearch = '';
+      this.retrieveAccount();
+    },
+
     retrieveAvailAccount() {
       AccountService.getAll()
         .then((response) => {
@@ -381,5 +392,11 @@ export default {
 <style>
 .action {
   display: flex;
+}
+.btn-showall {
+  float: right;
+  position: relative;
+  margin-top: 25px;
+  color: white;
 }
 </style>

@@ -18,6 +18,7 @@ public class RoomMapper {
         roomDTO.setBranchCode(room.getRoomBranch().getBranchCode());
         roomDTO.setThumbnailList(room.getThumbnailsRoomList());
         roomDTO.setPolicyCode(room.getCancelPolicy().getCode());
+        roomDTO.setMainImage(room.getMainImage());
         roomDTO.setAmmountPeople(String.valueOf(room.getAmountPeople()));
         return roomDTO;
     }
