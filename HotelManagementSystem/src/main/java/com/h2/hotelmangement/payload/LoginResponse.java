@@ -3,6 +3,7 @@ package com.h2.hotelmangement.payload;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
+import java.util.List;
 
 public class LoginResponse {
 
@@ -29,6 +30,7 @@ public class LoginResponse {
     private String customerName;
 
     private boolean isSocialAccount;
+
 
     public String getUserName() {
         return userName;

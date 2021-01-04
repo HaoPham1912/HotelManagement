@@ -2,18 +2,18 @@ import http from '../http-common';
 
 class AccountService{
     getAll(params){
-        return http.get("/account", {params});
+        return http.get("/api/account", {params});
     }
     disableAccount(id){
-        return http.delete(`/account/${id}`);
+        return http.delete(`/api/account/${id}`);
     }
 
     getById(id){
-        return http.get(`/account/${id}`);
+        return http.get(`/api/account/${id}`);
     }
 
     updateAccount(id, data){
-        return http.put(`/account/${id}`, data);
+        return http.put(`/api/account/${id}`, data);
     }
 }
 

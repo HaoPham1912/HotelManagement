@@ -3,6 +3,7 @@ import Router from 'vue-router';
 
 import Dashboard from '../components/views/Dashboard.vue';
 import EmployeeDashboard from '../components/views/EmployeeDashboard.vue';
+import HomePage from '../components/views/HomePage.vue';
 
 import CustomerTable from '../components/table/CustomerTable.vue';
 import AccountTable from '../components/table/AccountTable.vue';
@@ -44,6 +45,14 @@ Vue.use(Router);
 export default new Router({
     mode: 'history',
     routes: [
+        {
+          path:"*",
+          redirect:"/"
+        },
+        {
+          path:"/",
+          component: HomePage,
+        },
         {
         path:'/admin', component:Dashboard,
         children:[    {

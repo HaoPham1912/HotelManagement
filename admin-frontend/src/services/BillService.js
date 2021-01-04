@@ -2,15 +2,15 @@ import http from '../http-common';
 
 class BillService{
     getAll(params){
-        return http.get("/bill",{params});
+        return http.get("/api/bill",{params});
     }
 
     getBookingByBillId(id){
-        return http.get(`/bill/${id}`);
+        return http.get(`/api/bill/${id}`);
     }
 
     updateBill(id){
-        return http.put(`/bill/${id}`);
+        return http.put(`/api/bill/${id}`);
     }
 }
 export default new BillService();

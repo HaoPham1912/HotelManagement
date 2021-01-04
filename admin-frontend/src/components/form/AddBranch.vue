@@ -269,18 +269,24 @@ export default {
 
     decode() {
       let jwt =
-        'eyJhbGciOiJIUzUxMiJ9.eyJBVVRIT1JJVElFU19LRVkiOiJFTVBMT1lFRSIsInN1YiI6ImZvbyIsImlhdCI6MTYwOTI2MDEzMywiZXhwIjoxNjA5MjYwNDMzfQ.c9gixHSqKiWwDSDgsbR7dAvi5-epdhucsqb6hvyUhKakIUYgL3QP49UMSSKb4r28sAXwFslhxHHfDETq1_kZJg';
+        'eyJhbGciOiJIUzUxMiJ9.eyJBVVRIT1JJVElFU19LRVkiOiJBRE1JTixFTVBMT1lFRSIsInN1YiI6ImFkbWluIiwiaWF0IjoxNjA5NzU0NjQwLCJleHAiOjE2MDk3NTQ5NDB9.BYBmOu9TuqZwB0wgtE0lSLf-5GVCdODMjtOLWlO-q9VqoeQ1wNbP77LdGsXIbU0tZXbnv048AGBPwcYmV_uSbA';
 
       let jwtData = jwt.split('.')[1];
       let decodedJwtJsonData = window.atob(jwtData);
-      let decodedJwtData = JSON.stringify(decodedJwtJsonData);
+      //let decodedJwtData = JSON.stringify(decodedJwtJsonData);
 
       //let isAdmin = decodedJwtData.admin;
 
       console.log('jwtData: ' + jwtData);
       console.log('decodedJwtJsonData: ' + decodedJwtJsonData);
-      console.log('decodedJwtData: ' + decodedJwtData);
+      //console.log('decodedJwtData: ' + decodedJwtData);
       console.log(decodedJwtJsonData.AUTHORITIES_KEY);
+      if (typeof decodedJwtJsonData == 'string') console.log('Object');
+      else console.log('Not an object');
+
+      var obj = JSON.parse(decodedJwtJsonData);
+      console.log(obj);
+      console.log(obj.AUTHORITIES_KEY);
     },
   },
   mounted() {

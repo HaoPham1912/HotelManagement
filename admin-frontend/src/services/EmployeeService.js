@@ -2,27 +2,27 @@ import http from '../http-common';
 
 class EmployeeService{
     getAll(params){
-        return http.get("/employee", {params});
+        return http.get("/api/employee", {params});
     }
 
     getEmployeeById(id){
-        return http.get(`/employee/${id}`);
+        return http.get(`/api/employee/${id}`);
     }
 
     create(data){
-        return http.post("/employee", data);
+        return http.post("/api/employee", data);
     }
 
     updateInfo(id, data){
-        return http.put(`/employee/${id}`, data)
+        return http.put(`/api/employee/${id}`, data)
     }
 
     disableEmployee(id){
-        return http.delete(`/employee/${id}`);
+        return http.delete(`/api/employee/${id}`);
     }
 
     getAllNoPaging(){
-        return http.get("all-emp");
+        return http.get("/api/all-emp");
     }
 }
 

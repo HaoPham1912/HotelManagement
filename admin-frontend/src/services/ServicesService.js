@@ -2,22 +2,22 @@ import http from '../http-common';
 
 class ServicesService{
     getAll(params){
-        return http.get("/services",{params});
+        return http.get("/api/services",{params});
     }
 
     create(data){
-        return http.post("/services", data);
+        return http.post("/api/services", data);
     }
 
     get(id){
-        return http.get(`/services/${id}`);
+        return http.get(`/api/services/${id}`);
     }
 
     delete(id){
-        return http.delete(`services/${id}`);
+        return http.delete(`/api/services/${id}`);
     }
     update(id, data){
-        return http.put(`/services/${id}`,data);
+        return http.put(`/api/services/${id}`,data);
     }
 }
 
