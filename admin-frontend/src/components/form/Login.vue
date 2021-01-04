@@ -51,6 +51,7 @@
   </div>
 </template>
 <script>
+import AuthService from '../../services/AuthService';
 export default {
   name: 'Login',
   data() {
@@ -74,7 +75,21 @@ export default {
   // },
   methods: {
     handleLogin() {
-      this.loginError = false;
+      var data = {
+        userName: this.userName,
+        pass: this.pass,
+      };
+      AuthService.login(data)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((e) => {
+          if (e.response.status === 401) {
+            // if you ever get an unauthorized, logout the user
+            alert('Username password is incorrect');
+            // you can also redirect to /login if needed !
+          }
+        });
     },
   },
 };

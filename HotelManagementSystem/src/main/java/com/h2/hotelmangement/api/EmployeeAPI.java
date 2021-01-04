@@ -2,6 +2,7 @@ package com.h2.hotelmangement.api;
 
 import com.h2.hotelmangement.entity.*;
 
+import com.h2.hotelmangement.model.dto.AccountDTO;
 import com.h2.hotelmangement.model.dto.CustomerDTO;
 import com.h2.hotelmangement.model.dto.EmployeeDTO;
 import com.h2.hotelmangement.model.mapper.EmployeeMapper;
@@ -144,7 +145,7 @@ public class EmployeeAPI {
     }
 
     @PutMapping("/employee/{id}")
-    public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable("id") String id, @RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<HttpStatus> updateEmployee(@PathVariable("id") String id, @RequestBody EmployeeDTO employeeDTO) {
         System.out.println(employeeDTO.toString());
         Long idEmp = Long.valueOf(id);
         System.out.println("id emp" + idEmp);
@@ -162,11 +163,57 @@ public class EmployeeAPI {
             }else {
                 employee.setEmpBranch(null);
             }
-           Employee employeeUpdate = employeeService.save(employee);
-            return new ResponseEntity<>(employeeMapper.empEntityToDto(employeeUpdate), HttpStatus.OK);
+            employeeService.save(employee);
+            return new ResponseEntity<>( HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+    }
 
+    @GetMapping("/info-emp/{username}")
+    public ResponseEntity<EmployeeDTO> getInformationEmp(@PathVariable String username){
+        EmployeeDTO employeeDTO = new EmployeeDTO();
+        Employee employee = employeeService.getEmployeeByUsername(username);
+        System.out.println(employee.toString());
+        Account account = accountService.findAccountByUsername(username);
+        System.out.println(account.toString());
+        if(employee != null){
+            employeeDTO  = employeeMapper.empEntityToDto(employee);
+        }
+        if(account != null){
+            employeeDTO.setUsername(account.getUsername());
+            employeeDTO.setPassword(account.getPassword());
+        }
+        return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
+    }
+
+    @PutMapping("/info-emp/{username}")
+    public ResponseEntity<HttpStatus> updateEmployeeInformation(@PathVariable String username, @RequestBody EmployeeDTO employeeDTO){
+        Employee employee = employeeService.getEmployeeByUsername(username);
+        System.out.println(employee.toString());
+        Account account = accountService.findAccountByUsername(username);
+        System.out.println(account.toString());
+       try{
+           if(employee != null){
+               employee.setEmpCode(employeeDTO.getBranchCode());
+               employee.setIdCard(employeeDTO.getEmpIdCard());
+               employee.setName(employeeDTO.getEmpName());
+               employee.setPhone(employeeDTO.getEmpPhone());
+               employee.setEmail(employeeDTO.getEmail());
+
+               employeeService.save(employee);
+           }else {
+               throw new Exception("Can not get employee with username "+username);
+           }
+           if(account != null){
+               account.setPassword(employeeDTO.getNewPass());
+               accountService.save(account);
+           }else {
+               throw new Exception("Can not get account with username "+username);
+           }
+           return new ResponseEntity<>(HttpStatus.OK);
+       }catch (Exception e){
+           return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+       }
     }
 }

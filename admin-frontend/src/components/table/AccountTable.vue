@@ -318,6 +318,12 @@ export default {
         })
         .catch((e) => {
           console.log(e);
+          if (e.response.status === 401) {
+            // if you ever get an unauthorized, logout the user
+            alert('Username password is incorrect');
+            // you can also redirect to /login if needed !
+          }
+          console.log('e cmn ror');
         });
     },
 

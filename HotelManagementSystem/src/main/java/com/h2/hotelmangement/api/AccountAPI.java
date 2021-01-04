@@ -46,8 +46,13 @@ public class AccountAPI {
             Page<Account> accountPage;
             if (username == null) {
                 accountPage = accountService.findAll(pageNo, size);
+                if(accountPage.isEmpty()){
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
             } else {
-                accountPage = accountService.getAllAccountPagination(username, pageNo, size);
+                accountPage = accountService.getAllAccountPagination(username, pageNo, size); if(accountPage.isEmpty()){
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
             }
             accountList = accountPage.getContent();
             List<AccountDTO> accountDTOList = accountMapper.convertListEntityToDto(accountList);

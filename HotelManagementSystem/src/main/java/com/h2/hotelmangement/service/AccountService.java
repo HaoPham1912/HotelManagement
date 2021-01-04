@@ -20,4 +20,6 @@ public interface AccountService {
     void delete(Long accountId) throws Exception;
 
     Page<Account> getAllAccountPagination(String username, int pageNo, int pageSize);
+
+    Account findAccountByUsername(String username);
 }

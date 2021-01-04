@@ -286,7 +286,7 @@ export default {
 
       var obj = JSON.parse(decodedJwtJsonData);
       console.log(obj);
-      console.log(obj.AUTHORITIES_KEY);
+      console.log(obj.sub);
     },
   },
   mounted() {

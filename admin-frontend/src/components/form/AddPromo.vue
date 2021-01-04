@@ -51,7 +51,7 @@
     </div>
 
     <button
-      type="submit"
+      type="button"
       class="btn btn-primary btn-block mb-4"
       @click="createNewPromotion"
     >

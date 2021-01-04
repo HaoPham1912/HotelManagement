@@ -79,9 +79,9 @@
       ></b-form-select>
     </div>
     <button
-      type="submit"
+      type="button"
       class="btn btn-primary btn-block mb-4"
-      @submit="updateEmployee(idUpdate)"
+      @click="updateEmployee(idUpdate)"
     >
       Update Employee
     </button>
@@ -134,7 +134,7 @@ export default {
       EmployeeService.updateInfo(id, data)
         .then((response) => {
           alert('Update Success');
-          this.$router.push('/employee');
+          this.$router.push('/reloadEmployee');
           console.log(response.data);
         })
         .catch((e) => {
