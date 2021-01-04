@@ -19,6 +19,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import firebase from 'firebase'
 
 import router from './router/router'
+import store from './store'
 import App from './App.vue'
 
 // Install BootstrapVue
@@ -37,7 +38,7 @@ Vue.config.productionTip = false;
 
 new Vue({
   router,
-
+  store,
   render: h => h(App),
   created () {
     var firebaseConfig = {

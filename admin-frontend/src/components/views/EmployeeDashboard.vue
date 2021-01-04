@@ -12,7 +12,8 @@
               ><img
                 src="https://cdn1.iconfinder.com/data/icons/avatar-97/32/avatar-02-512.png"
                 alt=""
-            /></mdb-dropdown-toggle>
+              />Hi Employee</mdb-dropdown-toggle
+            >
 
             <mdb-dropdown-menu>
               <mdb-dropdown-item to="/emp/editProfie">Profie</mdb-dropdown-item>

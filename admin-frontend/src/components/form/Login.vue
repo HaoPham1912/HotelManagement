@@ -15,7 +15,6 @@
           v-validate="'required'"
           type="text"
           id="username"
-          name="username"
           class="form-control mb-4"
           placeholder="User Name"
         />
@@ -26,7 +25,6 @@
           v-validate="'required'"
           type="password"
           id="password"
-          name="password"
           class="form-control mb-4"
           placeholder="Password"
         />
@@ -51,7 +49,8 @@
   </div>
 </template>
 <script>
-import AuthService from '../../services/AuthService';
+//import AuthService from '../../services/AuthService';
+import { AUTH_REQUEST } from '../../store/actions/auth';
 export default {
   name: 'Login',
   data() {
@@ -63,31 +62,18 @@ export default {
       loginError: false,
     };
   },
-  // computed: {
-  //   loggedIn() {
-  //     return this.$store.state.auth.status.loggedIn;
-  //   },
-  // },
-  // created() {
-  //   if (this.loggedIn) {
-  //     this.$router.push('/');
-  //   }
-  // },
   methods: {
     handleLogin() {
-      var data = {
-        userName: this.userName,
-        pass: this.pass,
-      };
-      AuthService.login(data)
-        .then((response) => {
-          console.log(response.data);
+      const { userName, pass } = this;
+      this.$store
+        .dispatch(AUTH_REQUEST, { userName, pass })
+        .then(() => {
+          alert('Login success!!!');
+          this.$router.push('/home');
         })
-        .catch((e) => {
-          if (e.response.status === 401) {
-            // if you ever get an unauthorized, logout the user
-            alert('Username password is incorrect');
-            // you can also redirect to /login if needed !
+        .catch((error) => {
+          if (error.response.status === 401) {
+            alert('Username or password is incorrect');
           }
         });
     },

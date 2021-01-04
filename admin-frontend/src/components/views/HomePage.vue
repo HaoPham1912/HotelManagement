@@ -10,7 +10,7 @@
           <mdb-nav-item anchorClass="white-text" href="/admin"
             ><strong>ADMIN PAGE</strong></mdb-nav-item
           >
-          <mdb-nav-item anchorClass="white-text" href="/emp"
+          <mdb-nav-item anchorClass="white-text" href="/"
             ><strong>EMPLOYEE PAGE</strong></mdb-nav-item
           >
         </mdb-navbar-nav>

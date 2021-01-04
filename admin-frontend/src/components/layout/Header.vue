@@ -9,11 +9,16 @@
             ><img
               src="https://cdn1.iconfinder.com/data/icons/avatar-97/32/avatar-02-512.png"
               alt=""
-          /></mdb-dropdown-toggle>
+            />Hi Admin</mdb-dropdown-toggle
+          >
 
           <mdb-dropdown-menu>
             <!-- <div class="dropdown-divider"></div> -->
-            <mdb-dropdown-item>Log out</mdb-dropdown-item>
+            <mdb-dropdown-item>
+              <li @click="logout">
+                <span class="logout">Logout</span>
+              </li></mdb-dropdown-item
+            >
           </mdb-dropdown-menu>
         </mdb-dropdown>
       </mdb-navbar-nav>
@@ -32,7 +37,13 @@ import {
   mdbDropdownMenu,
   mdbDropdownToggle,
 } from 'mdbvue';
+import { AUTH_LOGOUT } from '../../store/actions/auth';
 export default {
+  methods: {
+    logout: function() {
+      this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'));
+    },
+  },
   components: {
     mdbNavbarBrand,
     mdbDropdown,

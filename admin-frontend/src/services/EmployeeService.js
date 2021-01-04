@@ -24,6 +24,8 @@ class EmployeeService{
     getAllNoPaging(){
         return http.get("/api/all-emp");
     }
+
+
 }
 
 export default new EmployeeService();

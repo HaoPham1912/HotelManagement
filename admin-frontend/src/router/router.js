@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from "../store";
 
 import Dashboard from '../components/views/Dashboard.vue';
 import EmployeeDashboard from '../components/views/EmployeeDashboard.vue';
@@ -41,20 +42,38 @@ import DetailBill from '../components/form/DetailBill.vue';
 import DetailRoom from '../components/page/DetailRoom.vue';
 
 Vue.use(Router);
+const ifNotAuthenticated = (to, from, next) => {
+  if (!store.getters.isAuthenticated) {
+    next();
+    return;
+  }
+  next("/");
+};
+
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters.isAuthenticated) {
+    next();
+    return;
+  }
+  next("/login");
+};
 
 export default new Router({
     mode: 'history',
     routes: [
         {
-          path:"*",
-          redirect:"/"
+          path:"",
+          redirect:"/login"
         },
         {
-          path:"/",
+          path:"/home",
           component: HomePage,
+          //beforeEnter: ifAuthenticated,
         },
         {
         path:'/admin', component:Dashboard,
+        name:'AdminDashboard',
+        beforeEnter: ifAuthenticated,
         children:[    {
           path: '/admin/account',
           name: 'Account',
@@ -221,6 +240,7 @@ export default new Router({
           path: '/login',
           name: 'Login',
           component: Login,
+          beforeEnter: ifNotAuthenticated
         },
         {
           path: '/register',
@@ -231,6 +251,7 @@ export default new Router({
           path:'/emp',
           name: 'Employee Dashboard',
           component:EmployeeDashboard,
+          beforeEnter: ifAuthenticated,
           children:[
             
               {
