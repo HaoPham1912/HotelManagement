@@ -174,9 +174,9 @@ public class EmployeeAPI {
     public ResponseEntity<EmployeeDTO> getInformationEmp(@PathVariable String username){
         EmployeeDTO employeeDTO = new EmployeeDTO();
         Employee employee = employeeService.getEmployeeByUsername(username);
-        System.out.println(employee.toString());
+//        System.out.println(employee.toString());
         Account account = accountService.findAccountByUsername(username);
-        System.out.println(account.toString());
+//        System.out.println(account.toString());
         if(employee != null){
             employeeDTO  = employeeMapper.empEntityToDto(employee);
         }
@@ -195,7 +195,6 @@ public class EmployeeAPI {
         System.out.println(account.toString());
        try{
            if(employee != null){
-               employee.setEmpCode(employeeDTO.getBranchCode());
                employee.setIdCard(employeeDTO.getEmpIdCard());
                employee.setName(employeeDTO.getEmpName());
                employee.setPhone(employeeDTO.getEmpPhone());

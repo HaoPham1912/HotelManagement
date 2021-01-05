@@ -129,4 +129,12 @@ public class AccountAPI {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
+
+    @GetMapping("/currentAccount/{username}")
+    public ResponseEntity<AccountDTO> getCurrentAccount(@PathVariable String username){
+        Account account = accountService.findAccountByUsername(username);
+        AccountDTO accountDTO = accountMapper.convertEntityToDto(account);
+
+        return new ResponseEntity<>(accountDTO, HttpStatus.OK);
+    }
 }

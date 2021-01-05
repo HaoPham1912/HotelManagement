@@ -8,7 +8,7 @@
             <div class="col-md-6">
               <div class="link-add">
                 <a
-                  href="/admin/promo/add"
+                  href="/admin/add-promo"
                   type="button"
                   class="btn btn-success"
                 >

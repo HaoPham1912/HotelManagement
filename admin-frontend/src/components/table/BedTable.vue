@@ -7,7 +7,7 @@
           <mdb-card class="mb-4">
             <div class="row">
               <div class="col-md-6">
-                <a href="/admin/bed/add" type="button" class="btn btn-success">
+                <a href="/admin/add-bed" type="button" class="btn btn-success">
                   Add new Bed
                 </a>
               </div>

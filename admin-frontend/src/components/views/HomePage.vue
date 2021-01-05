@@ -10,20 +10,26 @@
           <mdb-nav-item anchorClass="white-text" href="/admin"
             ><strong>ADMIN PAGE</strong></mdb-nav-item
           >
-          <mdb-nav-item anchorClass="white-text" href="/"
+          <mdb-nav-item anchorClass="white-text" href="/emp"
             ><strong>EMPLOYEE PAGE</strong></mdb-nav-item
           >
         </mdb-navbar-nav>
         <span class="navbar-text">
           <mdb-navbar-nav>
-            <mdb-nav-item anchorClass="white-text" href="/login"
+            <mdb-nav-item
+              anchorClass="white-text"
+              href="/login"
+              v-if="!isAuthenticate"
               ><strong>SIGN IN</strong></mdb-nav-item
+            >
+            <mdb-nav-item anchorClass="white-text"
+              ><strong @click="logout">SIGN OUT</strong></mdb-nav-item
             >
           </mdb-navbar-nav>
         </span>
       </mdb-navbar-toggler>
     </mdb-navbar>
-    <div style="margin-top: 100px">
+    <div style="margin-top: 200px">
       <h1 class="text-center">
         WELCOME TO H2 HOTEL MANAGEMENT SYSTEM
       </h1>
@@ -43,7 +49,19 @@ import {
   mdbNavbarNav,
   mdbNavItem,
 } from 'mdbvue';
+import { AUTH_LOGOUT } from '../../store/actions/auth';
+import store from '../../store';
 export default {
+  data() {
+    return {
+      isAuthenticate: store.getters.isAuthenticated,
+    };
+  },
+  methods: {
+    logout: function() {
+      this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'));
+    },
+  },
   components: {
     mdbNavbar,
     mdbNavbarBrand,

@@ -25,7 +25,12 @@ class EmployeeService{
         return http.get("/api/all-emp");
     }
 
-
+    getCurrentInfoEmployee(username){
+        return http.get(`/api/info-emp/${username}`);
+    }
+    updateCurrentInfoEmployee(username,data){
+        return http.put(`/api/info-emp/${username}`,data);
+    }
 }
 
 export default new EmployeeService();

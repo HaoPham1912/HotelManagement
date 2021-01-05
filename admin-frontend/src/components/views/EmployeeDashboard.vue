@@ -12,13 +12,17 @@
               ><img
                 src="https://cdn1.iconfinder.com/data/icons/avatar-97/32/avatar-02-512.png"
                 alt=""
-              />Hi Employee</mdb-dropdown-toggle
+              />{{ `Hi ${username}` }}</mdb-dropdown-toggle
             >
 
             <mdb-dropdown-menu>
               <mdb-dropdown-item to="/emp/editProfie">Profie</mdb-dropdown-item>
               <div class="dropdown-divider"></div>
-              <mdb-dropdown-item>Log out</mdb-dropdown-item>
+              <mdb-dropdown-item>
+                <li @click="logout">
+                  <span class="logout">Log Out</span>
+                </li></mdb-dropdown-item
+              >
             </mdb-dropdown-menu>
           </mdb-dropdown>
         </mdb-navbar-nav>
@@ -72,7 +76,15 @@ import {
   mdbListGroupItem,
 } from 'mdbvue';
 import Content from '../../components/layout/Content';
+import { AUTH_LOGOUT } from '../../store/actions/auth';
+import store from '../../store';
 export default {
+  methods: {
+    logout: function() {
+      this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'));
+    },
+  },
+
   components: {
     mdbContainer,
     mdbNavbarBrand,
@@ -91,6 +103,7 @@ export default {
   data() {
     return {
       activeItem: 0,
+      username: store.getters.username,
     };
   },
   beforeMount() {

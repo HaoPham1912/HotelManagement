@@ -4,7 +4,7 @@
     <div class="col-md-10">
       <div style="display: flex;">
         <h3>Employee Of Branch</h3>
-        <button>Add Employee</button>
+        <!-- <button>Add Employee</button> -->
       </div>
       <table class="table">
         <thead>
@@ -50,7 +50,7 @@
       </table>
       <div style="display: flex;">
         <h3>Room In Branch</h3>
-        <button>Add Room</button>
+        <!-- <button>Add Room</button> -->
       </div>
       <table class="table">
         <thead>

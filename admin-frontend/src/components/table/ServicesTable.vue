@@ -7,7 +7,7 @@
           <div class="row">
             <div class="col-md-6">
               <a
-                href="/admin/service/add"
+                href="/admin/add-service"
                 type="button"
                 class="btn btn-success"
               >

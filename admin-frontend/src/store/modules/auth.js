@@ -6,15 +6,20 @@ import {
   } from "../actions/auth";
 
   import AuthService from '../../services/AuthService';
+import AccountService from "../../services/AccountService";
   const state = {
     token: localStorage.getItem("user-token") || "",
     status: "",
-    hasLoadedOnce: false
+    hasLoadedOnce: false,
+    currentRole:localStorage.getItem("currentRole") || "",
+    username: localStorage.getItem("username") || "",
   };
 
   const getters = {
     isAuthenticated: state => !!state.token,
-    authStatus: state => state.status
+    authStatus: state => state.status,
+    currentRole: state => state.currentRole,
+    username: state=>state.username
   };
 
   const actions = {
@@ -25,7 +30,13 @@ import {
           .then(resp => {
             console.log(resp.data);
             localStorage.setItem("user-token", resp.data.data.accessToken);
-          
+            
+            let username = resp.data.data.user;
+            localStorage.setItem("username", username);
+            AccountService.getCurrentAccount(username).then((response) =>{
+              console.log(response.data.roleName);
+              localStorage.setItem("currentRole",response.data.roleName.toString());
+            })
             // Here set the header of your ajax library to the token value.
             // example with axios
             //axios.defaults.headers.common['Authorization'] = 'Bearer '+ resp.data.data.accessToken;
@@ -44,6 +55,9 @@ import {
       return new Promise(resolve => {
         commit(AUTH_LOGOUT);
         localStorage.removeItem("user-token");
+        localStorage.removeItem("username");
+        localStorage.removeItem("currentRole");
+      
         //delete axios.defaults.headers.common['Authorization'];
         resolve();
       });

@@ -1,6 +1,16 @@
 <template>
   <!-- Default form login -->
   <div>
+    <div style="margin-top: 10px">
+      <h1 class="text-center">
+        WELCOME TO H2 HOTEL MANAGEMENT SYSTEM
+      </h1>
+      <img
+        class="rounded mx-auto d-block"
+        src="../../assets/h2logo.png"
+        alt=""
+      />
+    </div>
     <div class="login-form">
       <!-- /<div class="img-login"><img src="../../assets/h2logo.png" alt="" /></div> -->
       <form
@@ -84,7 +94,7 @@ export default {
 .login-form {
   margin: auto;
 
-  margin-top: 200px;
+  margin-top: 40px;
   width: 25%;
 
   border: 5px solid lightskyblue;

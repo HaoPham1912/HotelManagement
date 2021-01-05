@@ -197,6 +197,8 @@ export default {
 
       RoomService.addRoom(data).then((response) => {
         console.log(response.data);
+        alert('New room have been added');
+        this.$router.push('/reloadRoom');
       });
     },
 

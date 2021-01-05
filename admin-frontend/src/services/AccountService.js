@@ -15,6 +15,10 @@ class AccountService{
     updateAccount(id, data){
         return http.put(`/api/account/${id}`, data);
     }
+
+    getCurrentAccount(username){
+        return http.get(`/api/currentAccount/${username}`);
+    }
 }
 
 export default new AccountService();

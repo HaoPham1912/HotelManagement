@@ -1,6 +1,7 @@
 <template>
   <!--Navbar-->
   <mdb-navbar class="flexible-navbar white" light position="top" scrolling>
+    <mdb-navbar-brand><a href="/home">Home</a></mdb-navbar-brand>
     <mdb-navbar-brand href="" target="_blank">Admin Dashboard</mdb-navbar-brand>
     <mdb-navbar-toggler>
       <mdb-navbar-nav right>
@@ -9,7 +10,7 @@
             ><img
               src="https://cdn1.iconfinder.com/data/icons/avatar-97/32/avatar-02-512.png"
               alt=""
-            />Hi Admin</mdb-dropdown-toggle
+            />{{ `Hi ${username}` }}</mdb-dropdown-toggle
           >
 
           <mdb-dropdown-menu>
@@ -38,7 +39,13 @@ import {
   mdbDropdownToggle,
 } from 'mdbvue';
 import { AUTH_LOGOUT } from '../../store/actions/auth';
+import store from '../../store';
 export default {
+  data() {
+    return {
+      username: store.getters.username,
+    };
+  },
   methods: {
     logout: function() {
       this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'));

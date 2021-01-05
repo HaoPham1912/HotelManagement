@@ -4,10 +4,9 @@
       <mdb-col md="2"></mdb-col>
       <mdb-col md="10">
         <mdb-card class="mb-4">
-          <div class="link-add"></div>
           <div class="row">
             <div class="col-md-6">
-              <a href="/admin/room/add" type="button" class="btn btn-success">
+              <a href="/admin/add-room" type="button" class="btn btn-success">
                 Add new Room
               </a>
             </div>

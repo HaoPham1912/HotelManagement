@@ -42,39 +42,41 @@ import DetailBill from '../components/form/DetailBill.vue';
 import DetailRoom from '../components/page/DetailRoom.vue';
 
 Vue.use(Router);
-const ifNotAuthenticated = (to, from, next) => {
-  if (!store.getters.isAuthenticated) {
-    next();
-    return;
-  }
-  next("/");
-};
+// const ifNotAuthenticated = (to, from, next) => {
+//   if (!store.getters.isAuthenticated) {
+//     next();
+//     return;
+//   }
+//   next("/");
+// };
 
-const ifAuthenticated = (to, from, next) => {
-  if (store.getters.isAuthenticated) {
-    next();
-    return;
-  }
-  next("/login");
-};
-
-export default new Router({
+// const ifAuthenticated = (to, from, next) => {
+//   if (store.getters.isAuthenticated) {
+//     next();
+//     return;
+//   }
+//   next("/login");
+// };
+const router = new Router({
     mode: 'history',
     routes: [
         {
-          path:"",
-          redirect:"/login"
+          path:"*",
+          redirect:"/home",
+          
         },
         {
           path:"/home",
           component: HomePage,
           //beforeEnter: ifAuthenticated,
+          meta: { authorize: '' } 
         },
         {
         path:'/admin', component:Dashboard,
         name:'AdminDashboard',
-        beforeEnter: ifAuthenticated,
-        children:[    {
+        meta: { authorize: 'ADMIN' } ,
+        children:[    
+          {
           path: '/admin/account',
           name: 'Account',
           component: AccountTable,
@@ -112,12 +114,6 @@ export default new Router({
           props: { page: 6 },
         },
         {
-          path: '/admin/room/:id',
-          name: 'EditRoom',
-          component: EditRoom,
-        
-        },
-        {
           path: '/admin/policy',
           name: 'PolicyTable',
           component: PolicyTable,
@@ -148,37 +144,37 @@ export default new Router({
           props: { page: 11 },
         },
         {
-          path: '/admin/employee/add',
+          path: '/admin/add-employee',
           name: 'Add New Emp',
           component: AddNewEmployee,
         },
         {
-          path: '/admin/policy/add',
+          path: '/admin/add-policy',
           name: 'Add New Policy',
           component: AddPolicy,
         },
         {
-          path: '/admin/room/add',
-          name: 'Add New Room',
+          path: '/admin/add-room',
+          name: 'AddNewRoom',
           component: AddRoom,
         },
         {
-          path: '/admin/bed/add',
+          path: '/admin/add-bed',
           name: 'Add New Bed',
           component: AddBed,
         },
         {
-          path: '/admin/service/add',
+          path: '/admin/add-service',
           name: 'Add New Service',
           component: AddService,
         },
         {
-          path: '/admin/promo/add',
+          path: '/admin/add-promo',
           name: 'Add New Promotion',
           component: AddPromo,
         },
         {
-          path: '/admin/branch/add',
+          path: '/admin/add-branch',
           name: 'Add New Branch',
           component: AddBranch,
         },
@@ -186,6 +182,11 @@ export default new Router({
           path: '/admin/branch/:id',
           name: 'Update Branch',
           component: EditBranch,
+        },
+        {
+          path: '/admin/room/:id',
+          name: 'EditRoom',
+          component: EditRoom,
         },
         {
           path: '/admin/detail-branch/:branchCode',
@@ -240,7 +241,7 @@ export default new Router({
           path: '/login',
           name: 'Login',
           component: Login,
-          beforeEnter: ifNotAuthenticated
+         
         },
         {
           path: '/register',
@@ -249,11 +250,10 @@ export default new Router({
         },
         {
           path:'/emp',
-          name: 'Employee Dashboard',
+          name: 'EmployeeDashboard',
           component:EmployeeDashboard,
-          beforeEnter: ifAuthenticated,
+          meta: { authorize: 'EMPLOYEE'} ,
           children:[
-            
               {
                 path: '/emp/editProfie',
                 name: 'editProfie',
@@ -282,3 +282,24 @@ export default new Router({
         }
       ]
 });
+router.beforeEach((to, from, next) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const { authorize } = to.meta;
+  const currentUser = store.getters.currentRole;
+
+  if (authorize) {
+      if (!currentUser) {
+          // not logged in so redirect to login page with the return url
+          return next({ path: '/login'});
+      }
+
+      // check if route is restricted by role
+      if (authorize.length && !currentUser.includes(authorize)) {
+          alert("You have not permission to access this page!!!!");
+          // role not authorised so redirect to home page
+          return next({ path: '/home' });
+      }
+  }
+  next();
+})
+export default router;
