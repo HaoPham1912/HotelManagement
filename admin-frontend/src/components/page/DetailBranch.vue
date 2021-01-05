@@ -41,7 +41,7 @@
               <div>
                 <button class="btn-sm btn-danger" @click="remove(scope.row)">
                   <i class="fas fa-trash"></i>
-                  DELETE
+                  REMOVE
                 </button>
               </div>
             </td>
@@ -88,12 +88,12 @@
                   EDIT
                 </button>
               </div>
-              <div>
+              <!-- <div>
                 <button class="btn-sm btn-danger" @click="remove(scope.row)">
                   <i class="fas fa-trash"></i>
                   DELETE
                 </button>
-              </div>
+              </div> -->
             </td>
           </tr>
         </tbody>

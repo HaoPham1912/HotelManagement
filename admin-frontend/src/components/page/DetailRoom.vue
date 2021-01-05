@@ -25,7 +25,7 @@
             <td>{{ data.price }}</td>
             <td>{{ data.description }}</td>
             <td class="action">
-              <div>
+              <!-- <div>
                 <button
                   class="btn-sm btn-warning"
                   @click="getIdEmp(data.employeeId)"
@@ -35,11 +35,11 @@
                   <i class="fas fa-pencil-alt"></i>
                   EDIT
                 </button>
-              </div>
+              </div> -->
               <div>
                 <button class="btn-sm btn-danger" @click="remove(scope.row)">
                   <i class="fas fa-trash"></i>
-                  DELETE
+                  REMOVE
                 </button>
               </div>
             </td>
@@ -69,7 +69,7 @@
             <td>{{ data.price }}</td>
             <td>{{ data.description }}</td>
             <td class="action">
-              <div>
+              <!-- <div>
                 <button
                   class="btn-sm btn-warning"
                   data-mdb-toggle="modal"
@@ -78,11 +78,11 @@
                   <i class="fas fa-pencil-alt"></i>
                   EDIT
                 </button>
-              </div>
+              </div> -->
               <div>
                 <button class="btn-sm btn-danger" @click="remove(scope.row)">
                   <i class="fas fa-trash"></i>
-                  DELETE
+                  REMOVE
                 </button>
               </div>
             </td>
