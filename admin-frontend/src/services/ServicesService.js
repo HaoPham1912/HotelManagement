@@ -19,6 +19,10 @@ class ServicesService{
     update(id, data){
         return http.put(`/api/services/${id}`,data);
     }
+
+    getAllNoPaging(){
+        return http.get("/api/all-service");
+    }
 }
 
 export default new ServicesService();

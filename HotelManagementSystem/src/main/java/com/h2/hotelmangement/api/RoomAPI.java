@@ -148,7 +148,7 @@ public class RoomAPI {
     }
 
     @PutMapping("/room-service/{roomCode}")
-    public ResponseEntity<HttpStatus> addServiceToRoom(@PathVariable String roomCode, @RequestBody List<Long> idServiceList) {
+    public ResponseEntity<HttpStatus> addServiceToRoom(@PathVariable String roomCode, @RequestParam(value = "idServiceList") List<Long> idServiceList) {
         System.out.println("I''m here");
         Room room = roomService.getRoomByRoomCode(roomCode);
         Set<Services> servicesSet = new HashSet<>();
@@ -171,7 +171,7 @@ public class RoomAPI {
     }
 
     @PutMapping("/room-bed/{roomCode}")
-    public ResponseEntity<HttpStatus> addBedToRoom(@PathVariable String roomCode, @RequestBody List<Long> idBedList) {
+    public ResponseEntity<HttpStatus> addBedToRoom(@PathVariable String roomCode, @RequestParam(value ="idBedList" ) List<Long> idBedList) {
 
         Set<Bed> bedSet = new HashSet<>();
         Room room = roomService.getRoomByRoomCode(roomCode);
@@ -195,7 +195,7 @@ public class RoomAPI {
     }
 
     @DeleteMapping("/room-bed/{roomCode}")
-    public ResponseEntity<HttpStatus> removeBedOutRoom(@PathVariable String roomCode, @RequestBody Long idBed) {
+    public ResponseEntity<HttpStatus> removeBedOutRoom(@PathVariable String roomCode, @RequestParam(value = "idBed") Long idBed) {
         Room room = roomService.getRoomByRoomCode(roomCode);
         Bed bed = bedService.getBedById(idBed);
         try {
@@ -222,7 +222,7 @@ public class RoomAPI {
         }
     }
     @DeleteMapping("/room-service/{roomCode}")
-    public ResponseEntity<HttpStatus> removeServiceOutRoom(@PathVariable String roomCode, @RequestBody Long idService) {
+    public ResponseEntity<HttpStatus> removeServiceOutRoom(@PathVariable String roomCode, @RequestParam("idService") Long idService) {
         Room room = roomService.getRoomByRoomCode(roomCode);
         Services services = serviceHotelService.getServicesById(idService);
         try {

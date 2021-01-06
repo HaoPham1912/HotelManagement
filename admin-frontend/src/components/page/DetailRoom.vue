@@ -4,7 +4,7 @@
     <div class="col-md-10">
       <div class="title-table">
         <h3>Bed In Room</h3>
-        <mdb-btn color="success">ADD BED</mdb-btn>
+        <mdb-btn color="success" @click="openModalAddBed">ADD BED</mdb-btn>
       </div>
       <table class="table">
         <thead>
@@ -90,12 +90,26 @@
           <mdb-modal-header>
             <mdb-modal-title>Update Account Information</mdb-modal-title>
           </mdb-modal-header>
-          <mdb-modal-body> </mdb-modal-body>
+          <mdb-modal-body
+            ><div>
+              <p>
+                <strong><center>CHOOSE BED WANT TO ADD</center></strong>
+              </p>
+              <div v-for="item in bedAvaiAdd" v-bind:key="item.bedId">
+                <input type="checkbox" :value="item.bedId" v-model="idBedAdd" />
+                <label>{{ item }}</label>
+              </div>
+              <br />
+              <span>Checked names: {{ idBedAdd }}</span>
+            </div>
+          </mdb-modal-body>
           <mdb-modal-footer>
             <mdb-btn color="danger" @click.native="modal = false"
               >Close</mdb-btn
             >
-            <mdb-btn color="primary">Save changes</mdb-btn>
+            <mdb-btn color="primary" @click="addBedToRoom(roomCode)"
+              >Save changes</mdb-btn
+            >
           </mdb-modal-footer>
         </mdb-modal>
       </div>
@@ -105,6 +119,8 @@
 
 <script>
 import RoomService from '../../services/RoomService';
+import ServicesService from '../../services/ServicesService';
+import BedService from '../../services/BedService';
 import {
   mdbModal,
   mdbModalHeader,
@@ -134,6 +150,12 @@ export default {
         services: [],
       },
       modal: false,
+      bedlist: [],
+      servicesList: [],
+      bedAvaiAdd: [],
+      serviceAvailAdd: [],
+      idBedAdd: [],
+      idServiceAdd: [],
     };
   },
   methods: {
@@ -144,10 +166,74 @@ export default {
         this.rooms.services = response.data.servicesDTOList;
       });
     },
+
+    getAllBed() {
+      BedService.getAllBedNoPaging()
+        .then((respose) => {
+          this.bedlist = respose.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getAllService() {
+      ServicesService.getAllNoPaging()
+        .then((response) => {
+          this.servicesList = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getAvailBed() {
+      var fullBedList = this.bedlist;
+      console.log(fullBedList);
+      var bedsToRemove = this.rooms.beds;
+      console.log(bedsToRemove);
+      var props = ['bedId', 'name', 'amountPeople', 'price'];
+      var result = fullBedList
+        .filter(function(o1) {
+          // filter out (!) items in result2
+          return !bedsToRemove.some(function(o2) {
+            return o1.bedId === o2.bedId; // assumes unique id
+          });
+        })
+        .map(function(o) {
+          // use reduce to make objects with only the required properties
+          // and map to apply this to the filtered array as a whole
+          return props.reduce(function(newo, name) {
+            newo[name] = o[name];
+            return newo;
+          }, {});
+        });
+
+      this.bedAvaiAdd = result;
+      console.log('aaaaaaaaaaaaaaaaa');
+      console.log(this.bedAvaiAdd);
+    },
+
+    addBedToRoom(roomCode) {
+      console.log(roomCode);
+      const toNumbers = (arr) => arr.map(Number);
+      let idBedList = toNumbers(this.idBedAdd);
+      console.log(idBedList);
+
+      RoomService.addBedToRoom(roomCode, idBedList).then(() => {
+        alert('Bed have been added!!!');
+        this.modal = false;
+      });
+    },
+
+    openModalAddBed() {
+      this.modal = true;
+      this.getAvailBed();
+    },
   },
 
   mounted() {
     this.getDetailRoom(this.roomCode);
+    this.getAllBed();
+    this.getAllService();
   },
 };
 </script>

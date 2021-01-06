@@ -24,6 +24,21 @@ class RoomService{
     getRoomByRoomCode(code){
         return http.get(`/api/room/${code}`);
     }
+
+    addBedToRoom(roomCode,data){
+        return http.put(`/api/room-bed/${roomCode}`,data);
+    }
+    addServiceToRoom(roomCode,data){
+        return http.put(`/api/room-service/${roomCode}`,data);
+    }
+
+    deleteBedToRoom(roomCode,data){
+        return http.delete(`/api/room-bed/${roomCode}`,data);
+    }
+    
+    deleteServiceToRoom(roomCode,data){
+        return http.delete(`/api/room-service/${roomCode}`,data);
+    }
 }
 
 export default new RoomService();
