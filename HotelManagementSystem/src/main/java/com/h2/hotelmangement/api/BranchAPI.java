@@ -104,7 +104,7 @@ public class BranchAPI {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -160,7 +160,7 @@ public class BranchAPI {
 
             return new ResponseEntity<>(HttpStatus.OK);
         }else{
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

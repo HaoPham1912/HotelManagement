@@ -298,6 +298,12 @@ export default {
         })
         .catch((e) => {
           console.log('error' + e);
+          if (e.response.status === 401) {
+            alert('Session time out!!!');
+            // if you ever get an unauthorized, logout the user
+            this.$router.push('/login');
+            // you can also redirect to /login if needed !
+          }
         });
     },
 

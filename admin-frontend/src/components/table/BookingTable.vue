@@ -96,7 +96,7 @@
                 @close="modalDetail = false"
               >
                 <mdb-modal-header>
-                  <mdb-modal-title>CUSTOMER INFORMATION</mdb-modal-title>
+                  <mdb-modal-title>BOOKING DETAIL</mdb-modal-title>
                 </mdb-modal-header>
                 <mdb-modal-body>
                   <div style="display: flex; justify-content:space-around">
@@ -257,12 +257,18 @@ export default {
       console.log(billId);
       console.log(roomId);
 
-      BookingService.deleteBooking(billId, roomId).then((response) => {
-        console.log(response.data);
-        alert('This booking information have been deleted!!!');
-        this.retrieveBookings();
-        this.modalDelete = false;
-      });
+      BookingService.deleteBooking(billId, roomId)
+        .then((response) => {
+          console.log(response.data);
+          alert('This booking information have been deleted!!!');
+          this.retrieveBookings();
+          this.modalDelete = false;
+        })
+        .catch((e) => {
+          console.log(e);
+          alert('This booking have been paid can not delete');
+          this.modalDelete = false;
+        });
     },
   },
 

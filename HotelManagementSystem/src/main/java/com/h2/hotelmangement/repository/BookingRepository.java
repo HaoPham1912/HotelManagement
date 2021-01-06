@@ -29,4 +29,5 @@ public interface BookingRepository extends JpaRepository<Booking, BookingKey> {
 
     Long deleteBookingByBills_BillidAndRoom_RoomId(Long billId, Long roomId);
 
+    Booking findBookingByBills_BillidAndRoom_RoomId(Long billId, Long roomId);
 }

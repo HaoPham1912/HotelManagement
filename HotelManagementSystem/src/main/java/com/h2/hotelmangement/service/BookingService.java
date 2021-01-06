@@ -22,5 +22,7 @@ public interface BookingService {
 
     Set<Booking> getBookingByBillId(Long id);
 
-    Long deleteBooking(Long billId, Long roomId);
+    Long deleteBooking(Long billId, Long roomId) throws Exception;
+
+    Booking getBookingInfor(Long billId, Long roomId);
 }

@@ -84,8 +84,18 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Long deleteBooking(Long billId, Long roomId) {
-        return bookingRepository.deleteBookingByBills_BillidAndRoom_RoomId(billId,roomId);
+    public Long deleteBooking(Long billId, Long roomId) throws Exception {
+        Booking booking = bookingRepository.findBookingByBills_BillidAndRoom_RoomId(billId, roomId);
+        if(booking.getStatus()){
+            return bookingRepository.deleteBookingByBills_BillidAndRoom_RoomId(billId,roomId);
+        }else {
+            throw new Exception("Can not delete this booking!!!");
+        }
+    }
+
+    @Override
+    public Booking getBookingInfor(Long billId, Long roomId) {
+        return bookingRepository.findBookingByBills_BillidAndRoom_RoomId(billId, roomId);
     }
 
 }

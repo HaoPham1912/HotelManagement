@@ -20,7 +20,7 @@
                 <input
                   class="form-control my-0 py-1 lime-border"
                   type="text"
-                  placeholder="Search by Name"
+                  placeholder="Search by Room Code"
                   aria-label="Search"
                   name="roomCode"
                   v-model="roomCode"

@@ -55,7 +55,7 @@ public class BookingAPI {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (Exception e) {
             System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -86,7 +86,7 @@ public class BookingAPI {
             return new ResponseEntity<>(detailsBillDTO, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -94,7 +94,12 @@ public class BookingAPI {
     public ResponseEntity<HttpStatus> deleteBooking(@PathVariable String billId, @PathVariable String roomId){
         Long idBill = Long.valueOf(billId);
         Long idRoom = Long.valueOf(roomId);
-        bookingService.deleteBooking(idBill,idRoom);
+        try {
+            bookingService.deleteBooking(idBill,idRoom);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         Set<Booking> bookingSet = bookingService.getBookingByBillId(idBill);
         if(bookingSet.isEmpty()){
             Bill bill = billService.getBillByBillId(idBill);
