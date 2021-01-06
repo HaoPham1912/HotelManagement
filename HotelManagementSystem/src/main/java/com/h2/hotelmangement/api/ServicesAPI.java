@@ -100,4 +100,11 @@ public class ServicesAPI {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
+
+    @GetMapping("/all-service")
+    public ResponseEntity<List<ServicesDTO>> getAllServiceNoPaging(){
+        List<Services> servicesList = servicesService.findAllService();
+        List<ServicesDTO> servicesDTOList = serviceMapper.convertListServiceEntityToDto(servicesList);
+        return new ResponseEntity<>(servicesDTOList, HttpStatus.OK);
+    }
 }

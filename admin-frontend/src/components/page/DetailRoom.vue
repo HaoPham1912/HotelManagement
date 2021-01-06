@@ -2,9 +2,9 @@
   <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-10">
-      <div style="display: flex;">
+      <div class="title-table">
         <h3>Bed In Room</h3>
-        <button>Add Bed</button>
+        <mdb-btn color="success">ADD BED</mdb-btn>
       </div>
       <table class="table">
         <thead>
@@ -45,10 +45,13 @@
             </td>
           </tr>
         </tbody>
+        <tbody v-else>
+          <p style="color: red;"><strong>DO NOT HAVE ANY BEDS</strong></p>
+        </tbody>
       </table>
-      <div style="display: flex;">
+      <div class="title-table">
         <h3>Service In Room</h3>
-        <button>Add Service</button>
+        <mdb-btn color="success">ADD SERVICE</mdb-btn>
       </div>
       <table class="table">
         <thead>
@@ -69,16 +72,6 @@
             <td>{{ data.price }}</td>
             <td>{{ data.description }}</td>
             <td class="action">
-              <!-- <div>
-                <button
-                  class="btn-sm btn-warning"
-                  data-mdb-toggle="modal"
-                  data-mdb-target="#exampleModal"
-                >
-                  <i class="fas fa-pencil-alt"></i>
-                  EDIT
-                </button>
-              </div> -->
               <div>
                 <button class="btn-sm btn-danger" @click="remove(scope.row)">
                   <i class="fas fa-trash"></i>
@@ -89,17 +82,48 @@
           </tr>
         </tbody>
         <tbody v-else>
-          <td>DO NOT HAVE ANY EMPLOYEE</td>
+          <p style="color: red;"><strong>DO NOT HAVE ANY SERVICES</strong></p>
         </tbody>
       </table>
+      <div>
+        <mdb-modal centered :show="modal" @close="modal = false">
+          <mdb-modal-header>
+            <mdb-modal-title>Update Account Information</mdb-modal-title>
+          </mdb-modal-header>
+          <mdb-modal-body> </mdb-modal-body>
+          <mdb-modal-footer>
+            <mdb-btn color="danger" @click.native="modal = false"
+              >Close</mdb-btn
+            >
+            <mdb-btn color="primary">Save changes</mdb-btn>
+          </mdb-modal-footer>
+        </mdb-modal>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import RoomService from '../../services/RoomService';
+import {
+  mdbModal,
+  mdbModalHeader,
+  mdbModalTitle,
+  mdbModalBody,
+  mdbModalFooter,
+  mdbBtn,
+} from 'mdbvue';
 export default {
+  watch: {},
   name: 'branch',
+  components: {
+    mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn,
+  },
   data() {
     return {
       roomCode: this.$route.params.roomCode,
@@ -109,10 +133,11 @@ export default {
         thumbnailsBranchSet: [],
         services: [],
       },
+      modal: false,
     };
   },
   methods: {
-    getDetailBranch(roomCode) {
+    getDetailRoom(roomCode) {
       RoomService.getRoomByRoomCode(roomCode).then((response) => {
         console.log(response.data);
         this.rooms.beds = response.data.bedDTOList;
@@ -122,7 +147,7 @@ export default {
   },
 
   mounted() {
-    this.getDetailBranch(this.roomCode);
+    this.getDetailRoom(this.roomCode);
   },
 };
 </script>
@@ -136,5 +161,12 @@ img {
 
 .img-branch {
   margin: 10px;
+}
+
+.title-table {
+  display: flex;
+}
+.title-table button {
+  margin-left: 30px;
 }
 </style>

@@ -1,7 +1,9 @@
 package com.h2.hotelmangement.api;
 
 import com.h2.hotelmangement.entity.Bed;
+import com.h2.hotelmangement.entity.Services;
 import com.h2.hotelmangement.model.dto.BedDTO;
+import com.h2.hotelmangement.model.dto.ServicesDTO;
 import com.h2.hotelmangement.model.mapper.BedMapper;
 import com.h2.hotelmangement.service.BedService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,5 +113,11 @@ public class BedAPI {
         else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+    @GetMapping("/all-bed")
+    public ResponseEntity<List<BedDTO>> getAllBedNoPaging(){
+        List<Bed> bedList = bedService.getAllBedList();
+        List<BedDTO> bedDTOList = bedMapper.listBedEntityToDto(bedList);
+        return new ResponseEntity<>(bedDTOList, HttpStatus.OK);
     }
 }
