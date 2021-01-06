@@ -25,7 +25,6 @@ import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
 @RestController
 @RequestMapping(PREFIX_API)
 public class BranchAPI {
-
     @Autowired
     private BranchService branchService;
 
@@ -116,4 +115,11 @@ public class BranchAPI {
      }
 
     }
+
+    @GetMapping("/branch/location")
+    public ResponseEntity<Object> getAllLocation(){
+        return new ResponseEntity<>(branchService.getListLocation(),HttpStatus.OK);
+
+    }
+
 }
