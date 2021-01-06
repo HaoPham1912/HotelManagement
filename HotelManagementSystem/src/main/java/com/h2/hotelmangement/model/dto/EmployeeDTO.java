@@ -12,6 +12,15 @@ public class EmployeeDTO {
     private String branchCode;
     private String roleName;
     private String status;
+    private String newPass;
+
+    public String getNewPass() {
+        return newPass;
+    }
+
+    public void setNewPass(String newPass) {
+        this.newPass = newPass;
+    }
 
     public String getStatus() {
         return status;

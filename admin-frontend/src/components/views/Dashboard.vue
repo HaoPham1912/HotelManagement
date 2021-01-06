@@ -1,26 +1,4 @@
 <template>
-  <!-- <b-container class="bv-example-row">
-    <b-row>
-      <b-col cols="6"><SlideBar /></b-col>
-      <b-col>
-        <Header />
-      </b-col>
-    </b-row>
-    <br />
-    <br />
-    <br />
-    <br />
-    <div class="content-main">
-      <b-row>
-        <b-col></b-col>
-      </b-row>
-    </div>
-    <div class="content-main">
-      <b-row>
-        <b-col> <Content /></b-col>
-      </b-row>
-    </div>
-  </b-container> -->
   <mdb-container fluid>
     <Header />
     <SlideBar />

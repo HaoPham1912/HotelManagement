@@ -186,6 +186,9 @@ public class Room {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
+                ", status=" + status +
+                ", amountPeople=" + amountPeople +
+                ", mainImage='" + mainImage + '\'' +
                 '}';
     }
 }

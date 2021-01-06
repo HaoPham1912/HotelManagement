@@ -1,37 +1,63 @@
 <template>
-  <form action="" class="form-add">
+  <form action="" class="form-add" v-on:submit.prevent="createNewRoom">
     <h3>Add New Room</h3>
+    <!-- Message input -->
     <div class="form-outline mb-4">
-      <label for="location">Choose Branch</label>
-      <select class="browser-default custom-select">
-        <option selected value="HCM1">HCM1</option>
-        <option value="NT1">NT1</option>
-        <option value="DN1">DN1</option>
-      </select>
+      <label class="form-label" for="branchCode">Choose Branch Code</label>
+      <b-form-select
+        v-model="rooms.branchCode"
+        :options="branchCodes"
+      ></b-form-select>
     </div>
     <div class="form-outline mb-4">
-      <label for="policy">Choose Cancel Policy</label>
-      <select class="browser-default custom-select">
-        <option selected value="PL1">PL1</option>
-        <option value="PL2">PL2</option>
-      </select>
+      <label class="form-label" for="policyCode">Choose Cancel Policy</label>
+      <b-form-select
+        v-model="rooms.policyCode"
+        :options="policyCodes"
+      ></b-form-select>
     </div>
     <div class="form-outline mb-4">
       <label for="roomCode">Room Code</label>
-      <input type="text" id="roomCode" class="form-control" required />
+      <input
+        type="text"
+        id="roomCode"
+        class="form-control"
+        v-model="rooms.roomCode"
+        required
+      />
     </div>
 
     <div class="form-outline mb-4">
       <label for="name">Room Name</label>
-      <input type="text" id="name" class="form-control" required />
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        v-model="rooms.name"
+        required
+      />
     </div>
     <div class="form-outline mb-4">
-      <label for="amount">Amount People</label>
-      <input type="text" id="address" class="form-control" required />
+      <label for="policy">Choose Ammount People</label>
+      <select
+        class="browser-default custom-select"
+        v-model="rooms.ammountPeople"
+      >
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
     </div>
     <div class="form-outline mb-4">
       <label for="price">Price</label>
-      <input type="text" id="price" class="form-control" required />
+      <input
+        type="text"
+        id="price"
+        class="form-control"
+        v-model="rooms.price"
+        required
+      />
     </div>
     <div class="form-outline mb-4">
       <label for="description">Description</label>
@@ -41,11 +67,12 @@
         rows="4"
         cols="50"
         class="form-control"
+        v-model="rooms.description"
         required
       />
     </div>
     <div class="form-outline mb-4">
-      <label for="image">Choose Main Image Of Room</label>
+      <label for="image">Choose Image Of Room</label>
       <div class="input-group">
         <div>
           <b-button variant="success" @click="onPickFile">
@@ -74,11 +101,30 @@
 </template>
 
 <script>
+import firebase from 'firebase';
+
+import BranchService from '../../services/BranchService';
+import CancelPolicyService from '../../services/CancelPolicyService';
+import RoomService from '../../services/RoomService';
 export default {
   data() {
     return {
       imageUrl: '',
       image: null,
+      rooms: {
+        branchCode: '',
+        roomCode: '',
+        policyCode: '',
+        name: '',
+        ammountPeople: '',
+        price: '',
+        description: '',
+        mainImage: '',
+      },
+      branchs: [],
+      branchCodes: [],
+      policies: [],
+      policyCodes: [],
     };
   },
   methods: {
@@ -98,8 +144,115 @@ export default {
         this.imageUrl = fileReader.result;
       });
       fileReader.readAsDataURL(files[0]);
-      this.image = files[0];
+      this.image = event.target.files[0];
+      this.onUpload();
     },
+    onUpload() {
+      return new Promise((resolve, reject) => {
+        const storageRef = firebase
+          .storage()
+          .ref(`${this.image.name}`)
+          .put(this.image);
+        storageRef.on(
+          `state_changed`,
+          (snapshot) => {
+            this.uploadValue =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          },
+          (error) => {
+            console.log(error.message);
+            reject();
+          },
+          () => {
+            this.uploadValue = 100;
+            storageRef.snapshot.ref.getDownloadURL().then((url) => {
+              console.log('=------------------');
+              console.log(url);
+              if (url !== '') {
+                this.rooms.mainImage = url;
+
+                console.log('dasdasdasd');
+
+                console.log(this.rooms.mainImage);
+              }
+            });
+            resolve();
+          }
+        );
+      });
+    },
+
+    async createNewRoom() {
+      await this.onUpload();
+      var data = {
+        roomCode: this.rooms.roomCode,
+        policyCode: this.rooms.policyCode,
+        branchCode: this.rooms.branchCode,
+        name: this.rooms.name,
+        ammountPeople: this.rooms.ammountPeople,
+        price: this.rooms.price,
+        description: this.rooms.description,
+        mainImage: this.rooms.mainImage,
+      };
+
+      RoomService.addRoom(data).then((response) => {
+        console.log(response.data);
+        alert('New room have been added');
+        this.$router.push('/reloadRoom');
+      });
+    },
+
+    setBracnhCodes() {
+      BranchService.getAllBranchInfor()
+        .then((response) => {
+          this.branchs = response.data;
+
+          console.log(this.branchs);
+
+          for (var i = 0; i < this.branchs.length; i++) {
+            var options = [];
+            for (var key in this.branchs[i]) {
+              if (key == 'branchCode') {
+                options['value'] = this.branchs[i][key];
+                options['text'] = this.branchs[i][key];
+              }
+            }
+            this.branchCodes.push(Object.assign({}, options));
+          }
+          console.log(this.branchCodes);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    setPolicyCode() {
+      CancelPolicyService.getAll()
+        .then((response) => {
+          this.policies = response.data;
+
+          console.log(this.policies);
+
+          for (var i = 0; i < this.policies.length; i++) {
+            var options = [];
+            for (var key in this.policies[i]) {
+              if (key == 'policyCode') {
+                options['value'] = this.policies[i][key];
+                options['text'] = this.policies[i][key];
+              }
+            }
+            this.policyCodes.push(Object.assign({}, options));
+          }
+          console.log(this.policyCodes);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+  },
+
+  mounted() {
+    this.setBracnhCodes();
+    this.setPolicyCode();
   },
 };
 </script>

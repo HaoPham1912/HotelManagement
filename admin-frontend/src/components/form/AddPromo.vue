@@ -31,40 +31,27 @@
     </div>
     <div class="form-outline mb-4">
       <label for="startDate">Choose Start Date</label>
-      <b-form-datepicker
-        id="startDate"
-        :date-format-options="{
-          year: 'numeric',
-          month: 'numeric',
-          day: 'numeric',
-        }"
-        locale="en"
+      <input
+        type="date"
+        id="percent"
+        class="form-control"
+        required
         v-model="promotions.startDate"
-      ></b-form-datepicker>
+      />
     </div>
     <div class="form-outline mb-4">
-      <label for="endDate">Choose Start Date</label>
-      <b-form-datepicker
-        id="endDate"
-        :date-format-options="{
-          year: 'numeric',
-          month: 'numeric',
-          day: 'numeric',
-        }"
-        locale="en"
+      <label for="endDate">Choose End Date</label>
+      <input
+        type="date"
+        id="percent"
+        class="form-control"
+        required
         v-model="promotions.endDate"
-      ></b-form-datepicker>
+      />
     </div>
-    <div>
-      <label for="example-datepicker">Choose a date</label>
-      <b-form-datepicker
-        id="example-datepicker"
-        v-model="value"
-        class="mb-2"
-      ></b-form-datepicker>
-    </div>
+
     <button
-      type="submit"
+      type="button"
       class="btn btn-primary btn-block mb-4"
       @click="createNewPromotion"
     >
@@ -119,9 +106,16 @@ export default {
         endDate: this.promotions.endDate,
         customerType: this.promotions.customerType,
       };
-      PromotionService.create(data).then((reponse) => {
-        console.log(reponse.data);
-      });
+      PromotionService.create(data)
+        .then((reponse) => {
+          console.log(reponse.data);
+          alert('Add new promotion successful');
+          this.$router.push('/reloadPromo');
+        })
+        .catch((e) => {
+          console.log(e);
+          alert('Add new promotion failed!');
+        });
     },
   },
   mounted() {

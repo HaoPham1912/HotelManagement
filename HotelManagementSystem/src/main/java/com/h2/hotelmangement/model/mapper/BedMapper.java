@@ -25,6 +25,7 @@ public class BedMapper {
         }
         bedDTO.setRoomCodeSet(roomCodeSet);
         bedDTO.setDescription(bed.getDescription());
+        bedDTO.setStatus(String.valueOf(bed.getStatus()));
 
         return bedDTO;
     }
@@ -37,5 +38,15 @@ public class BedMapper {
             bedDTOList.add(bedDTO);
         }
         return bedDTOList;
+    }
+
+    public Bed convetBedDTOToEntity(BedDTO bedDTO){
+        Bed bed = new Bed();
+        bed.setName(bedDTO.getName());
+        bed.setPrice(Double.valueOf(bedDTO.getPrice()));
+        bed.setAmountPeople(Integer.valueOf(bedDTO.getAmountPeople()));
+        bed.setDescription(bedDTO.getDescription());
+
+        return bed;
     }
 }

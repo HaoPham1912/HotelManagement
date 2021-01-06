@@ -1,11 +1,12 @@
 package com.h2.hotelmangement.api;
 
-import com.h2.hotelmangement.entity.Bed;
-import com.h2.hotelmangement.entity.Customer;
+import com.h2.hotelmangement.entity.*;
 import com.h2.hotelmangement.model.dto.BedDTO;
 import com.h2.hotelmangement.model.dto.CustomerDTO;
 import com.h2.hotelmangement.model.mapper.CustomerMapper;
+import com.h2.hotelmangement.service.AccountService;
 import com.h2.hotelmangement.service.CustomerService;
+import com.h2.hotelmangement.service.CustomerTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,12 @@ public class CustomerAPI {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private CustomerTypeService customerTypeService;
+
+    @Autowired
+    private AccountService accountService;
 
     private CustomerMapper customerMapper = new CustomerMapper();
 
@@ -71,28 +78,35 @@ public class CustomerAPI {
         Long cusId = Long.valueOf(id);
         Customer customer = customerService.getCustomerById(cusId);
         if(customer != null){
-            customer.setEmail(customerDTO.getEmail());
-            customer.setIdCard(customerDTO.getIdCard());
-            customer.setName(customerDTO.getName());
-            customer.setPhone(customerDTO.getPhone());
-
+            CustomerType customerType = customerTypeService.findCustomerTypeByName(customerDTO.getCustomerType());
+            customer.setCustomerType(customerType);
             customerService.save(customer);
             return new ResponseEntity<>(HttpStatus.OK);
         }else{
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
-    @PostMapping("customer")
-    public ResponseEntity<HttpStatus> addnewEmployee(@RequestBody CustomerDTO customerDTO){
-        Customer customer = new Customer();
-        customer.setCusCode(customerDTO.getCustomerCode());
-        customer.setEmail(customerDTO.getEmail());
-        customer.setName(customerDTO.getName());
-        customer.setPhone(customerDTO.getPhone());
-        customer.setCustomerType(null);
-        customer.setAccountCus(null);
-        customerService.save(customer);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+    @DeleteMapping("/customer/{id}")
+    public ResponseEntity<HttpStatus> deleteEmp(@PathVariable("id") String id) {
+        Long cusId = Long.valueOf(id);
+        Customer customer = customerService.getCustomerById(cusId);
+        if(customer != null){
+            try {
+                customerService.deleteCustomer(cusId);
+                Account account = customer.getAccountCus();
+                if(account != null){
+                    Boolean status = account.getStatus();
+                    account.setStatus(!status);
+                    accountService.save(account);
+                }
+                return new ResponseEntity<>(HttpStatus.OK);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        }else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 }

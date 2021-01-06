@@ -4,12 +4,16 @@
       <mdb-col md="2"></mdb-col>
       <mdb-col md="10">
         <mdb-card class="mb-4">
-          <div class="link-add"></div>
           <div class="row">
-            <div class="col-md-9">
-              <a href="/room/add" type="button" class="btn btn-success">
+            <div class="col-md-6">
+              <a href="/admin/add-room" type="button" class="btn btn-success">
                 Add new Room
               </a>
+            </div>
+            <div class="col-md-3">
+              <mdb-btn class="btn-showall" color="info" @click="showAll"
+                >Show All</mdb-btn
+              >
             </div>
             <div class="col-md-3">
               <div class="input-group md-form form-sm form-2 pl-0">
@@ -45,8 +49,9 @@
                   <th>RoomCode</th>
                   <th>Name</th>
                   <th>Price</th>
-                  <th>Branch ID</th>
+                  <th>In Branch</th>
                   <th>Description</th>
+                  <th>Room Image</th>
                   <th></th>
                 </tr>
               </thead>
@@ -54,24 +59,31 @@
                 <tr v-for="(data, index) in rooms" :key="index">
                   <td>{{ data.roomId }}</td>
                   <td>
-                    <a href="">{{ data.roomCode }}</a>
+                    <a :href="'detail-room/' + data.roomCode">{{
+                      data.roomCode
+                    }}</a>
                   </td>
                   <td>{{ data.name }}</td>
                   <td>{{ data.price }}</td>
-                  <td>{{ data.branchId }}</td>
-                  <td>{{ data.description }}</td>
+                  <td>{{ data.branchCode }}</td>
+                  <td class="descrip-room">{{ data.description }}</td>
+                  <td>
+                    <div class="img-table">
+                      <img :src="data.mainImage" alt="" />
+                    </div>
+                  </td>
                   <td class="action">
                     <div>
-                      <button class="btn-sm btn-warning">
-                        <a
-                          class="btn-link-edit action-button"
-                          @click="edit(scope.row)"
-                        >
+                      <button
+                        class="btn-sm btn-warning"
+                        @click="editRoom(data.roomId)"
+                      >
+                        <a class="btn-link-edit action-button">
                           <i class="fas fa-pencil-alt"></i> </a
-                        >EDIT
+                        >EDIT ROOM
                       </button>
                     </div>
-                    <div>
+                    <!-- <div>
                       <button class="btn-sm btn-danger">
                         <a
                           class="btn-link-delete action-button"
@@ -81,7 +93,7 @@
                         </a>
                         DELETE
                       </button>
-                    </div>
+                    </div> -->
                   </td>
                 </tr>
               </tbody>
@@ -106,7 +118,15 @@
   </section>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl } from 'mdbvue';
+import {
+  mdbRow,
+  mdbCol,
+  mdbCard,
+  mdbCardBody,
+  mdbTbl,
+  mdbIcon,
+  mdbBtn,
+} from 'mdbvue';
 
 import RoomService from '../../services/RoomService';
 export default {
@@ -130,6 +150,8 @@ export default {
     mdbCard,
     mdbCardBody,
     mdbTbl,
+    mdbIcon,
+    mdbBtn,
   },
   methods: {
     getRequestParams(roomCode, page, pageSize) {
@@ -174,8 +196,18 @@ export default {
       this.retrieveRoom();
     },
 
+    editRoom(id) {
+      console.log(`id is ${id}`);
+      this.$router.push(`room/${id}`);
+    },
+
     handelSearch() {
       this.page = 1;
+      this.retrieveRoom();
+    },
+
+    showAll() {
+      this.roomCode = '';
       this.retrieveRoom();
     },
   },
@@ -196,5 +228,13 @@ a {
 }
 .link-add {
   margin-right: auto;
+}
+img {
+  width: 200px;
+  height: 120px;
+  text-align: center;
+}
+.descrip-room {
+  width: 300px;
 }
 </style>

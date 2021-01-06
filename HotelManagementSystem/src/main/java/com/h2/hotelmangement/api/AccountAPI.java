@@ -46,8 +46,13 @@ public class AccountAPI {
             Page<Account> accountPage;
             if (username == null) {
                 accountPage = accountService.findAll(pageNo, size);
+                if(accountPage.isEmpty()){
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
             } else {
-                accountPage = accountService.getAllAccountPagination(username, pageNo, size);
+                accountPage = accountService.getAllAccountPagination(username, pageNo, size); if(accountPage.isEmpty()){
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
             }
             accountList = accountPage.getContent();
             List<AccountDTO> accountDTOList = accountMapper.convertListEntityToDto(accountList);
@@ -123,5 +128,13 @@ public class AccountAPI {
         } else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+    }
+
+    @GetMapping("/currentAccount/{username}")
+    public ResponseEntity<AccountDTO> getCurrentAccount(@PathVariable String username){
+        Account account = accountService.findAccountByUsername(username);
+        AccountDTO accountDTO = accountMapper.convertEntityToDto(account);
+
+        return new ResponseEntity<>(accountDTO, HttpStatus.OK);
     }
 }

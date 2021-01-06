@@ -5,7 +5,12 @@
       <mdb-col md="10">
         <mdb-card class="mb-4">
           <div class="row">
-            <div class="col-md-9"></div>
+            <div class="col-md-6"></div>
+            <div class="col-md-3">
+              <mdb-btn class="btn-showall" color="info" @click="showAll"
+                >Show All</mdb-btn
+              >
+            </div>
             <div class="col-md-3">
               <div class="input-group md-form form-sm form-2 pl-0">
                 <input
@@ -55,44 +60,78 @@
                   <td>{{ data.idCard }}</td>
                   <td>{{ data.name }}</td>
                   <td>{{ data.phone }}</td>
-                  <td v-if="data.customerType != ''">
+                  <td>
                     {{ data.customerType }}
                   </td>
-                  <td class="spec" v-if="data.customerType == ''">
-                    No register
-                  </td>
-                  <td v-if="data.userName != ''">{{ data.userName }}</td>
-                  <td class="spec" v-if="data.userName == ''">
-                    No have account
-                  </td>
+
+                  <td>{{ data.userName }}</td>
+
                   <td class="action">
                     <div>
-                      <button
-                        class="btn-sm btn-warning"
-                        @click="getCustomerId(data.customerId)"
+                      <mdb-btn
+                        @click="bindingDataToModal(data.customerId)"
+                        color="light-green"
+                        v-tooltip.top-center="{
+                          content: 'Upgrade this customer',
+                        }"
                       >
-                        <a
-                          class="btn-link-edit action-button"
-                          :href="'customer/' + data.customerId"
-                        >
-                          <i class="fas fa-pencil-alt"></i>
-                        </a>
-                      </button>
-                    </div>
-                    <div>
-                      <button class="btn-sm btn-danger">
-                        <a
-                          class="btn-link-delete action-button"
-                          @click="remove(scope.row)"
-                        >
-                          <i class="fas fa-trash"></i>
-                        </a>
-                      </button>
+                        <mdb-icon icon="angle-double-up" />
+                      </mdb-btn>
                     </div>
                   </td>
                 </tr>
+                <tr>
+                  {{
+                    noDataMessage
+                  }}
+                </tr>
               </tbody>
             </mdb-tbl>
+            <div>
+              <mdb-modal
+                centered
+                :show="modalUpdate"
+                @close="modalUpdate = false"
+              >
+                <mdb-modal-header>
+                  <mdb-modal-title>ARE YOU SURE?</mdb-modal-title>
+                </mdb-modal-header>
+                <mdb-modal-body>
+                  <div class="form-outline">
+                    <label class="form-label" for="employeeCode"
+                      >Customer Code</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="currentCustomer.customerCode"
+                      required
+                      disabled
+                    />
+                  </div>
+                  <br />
+                  <div class="form-outline">
+                    <label class="form-label" for="employeeCode"
+                      >Customer Type</label
+                    >
+                    <b-form-select
+                      v-model="currentCustomer.customerType"
+                      :options="customerType"
+                    ></b-form-select>
+                  </div>
+                </mdb-modal-body>
+                <mdb-modal-footer>
+                  <mdb-btn color="danger" @click.native="modalUpdate = false"
+                    >Close</mdb-btn
+                  >
+                  <mdb-btn
+                    color="primary"
+                    @click="updateCustomer(currentCustomer.customerId)"
+                    >OK</mdb-btn
+                  >
+                </mdb-modal-footer>
+              </mdb-modal>
+            </div>
           </mdb-card-body>
           <br />
           <div id="paging">
@@ -113,19 +152,42 @@
   </section>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
+import {
+  mdbRow,
+  mdbCol,
+  mdbCard,
+  mdbCardBody,
+  mdbTbl,
+  mdbIcon,
+  mdbModal,
+  mdbModalHeader,
+  mdbModalTitle,
+  mdbModalBody,
+  mdbModalFooter,
+  mdbBtn,
+} from 'mdbvue';
 
 import CustomerServices from '../../services/CustomerServices';
+import CustomerTypeService from '../../services/CustomerTypeService';
 export default {
   data() {
     return {
       customers: [],
+
       currentIndex: -1,
       searchName: '',
 
+      modalUpdate: false,
+
+      currentCustomer: {},
       page: 1,
       count: 0,
       pageSize: 3,
+
+      noDataMessage: '',
+
+      customerTypes: [],
+      customerType: [],
 
       pageSizes: [3, 6, 9],
     };
@@ -137,6 +199,12 @@ export default {
     mdbCardBody,
     mdbTbl,
     mdbIcon,
+    mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn,
   },
   methods: {
     getRequestParams(searchName, page, pageSize) {
@@ -154,6 +222,19 @@ export default {
 
       return params;
     },
+
+    bindingDataToModal(id) {
+      console.log(id);
+      CustomerServices.getCustomerById(id)
+        .then((response) => {
+          console.log(response.data);
+          this.currentCustomer = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      this.modalUpdate = true;
+    },
     retrieveCustomer() {
       const params = this.getRequestParams(
         this.searchName,
@@ -164,7 +245,36 @@ export default {
         .then((response) => {
           const { customers, totalItems } = response.data;
           this.customers = customers;
-          this.totalItems = totalItems;
+          this.count = totalItems;
+          if (this.customers.length === 0) {
+            this.noDataMessage = 'No data matching';
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    ShowModalDisable(id) {
+      console.log(id);
+      this.modalDelete = true;
+      CustomerServices.getCustomerById(id)
+        .then((response) => {
+          this.currentCustomer = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    deleteAccount(id) {
+      console.log(id);
+      CustomerServices.disableCustomer(id)
+        .then(() => {
+          CustomerServices.getAll().then((response) => {
+            const { customers, totalItems } = response.data;
+            this.customers = customers;
+            this.count = totalItems;
+            console.log(response.data);
+          });
         })
         .catch((e) => {
           console.log(e);
@@ -188,10 +298,56 @@ export default {
     getCustomerId(id) {
       console.log(id);
     },
+    showAll() {
+      this.searchName = '';
+      this.retrieveCustomer();
+    },
+
+    getAllCustomerType() {
+      CustomerTypeService.getAll()
+        .then((response) => {
+          this.customerTypes = response.data;
+
+          console.log(this.customerTypes);
+          for (var i = 0; i < this.customerTypes.length; i++) {
+            var options = [];
+            for (var key in this.customerTypes[i]) {
+              if (key == 'typeName') {
+                options['value'] = this.customerTypes[i][key];
+                options['text'] = this.customerTypes[i][key];
+              }
+            }
+            this.customerType.push(Object.assign({}, options));
+          }
+          console.log(this.customerType);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+
+    updateCustomer(id) {
+      var data = {
+        customerCode: this.currentCustomer.customerCode,
+        customerType: this.currentCustomer.customerType,
+      };
+
+      CustomerServices.upgradeCustomer(id, data)
+        .then((response) => {
+          console.log(response.data);
+          alert('Update Success!!!!');
+          this.modalUpdate = false;
+          this.retrieveCustomer();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
   },
 
   mounted() {
     this.retrieveCustomer();
+    this.getAllCustomerType();
   },
 };
 </script>

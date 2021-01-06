@@ -5,7 +5,12 @@
       <mdb-col md="10">
         <mdb-card class="mb-4">
           <div class="row">
-            <div class="col-md-9"></div>
+            <div class="col-md-6"></div>
+            <div class="col-md-3">
+              <mdb-btn class="btn-showall" color="info" @click="showAll"
+                >Show All</mdb-btn
+              >
+            </div>
             <div class="col-md-3">
               <div class="input-group md-form form-sm form-2 pl-0">
                 <input
@@ -42,7 +47,7 @@
                   <th>Create Date</th>
                   <th>Promo Code</th>
                   <th>Status</th>
-                  <th>Total Price</th>
+                  <!-- <th>Total Price</th> -->
                   <th></th>
                 </tr>
               </thead>
@@ -54,42 +59,51 @@
                   <td>{{ data.createDate }}</td>
                   <td>{{ data.promoCode }}</td>
                   <td>{{ data.status }}</td>
-                  <td>{{ data.totalPrice }}</td>
+                  <!-- <td>{{ data.totalPrice }}</td> -->
                   <td class="action">
                     <div>
-                      <button class="btn-sm btn-primary">
-                        <a
-                          class="btn-link-edit action-button"
-                          href="/detailBill"
-                        >
-                          <i class="fas fa-file-export"></i>
-                        </a>
-                      </button>
+                      <mdb-btn
+                        color="primary"
+                        @click="gotoDetailBill(data.billId)"
+                      >
+                        <mdb-icon icon="file-export" />
+                      </mdb-btn>
                     </div>
                     <div>
-                      <button class="btn-sm btn-warning">
-                        <a
-                          class="btn-link-edit action-button"
-                          @click="edit(scope.row)"
-                        >
-                          <i class="fas fa-pencil-alt"></i>
-                        </a>
-                      </button>
-                    </div>
-                    <div>
-                      <button class="btn-sm btn-danger">
-                        <a
-                          class="btn-link-delete action-button"
-                          @click="remove(scope.row)"
-                        >
-                          <i class="fas fa-trash"></i>
-                        </a>
-                      </button>
+                      <mdb-btn
+                        color="success"
+                        @click="showModalConfirm(data.billId)"
+                        :disabled="isDisabled"
+                      >
+                        <mdb-icon far icon="money-bill-alt" />
+                      </mdb-btn>
                     </div>
                   </td>
                 </tr>
               </tbody>
             </mdb-tbl>
+            <div>
+              <mdb-modal
+                centered
+                :show="modalConfirm"
+                @close="modalConfirm = false"
+              >
+                <mdb-modal-header>
+                  <mdb-modal-title>ARE YOU SURE?</mdb-modal-title>
+                </mdb-modal-header>
+                <mdb-modal-body>
+                  <strong>Please confirm your action</strong>
+                </mdb-modal-body>
+                <mdb-modal-footer>
+                  <mdb-btn color="danger" @click.native="modalConfirm = false"
+                    >Close</mdb-btn
+                  >
+                  <mdb-btn color="success" @click="updateBill(currentBillId)"
+                    >OK</mdb-btn
+                  >
+                </mdb-modal-footer>
+              </mdb-modal>
+            </div>
           </mdb-card-body>
           <br />
           <div id="paging">
@@ -110,7 +124,20 @@
   </section>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
+import {
+  mdbRow,
+  mdbCol,
+  mdbCard,
+  mdbCardBody,
+  mdbTbl,
+  mdbIcon,
+  mdbBtn,
+  mdbModal,
+  mdbModalHeader,
+  mdbModalTitle,
+  mdbModalBody,
+  mdbModalFooter,
+} from 'mdbvue';
 
 import BillService from '../../services/BillService';
 export default {
@@ -120,12 +147,21 @@ export default {
       currentBill: null,
       currentIndex: -1,
       searchName: '',
+      isDisabled: false,
 
       page: 1,
       count: 0,
-      pageSize: 3,
+      pageSize: 5,
 
-      pageSizes: [3, 6, 9],
+      pageSizes: [5, 10, 15],
+
+      currentURL: '',
+
+      currentBillId: '',
+
+      modalConfirm: false,
+
+      prefix: '',
     };
   },
   components: {
@@ -135,6 +171,12 @@ export default {
     mdbCardBody,
     mdbTbl,
     mdbIcon,
+    mdbBtn,
+    mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
   },
   methods: {
     getRequestParams(searchName, page, pageSize) {
@@ -168,6 +210,37 @@ export default {
         .catch((e) => {
           console.log(e);
         });
+    },
+    showAll() {
+      this.searchName = '';
+      this.retrieveBill();
+    },
+    showModalConfirm(id) {
+      this.modalConfirm = true;
+      this.currentBillId = id;
+    },
+
+    updateBill(id) {
+      BillService.updateBill(id).then((response) => {
+        console.log(response.data);
+        alert('Bill have been updated!');
+        this.modalConfirm = false;
+        this.retrieveBill();
+      });
+    },
+
+    gotoDetailBill(id) {
+      this.currentUrl = this.$router.currentRoute.path;
+
+      let url = this.$router.currentRoute.path;
+      let index = url.lastIndexOf('/');
+      let subString = url.slice(0, index);
+
+      this.prefix = subString;
+
+      const newPath = this.prefix + '/detailBill/' + id;
+
+      this.$router.push(newPath);
     },
     handlePageChange(value) {
       this.page = value;

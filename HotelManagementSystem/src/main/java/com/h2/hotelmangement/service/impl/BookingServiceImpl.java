@@ -12,6 +12,9 @@ import com.h2.hotelmangement.service.BillService;
 import com.h2.hotelmangement.service.BookingService;
 import com.h2.hotelmangement.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -67,6 +70,22 @@ public class BookingServiceImpl implements BookingService {
             });
         }
         return Optional.ofNullable(responseHistoryBookDTOS);
+    }
+
+    @Override
+    public Page<Booking> getPageBookingPagination(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        return bookingRepository.findAll(pageable);
+    }
+
+    @Override
+    public Set<Booking> getBookingByBillId(Long id) {
+        return bookingRepository.findBookingByBookingKey_BillId(id);
+    }
+
+    @Override
+    public Long deleteBooking(Long billId, Long roomId) {
+        return bookingRepository.deleteBookingByBills_BillidAndRoom_RoomId(billId,roomId);
     }
 
 }

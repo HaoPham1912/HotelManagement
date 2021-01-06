@@ -1,6 +1,7 @@
 package com.h2.hotelmangement.api;
 
 
+import com.h2.hotelmangement.entity.Booking;
 import com.h2.hotelmangement.entity.Branch;
 import com.h2.hotelmangement.entity.Employee;
 import com.h2.hotelmangement.model.dto.BranchDTO;
@@ -9,16 +10,18 @@ import com.h2.hotelmangement.model.mapper.BranchMapper;
 import com.h2.hotelmangement.model.mapper.EmployeeMapper;
 import com.h2.hotelmangement.service.BranchService;
 import com.h2.hotelmangement.service.EmployeeService;
+import com.sun.org.apache.bcel.internal.generic.LUSHR;
+import jdk.nashorn.internal.ir.BreakableNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 import static com.h2.hotelmangement.common.util.CommonConstants.PREFIX_API;
-
 
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -38,14 +41,14 @@ public class BranchAPI {
     @GetMapping("/branch")
     public ResponseEntity<Map<String, Object>> getAllBranch(@RequestParam(required = false) String branchCode,
                                                             @RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
-                                                            @RequestParam(value = "size", defaultValue = "3") int size){
-        try{
+                                                            @RequestParam(value = "size", defaultValue = "3") int size) {
+        try {
             List<Branch> branchList = new ArrayList<>();
             Page<Branch> branchPage;
-            if(branchCode == null){
+            if (branchCode == null) {
                 branchPage = branchService.getAllBranchPage(pageNo, size);
-            }else{
-                branchPage = branchService.getAllBranchPageByName(branchCode,pageNo,size);
+            } else {
+                branchPage = branchService.getAllBranchPageByName(branchCode, pageNo, size);
             }
             branchList = branchPage.getContent();
             List<BranchDTO> branchDTOList = branchMapper.convertListBranchEntityToDto(branchList);
@@ -55,41 +58,65 @@ public class BranchAPI {
             response.put("totalItems", branchPage.getTotalElements());
             response.put("totalPages", branchPage.getTotalPages());
             return new ResponseEntity<>(response, HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @GetMapping("/branch/{code}")
-    public ResponseEntity<BranchDTO> getBranchByBranchCode(@PathVariable("code") String branchCode){
+    @GetMapping("/all-branch")
+    public ResponseEntity<List<BranchDTO>> getAllBranchNoPaging() {
+        List<Branch> branchList = branchService.getAllBranch();
+        List<BranchDTO> branchDTOList = branchMapper.convertListBranchEntityToDto(branchList);
+        return new ResponseEntity<>(branchDTOList, HttpStatus.OK);
+    }
+
+    @GetMapping("/detail-branch/{code}")
+    public ResponseEntity<BranchDTO> getBranchByBranchCode(@PathVariable("code") String branchCode) {
         BranchDTO branchDTO = new BranchDTO();
-        try{
+        try {
             Branch branch = branchService.getBranchByBranchCode(branchCode);
-            if(branch == null) throw new Exception("Can not find Bracnh by "+branchCode);
+            if (branch == null) throw new Exception("Can not find Bracnh by " + branchCode);
             else {
                 List<Employee> employee = employeeService.findEmpByBranchCode(branchCode);
                 List<EmployeeDTO> employeeDTOList = employeeMapper.listEmpEntityToDto(employee);
                 branchDTO = branchMapper.convertEntityToDto(branch);
                 branchDTO.setEmployeeDTOSet(employeeDTOList);
-                return new ResponseEntity<>(branchDTO,HttpStatus.OK);
+                return new ResponseEntity<>(branchDTO, HttpStatus.OK);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(branchDTO, HttpStatus.NO_CONTENT);
         }
 
     }
 
+    @GetMapping("/current-branch/{id}")
+    public ResponseEntity<BranchDTO> getBranchById(@PathVariable String id){
+        Long branchId = Long.valueOf(id);
+
+        Branch branch = branchService.getBranchById(branchId);
+        try {
+            if(branch == null) throw new Exception("Can not find branch with id "+ id);
+            else {
+                BranchDTO branchDTO = branchMapper.convertEntityToDto(branch);
+                return new ResponseEntity<>(branchDTO, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
     @PostMapping("/branch")
-    public ResponseEntity<HttpStatus> addNewBranch(@RequestBody BranchDTO branchDTO){
+    public ResponseEntity<HttpStatus> addNewBranch(@RequestBody BranchDTO branchDTO) {
         System.out.println(branchDTO.toString());
         Branch branch = branchMapper.convertDtoToEntity(branchDTO);
+        branch.setStatus(true);
         System.out.println(branch.toString());
-        try{
-
+        try {
             branchService.save(branch);
             return new ResponseEntity<>(HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
         }
     }
@@ -101,19 +128,39 @@ public class BranchAPI {
         return new ResponseEntity<>(listBranch, HttpStatus.OK);
     }
 
-    @PutMapping("/branch/{code}")
-    public ResponseEntity<HttpStatus> updateBranchInfo(@PathVariable String code, @RequestBody BranchDTO branchDTO){
-     Branch branch = branchService.getBranchByBranchCode(code);
+    @PutMapping("/branch/{id}")
+    public ResponseEntity<HttpStatus> updateBranchInfo(@PathVariable String id, @RequestBody BranchDTO branchDTO) {
+        System.out.println("sdasdasdasdasd");
+        Long branchId = Long.parseLong(id);
+        Branch branch = branchService.getBranchById(branchId);
 
-     if(branch != null){
-         branchDTO.setBranchId(String.valueOf(branch.getBranchId()));
-        branch = branchMapper.convertDtoToEntity(branchDTO);
-        branchService.save(branch);
-        return new ResponseEntity<>(HttpStatus.OK);
-     }else {
-         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-     }
+        if (branch != null) {
+            branch.setAddress(branchDTO.getAddress());
+            branch.setDescription(branchDTO.getDescription());
+            branch.setName(branchDTO.getBranchName());
+            branch.setStatus(branchDTO.getStatus());
+            branch.setMainImage(branchDTO.getMainImage());
+            branchService.save(branch);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
+    @DeleteMapping("/branch/{id}")
+    public ResponseEntity<HttpStatus> diableBranch(@PathVariable String id){
+        Long branchId = Long.parseLong(id);
+
+        Branch branch = branchService.getBranchById(branchId);
+        if(branch!=null){
+            Boolean branchStatus = branch.getStatus();
+            branch.setStatus(!branchStatus);
+            branchService.save(branch);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 
     @GetMapping("/branch/location")

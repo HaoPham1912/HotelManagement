@@ -2,6 +2,7 @@ package com.h2.hotelmangement.service.impl;
 
 import com.h2.hotelmangement.Request.UserInfoUpdateDTO;
 import com.h2.hotelmangement.entity.Customer;
+import com.h2.hotelmangement.entity.Employee;
 import com.h2.hotelmangement.repository.CustomerRepository;
 import com.h2.hotelmangement.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,15 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void deleteCustomer(Long id) {
-        customerRepository.deleteById(id);
+    public void deleteCustomer(Long id) throws Exception {
+        Customer customer = customerRepository.getOne(id);
+        if(customer != null){
+            Boolean empStatus = customer.getStatus();
+            customer.setStatus(!empStatus);
+            customerRepository.save(customer);
+        }else{
+            throw new Exception("Can not find employee with id "+ id);
+        }
     }
 
     @Override

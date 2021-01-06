@@ -1,18 +1,26 @@
 package com.h2.hotelmangement.model.mapper;
 
+import com.h2.hotelmangement.entity.Account;
+import com.h2.hotelmangement.entity.Branch;
 import com.h2.hotelmangement.entity.Employee;
+import com.h2.hotelmangement.model.dto.AccountDTO;
 import com.h2.hotelmangement.model.dto.EmployeeDTO;
+import com.h2.hotelmangement.service.AccountService;
 import com.h2.hotelmangement.service.BranchService;
 import com.h2.hotelmangement.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class EmployeeMapper {
 
     @Autowired
     private BranchService branchService;
+
+    @Autowired
+    private AccountService accountService;
 
     public EmployeeDTO empEntityToDto(Employee employee) {
         EmployeeDTO employeeDTO = new EmployeeDTO();
@@ -26,6 +34,7 @@ public class EmployeeMapper {
         employeeDTO.setBranchCode(employee.getEmpBranch().getBranchCode());
         employeeDTO.setUsername(employee.getAccountEmp().getUsername());
         employeeDTO.setPassword(employee.getAccountEmp().getPassword());
+        employeeDTO.setStatus(String.valueOf(employee.getStatusEmp()));
         return employeeDTO;
     }
 
@@ -40,12 +49,14 @@ public class EmployeeMapper {
 
     public Employee empDtoToEntity(EmployeeDTO employeeDTO){
         Employee employee = new Employee();
+        employee.setEmployeeId(Long.valueOf(employeeDTO.getEmployeeId()));
         employee.setEmpCode(employeeDTO.getBranchCode());
         employee.setIdCard(employeeDTO.getEmpIdCard());
         employee.setName(employeeDTO.getEmpName());
         employee.setPhone(employeeDTO.getEmpPhone());
         employee.setEmail(employeeDTO.getEmail());
-        employee.setEmpBranch(branchService.getBranchByBranchCode(employeeDTO.getBranchCode()));
+        Branch branch = branchService.getBranchByBranchCode(employeeDTO.getBranchCode());
+        employee.setEmpBranch(branch);
 
         return employee;
     }

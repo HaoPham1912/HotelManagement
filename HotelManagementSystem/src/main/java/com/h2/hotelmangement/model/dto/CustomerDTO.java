@@ -10,6 +10,15 @@ public class CustomerDTO extends BaseDTO {
     private String customerType;
     private String userName;
     private String passWord;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getPassWord() {
         return passWord;

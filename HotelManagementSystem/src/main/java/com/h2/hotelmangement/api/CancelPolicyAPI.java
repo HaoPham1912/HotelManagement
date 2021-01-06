@@ -7,6 +7,7 @@ import com.h2.hotelmangement.service.CancelPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,14 +25,22 @@ public class CancelPolicyAPI {
     public CancelPolicyMapper cancelPolicyMapper = new CancelPolicyMapper();
 
     @GetMapping("/policy")
-    public ResponseEntity<List<CancelPolicyDTO>> getAllPolicy(){
+    public ResponseEntity<List<CancelPolicyDTO>> getAllPolicy() {
         List<CancelPolicy> cancelPolicyList = cancelPolicyService.findAll();
         List<CancelPolicyDTO> cancelPolicyDTOList = cancelPolicyMapper.convertListEntityToDto(cancelPolicyList);
         return new ResponseEntity<>(cancelPolicyDTOList, HttpStatus.OK);
     }
 
+    @GetMapping("/policy/{id}")
+    public ResponseEntity<CancelPolicyDTO> getCancelPolicyById(@PathVariable String id) {
+        int cancelId = Integer.parseInt(id);
+        CancelPolicy cancelPolicy = cancelPolicyService.getById(cancelId);
+        CancelPolicyDTO cancelPolicyDTO = cancelPolicyMapper.convertEntittyToDto(cancelPolicy);
+        return new ResponseEntity<>(cancelPolicyDTO, HttpStatus.OK);
+    }
+
     @PostMapping("/policy")
-    public ResponseEntity<HttpStatus> addCancelPolicy(@RequestBody CancelPolicyDTO cancelPolicyDTO){
+    public ResponseEntity<HttpStatus> addCancelPolicy(@RequestBody CancelPolicyDTO cancelPolicyDTO) {
         System.out.println(cancelPolicyDTO.toString());
         CancelPolicy cancelPolicy = cancelPolicyMapper.covertDtoToEntity(cancelPolicyDTO);
 
@@ -42,4 +51,20 @@ public class CancelPolicyAPI {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PutMapping("/policy/{id}")
+    public ResponseEntity<HttpStatus> updateCancelPolicy(@PathVariable String id, @RequestBody CancelPolicyDTO cancelPolicyDTO) {
+        int policyId = Integer.parseInt(id);
+        CancelPolicy cancelPolicy = cancelPolicyService.getById(policyId);
+        if (cancelPolicy != null) {
+            cancelPolicy.setCode(cancelPolicyDTO.getPolicyCode());
+            cancelPolicy.setTitle(cancelPolicyDTO.getTitle());
+            cancelPolicy.setDetail(cancelPolicyDTO.getDetail());
+            cancelPolicy.setDayLong(Integer.parseInt(cancelPolicyDTO.getRangeDate()));
+
+            cancelPolicyService.save(cancelPolicy);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
 }

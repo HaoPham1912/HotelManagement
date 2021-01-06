@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,12 +46,25 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void delete(Long id) {
-        employeeRepository.deleteById(id);
+    public void delete(Long id) throws Exception {
+        Employee employee = employeeRepository.getOne(id);
+        if(employee != null){
+            Boolean empStatus = employee.getStatusEmp();
+            employee.setStatusEmp(!empStatus);
+            employeeRepository.save(employee);
+        }else{
+            throw new Exception("Can not find employee with id "+ id);
+        }
+
     }
 
     @Override
     public Employee findEmpByAccountId(Long id) {
         return employeeRepository.getEmployeeByAccountEmp_AccountId(id);
+    }
+
+    @Override
+    public Employee getEmployeeByUsername(String username) {
+        return employeeRepository.getEmployeeByAccountEmp_Username(username);
     }
 }

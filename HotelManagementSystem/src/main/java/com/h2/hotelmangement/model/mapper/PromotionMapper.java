@@ -18,4 +18,15 @@ public class PromotionMapper {
 
         return promotion;
     }
+
+    public PromotionDTO converEntityToDto(Promotion promotion){
+        PromotionDTO promotionDTO = new PromotionDTO();
+        promotionDTO.setPromoId(String.valueOf(promotion.getPromoId()));
+        promotionDTO.setPromoCode(promotion.getPromotionCode());
+        promotionDTO.setCustomerType(promotion.getCusType());
+        promotionDTO.setPercent(String.valueOf(promotion.getPercent()));
+        promotionDTO.setStartDate(promotion.getStartDate());
+        promotionDTO.setEndDate(promotion.getEndDate());
+        return promotionDTO;
+    }
 }

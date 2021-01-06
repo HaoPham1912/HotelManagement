@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BedServiceImpl implements BedService {
@@ -31,8 +31,16 @@ public class BedServiceImpl implements BedService {
     }
 
     @Override
-    public void delete(Long id) {
-        bedRepository.deleteById(id);
+    public void delete(Long id) throws Exception {
+        Bed bed = bedRepository.getOne(id);
+        if (bed!=null){
+            Boolean bedStatus = bed.getStatus();
+            bed.setStatus(!bedStatus);
+            bedRepository.save(bed);
+        }else{
+            throw new Exception("Can not find bed with id= " +id);
+        }
+
     }
 
     @Override
@@ -41,5 +49,16 @@ public class BedServiceImpl implements BedService {
        Page<Bed> bedPage = bedRepository.findAllByNameContains(name, pageable);
        return bedPage;
     }
+
+    @Override
+    public List<Bed> getAllBedList() {
+        return bedRepository.findAll();
+    }
+
+    @Override
+    public Bed getBedById(Long id) {
+        return bedRepository.getOne(id);
+    }
+
 
 }

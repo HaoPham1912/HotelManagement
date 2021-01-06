@@ -32,11 +32,11 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter  {
                 // make sure we use stateless session, session won't be used to  store user's state.
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 // all other requests need to be authenticated
-                .authorizeRequests().antMatchers("/login","/login/register","/customerUnauthenticated/**","/api/**").permitAll()
+                .authorizeRequests().antMatchers("/login","/login/register","/customerUnauthenticated/**").permitAll()
                                     .anyRequest().authenticated();
 
 
-        // Add a filter to validate the tokens with every request
+        // Add a filter to validate the tokens with every requests "/api/**"
         httpSecurity.addFilterBefore(validateTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 

@@ -19,6 +19,7 @@ public class BranchDTO {
     private Set<String> empCodeSet = new HashSet<>();
     private List<String> thumbnailsBranchSet = new ArrayList<>();
     private List<EmployeeDTO> employeeDTOSet = new ArrayList<>();
+    private List<RoomDTO> roomDTOList = new ArrayList<>();
 
     public String getMainImage() {
         return mainImage;
@@ -114,6 +115,14 @@ public class BranchDTO {
 
     public void setThumbnailsBranchSet(List<String> thumbnailsBranchSet) {
         this.thumbnailsBranchSet = thumbnailsBranchSet;
+    }
+
+    public List<RoomDTO> getRoomDTOList() {
+        return roomDTOList;
+    }
+
+    public void setRoomDTOList(List<RoomDTO> roomDTOList) {
+        this.roomDTOList = roomDTOList;
     }
 
     @Override

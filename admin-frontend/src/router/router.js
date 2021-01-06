@@ -1,7 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from "../store";
 
 import Dashboard from '../components/views/Dashboard.vue';
+import EmployeeDashboard from '../components/views/EmployeeDashboard.vue';
+import HomePage from '../components/views/HomePage.vue';
+
 import CustomerTable from '../components/table/CustomerTable.vue';
 import AccountTable from '../components/table/AccountTable.vue';
 import EmployeeTable from '../components/table/EmployeeTable.vue';
@@ -18,7 +22,7 @@ import BillTable from '../components/table/BillTable.vue';
 import Login from '../components/form/Login.vue';
 import Register from '../components/form/Register.vue';
 import AddNewEmployee from '../components/form/AddEmployee.vue';
-import AddCustomer from '../components/form/AddCustomer.vue';
+
 import AddPolicy from '../components/form/AddPolicy.vue';
 import AddRoom from '../components/form/AddRoom.vue';
 import AddBed from '../components/form/AddBed.vue';
@@ -29,167 +33,273 @@ import AddBranch from '../components/form/AddBranch.vue';
 import EditService from '../components/form/EditService.vue';
 import EditCustomer from '../components/form/EditCustomer.vue';
 import EditProfie from '../components/form/EditProfie.vue';
+import EditEmployee from '../components/form/EditEmployee.vue';
+import EditBranch from '../components/form/EditBranch.vue';
+import EditRoom from '../components/form/EditRoom.vue';
 
 import DetailBranch from '../components/page/DetailBranch.vue';
 import DetailBill from '../components/form/DetailBill.vue';
+import DetailRoom from '../components/page/DetailRoom.vue';
 
 Vue.use(Router);
+// const ifNotAuthenticated = (to, from, next) => {
+//   if (!store.getters.isAuthenticated) {
+//     next();
+//     return;
+//   }
+//   next("/");
+// };
 
-export default new Router({
+// const ifAuthenticated = (to, from, next) => {
+//   if (store.getters.isAuthenticated) {
+//     next();
+//     return;
+//   }
+//   next("/login");
+// };
+const router = new Router({
     mode: 'history',
     routes: [
         {
-        path:'/', component:Dashboard,
-        children:[    {
-          path: '/account',
+          path:"*",
+          redirect:"/home",
+          
+        },
+        {
+          path:"/home",
+          component: HomePage,
+          //beforeEnter: ifAuthenticated,
+          meta: { authorize: '' } 
+        },
+        {
+        path:'/admin', component:Dashboard,
+        name:'AdminDashboard',
+        meta: { authorize: 'ADMIN' } ,
+        children:[    
+          {
+          path: '/admin/account',
           name: 'Account',
           component: AccountTable,
           props: { page: 1 },
         },
         {
-          path: '/customer',
+          path: '/admin/customer',
           name: 'Customer',
           component: CustomerTable,
           props: { page: 2 },
         },
         {
-          path: '/employee',
+          path: '/admin/employee',
           name: 'Employee',
           component: EmployeeTable,
           props: { page: 3 },
         },
         {
-          path: '/booking',
+          path: '/admin/booking',
           name: 'Booking',
           component: BookingTable,
           props: { page: 4 },
         },
         {
-          path: '/bill',
+          path: '/admin/bill',
           name: 'BillTable',
           component: BillTable,
           props: { page: 5 },
         },
         
         {
-          path: '/room',
+          path: '/admin/room',
           name: 'Room',
           component: RoomTable,
           props: { page: 6 },
         },
         {
-          path: '/policy',
+          path: '/admin/policy',
           name: 'PolicyTable',
           component: PolicyTable,
           props: { page:  7},
         },
         {
-          path: '/bed',
+          path: '/admin/bed',
           name: 'Bed',
           component: BedTable,
           props: { page: 8 },
         },
         {
-          path: '/services',
+          path: '/admin/services',
           name: 'Services',
           component: ServicesTable,
           props: { page: 9 },
         },
         {
-          path: '/branch',
+          path: '/admin/branch',
           name: 'Branch',
           component: BranchTable,
           props: { page: 10 },
         },
         {
-          path: '/promotion',
+          path: '/admin/promotion',
           name: 'Promotion',
           component: PromotionTable,
           props: { page: 11 },
         },
         {
-          path: '/employee/add',
+          path: '/admin/add-employee',
           name: 'Add New Emp',
           component: AddNewEmployee,
         },
         {
-          path: '/customer/add',
-          name: 'Add New Customer',
-          component: AddCustomer,
-        },
-        {
-          path: '/policy/add',
+          path: '/admin/add-policy',
           name: 'Add New Policy',
           component: AddPolicy,
         },
         {
-          path: '/room/add',
-          name: 'Add New Room',
+          path: '/admin/add-room',
+          name: 'AddNewRoom',
           component: AddRoom,
         },
         {
-          path: '/bed/add',
+          path: '/admin/add-bed',
           name: 'Add New Bed',
           component: AddBed,
         },
         {
-          path: '/service/add',
+          path: '/admin/add-service',
           name: 'Add New Service',
           component: AddService,
         },
         {
-          path: '/promo/add',
+          path: '/admin/add-promo',
           name: 'Add New Promotion',
           component: AddPromo,
         },
         {
-          path: '/branch/add',
+          path: '/admin/add-branch',
           name: 'Add New Branch',
           component: AddBranch,
         },
         {
-          path: '/branch/:branchCode',
+          path: '/admin/branch/:id',
+          name: 'Update Branch',
+          component: EditBranch,
+        },
+        {
+          path: '/admin/room/:id',
+          name: 'EditRoom',
+          component: EditRoom,
+        },
+        {
+          path: '/admin/detail-branch/:branchCode',
           name: 'Branch Detail',
           component: DetailBranch,
         },
         {
-          path: '/services/:code',
+          path: '/admin/detail-room/:roomCode',
+          name: 'Room Detail',
+          component: DetailRoom,
+        },
+        {
+          path: '/admin/services/:code',
           name: 'Update Service',
           component: EditService,
           props: true,
         },
         {
-          path: '/customer/:id',
+          path: '/admin/customer/:id',
           name: 'Update Customer',
           component: EditCustomer,
           props: true,
         },
         {
-          path: '/detailBill',
+          path: '/admin/employee/:id',
+          name: 'Update Employee',
+          component: EditEmployee,
+          props: true,
+        },
+        {
+          path: '/admin/detailBill/:id',
           name: 'DetailBill',
           component: DetailBill,
           props: true,
         },
         {
-          path: '/editProfie',
+          path: '/admin/editProfie',
           name: 'editProfie',
           component: EditProfie,
           props: true,
         },
-        { path: '/reloadService', redirect: '/services' },
-        { path: '/reloadAccount', redirect: '/account' },
-        { path: '/reloadPolicy', redirect: '/policy' }
+        { path: '/reloadService', redirect: '/admin/services' },
+        { path: '/reloadAccount', redirect: '/admin/account' },
+        { path: '/reloadPolicy', redirect: '/admin/policy' },
+        { path: '/reloadEmployee', redirect: '/admin/employee' },
+        { path: '/reloadPromo', redirect: '/admin/promotion' },
+        { path: '/reloadBranch', redirect: '/admin/branch' },
+        { path: '/reloadRoom', redirect: '/admin/room' }
       ]
       },
         {
           path: '/login',
           name: 'Login',
           component: Login,
+         
         },
         {
           path: '/register',
           name: 'Register',
           component: Register,
         },
+        {
+          path:'/emp',
+          name: 'EmployeeDashboard',
+          component:EmployeeDashboard,
+          meta: { authorize: 'EMPLOYEE'} ,
+          children:[
+              {
+                path: '/emp/editProfie',
+                name: 'editProfie',
+                component: EditProfie,
+                props: true,
+              },
+              {
+                path: '/emp/detailBill/:id',
+                name: 'DetailBill',
+                component: DetailBill,
+                props: true,
+              },
+              {
+                path: '/emp/booking',
+                name: 'Booking',
+                component: BookingTable,
+                props: { page: 4 },
+              },
+              {
+                path: '/emp/bill',
+                name: 'BillTable',
+                component: BillTable,
+                props: { page: 5 },
+              },
+          ]
+        }
       ]
 });
+router.beforeEach((to, from, next) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const { authorize } = to.meta;
+  const currentUser = store.getters.currentRole;
+
+  if (authorize) {
+      if (!currentUser) {
+          // not logged in so redirect to login page with the return url
+          return next({ path: '/login'});
+      }
+
+      // check if route is restricted by role
+      if (authorize.length && !currentUser.includes(authorize)) {
+          alert("You have not permission to access this page!!!!");
+          // role not authorised so redirect to home page
+          return next({ path: '/home' });
+      }
+  }
+  next();
+})
+export default router;

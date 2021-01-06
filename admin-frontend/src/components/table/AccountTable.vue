@@ -5,10 +5,16 @@
       <mdb-col md="10">
         <mdb-card class="mb-4">
           <div class="row">
-            <div class="col-md-9"></div>
+            <div class="col-md-6"></div>
+            <div class="col-md-3">
+              <mdb-btn class="btn-showall" color="info" @click="showAll"
+                >Show All</mdb-btn
+              >
+            </div>
             <div class="col-md-3">
               <div class="input-group md-form form-sm form-2 pl-0">
                 <input
+                  id="usernameSearch"
                   class="form-control my-0 py-1 lime-border"
                   type="text"
                   placeholder="Search by Username"
@@ -62,11 +68,7 @@
                         @click="bindingDataToModal(data.accountId)"
                       >
                         <i class="fas fa-pencil-alt"></i>
-                        <a
-                          class="btn-link-edit action-button"
-                          :href="'account/' + data.accountId"
-                        >
-                        </a>
+                        <a class="btn-link-edit action-button"> </a>
                       </mdb-btn>
                     </div>
                     <div>
@@ -76,10 +78,11 @@
                           'btn-sm btn-success': data.status === 'false',
                         }"
                         color="data.status : danger ? success"
-                        @click="deleteAccount(data.accountId)"
+                        @click="ShowModalDisable(data.accountId)"
                         v-tooltip.top-center="{
                           content: setTextTooltip(data.status),
                         }"
+                        disable
                       >
                         <a :href="'account/' + data.accountId"> </a>
                         <i
@@ -104,7 +107,7 @@
                     <div class="form-group">
                       <input
                         type="text"
-                        id="username"
+                        id="accountId"
                         class="form-control form-control-md"
                         v-model="currentAccount.accountId"
                         hidden
@@ -137,6 +140,28 @@
                     color="primary"
                     @click="updateAcount(currentAccount.accountId)"
                     >Save changes</mdb-btn
+                  >
+                </mdb-modal-footer>
+              </mdb-modal>
+            </div>
+            <div>
+              <mdb-modal
+                centered
+                :show="modalDelete"
+                @close="modalDelete = false"
+              >
+                <mdb-modal-header>
+                  <mdb-modal-title>ARE YOU SURE?</mdb-modal-title>
+                </mdb-modal-header>
+                <mdb-modal-body>PLEASE CHECK BEFORE ACTION</mdb-modal-body>
+                <mdb-modal-footer>
+                  <mdb-btn color="danger" @click.native="modalDelete = false"
+                    >Close</mdb-btn
+                  >
+                  <mdb-btn
+                    color="primary"
+                    @click="deleteAccount(currentAccount.accountId)"
+                    >OK</mdb-btn
                   >
                 </mdb-modal-footer>
               </mdb-modal>
@@ -195,6 +220,7 @@ export default {
 
       pageSizes: [3, 6, 9],
       modal: false,
+      modalDelete: false,
     };
   },
   components: {
@@ -226,6 +252,18 @@ export default {
       }
 
       return params;
+    },
+
+    ShowModalDisable(id) {
+      console.log(id);
+      this.modalDelete = true;
+      AccountService.getById(id)
+        .then((response) => {
+          this.currentAccount = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
 
     bindingDataToModal(id) {
@@ -263,6 +301,11 @@ export default {
         });
     },
 
+    showAll() {
+      this.usernameSearch = '';
+      this.retrieveAccount();
+    },
+
     retrieveAvailAccount() {
       AccountService.getAll()
         .then((response) => {
@@ -275,10 +318,17 @@ export default {
         })
         .catch((e) => {
           console.log(e);
+          if (e.response.status === 401) {
+            // if you ever get an unauthorized, logout the user
+            alert('Username password is incorrect');
+            // you can also redirect to /login if needed !
+          }
+          console.log('e cmn ror');
         });
     },
 
     deleteAccount(id) {
+      console.log(id);
       AccountService.disableAccount(id)
         .then(() => {
           AccountService.getAll().then((response) => {
@@ -291,6 +341,7 @@ export default {
             } else {
               this.messageTooltip = 'Enable this account';
             }
+            this.modalDelete = false;
           });
         })
         .catch((e) => {
@@ -308,10 +359,12 @@ export default {
       AccountService.updateAccount(id, data)
         .then(() => {
           this.modal = false;
+          alert('Update Success!');
           this.retrieveAccount();
         })
         .catch((e) => {
           console.log(e);
+          alert('Update Failed!');
         });
     },
 
@@ -346,5 +399,11 @@ export default {
 <style>
 .action {
   display: flex;
+}
+.btn-showall {
+  float: right;
+  position: relative;
+  margin-top: 25px;
+  color: white;
 }
 </style>

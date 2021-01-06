@@ -17,7 +17,7 @@ public interface CustomerService {
 
     void save(Customer customer);
 
-    void deleteCustomer(Long id);
+    void deleteCustomer(Long id) throws Exception;
 
     Customer getCustomerById(Long id);
 

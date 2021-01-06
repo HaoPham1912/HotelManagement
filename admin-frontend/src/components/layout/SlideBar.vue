@@ -5,7 +5,7 @@
       ><img alt="" class="img" src="../../assets/h2logo.png"
     /></a>
     <mdb-list-group class="list-group-flush">
-      <router-link to="/account" @click.native="activeItem = 1">
+      <router-link to="/admin/account" @click.native="activeItem = 1">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 1 && 'active'"
@@ -15,7 +15,7 @@
         >
       </router-link>
       <br />
-      <router-link to="/customer" @click.native="activeItem = 2">
+      <router-link to="/admin/customer" @click.native="activeItem = 2">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 2 && 'active'"
@@ -25,7 +25,7 @@
         >
       </router-link>
       <br />
-      <router-link to="/employee" @click.native="activeItem = 3">
+      <router-link to="/admin/employee" @click.native="activeItem = 3">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 3 && 'active'"
@@ -34,7 +34,7 @@
         >
       </router-link>
       <br />
-      <router-link to="/booking" @click.native="activeItem = 4">
+      <router-link to="/admin/booking" @click.native="activeItem = 4">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 4 && 'active'"
@@ -43,7 +43,7 @@
         >
       </router-link>
       <br />
-      <router-link to="/branch" @click.native="activeItem = 5">
+      <router-link to="/admin/branch" @click.native="activeItem = 5">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 5 && 'active'"
@@ -52,7 +52,7 @@
         >
       </router-link>
       <br />
-      <router-link to="/room" @click.native="activeItem = 6">
+      <router-link to="/admin/room" @click.native="activeItem = 6">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 6 && 'active'"
@@ -61,7 +61,7 @@
         >
       </router-link>
       <br />
-      <router-link to="/policy" @click.native="activeItem = 7">
+      <router-link to="/admin/policy" @click.native="activeItem = 7">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 7 && 'active'"
@@ -70,7 +70,7 @@
         >
       </router-link>
       <br />
-      <router-link to="/bed" @click.native="activeItem = 8">
+      <router-link to="/admin/bed" @click.native="activeItem = 8">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 8 && 'active'"
@@ -78,7 +78,7 @@
         >
       </router-link>
       <br />
-      <router-link to="/services" @click.native="activeItem = 9">
+      <router-link to="/admin/services" @click.native="activeItem = 9">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 9 && 'active'"
@@ -87,7 +87,7 @@
         >
       </router-link>
       <br />
-      <router-link to="/promotion" @click.native="activeItem = 10">
+      <router-link to="/admin/promotion" @click.native="activeItem = 10">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 10 && 'active'"
@@ -96,7 +96,7 @@
         >
       </router-link>
       <br />
-      <router-link to="/bill" @click.native="activeItem = 11">
+      <router-link to="/admin/bill" @click.native="activeItem = 11">
         <mdb-list-group-item
           :action="true"
           :class="activeItem === 11 && 'active'"

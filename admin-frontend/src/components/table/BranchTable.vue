@@ -5,10 +5,15 @@
       <mdb-col md="10">
         <mdb-card class="mb-4">
           <div class="row">
-            <div class="col-md-9">
-              <a href="/branch/add" type="button" class="btn btn-success">
+            <div class="col-md-6">
+              <a href="/admin/add-branch" type="button" class="btn btn-success">
                 Add new Branch
               </a>
+            </div>
+            <div class="col-md-3">
+              <mdb-btn class="btn-showall" color="info" @click="showAll"
+                >Show All</mdb-btn
+              >
             </div>
             <div class="col-md-3">
               <div class="input-group md-form form-sm form-2 pl-0">
@@ -45,7 +50,7 @@
                   <th>Address</th>
                   <th>Description</th>
                   <th>Branch Name</th>
-                  <th>Status</th>
+                  <th>Branch Image</th>
                   <th></th>
                 </tr>
               </thead>
@@ -53,7 +58,7 @@
                 <tr v-for="(data, index) in branchs" :key="index">
                   <td>{{ data.branchId }}</td>
                   <td>
-                    <a :href="'branch/' + data.branchCode">{{
+                    <a :href="'detail-branch/' + data.branchCode">{{
                       data.branchCode
                     }}</a>
                   </td>
@@ -64,28 +69,33 @@
                     <p>{{ data.description }}</p>
                   </td>
                   <td>{{ data.branchName }}</td>
-                  <td>{{ data.status }}</td>
+                  <td>
+                    <dir class="img-table">
+                      <img :src="data.mainImage" alt="" />
+                    </dir>
+                  </td>
                   <td class="action">
                     <div>
-                      <button class="btn-sm btn-warning">
-                        <a
-                          class="btn-link-edit action-button"
-                          @click="edit(scope.row)"
-                        >
+                      <button
+                        class="btn-sm btn-warning"
+                        @click="editBranch(data.branchId)"
+                      >
+                        <a class="btn-link-edit action-button">
                           <i class="fas fa-pencil-alt"></i>
                         </a>
+                        EDIT BRANCH
                       </button>
                     </div>
-                    <div>
-                      <button class="btn-sm btn-danger">
-                        <a
-                          class="btn-link-delete action-button"
-                          @click="remove(scope.row)"
-                        >
+                    <!-- <div>
+                      <button
+                        class="btn-sm btn-danger"
+                        @click="disableBranch(data.branchId)"
+                      >
+                        <a class="btn-link-delete action-button">
                           <i class="fas fa-trash"></i>
                         </a>
                       </button>
-                    </div>
+                    </div> -->
                   </td>
                 </tr>
               </tbody>
@@ -110,7 +120,15 @@
   </section>
 </template>
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbTbl, mdbIcon } from 'mdbvue';
+import {
+  mdbRow,
+  mdbCol,
+  mdbCard,
+  mdbCardBody,
+  mdbTbl,
+  mdbIcon,
+  mdbBtn,
+} from 'mdbvue';
 
 import BranchService from '../../services/BranchService';
 export default {
@@ -135,6 +153,7 @@ export default {
     mdbCardBody,
     mdbTbl,
     mdbIcon,
+    mdbBtn,
   },
   methods: {
     getRequestParams(branchCode, page, pageSize) {
@@ -169,6 +188,19 @@ export default {
           console.log(e);
         });
     },
+
+    showAll() {
+      this.branchCode = '';
+      this.retrieveBranch();
+    },
+
+    disableBranch(id) {
+      console.log(id);
+
+      BranchService.disableBranch(id).then((response) => {
+        console.log(response.data);
+      });
+    },
     handlePageChange(value) {
       this.page = value;
       this.retrieveBranch();
@@ -178,6 +210,11 @@ export default {
       this.pageSize = event.target.value;
       this.page = 1;
       this.retrieveBranch();
+    },
+
+    editBranch(id) {
+      console.log(`id is ${id}`);
+      this.$router.push(`branch/${id}`);
     },
 
     handelSearch() {
@@ -206,15 +243,17 @@ a {
 
 .description {
   overflow-wrap: break-word;
-}
-
-.description {
-  word-wrap: break-word;
   width: 300px;
 }
 
 .address {
   word-wrap: break-word;
+  width: 100px;
+}
+
+img {
   width: 200px;
+  height: 120px;
+  text-align: center;
 }
 </style>

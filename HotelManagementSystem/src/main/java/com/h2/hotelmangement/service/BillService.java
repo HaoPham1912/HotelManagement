@@ -1,6 +1,7 @@
 package com.h2.hotelmangement.service;
 
 import com.h2.hotelmangement.entity.Bill;
+import com.h2.hotelmangement.entity.Customer;
 import com.h2.hotelmangement.model.dto.BillDTO;
 import org.springframework.data.domain.Page;
 
@@ -18,4 +19,10 @@ public interface BillService {
     Page<Bill> findPageBillByCusCode(String customerCode, int pageNo, int pageSize);
 
     Optional<Set<BillDTO>> findBillByCustomer(Long CustomerId);
+
+    Customer getCustomerByBillId(Long id) throws Exception;
+
+    void deleteBillById(Long id);
+
+    Bill getBillByBillId(Long id);
 }

@@ -59,4 +59,16 @@ public class AccountDTO {
     public void setRoleName(Set<String> roleName) {
         this.roleName = roleName;
     }
+
+    @Override
+    public String toString() {
+        return "AccountDTO{" +
+                "accountId=" + accountId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", status='" + status + '\'' +
+                ", roleSet=" + roleSet +
+                ", roleName=" + roleName +
+                '}';
+    }
 }

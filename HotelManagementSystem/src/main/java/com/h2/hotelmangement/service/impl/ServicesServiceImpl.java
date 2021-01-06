@@ -4,12 +4,12 @@ import com.h2.hotelmangement.common.util.ModelMapperUtil;
 import com.h2.hotelmangement.entity.Services;
 import com.h2.hotelmangement.model.dto.ServicesDTO;
 import com.h2.hotelmangement.repository.ServiceRepository;
-import com.h2.hotelmangement.service.ServicesService;
+import com.h2.hotelmangement.service.ServiceHotel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
+
 import org.springframework.stereotype.Service;
 
 
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class ServicesServiceImpl implements ServicesService {
+public class ServicesServiceImpl implements ServiceHotel {
 
     @Autowired
     private ServiceRepository serviceRepository;
@@ -67,6 +67,11 @@ public class ServicesServiceImpl implements ServicesService {
     public Optional<Set<ServicesDTO>> findServiceByRoom(Long roomId) {
         Optional<Set<Services>> listServices = serviceRepository.findByRooms(roomId);
         return Optional.ofNullable(ModelMapperUtil.mapAllToSet(listServices.get(),ServicesDTO.class));
+    }
+
+    @Override
+    public Services getServicesById(Long id) {
+        return serviceRepository.getOne(id);
     }
 }
 

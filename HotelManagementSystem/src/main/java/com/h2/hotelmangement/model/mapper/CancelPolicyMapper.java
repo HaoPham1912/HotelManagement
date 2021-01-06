@@ -10,10 +10,11 @@ public class CancelPolicyMapper {
 
     public CancelPolicyDTO convertEntittyToDto(CancelPolicy cancelPolicy){
         CancelPolicyDTO cancelPolicyDTO = new CancelPolicyDTO();
-        cancelPolicyDTO.setPolicyId(cancelPolicy.getId());
+        cancelPolicyDTO.setPolicyId(String.valueOf(cancelPolicy.getId()));
         cancelPolicyDTO.setPolicyCode(cancelPolicy.getCode());
         cancelPolicyDTO.setTitle(cancelPolicy.getTitle());
         cancelPolicyDTO.setDetail(cancelPolicy.getDetail());
+        cancelPolicyDTO.setRangeDate(String.valueOf(cancelPolicy.getDayLong()));
         return cancelPolicyDTO;
     }
 
@@ -29,7 +30,7 @@ public class CancelPolicyMapper {
 
     public CancelPolicy covertDtoToEntity(CancelPolicyDTO cancelPolicyDTO){
         CancelPolicy cancelPolicy = new CancelPolicy();
-        cancelPolicy.setId(cancelPolicyDTO.getPolicyId());
+        cancelPolicy.setId(Integer.parseInt(cancelPolicyDTO.getPolicyId()));
         cancelPolicy.setCode(cancelPolicyDTO.getPolicyCode());
         cancelPolicy.setTitle(cancelPolicyDTO.getTitle());
         cancelPolicy.setDetail(cancelPolicyDTO.getDetail());

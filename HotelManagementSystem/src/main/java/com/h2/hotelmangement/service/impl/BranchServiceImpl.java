@@ -79,4 +79,9 @@ public class BranchServiceImpl implements BranchService {
         return branchRepository.findAllByBranchCodeContains(name, pageable);
 
     }
+
+    @Override
+    public Branch getBranchById(Long id) {
+        return branchRepository.getOne(id);
+    }
 }

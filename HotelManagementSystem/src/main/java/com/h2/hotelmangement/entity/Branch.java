@@ -48,6 +48,9 @@ public class Branch {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "roomBranch")
     private Set<Room> roomSet;
 
+    @Column(name = "mainimage")
+    private String mainImage;
+
     @Column(name = "thumbnail")
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "branchimages", joinColumns = @JoinColumn(name = "branchid"))
@@ -141,6 +144,13 @@ public class Branch {
         this.description = description;
     }
 
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
+    }
 
     @Override
     public String toString() {

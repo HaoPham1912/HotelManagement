@@ -8,6 +8,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BedRepository extends PagingAndSortingRepository<Bed, Long> {
+public interface BedRepository extends JpaRepository<Bed, Long> {
     Page<Bed> findAllByNameContains(String name, Pageable pageable);
 }

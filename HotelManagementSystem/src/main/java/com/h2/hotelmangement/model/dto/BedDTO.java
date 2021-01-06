@@ -11,6 +11,15 @@ public class BedDTO {
     private String description;
     private String branchCode;
     private String roomCode;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     private Set<String> roomCodeSet = new HashSet<>();
 
