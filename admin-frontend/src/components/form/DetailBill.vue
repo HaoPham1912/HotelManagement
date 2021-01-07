@@ -83,12 +83,17 @@
         </div>
       </div>
     </div>
-    <button style="float: right;" class="btn btn-primary">PRINT</button>
+    <canvas id="canvas" width="500" height="700"></canvas>
+    <button style="float: right;" class="btn btn-primary" @click="download">
+      PRINT
+    </button>
   </div>
 </template>
 
 <script>
 import BillService from '../../services/BillService';
+import jspdf from 'jspdf';
+// /import html2canvas from 'html2canvas';
 
 export default {
   data() {
@@ -121,6 +126,33 @@ export default {
       var yyyy = today.getFullYear();
 
       this.printDate = mm + '/' + dd + '/' + yyyy;
+    },
+
+    download() {
+      var pdf = new jspdf();
+      var index = 10;
+      for (let i = 0; i < this.bookingList.length; i++) {
+        console.log(this.bookingList[i].roomId);
+        pdf.text(`RoomId ${this.bookingList[i].roomId}`, 10, (index += 10));
+        pdf.text(
+          `Booking Date ${this.bookingList[i].bookDate}`,
+          10,
+          (index += 10)
+        );
+        pdf.text(
+          `Checkin Date ${this.bookingList[i].checkinDate}`,
+          10,
+          (index += 10)
+        );
+        pdf.text(
+          `Checkout Date ${this.bookingList[i].checkoutDate}`,
+          10,
+          (index += 10)
+        );
+      }
+      pdf.text(`Total Price ${this.totalPrice}`, 10, (index += 10));
+
+      pdf.save('test.pdf');
     },
   },
 

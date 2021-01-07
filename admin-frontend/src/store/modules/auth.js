@@ -6,7 +6,7 @@ import {
   } from "../actions/auth";
 
   import AuthService from '../../services/AuthService';
-import AccountService from "../../services/AccountService";
+  import AccountService from "../../services/AccountService";
   const state = {
     token: localStorage.getItem("user-token") || "",
     status: "",
@@ -28,13 +28,14 @@ import AccountService from "../../services/AccountService";
         commit(AUTH_REQUEST);
         AuthService.login(user)
           .then(resp => {
-            console.log(resp.data);
+            //console.log(resp.data);
             localStorage.setItem("user-token", resp.data.data.accessToken);
             
             let username = resp.data.data.user;
             localStorage.setItem("username", username);
+
             AccountService.getCurrentAccount(username).then((response) =>{
-              console.log(response.data.roleName);
+              //console.log(response.data.roleName);
               localStorage.setItem("currentRole",response.data.roleName.toString());
             })
             // Here set the header of your ajax library to the token value.

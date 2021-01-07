@@ -16,14 +16,14 @@
         </mdb-navbar-nav>
         <span class="navbar-text">
           <mdb-navbar-nav>
-            <mdb-nav-item
-              anchorClass="white-text"
-              href="/login"
-              v-if="!isAuthenticate"
-              ><strong>SIGN IN</strong></mdb-nav-item
-            >
             <mdb-nav-item anchorClass="white-text"
               ><strong @click="logout">SIGN OUT</strong></mdb-nav-item
+            >
+            <mdb-nav-item anchorClass="white-text" v-if="!isAuthenticate"
+              ><strong>WELCOME</strong></mdb-nav-item
+            >
+            <mdb-nav-item anchorClass="white-text" v-else
+              ><strong>{{ `WELCOME ${username}` }}</strong></mdb-nav-item
             >
           </mdb-navbar-nav>
         </span>
@@ -54,12 +54,18 @@ import store from '../../store';
 export default {
   data() {
     return {
-      isAuthenticate: store.getters.isAuthenticated,
+      isAuthenticate: '',
+      username: '',
     };
   },
   methods: {
     logout: function() {
       this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'));
+    },
+
+    checkAuthenticate() {
+      this.isAuthenticate = store.getters.isAuthenticated;
+      this.username = store.getters.username;
     },
   },
   components: {
@@ -68,6 +74,9 @@ export default {
     mdbNavbarToggler,
     mdbNavbarNav,
     mdbNavItem,
+  },
+  mounted() {
+    this.checkAuthenticate();
   },
 };
 </script>

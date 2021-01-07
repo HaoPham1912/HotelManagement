@@ -243,7 +243,7 @@ const router = new Router({
         },
         {
           path: '/admin/detailBill/:id',
-          name: 'DetailBill',
+          name: 'AdminDetailBill',
           component: DetailBill,
           meta: { authorize: 'ADMIN' } ,
           props: true,
@@ -261,7 +261,8 @@ const router = new Router({
         { path: '/reloadEmployee', redirect: '/admin/employee' },
         { path: '/reloadPromo', redirect: '/admin/promotion' },
         { path: '/reloadBranch', redirect: '/admin/branch' },
-        { path: '/reloadRoom', redirect: '/admin/room' }
+        { path: '/reloadRoom', redirect: '/admin/room' },
+        { path: '/redirectHome', redirect: '/home' }
       ]
       },
         {
@@ -289,7 +290,7 @@ const router = new Router({
               },
               {
                 path: '/emp/detailBill/:id',
-                name: 'DetailBill',
+                name: 'EmpDetailBill',
                 component: DetailBill,
                 props: true,
               },

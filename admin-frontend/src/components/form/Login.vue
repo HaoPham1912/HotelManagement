@@ -79,7 +79,7 @@ export default {
         .dispatch(AUTH_REQUEST, { userName, pass })
         .then(() => {
           alert('Login success!!!');
-          this.$router.push('/home');
+          this.$router.push('/redirectHome');
         })
         .catch((error) => {
           if (error.response.status === 401) {

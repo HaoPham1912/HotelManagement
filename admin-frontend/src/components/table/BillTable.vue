@@ -16,7 +16,7 @@
                 <input
                   class="form-control my-0 py-1 lime-border"
                   type="text"
-                  placeholder="Search by Name"
+                  placeholder="Search by Customer Code"
                   aria-label="Search"
                   name="searchName"
                   v-model="searchName"
@@ -57,7 +57,8 @@
                   <td>{{ data.customerCode }}</td>
                   <td>{{ data.customerName }}</td>
                   <td>{{ data.createDate }}</td>
-                  <td>{{ data.promoCode }}</td>
+                  <td v-if="data.promoCode">{{ data.promoCode }}</td>
+                  <td v-else>No Promotion Code</td>
                   <td>{{ data.status }}</td>
                   <!-- <td>{{ data.totalPrice }}</td> -->
                   <td class="action">
