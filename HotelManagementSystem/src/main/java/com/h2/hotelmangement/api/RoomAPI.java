@@ -3,6 +3,7 @@ package com.h2.hotelmangement.api;
 
 import com.h2.hotelmangement.Request.BookRoomDTO;
 import com.h2.hotelmangement.entity.*;
+import com.h2.hotelmangement.model.dto.HandleListDTO;
 import com.h2.hotelmangement.model.dto.RoomDTO;
 import com.h2.hotelmangement.model.mapper.RoomMapper;
 import com.h2.hotelmangement.service.*;
@@ -148,7 +149,8 @@ public class RoomAPI {
     }
 
     @PutMapping("/room-service/{roomCode}")
-    public ResponseEntity<HttpStatus> addServiceToRoom(@PathVariable String roomCode, @RequestParam(value = "idServiceList") List<Long> idServiceList) {
+    public ResponseEntity<HttpStatus> addServiceToRoom(@PathVariable String roomCode, @RequestBody HandleListDTO handleListDTO) {
+        List<Long> idServiceList = handleListDTO.getLongListIdService();
         System.out.println("I''m here");
         Room room = roomService.getRoomByRoomCode(roomCode);
         Set<Services> servicesSet = new HashSet<>();
@@ -171,8 +173,8 @@ public class RoomAPI {
     }
 
     @PutMapping("/room-bed/{roomCode}")
-    public ResponseEntity<HttpStatus> addBedToRoom(@PathVariable String roomCode, @RequestParam(value ="idBedList" ) List<Long> idBedList) {
-
+    public ResponseEntity<HttpStatus> addBedToRoom(@PathVariable String roomCode, @RequestBody HandleListDTO handleListDTO) {
+        List<Long> idBedList = handleListDTO.getLongListIdBed();
         Set<Bed> bedSet = new HashSet<>();
         Room room = roomService.getRoomByRoomCode(roomCode);
         for (Long id :
@@ -192,12 +194,14 @@ public class RoomAPI {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
     }
 
-    @DeleteMapping("/room-bed/{roomCode}")
-    public ResponseEntity<HttpStatus> removeBedOutRoom(@PathVariable String roomCode, @RequestParam(value = "idBed") Long idBed) {
+    @DeleteMapping("/room-bed/{roomCode}/{bedId}")
+    public ResponseEntity<HttpStatus> removeBedOutRoom(@PathVariable String roomCode, @PathVariable Long bedId) {
+
         Room room = roomService.getRoomByRoomCode(roomCode);
-        Bed bed = bedService.getBedById(idBed);
+        Bed bed = bedService.getBedById(bedId);
         try {
             if (room != null) {
                 Set<Bed> bedSet = room.getBedSet();
@@ -213,7 +217,7 @@ public class RoomAPI {
                 bed.setRooms(roomSet);
                 bedService.save(bed);
             }else {
-                throw new Exception("Can not find bed by "+ idBed);
+                throw new Exception("Can not find bed by "+ bedId);
             }
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
@@ -221,10 +225,10 @@ public class RoomAPI {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    @DeleteMapping("/room-service/{roomCode}")
-    public ResponseEntity<HttpStatus> removeServiceOutRoom(@PathVariable String roomCode, @RequestParam("idService") Long idService) {
+    @DeleteMapping("/room-service/{roomCode}/{serviceId}")
+    public ResponseEntity<HttpStatus> removeServiceOutRoom(@PathVariable String roomCode,   @PathVariable Long serviceId) {
         Room room = roomService.getRoomByRoomCode(roomCode);
-        Services services = serviceHotelService.getServicesById(idService);
+        Services services = serviceHotelService.getServicesById(serviceId);
         try {
             if (room != null) {
                 Set<Services> servicesSet = room.getServices();
@@ -240,7 +244,7 @@ public class RoomAPI {
                 services.setRooms(roomSet);
                 serviceHotelService.save(services);
             }else {
-                throw new Exception("Can not find service by "+ idService);
+                throw new Exception("Can not find service by "+ serviceId);
             }
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {

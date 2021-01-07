@@ -37,7 +37,10 @@
                 </button>
               </div> -->
               <div>
-                <button class="btn-sm btn-danger" @click="remove(scope.row)">
+                <button
+                  class="btn-sm btn-danger"
+                  @click="openModalRemoveBed(data.bedId)"
+                >
                   <i class="fas fa-trash"></i>
                   REMOVE
                 </button>
@@ -51,7 +54,9 @@
       </table>
       <div class="title-table">
         <h3>Service In Room</h3>
-        <mdb-btn color="success">ADD SERVICE</mdb-btn>
+        <mdb-btn color="success" @click="openModalAddService"
+          >ADD SERVICE</mdb-btn
+        >
       </div>
       <table class="table">
         <thead>
@@ -73,7 +78,10 @@
             <td>{{ data.description }}</td>
             <td class="action">
               <div>
-                <button class="btn-sm btn-danger" @click="remove(scope.row)">
+                <button
+                  class="btn-sm btn-danger"
+                  @click="openModalRemoveService(data.serviceId)"
+                >
                   <i class="fas fa-trash"></i>
                   REMOVE
                 </button>
@@ -85,15 +93,17 @@
           <p style="color: red;"><strong>DO NOT HAVE ANY SERVICES</strong></p>
         </tbody>
       </table>
-      <div>
+      <div class="modal-bed">
         <mdb-modal centered :show="modal" @close="modal = false">
           <mdb-modal-header>
-            <mdb-modal-title>Update Account Information</mdb-modal-title>
+            <mdb-modal-title>ADD BED TO THIS ROOM</mdb-modal-title>
           </mdb-modal-header>
           <mdb-modal-body
             ><div>
               <p>
-                <strong><center>CHOOSE BED WANT TO ADD</center></strong>
+                <strong
+                  ><center>CHOOSE BED INFORMATION WANT TO ADD</center></strong
+                >
               </p>
               <div v-for="item in bedAvaiAdd" v-bind:key="item.bedId">
                 <input type="checkbox" :value="item.bedId" v-model="idBedAdd" />
@@ -109,6 +119,94 @@
             >
             <mdb-btn color="primary" @click="addBedToRoom(roomCode)"
               >Save changes</mdb-btn
+            >
+          </mdb-modal-footer>
+        </mdb-modal>
+      </div>
+      <div class="modal-remove-bed">
+        <mdb-modal centered :show="modalRemove" @close="modalRemove = false">
+          <mdb-modal-header>
+            <mdb-modal-title>ARE YOU SURE?</mdb-modal-title>
+          </mdb-modal-header>
+          <mdb-modal-body>
+            <p>
+              <strong
+                ><center>
+                  This action will remove this bed out of room
+                </center></strong
+              >
+            </p>
+          </mdb-modal-body>
+          <mdb-modal-footer>
+            <mdb-btn color="danger" @click.native="modalRemove = false"
+              >NO</mdb-btn
+            >
+            <mdb-btn color="primary" @click="removeBedOutRoom(roomCode)"
+              >YES</mdb-btn
+            >
+          </mdb-modal-footer>
+        </mdb-modal>
+      </div>
+      <div class="modal-service">
+        <mdb-modal centered :show="modalService" @close="modalService = false">
+          <mdb-modal-header>
+            <mdb-modal-title>ADD SERVICES TO THIS ROOM</mdb-modal-title>
+          </mdb-modal-header>
+          <mdb-modal-body
+            ><div>
+              <p>
+                <strong
+                  ><center>
+                    CHOOSE SERVICES INFORMATION WANT TO ADD
+                  </center></strong
+                >
+              </p>
+              <div v-for="item in serviceAvailAdd" v-bind:key="item.serviceId">
+                <input
+                  type="checkbox"
+                  :value="item.serviceId"
+                  v-model="idServiceAdd"
+                />
+                <label>{{ item }}</label>
+              </div>
+              <br />
+              <span>Checked names: {{ idServiceAdd }}</span>
+            </div>
+          </mdb-modal-body>
+          <mdb-modal-footer>
+            <mdb-btn color="danger" @click.native="modalService = false"
+              >Close</mdb-btn
+            >
+            <mdb-btn color="primary" @click="addServiceToRoom(roomCode)"
+              >Save changes</mdb-btn
+            >
+          </mdb-modal-footer>
+        </mdb-modal>
+      </div>
+      <div class="modal-remove-service">
+        <mdb-modal
+          centered
+          :show="modalRemoveService"
+          @close="modalRemoveService = false"
+        >
+          <mdb-modal-header>
+            <mdb-modal-title>ARE YOU SURE?</mdb-modal-title>
+          </mdb-modal-header>
+          <mdb-modal-body>
+            <p>
+              <strong
+                ><center>
+                  This action will remove this service out of room
+                </center></strong
+              >
+            </p>
+          </mdb-modal-body>
+          <mdb-modal-footer>
+            <mdb-btn color="danger" @click.native="modalRemoveService = false"
+              >NO</mdb-btn
+            >
+            <mdb-btn color="primary" @click="removeServiceOutRoom(roomCode)"
+              >YES</mdb-btn
             >
           </mdb-modal-footer>
         </mdb-modal>
@@ -150,12 +248,21 @@ export default {
         services: [],
       },
       modal: false,
+      modalRemove: false,
+
+      modalService: false,
+      modalRemoveService: false,
+
       bedlist: [],
-      servicesList: [],
       bedAvaiAdd: [],
-      serviceAvailAdd: [],
       idBedAdd: [],
+      listIdBed: [],
+      currentBedId: '',
+
+      servicesList: [],
+      serviceAvailAdd: [],
       idServiceAdd: [],
+      currentServiceId: '',
     };
   },
   methods: {
@@ -211,22 +318,94 @@ export default {
       console.log('aaaaaaaaaaaaaaaaa');
       console.log(this.bedAvaiAdd);
     },
+    getAvailService() {
+      var fullServiceList = this.servicesList;
+      console.log(fullServiceList);
+      var servicesToRemove = this.rooms.services;
+      console.log(servicesToRemove);
+      var props = ['serviceId', 'name', 'serviceCode', 'price'];
+      var result = fullServiceList
+        .filter(function(o1) {
+          // filter out (!) items in result2
+          return !servicesToRemove.some(function(o2) {
+            return o1.serviceId === o2.serviceId; // assumes unique id
+          });
+        })
+        .map(function(o) {
+          // use reduce to make objects with only the required properties
+          // and map to apply this to the filtered array as a whole
+          return props.reduce(function(newo, serviceCode) {
+            newo[serviceCode] = o[serviceCode];
+            return newo;
+          }, {});
+        });
+
+      this.serviceAvailAdd = result;
+      console.log(result);
+      console.log(this.serviceAvailAdd);
+    },
 
     addBedToRoom(roomCode) {
       console.log(roomCode);
       const toNumbers = (arr) => arr.map(Number);
-      let idBedList = toNumbers(this.idBedAdd);
-      console.log(idBedList);
-
-      RoomService.addBedToRoom(roomCode, idBedList).then(() => {
+      this.listIdBed = toNumbers(this.idBedAdd);
+      var data = {
+        longListIdBed: this.listIdBed,
+      };
+      RoomService.addBedToRoom(roomCode, data).then(() => {
         alert('Bed have been added!!!');
         this.modal = false;
+      });
+    },
+
+    addServiceToRoom(roomCode) {
+      console.log(roomCode);
+      // const toNumbers = (arr) => arr.map(Number);
+      //this.listIdBed = toNumbers(this.idBedAdd);
+      var data = {
+        longListIdService: this.idServiceAdd,
+      };
+      RoomService.addServiceToRoom(roomCode, data).then(() => {
+        alert('Service have been added!!!');
+        this.modalService = false;
+      });
+    },
+
+    removeBedOutRoom(rommCode) {
+      let bedId = this.currentBedId;
+      RoomService.deleteBedToRoom(rommCode, bedId).then(() => {
+        alert('Bed have been removed!!!');
+        this.modalRemove = false;
+      });
+    },
+
+    removeServiceOutRoom(rommCode) {
+      let serviceId = this.currentServiceId;
+      RoomService.deleteServiceToRoom(rommCode, serviceId).then(() => {
+        alert('Service have been removed!!!');
+        this.modalRemoveService = false;
       });
     },
 
     openModalAddBed() {
       this.modal = true;
       this.getAvailBed();
+    },
+
+    openModalAddService() {
+      this.modalService = true;
+      this.getAvailService();
+    },
+
+    openModalRemoveBed(id) {
+      this.modalRemove = true;
+      this.currentBedId = id;
+      console.log(this.currentBedId);
+    },
+    openModalRemoveService(id) {
+      this.modalRemoveService = true;
+      this.currentServiceId = id;
+      console.log(this.currentServiceId);
     },
   },
 

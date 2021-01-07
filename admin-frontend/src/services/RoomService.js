@@ -32,12 +32,12 @@ class RoomService{
         return http.put(`/api/room-service/${roomCode}`,data);
     }
 
-    deleteBedToRoom(roomCode,data){
-        return http.delete(`/api/room-bed/${roomCode}`,data);
+    deleteBedToRoom(roomCode,bedId){
+        return http.delete(`/api/room-bed/${roomCode}/${bedId}`);
     }
     
-    deleteServiceToRoom(roomCode,data){
-        return http.delete(`/api/room-service/${roomCode}`,data);
+    deleteServiceToRoom(roomCode,serviceId){
+        return http.delete(`/api/room-service/${roomCode}/${serviceId}`);
     }
 }
 

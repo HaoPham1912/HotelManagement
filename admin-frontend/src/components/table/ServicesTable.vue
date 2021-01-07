@@ -291,6 +291,7 @@ export default {
         this.page,
         this.pageSize
       );
+      console.log(params);
       ServicesService.getAll(params)
         .then((response) => {
           const { services, totalItems } = response.data;
