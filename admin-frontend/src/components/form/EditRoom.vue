@@ -197,7 +197,10 @@ export default {
       });
     },
 
-    updateRoom(id) {
+    async updateRoom(id) {
+      if (this.imageUrl !== this.rooms.mainImage) {
+        await this.onUpload();
+      }
       var data = {
         roomCode: this.rooms.roomCode,
         policyCode: this.rooms.policyCode,

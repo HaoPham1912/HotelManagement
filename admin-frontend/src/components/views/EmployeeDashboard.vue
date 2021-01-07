@@ -2,6 +2,7 @@
   <mdb-container fluid>
     <!--Navbar-->
     <mdb-navbar class="flexible-navbar white" light position="top" scrolling>
+      <mdb-navbar-brand><a href="/home">Home</a></mdb-navbar-brand>
       <mdb-navbar-brand href="" target="_blank"
         >Employee Dashboard</mdb-navbar-brand
       >

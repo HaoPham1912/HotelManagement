@@ -16,6 +16,10 @@ class BedService{
     delete(id){
         return http.delete(`/api/bed/${id}`);
     }
+
+    getAllBedNoPaging(){
+        return http.get("/api/all-bed");
+    }
 }
 
 export default new BedService();

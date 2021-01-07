@@ -1,7 +1,9 @@
 package com.h2.hotelmangement.api;
 
 import com.h2.hotelmangement.entity.Bed;
+import com.h2.hotelmangement.entity.Services;
 import com.h2.hotelmangement.model.dto.BedDTO;
+import com.h2.hotelmangement.model.dto.ServicesDTO;
 import com.h2.hotelmangement.model.mapper.BedMapper;
 import com.h2.hotelmangement.service.BedService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,7 @@ public class BedAPI {
             //List<BedDTO> bedDTOList = bedMapper.listBedEntityToDto(bedList);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -65,7 +67,7 @@ public class BedAPI {
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -83,7 +85,7 @@ public class BedAPI {
 
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -96,7 +98,7 @@ public class BedAPI {
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -109,7 +111,13 @@ public class BedAPI {
             return  new ResponseEntity<>(bedDTO, HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+    @GetMapping("/all-bed")
+    public ResponseEntity<List<BedDTO>> getAllBedNoPaging(){
+        List<Bed> bedList = bedService.getAllBedList();
+        List<BedDTO> bedDTOList = bedMapper.listBedEntityToDto(bedList);
+        return new ResponseEntity<>(bedDTOList, HttpStatus.OK);
     }
 }

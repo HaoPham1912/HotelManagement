@@ -15,7 +15,7 @@
             <th scope="col">Employee Phone</th>
             <th scope="col">Employee Email</th>
             <th scope="col">UserName</th>
-            <th></th>
+            <!-- <th></th> -->
           </tr>
         </thead>
         <tbody v-if="branchs.employees">
@@ -26,7 +26,7 @@
             <td>{{ data.empPhone }}</td>
             <td>{{ data.email }}</td>
             <td>{{ data.username }}</td>
-            <td class="action">
+            <!-- <td class="action">
               <div>
                 <button
                   class="btn-sm btn-warning"
@@ -44,8 +44,11 @@
                   REMOVE
                 </button>
               </div>
-            </td>
+            </td> -->
           </tr>
+        </tbody>
+        <tbody v-else>
+          <td>DO NOT HAVE ANY EMPLOYEE</td>
         </tbody>
       </table>
       <div style="display: flex;">
@@ -55,6 +58,7 @@
       <table class="table">
         <thead>
           <tr>
+            <th scope="col">Room Id</th>
             <th scope="col">Room Code</th>
             <th scope="col">Room Name</th>
             <th scope="col">Room Price</th>
@@ -66,6 +70,7 @@
         </thead>
         <tbody v-if="branchs.rooms">
           <tr v-for="(data, index) in branchs.rooms" :key="index">
+            <td>{{ data.roomId }}</td>
             <td>{{ data.roomCode }}</td>
             <td>{{ data.name }}</td>
             <td>{{ data.price }}</td>
@@ -80,12 +85,11 @@
               <div>
                 <button
                   class="btn-sm btn-warning"
-                  @click="getIdEmp(data.employeeId)"
-                  data-mdb-toggle="modal"
-                  data-mdb-target="#exampleModal"
+                  @click="editRoom(data.roomId)"
                 >
-                  <i class="fas fa-pencil-alt"></i>
-                  EDIT
+                  <a class="btn-link-edit action-button">
+                    <i class="fas fa-pencil-alt"></i> </a
+                  >EDIT ROOM
                 </button>
               </div>
               <!-- <div>
@@ -98,7 +102,7 @@
           </tr>
         </tbody>
         <tbody v-else>
-          <td>DO NOT HAVE ANY EMPLOYEE</td>
+          <td>DO NOT HAVE ANY ROOM</td>
         </tbody>
       </table>
     </div>
@@ -107,6 +111,7 @@
 
 <script>
 import BranchService from '../../services/BranchService';
+// /import RoomService from '../../services/RoomService';
 export default {
   name: 'branch',
   data() {
@@ -117,10 +122,21 @@ export default {
         mainImage: '',
         thumbnailsBranchSet: [],
         rooms: [],
+        roomCode: '',
+
+        page: 1,
+        count: 0,
+        pageSize: 3,
+
+        pageSizes: [3, 6, 9],
       },
     };
   },
   methods: {
+    editRoom(id) {
+      console.log(`id is ${id}`);
+      this.$router.push(`/admin/room/${id}`);
+    },
     getDetailBranch(branchCode) {
       BranchService.getBranchByCode(branchCode).then((response) => {
         console.log(response.data);

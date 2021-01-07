@@ -92,11 +92,16 @@ public class BillAPI {
         if(bill!= null){
             Boolean billStatus = bill.getStatus();
             bill.setStatus(!billStatus);
-
             billService.save(bill);
+            Set<Booking> bookingSet = bookingService.getBookingByBillId(billId);
+            for (Booking booking:
+                 bookingSet) {
+                booking.setStatus(bill.getStatus());
+                bookingService.saveOrUpdate(booking);
+            }
             return new ResponseEntity<>(HttpStatus.OK);
         }else{
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -258,7 +258,10 @@ export default {
         );
       });
     },
-    updateBranch(id) {
+    async updateBranch(id) {
+      if (this.imageData !== this.branch.mainImage) {
+        await this.onUpload();
+      }
       var data = {
         branchCode: this.branch.branchCode,
         branchName: this.branch.branchName,
