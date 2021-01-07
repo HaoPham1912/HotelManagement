@@ -103,7 +103,7 @@ public class BookingAPI {
         Set<Booking> bookingSet = bookingService.getBookingByBillId(idBill);
         if(bookingSet.isEmpty()){
             Bill bill = billService.getBillByBillId(idBill);
-            if(bill.getStatus()){
+            if(!bill.getStatus()){
                 billService.deleteBillById(idBill);
             }
         }
