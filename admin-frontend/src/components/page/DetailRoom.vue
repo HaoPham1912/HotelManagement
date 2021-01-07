@@ -25,17 +25,6 @@
             <td>{{ data.price }}</td>
             <td>{{ data.description }}</td>
             <td class="action">
-              <!-- <div>
-                <button
-                  class="btn-sm btn-warning"
-                  @click="getIdEmp(data.employeeId)"
-                  data-mdb-toggle="modal"
-                  data-mdb-target="#exampleModal"
-                >
-                  <i class="fas fa-pencil-alt"></i>
-                  EDIT
-                </button>
-              </div> -->
               <div>
                 <button
                   class="btn-sm btn-danger"
@@ -355,6 +344,7 @@ export default {
       RoomService.addBedToRoom(roomCode, data).then(() => {
         alert('Bed have been added!!!');
         this.modal = false;
+        window.location.reload();
       });
     },
 
@@ -368,6 +358,7 @@ export default {
       RoomService.addServiceToRoom(roomCode, data).then(() => {
         alert('Service have been added!!!');
         this.modalService = false;
+        window.location.reload();
       });
     },
 
@@ -376,6 +367,7 @@ export default {
       RoomService.deleteBedToRoom(rommCode, bedId).then(() => {
         alert('Bed have been removed!!!');
         this.modalRemove = false;
+        window.location.reload();
       });
     },
 
@@ -384,6 +376,7 @@ export default {
       RoomService.deleteServiceToRoom(rommCode, serviceId).then(() => {
         alert('Service have been removed!!!');
         this.modalRemoveService = false;
+        window.location.reload();
       });
     },
 

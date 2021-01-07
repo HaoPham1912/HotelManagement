@@ -50,6 +50,18 @@ export default {
     logout: function() {
       this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'));
     },
+    logoutaftertime() {
+      alert('Session time out!!!!');
+      this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'));
+    },
+  },
+  created() {
+    setTimeout(
+      function() {
+        this.logoutaftertime();
+      }.bind(this),
+      290000
+    );
   },
   components: {
     mdbNavbarBrand,

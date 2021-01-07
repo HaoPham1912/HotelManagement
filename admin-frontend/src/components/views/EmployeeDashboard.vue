@@ -84,6 +84,10 @@ export default {
     logout: function() {
       this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'));
     },
+    logoutaftertime() {
+      alert('Session time out!!!!');
+      this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'));
+    },
   },
 
   components: {
@@ -109,6 +113,14 @@ export default {
   },
   beforeMount() {
     this.activeItem = this.$route.matched[0];
+  },
+  created() {
+    setTimeout(
+      function() {
+        this.logoutaftertime();
+      }.bind(this),
+      290000
+    );
   },
 };
 </script>

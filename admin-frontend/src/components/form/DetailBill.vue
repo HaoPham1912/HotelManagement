@@ -92,6 +92,7 @@
 
 <script>
 import BillService from '../../services/BillService';
+import RoomService from '../../services/RoomService';
 import jspdf from 'jspdf';
 // /import html2canvas from 'html2canvas';
 
@@ -106,6 +107,10 @@ export default {
 
       currentBill: {},
 
+      currentRoomId: [],
+
+      roomInBill: [],
+
       printDate: '',
     };
   },
@@ -118,7 +123,20 @@ export default {
           this.bookingList = response.data;
           this.bookingList.forEach((element) => {
             this.totalPrice += element.paidPrice;
+            this.currentRoomId.push(element.roomId);
           });
+          console.log(this.currentRoomId);
+          this.currentRoomId.forEach((element) => {
+            console.log(`element ${element}`);
+            RoomService.getRoomById(element)
+              .then((response) => {
+                this.roomInBill.push(response.data);
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          });
+          console.log(this.roomInBill);
         })
         .catch((e) => {
           console.log(e);
@@ -135,6 +153,20 @@ export default {
         });
     },
 
+    getRoomInforInBill() {
+      this.currentRoomId.forEach((element) => {
+        console.log(`element ${element}`);
+        RoomService.getRoomById(element)
+          .then((response) => {
+            this.roomInBill.push(response.data);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      });
+      console.log(this.roomInBill);
+    },
+
     getPrintDate() {
       var today = new Date();
       var dd = String(today.getDate()).padStart(2, '0');
@@ -147,9 +179,13 @@ export default {
     download() {
       var pdf = new jspdf();
       var index = 10;
+      pdf.text('H2 HOTEL', 50, index);
+      pdf.text('Your detail bill', 10, (index += 10));
+      pdf.text(`Name: ${this.currentBill.customerName}`, 10, (index += 10));
       for (let i = 0; i < this.bookingList.length; i++) {
         console.log(this.bookingList[i].roomId);
-        pdf.text(`RoomId ${this.bookingList[i].roomId}`, 10, (index += 10));
+        pdf.text('------------------------------', 10, (index += 10));
+        pdf.text(`Room Name: ${this.roomInBill[i].name}`, 10, (index += 10));
         pdf.text(
           `Booking Date ${this.bookingList[i].bookDate}`,
           10,
@@ -165,7 +201,9 @@ export default {
           10,
           (index += 10)
         );
+        pdf.text(`Price: ${this.bookingList[i].paidPrice}`, 10, (index += 10));
       }
+      pdf.text('------------------------------', 10, (index += 10));
       pdf.text(`Total Price ${this.totalPrice}`, 10, (index += 10));
 
       pdf.save('test.pdf');

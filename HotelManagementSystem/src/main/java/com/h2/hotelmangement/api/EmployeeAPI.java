@@ -204,7 +204,7 @@ public class EmployeeAPI {
            }else {
                throw new Exception("Can not get employee with username "+username);
            }
-           if(account != null){
+           if(account != null && !employeeDTO.getNewPass().equals("")){
                account.setPassword(employeeDTO.getNewPass());
                accountService.save(account);
            }else {
