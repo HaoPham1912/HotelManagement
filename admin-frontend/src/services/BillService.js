@@ -12,5 +12,9 @@ class BillService{
     updateBill(id){
         return http.put(`/api/bill/${id}`);
     }
+
+    getDetailBooking(id){
+        return http.get(`/api/detail-bill/${id}`);
+    }
 }
 export default new BillService();

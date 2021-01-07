@@ -104,4 +104,13 @@ public class BillAPI {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/detail-bill/{id}")
+    public ResponseEntity<BillDTO> getDetailBill(@PathVariable String id){
+        Long billId = Long.valueOf(id);
+        Bill bill = billService.getBillByBillId(billId);
+        BillDTO billDTO = billMapper.convertBillEntityToDTO(bill);
+
+        return new ResponseEntity<>(billDTO, HttpStatus.OK);
+    }
 }

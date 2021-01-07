@@ -104,19 +104,35 @@ export default {
 
       totalPrice: 0,
 
+      currentBill: {},
+
       printDate: '',
     };
   },
 
   methods: {
     getBookingList() {
-      BillService.getBookingByBillId(this.billId).then((response) => {
-        console.log(response.data);
-        this.bookingList = response.data;
-        this.bookingList.forEach((element) => {
-          this.totalPrice += element.paidPrice;
+      BillService.getBookingByBillId(this.billId)
+        .then((response) => {
+          console.log(response.data);
+          this.bookingList = response.data;
+          this.bookingList.forEach((element) => {
+            this.totalPrice += element.paidPrice;
+          });
+        })
+        .catch((e) => {
+          console.log(e);
         });
-      });
+
+      BillService.getDetailBooking(this.billId)
+        .then((response) => {
+          console.log('current bill');
+          console.log(response.data);
+          this.currentBill = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
 
     getPrintDate() {
