@@ -15,4 +15,7 @@ public class CommonConstants {
     /** The prefix of value the {@code Authorization} attribute */
     public static final String PREFIX_BEARER = "Bearer ";
 
+    /** The {@code prefix for Customer}*/
+    public static final String PREFIX_CUSTOMER="/guest";
+
 }
