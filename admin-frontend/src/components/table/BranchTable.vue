@@ -131,6 +131,7 @@ import {
 } from 'mdbvue';
 
 import BranchService from '../../services/BranchService';
+import { AUTH_LOGOUT } from '../../store/actions/auth';
 export default {
   data() {
     return {
@@ -186,6 +187,10 @@ export default {
         })
         .catch((e) => {
           console.log(e);
+          alert('Session time out!!!');
+          this.$store
+            .dispatch(AUTH_LOGOUT)
+            .then(() => this.$router.push('/login'));
         });
     },
 

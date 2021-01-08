@@ -23,6 +23,7 @@
             id="empIdCard"
             class="form-control"
             v-model="employee.empIdCard"
+            required
           />
           <label class="form-label" for="empIdCard">Id Card</label>
         </div>
@@ -36,6 +37,7 @@
         id="empName"
         class="form-control"
         v-model="employee.empName"
+        required
       />
       <label class="form-label" for="empName">Employee Name</label>
     </div>
@@ -47,6 +49,7 @@
         id="empPhone"
         class="form-control"
         v-model="employee.empPhone"
+        required
       />
       <label class="form-label" for="empPhone">Phone</label>
     </div>
@@ -58,7 +61,7 @@
         id="email"
         class="form-control"
         v-model="employee.email"
-        v-validate="'required|email'"
+        required
       />
       <label class="form-label" for="email">Email</label>
     </div>
@@ -70,6 +73,7 @@
         id="username"
         class="form-control"
         v-model="employee.username"
+        required
       />
       <label class="form-label" for="username">Username Account</label>
     </div>
@@ -81,6 +85,7 @@
         id="password"
         class="form-control"
         v-model="employee.password"
+        required
       />
       <label class="form-label" for="password">Password Account</label>
     </div>
@@ -100,6 +105,7 @@
       <b-form-select
         v-model="employee.branchCode"
         :options="branchCodes"
+        required
       ></b-form-select>
       <label class="form-label" for="branchCode">Choose Branch Code</label>
     </div>

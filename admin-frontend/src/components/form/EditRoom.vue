@@ -111,6 +111,7 @@ import firebase from 'firebase';
 import BranchService from '../../services/BranchService';
 import CancelPolicyService from '../../services/CancelPolicyService';
 import RoomService from '../../services/RoomService';
+import { AUTH_LOGOUT } from '../../store/actions/auth';
 export default {
   data() {
     return {
@@ -136,11 +137,18 @@ export default {
     getCurrentRoom() {
       let roomId = this.$route.params.id;
       console.log(roomId);
-      RoomService.getRoomById(roomId).then((response) => {
-        this.rooms = response.data;
-        this.imageUrl = response.data.mainImage;
-        this.rooms.mainImage = response.data.mainImage;
-      });
+      RoomService.getRoomById(roomId)
+        .then((response) => {
+          this.rooms = response.data;
+          this.imageUrl = response.data.mainImage;
+          this.rooms.mainImage = response.data.mainImage;
+        })
+        .catch(() => {
+          alert('Session time out!!!');
+          this.$store
+            .dispatch(AUTH_LOGOUT)
+            .then(() => this.$router.push('/login'));
+        });
     },
 
     onPickFile() {

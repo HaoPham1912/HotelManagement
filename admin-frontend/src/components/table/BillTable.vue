@@ -59,11 +59,20 @@
                   <td>{{ data.createDate }}</td>
                   <td v-if="data.promoCode">{{ data.promoCode }}</td>
                   <td v-else>No Promotion Code</td>
-                  <td>{{ data.status }}</td>
+                  <td v-if="data.status === 'true'">
+                    <p style="color: red">Paid</p>
+                  </td>
+                  <td v-if="data.status === 'false'">
+                    <p style="color: green">Un Paid</p>
+                  </td>
                   <!-- <td>{{ data.totalPrice }}</td> -->
                   <td class="action">
                     <div>
                       <mdb-btn
+                        class="btn-sm btn-primary"
+                        v-tooltip.top-center="{
+                          content: 'Detail Bill',
+                        }"
                         color="primary"
                         @click="gotoDetailBill(data.billId)"
                       >
@@ -72,9 +81,15 @@
                     </div>
                     <div>
                       <mdb-btn
-                        color="success"
+                        v-tooltip.top-center="{
+                          content: setTextTooltip(data.status),
+                        }"
+                        :class="{
+                          'btn-sm btn-danger': data.status === 'true',
+                          'btn-sm btn-success': data.status === 'false',
+                        }"
+                        color="data.status : danger ? success"
                         @click="showModalConfirm(data.billId)"
-                        :disabled="isDisabled"
                       >
                         <mdb-icon far icon="money-bill-alt" />
                       </mdb-btn>
@@ -141,6 +156,7 @@ import {
 } from 'mdbvue';
 
 import BillService from '../../services/BillService';
+import { AUTH_LOGOUT } from '../../store/actions/auth';
 export default {
   data() {
     return {
@@ -207,9 +223,19 @@ export default {
           this.bills = bills;
           this.count = totalItems;
           console.log(response.data);
+          if (Object.entries(this.bills).length === 0) {
+            alert('Session time out!!!');
+            this.$store
+              .dispatch(AUTH_LOGOUT)
+              .then(() => this.$router.push('/login'));
+          }
         })
         .catch((e) => {
           console.log(e);
+          alert('Session time out!!!');
+          this.$store
+            .dispatch(AUTH_LOGOUT)
+            .then(() => this.$router.push('/login'));
         });
     },
     showAll() {
@@ -257,6 +283,13 @@ export default {
     handelSearch() {
       this.page = 1;
       this.retrieveBill();
+    },
+    setTextTooltip(text) {
+      if (text === 'true') {
+        return 'Refund this bill';
+      } else {
+        return 'Cash this bill';
+      }
     },
   },
 

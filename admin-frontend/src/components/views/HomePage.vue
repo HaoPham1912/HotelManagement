@@ -64,7 +64,6 @@ export default {
     },
 
     logoutaftertime() {
-      alert('Session time out!!!!');
       this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'));
     },
 
@@ -82,14 +81,6 @@ export default {
   },
   mounted() {
     this.checkAuthenticate();
-  },
-  created() {
-    setTimeout(
-      function() {
-        this.logoutaftertime();
-      }.bind(this),
-      200000
-    );
   },
 };
 </script>

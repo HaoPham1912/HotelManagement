@@ -17,7 +17,9 @@
             >
 
             <mdb-dropdown-menu>
-              <mdb-dropdown-item to="/emp/editProfie">Profie</mdb-dropdown-item>
+              <mdb-dropdown-item v-if="isAdmin === false" to="/emp/editProfie"
+                >Profie</mdb-dropdown-item
+              >
               <div class="dropdown-divider"></div>
               <mdb-dropdown-item>
                 <li @click="logout">
@@ -85,8 +87,13 @@ export default {
       this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'));
     },
     logoutaftertime() {
-      alert('Session time out!!!!');
       this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'));
+    },
+
+    checkUserName() {
+      if (this.username === 'admin') {
+        this.isAdmin = true;
+      }
     },
   },
 
@@ -109,18 +116,15 @@ export default {
     return {
       activeItem: 0,
       username: store.getters.username,
+
+      isAdmin: false,
     };
+  },
+  mounted() {
+    this.checkUserName();
   },
   beforeMount() {
     this.activeItem = this.$route.matched[0];
-  },
-  created() {
-    setTimeout(
-      function() {
-        this.logoutaftertime();
-      }.bind(this),
-      290000
-    );
   },
 };
 </script>

@@ -114,7 +114,7 @@ export default {
         })
         .catch((e) => {
           console.log(e);
-          alert('Add new promotion failed!');
+          alert('Add new promotion failed! Please fill all field');
         });
     },
   },

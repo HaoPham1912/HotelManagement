@@ -140,7 +140,7 @@
                         required
                       />
                     </div>
-                    <div class="form-outline mb-4">
+                    <!-- <div class="form-outline mb-4">
                       <label for="description">Description</label>
                       <textarea
                         id="description"
@@ -150,8 +150,9 @@
                         v-model="currentService.description"
                         required
                       />
-                    </div></div
-                ></mdb-modal-body>
+                    </div> -->
+                  </div></mdb-modal-body
+                >
                 <mdb-modal-footer>
                   <mdb-btn color="danger" @click.native="modal = false"
                     >Close</mdb-btn
@@ -222,6 +223,7 @@ import {
 } from 'mdbvue';
 
 import ServicesService from '../../services/ServicesService';
+import { AUTH_LOGOUT } from '../../store/actions/auth';
 export default {
   components: {
     mdbRow,
@@ -296,6 +298,12 @@ export default {
         .then((response) => {
           const { services, totalItems } = response.data;
           this.services = services;
+          if (Object.entries(this.services).length === 0) {
+            alert('Session time out!!!');
+            this.$store
+              .dispatch(AUTH_LOGOUT)
+              .then(() => this.$router.push('/login'));
+          }
           this.count = totalItems;
           console.log(response.data);
           if (this.services.status === true) {
@@ -306,6 +314,10 @@ export default {
         })
         .catch((e) => {
           console.log(e);
+          alert('Session time out!!!');
+          this.$store
+            .dispatch(AUTH_LOGOUT)
+            .then(() => this.$router.push('/login'));
         });
     },
 

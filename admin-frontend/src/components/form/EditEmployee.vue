@@ -90,6 +90,8 @@
 <script>
 import EmployeeService from '../../services/EmployeeService';
 import BranchService from '../../services/BranchService';
+
+import { AUTH_LOGOUT } from '../../store/actions/auth';
 export default {
   data() {
     return {
@@ -113,11 +115,18 @@ export default {
     getCurrentEmployee() {
       let empId = this.$route.params.id;
       console.log(`empl id ${empId}`);
-      EmployeeService.getEmployeeById(empId).then((response) => {
-        this.employee = response.data;
-        console.log(this.employee);
-        this.idUpdate = this.employee.employeeId;
-      });
+      EmployeeService.getEmployeeById(empId)
+        .then((response) => {
+          this.employee = response.data;
+          console.log(this.employee);
+          this.idUpdate = this.employee.employeeId;
+        })
+        .catch(() => {
+          alert('Session time out!!!');
+          this.$store
+            .dispatch(AUTH_LOGOUT)
+            .then(() => this.$router.push('/login'));
+        });
     },
 
     updateEmployee(id) {

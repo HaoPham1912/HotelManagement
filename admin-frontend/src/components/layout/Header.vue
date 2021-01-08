@@ -51,18 +51,18 @@ export default {
       this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'));
     },
     logoutaftertime() {
-      alert('Session time out!!!!');
       this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'));
     },
   },
-  created() {
-    setTimeout(
-      function() {
-        this.logoutaftertime();
-      }.bind(this),
-      290000
-    );
-  },
+  // created() {
+  //   setTimeout(
+  //     function() {
+  //       alert('Session time out!!!!');
+  //       this.logoutaftertime();
+  //     }.bind(this),
+  //     200000
+  //   );
+  // },
   components: {
     mdbNavbarBrand,
     mdbDropdown,

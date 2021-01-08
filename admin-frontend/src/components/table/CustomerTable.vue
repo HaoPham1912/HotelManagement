@@ -169,6 +169,8 @@ import {
 
 import CustomerServices from '../../services/CustomerServices';
 import CustomerTypeService from '../../services/CustomerTypeService';
+
+import { AUTH_LOGOUT } from '../../store/actions/auth';
 export default {
   data() {
     return {
@@ -251,6 +253,10 @@ export default {
           }
         })
         .catch((e) => {
+          alert('Session time out!!!');
+          this.$store
+            .dispatch(AUTH_LOGOUT)
+            .then(() => this.$router.push('/login'));
           console.log(e);
         });
     },
@@ -322,6 +328,10 @@ export default {
           console.log(this.customerType);
         })
         .catch((e) => {
+          alert('Session time out!!!');
+          this.$store
+            .dispatch(AUTH_LOGOUT)
+            .then(() => this.$router.push('/login'));
           console.log(e);
         });
     },

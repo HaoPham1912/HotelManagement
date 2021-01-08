@@ -100,15 +100,19 @@ public class AccountAPI {
     @PutMapping("/account/{id}")
     public ResponseEntity<HttpStatus> updateStatusAccount(@PathVariable("id") String id, @RequestBody AccountDTO accountDTO) {
         System.out.println("dsasdasdasd");
-        Long idAcc = Long.valueOf(id);
-        Optional<Account> account = accountService.getAccountByAccountId(idAcc);
-        if (account.isPresent()) {
-            Account account1 = account.get();
-            account1.setUsername(accountDTO.getUsername());
-            account1.setPassword(accountDTO.getPassword());
-            accountService.save(account1);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        if(accountDTO.getUsername().equals("") || accountDTO.getPassword().equals("")){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }else{
+            Long idAcc = Long.valueOf(id);
+            Optional<Account> account = accountService.getAccountByAccountId(idAcc);
+            if (account.isPresent()) {
+                Account account1 = account.get();
+                account1.setUsername(accountDTO.getUsername());
+                account1.setPassword(accountDTO.getPassword());
+                accountService.save(account1);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

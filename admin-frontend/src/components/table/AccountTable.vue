@@ -102,8 +102,9 @@
                 <mdb-modal-header>
                   <mdb-modal-title>Update Account Information</mdb-modal-title>
                 </mdb-modal-header>
+
                 <mdb-modal-body>
-                  <div>
+                  <form>
                     <div class="form-group">
                       <input
                         type="text"
@@ -120,6 +121,7 @@
                         id="username"
                         class="form-control form-control-md"
                         v-model="currentAccount.username"
+                        required
                       />
                     </div>
                     <div class="form-group">
@@ -129,9 +131,22 @@
                         id="password"
                         class="form-control form-control-md"
                         v-model="currentAccount.password"
+                        required
                       />
-                    </div></div
-                ></mdb-modal-body>
+                      <div
+                        v-if="isSubmitted && $v.currentAccount.password.$error"
+                        class="invalid-feedback"
+                      >
+                        <span v-if="!$v.currentAccount.password.required"
+                          >Password field is required</span
+                        >
+                        <span v-if="!$v.currentAccount.password.minLength"
+                          >Password should be at least 5 characters long</span
+                        >
+                      </div>
+                    </div>
+                  </form>
+                </mdb-modal-body>
                 <mdb-modal-footer>
                   <mdb-btn color="danger" @click.native="modal = false"
                     >Close</mdb-btn
@@ -201,6 +216,9 @@ import {
   mdbBtn,
 } from 'mdbvue';
 import AccountService from '../../services/AccountService';
+//import { required, minLength, between } from 'vuelidate/lib/validators';
+import { required, minLength } from 'vuelidate/lib/validators';
+import { AUTH_LOGOUT } from '../../store/actions/auth';
 
 export default {
   data() {
@@ -221,7 +239,15 @@ export default {
       pageSizes: [3, 6, 9],
       modal: false,
       modalDelete: false,
+
+      isSubmitted: false,
     };
+  },
+  validations: {
+    currentAccount: {
+      username: { required, minLength: minLength(6) },
+      password: { required, minLength: minLength(6) },
+    },
   },
   components: {
     mdbRow,
@@ -238,6 +264,16 @@ export default {
     mdbBtn,
   },
   methods: {
+    handleSubmit() {
+      this.isSubmitted = true;
+
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
+
+      alert('SUCCESS!' + JSON.stringify(this.userForm));
+    },
     getRequestParams(usernameSearch, page, pageSize) {
       let params = {};
 
@@ -296,14 +332,12 @@ export default {
             this.messageTooltip = 'Enable this account';
           }
         })
-        .catch((e) => {
-          console.log('error' + e);
-          if (e.response.status === 401) {
-            alert('Session time out!!!');
-            // if you ever get an unauthorized, logout the user
-            this.$router.push('/login');
-            // you can also redirect to /login if needed !
-          }
+        .catch((error) => {
+          console.log(error);
+          alert('Session time out!!!');
+          this.$store
+            .dispatch(AUTH_LOGOUT)
+            .then(() => this.$router.push('/login'));
         });
     },
 
@@ -370,7 +404,7 @@ export default {
         })
         .catch((e) => {
           console.log(e);
-          alert('Update Failed!');
+          alert('Update Failed! Please sure fill all field');
         });
     },
 
@@ -399,6 +433,15 @@ export default {
 
   mounted() {
     this.retrieveAccount();
+  },
+
+  computed: {
+    isDisable() {
+      return (
+        this.currentAccount.username.length > 0 &&
+        this.currentAccount.password.length > 0
+      );
+    },
   },
 };
 </script>

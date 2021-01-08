@@ -170,6 +170,7 @@ import {
 } from 'mdbvue';
 
 import CancelPolicyService from '../../services/CancelPolicyService';
+import { AUTH_LOGOUT } from '../../store/actions/auth';
 export default {
   components: {
     mdbRow,
@@ -206,6 +207,12 @@ export default {
       CancelPolicyService.getById(id)
         .then((response) => {
           this.currentPolicy = response.data;
+          if (Object.entries(this.currentPolicy).length === 0) {
+            alert('Session time out!!!');
+            this.$store
+              .dispatch(AUTH_LOGOUT)
+              .then(() => this.$router.push('/login'));
+          }
         })
         .catch((e) => {
           console.log(e);
@@ -226,10 +233,20 @@ export default {
       CancelPolicyService.getAll()
         .then((response) => {
           this.policies = response.data;
+          if (Object.entries(this.policies).length === 0) {
+            alert('Session time out!!!');
+            this.$store
+              .dispatch(AUTH_LOGOUT)
+              .then(() => this.$router.push('/login'));
+          }
           console.log(response.data);
         })
         .catch((e) => {
           console.log(e);
+          alert('Session time out!!!');
+          this.$store
+            .dispatch(AUTH_LOGOUT)
+            .then(() => this.$router.push('/login'));
         });
     },
     updatePolicy(id) {

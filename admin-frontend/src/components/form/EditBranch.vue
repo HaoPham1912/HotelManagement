@@ -143,6 +143,7 @@
 <script>
 import firebase from 'firebase';
 import BranchService from '../../services/BranchService';
+import { AUTH_LOGOUT } from '../../store/actions/auth';
 import {
   mdbRow,
   mdbCol,
@@ -196,12 +197,19 @@ export default {
     getCurrentBranch() {
       let branchId = this.$route.params.id;
       console.log(branchId);
-      BranchService.getBranchById(branchId).then((response) => {
-        console.log(response.data);
-        this.branch = response.data;
-        this.idUpdate = this.branch.branchId;
-        this.branch.mainImage = response.data.mainImage;
-      });
+      BranchService.getBranchById(branchId)
+        .then((response) => {
+          console.log(response.data);
+          this.branch = response.data;
+          this.idUpdate = this.branch.branchId;
+          this.branch.mainImage = response.data.mainImage;
+        })
+        .catch(() => {
+          alert('Session time out!!!');
+          this.$store
+            .dispatch(AUTH_LOGOUT)
+            .then(() => this.$router.push('/login'));
+        });
     },
 
     click1() {

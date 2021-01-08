@@ -229,6 +229,7 @@ import {
 
 import PromotionService from '../../services/PromotionService';
 import CustomerTypeService from '../../services/CustomerTypeService';
+import { AUTH_LOGOUT } from '../../store/actions/auth';
 export default {
   components: {
     mdbRow,
@@ -320,10 +321,20 @@ export default {
           console.log(response.data);
           const { promos, totalItems } = response.data;
           this.promos = promos;
+          if (Object.entries(this.promos).length === 0) {
+            alert('Session time out!!!');
+            this.$store
+              .dispatch(AUTH_LOGOUT)
+              .then(() => this.$router.push('/login'));
+          }
           this.count = totalItems;
         })
         .catch((e) => {
           console.log('error' + e);
+          alert('Session time out!!!');
+          this.$store
+            .dispatch(AUTH_LOGOUT)
+            .then(() => this.$router.push('/login'));
         });
     },
     showAll() {

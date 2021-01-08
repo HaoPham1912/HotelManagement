@@ -136,7 +136,7 @@
                         required
                       />
                     </div>
-                    <div class="form-outline mb-4">
+                    <!-- <div class="form-outline mb-4">
                       <label for="description">Description</label>
                       <textarea
                         id="description"
@@ -147,7 +147,7 @@
                         v-model="currentBed.description"
                         required
                       />
-                    </div>
+                    </div> -->
                   </mdb-modal-body>
                   <mdb-modal-footer>
                     <mdb-btn color="danger" @click.native="modal = false"
@@ -219,6 +219,7 @@ import {
   mdbBtn,
 } from 'mdbvue';
 import BedService from '../../services/BedService';
+import { AUTH_LOGOUT } from '../../store/actions/auth';
 export default {
   components: {
     mdbRow,
@@ -289,6 +290,12 @@ export default {
       BedService.get(id)
         .then((response) => {
           this.currentBed = response.data;
+          if (Object.entries(this.currentBed).length === 0) {
+            alert('Session time out!!!');
+            this.$store
+              .dispatch(AUTH_LOGOUT)
+              .then(() => this.$router.push('/login'));
+          }
         })
         .catch((e) => {
           console.log(e);
@@ -306,9 +313,19 @@ export default {
           this.beds = beds;
           this.count = totalItems;
           console.log(response.data);
+          if (Object.entries(this.beds).length === 0) {
+            alert('Session time out!!!');
+            this.$store
+              .dispatch(AUTH_LOGOUT)
+              .then(() => this.$router.push('/login'));
+          }
         })
         .catch((e) => {
           console.log(e);
+          alert('Session time out!!!');
+          this.$store
+            .dispatch(AUTH_LOGOUT)
+            .then(() => this.$router.push('/login'));
         });
     },
 

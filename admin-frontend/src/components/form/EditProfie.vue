@@ -65,7 +65,7 @@
           </div>
         </div>
         <div class="col-md-4">
-          <div class="p-3 py-5">
+          <!-- <div class="p-3 py-5">
             <div
               class="d-flex justify-content-between align-items-center experience"
             >
@@ -105,7 +105,7 @@
                 value=""
               />
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="mt-5 text-center">
@@ -168,6 +168,7 @@ export default {
           console.log(response.data);
           alert('Your information have been updated!!!');
           this.getCurrentInformation(username);
+          window.location.reload();
         })
         .catch((error) => {
           console.log(error);

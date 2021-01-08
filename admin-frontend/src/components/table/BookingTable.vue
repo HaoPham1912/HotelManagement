@@ -30,7 +30,10 @@
                   <td>{{ data.checkinDate }}</td>
                   <td>{{ data.checkoutDate }}</td>
                   <td>{{ data.paidPrice }}</td>
-                  <td>{{ data.status }}</td>
+                  <td v-if="data.status"><p style="color: red">Paid</p></td>
+                  <td v-if="!data.status">
+                    <p style="color: green">Un Paid</p>
+                  </td>
                   <td class="action">
                     <div>
                       <mdb-btn
@@ -166,6 +169,7 @@ import {
 } from 'mdbvue';
 
 import BookingService from '../../services/BookingService';
+import { AUTH_LOGOUT } from '../../store/actions/auth';
 export default {
   components: {
     mdbRow,
@@ -227,9 +231,19 @@ export default {
           this.bookings = bookings;
           this.count = totalItems;
           console.log(response.data);
+           if (Object.entries(this.bookings).length === 0) {
+            alert('Session time out!!!');
+            this.$store
+              .dispatch(AUTH_LOGOUT)
+              .then(() => this.$router.push('/login'));
+          }
         })
         .catch((e) => {
           console.log(e);
+          alert('Session time out!!!');
+          this.$store
+            .dispatch(AUTH_LOGOUT)
+            .then(() => this.$router.push('/login'));
         });
     },
     setTextTooltip() {

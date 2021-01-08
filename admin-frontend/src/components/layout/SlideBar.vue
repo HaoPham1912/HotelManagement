@@ -33,15 +33,7 @@
           Employee</mdb-list-group-item
         >
       </router-link>
-      <br />
-      <router-link to="/admin/booking" @click.native="activeItem = 4">
-        <mdb-list-group-item
-          :action="true"
-          :class="activeItem === 4 && 'active'"
-          ><mdb-icon icon="table" class="mr-3" />Manage
-          Booking</mdb-list-group-item
-        >
-      </router-link>
+
       <br />
       <router-link to="/admin/branch" @click.native="activeItem = 5">
         <mdb-list-group-item
@@ -93,6 +85,15 @@
           :class="activeItem === 10 && 'active'"
           ><mdb-icon icon="table" class="mr-3" />Manage
           Promo</mdb-list-group-item
+        >
+      </router-link>
+      <br />
+      <router-link to="/admin/booking" @click.native="activeItem = 4">
+        <mdb-list-group-item
+          :action="true"
+          :class="activeItem === 4 && 'active'"
+          ><mdb-icon icon="table" class="mr-3" />Manage
+          Booking</mdb-list-group-item
         >
       </router-link>
       <br />

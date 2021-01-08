@@ -173,31 +173,36 @@ export default {
       var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
       var yyyy = today.getFullYear();
 
-      this.printDate = mm + '/' + dd + '/' + yyyy;
+      this.printDate = dd + '/' + mm + '/' + yyyy;
     },
 
     download() {
       var pdf = new jspdf();
       var index = 10;
       pdf.text('H2 HOTEL', 50, index);
-      pdf.text('Your detail bill', 10, (index += 10));
-      pdf.text(`Name: ${this.currentBill.customerName}`, 10, (index += 10));
+      pdf.text('CUSTOMER BILL', 10, (index += 10));
+      pdf.text(`Date Export: ${this.printDate}`, 10, (index += 10));
+      pdf.text(
+        `Customer Name: ${this.currentBill.customerName}`,
+        10,
+        (index += 10)
+      );
       for (let i = 0; i < this.bookingList.length; i++) {
         console.log(this.bookingList[i].roomId);
         pdf.text('------------------------------', 10, (index += 10));
         pdf.text(`Room Name: ${this.roomInBill[i].name}`, 10, (index += 10));
         pdf.text(
-          `Booking Date ${this.bookingList[i].bookDate}`,
+          `Booking Date: ${this.bookingList[i].bookDate}`,
           10,
           (index += 10)
         );
         pdf.text(
-          `Checkin Date ${this.bookingList[i].checkinDate}`,
+          `Checkin Date: ${this.bookingList[i].checkinDate}`,
           10,
           (index += 10)
         );
         pdf.text(
-          `Checkout Date ${this.bookingList[i].checkoutDate}`,
+          `Checkout Date: ${this.bookingList[i].checkoutDate}`,
           10,
           (index += 10)
         );

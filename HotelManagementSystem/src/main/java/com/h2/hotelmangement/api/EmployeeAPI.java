@@ -166,7 +166,7 @@ public class EmployeeAPI {
             employeeService.save(employee);
             return new ResponseEntity<>( HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

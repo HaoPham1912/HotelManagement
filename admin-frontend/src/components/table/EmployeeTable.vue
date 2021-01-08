@@ -167,7 +167,7 @@ import {
 } from 'mdbvue';
 
 import EmployeeService from '../../services/EmployeeService';
-
+import { AUTH_LOGOUT } from '../../store/actions/auth';
 export default {
   data() {
     return {
@@ -231,6 +231,10 @@ export default {
         })
         .catch((e) => {
           console.log(e);
+          alert('Session time out!!!');
+          this.$store
+            .dispatch(AUTH_LOGOUT)
+            .then(() => this.$router.push('/login'));
         });
     },
 

@@ -41,29 +41,20 @@ import DetailBranch from '../components/page/DetailBranch.vue';
 import DetailBill from '../components/form/DetailBill.vue';
 import DetailRoom from '../components/page/DetailRoom.vue';
 
-Vue.use(Router);
-// const ifNotAuthenticated = (to, from, next) => {
-//   if (!store.getters.isAuthenticated) {
-//     next();
-//     return;
-//   }
-//   next("/");
-// };
+import WelcomeAdm from '../components/views/WelcomeAdm.vue';
 
-// const ifAuthenticated = (to, from, next) => {
-//   if (store.getters.isAuthenticated) {
-//     next();
-//     return;
-//   }
-//   next("/login");
-// };
+Vue.use(Router);
+
 const router = new Router({
     mode: 'history',
     routes: [
         {
           path:"*",
           redirect:"/home",
-          
+        },
+        {
+          path:"/admin",
+          redirect:"/admin/home",
         },
         {
           path:"/home",
@@ -76,6 +67,12 @@ const router = new Router({
         name:'AdminDashboard',
         meta: { authorize: 'ADMIN' } ,
         children:[    
+          {
+            path: '/admin/home',
+            name: 'WelcomeAdm',
+            component: WelcomeAdm,
+            meta: { authorize: 'ADMIN' } ,
+          },
           {
           path: '/admin/account',
           name: 'Account',
