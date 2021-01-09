@@ -92,11 +92,11 @@ public class EmployeeAPI {
     public ResponseEntity<HttpStatus> deleteEmp(@PathVariable("id") String id) {
         Long empId = Long.valueOf(id);
         Employee employee = employeeService.findEmpById(empId);
-        if(employee != null){
+        if (employee != null) {
             try {
                 employeeService.delete(empId);
                 Account account = employee.getAccountEmp();
-                if(account != null){
+                if (account != null) {
                     Boolean status = account.getStatus();
                     account.setStatus(!status);
                     accountService.save(account);
@@ -106,7 +106,7 @@ public class EmployeeAPI {
                 e.printStackTrace();
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-        }else {
+        } else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
@@ -120,28 +120,21 @@ public class EmployeeAPI {
         account.setUsername(employeeDTO.getUsername());
         account.setPassword(employeeDTO.getPassword());
         account.setRoles(roleSet);
-
-        //accountService.save(account);
         Employee employee = new Employee();
         employee.setEmpCode(employeeDTO.getEmployeeCode());
         employee.setIdCard(employeeDTO.getEmpIdCard());
         employee.setPhone(employeeDTO.getEmpPhone());
         employee.setName(employeeDTO.getEmpName());
         employee.setEmail(employeeDTO.getEmail());
-
-
         Branch branch = branchService.getBranchByBranchCode(employeeDTO.getBranchCode());
 
         employee.setEmpBranch(branch);
 
         employee.setAccountEmp(account);
-
         accountService.save(account);
         employeeService.save(employee);
 
         System.out.println(employeeDTO.toString());
-
-
     }
 
     @PutMapping("/employee/{id}")
@@ -158,29 +151,29 @@ public class EmployeeAPI {
             employee.setPhone(employeeDTO.getEmpPhone());
             employee.setEmail(employeeDTO.getEmail());
             Branch branch = branchService.getBranchByBranchCode(employeeDTO.getBranchCode());
-            if(branch!=null){
+            if (branch != null) {
                 employee.setEmpBranch(branch);
-            }else {
+            } else {
                 employee.setEmpBranch(null);
             }
             employeeService.save(employee);
-            return new ResponseEntity<>( HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/info-emp/{username}")
-    public ResponseEntity<EmployeeDTO> getInformationEmp(@PathVariable String username){
+    public ResponseEntity<EmployeeDTO> getInformationEmp(@PathVariable String username) {
         EmployeeDTO employeeDTO = new EmployeeDTO();
         Employee employee = employeeService.getEmployeeByUsername(username);
 //        System.out.println(employee.toString());
         Account account = accountService.findAccountByUsername(username);
 //        System.out.println(account.toString());
-        if(employee != null){
-            employeeDTO  = employeeMapper.empEntityToDto(employee);
+        if (employee != null) {
+            employeeDTO = employeeMapper.empEntityToDto(employee);
         }
-        if(account != null){
+        if (account != null) {
             employeeDTO.setUsername(account.getUsername());
             employeeDTO.setPassword(account.getPassword());
         }
@@ -188,31 +181,31 @@ public class EmployeeAPI {
     }
 
     @PutMapping("/info-emp/{username}")
-    public ResponseEntity<HttpStatus> updateEmployeeInformation(@PathVariable String username, @RequestBody EmployeeDTO employeeDTO){
+    public ResponseEntity<HttpStatus> updateEmployeeInformation(@PathVariable String username, @RequestBody EmployeeDTO employeeDTO) {
         Employee employee = employeeService.getEmployeeByUsername(username);
         System.out.println(employee.toString());
         Account account = accountService.findAccountByUsername(username);
         System.out.println(account.toString());
-       try{
-           if(employee != null){
-               employee.setIdCard(employeeDTO.getEmpIdCard());
-               employee.setName(employeeDTO.getEmpName());
-               employee.setPhone(employeeDTO.getEmpPhone());
-               employee.setEmail(employeeDTO.getEmail());
+        try {
+            if (employee != null) {
+                employee.setIdCard(employeeDTO.getEmpIdCard());
+                employee.setName(employeeDTO.getEmpName());
+                employee.setPhone(employeeDTO.getEmpPhone());
+                employee.setEmail(employeeDTO.getEmail());
 
-               employeeService.save(employee);
-           }else {
-               throw new Exception("Can not get employee with username "+username);
-           }
-           if(account != null && !employeeDTO.getNewPass().equals("")){
-               account.setPassword(employeeDTO.getNewPass());
-               accountService.save(account);
-           }else {
-               throw new Exception("Can not get account with username "+username);
-           }
-           return new ResponseEntity<>(HttpStatus.OK);
-       }catch (Exception e){
-           return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-       }
+                employeeService.save(employee);
+            } else {
+                throw new Exception("Can not get employee with username " + username);
+            }
+            if (account != null && !employeeDTO.getNewPass().equals("")) {
+                account.setPassword(employeeDTO.getNewPass());
+                accountService.save(account);
+            } else {
+                throw new Exception("Can not get account with username " + username);
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 }

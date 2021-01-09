@@ -70,7 +70,7 @@
                         color="warning"
                         class="btn-sm btn-warning"
                         v-tooltip.top-center="{
-                          content: 'Edit this account',
+                          content: 'Edit this service',
                         }"
                         @click="bindingDataToModal(data.serviceId)"
                       >

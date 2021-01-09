@@ -74,30 +74,67 @@
                   </td>
                   <td class="action">
                     <div>
-                      <button
+                      <mdb-btn
+                        color="warning"
                         class="btn-sm btn-warning"
+                        v-tooltip.top-center="{
+                          content: 'Edit this room',
+                        }"
                         @click="editRoom(data.roomId)"
                       >
                         <a class="btn-link-edit action-button">
-                          <i class="fas fa-pencil-alt"></i> </a
-                        >EDIT ROOM
-                      </button>
-                    </div>
-                    <!-- <div>
-                      <button class="btn-sm btn-danger">
-                        <a
-                          class="btn-link-delete action-button"
-                          @click="remove(scope.row)"
-                        >
-                          <i class="fas fa-trash"></i>
+                          <i class="fas fa-pencil-alt"></i>
                         </a>
-                        DELETE
-                      </button>
-                    </div> -->
+                      </mdb-btn>
+                    </div>
+                    <div>
+                      <mdb-btn
+                        :class="{
+                          'btn-sm btn-danger': data.status === 'true',
+                          'btn-sm btn-success': data.status === 'false',
+                        }"
+                        color="data.status : danger ? success"
+                        @click="ShowModalDisable(data.roomId)"
+                        v-tooltip.top-center="{
+                          content: setTextTooltip(data.status),
+                        }"
+                      >
+                        <i
+                          :class="{
+                            'fas fa-ban': data.status === 'true',
+                            'fas fa-plus': data.status === 'false',
+                          }"
+                        ></i>
+                      </mdb-btn>
+                    </div>
                   </td>
                 </tr>
               </tbody>
             </mdb-tbl>
+            <div>
+              <mdb-modal
+                centered
+                :show="modalDelete"
+                @close="modalDelete = false"
+              >
+                <mdb-modal-header>
+                  <mdb-modal-title>ARE YOU SURE?</mdb-modal-title>
+                </mdb-modal-header>
+                <mdb-modal-body
+                  ><strong>Please check before action</strong></mdb-modal-body
+                >
+                <mdb-modal-footer>
+                  <mdb-btn color="danger" @click.native="modalDelete = false"
+                    >Close</mdb-btn
+                  >
+                  <mdb-btn
+                    color="success"
+                    @click="disableRoom(currentRoom.roomId)"
+                    >OK</mdb-btn
+                  >
+                </mdb-modal-footer>
+              </mdb-modal>
+            </div>
           </mdb-card-body>
           <br />
           <div id="paging">
@@ -125,6 +162,11 @@ import {
   mdbCardBody,
   mdbTbl,
   mdbIcon,
+  mdbModal,
+  mdbModalHeader,
+  mdbModalTitle,
+  mdbModalBody,
+  mdbModalFooter,
   mdbBtn,
 } from 'mdbvue';
 
@@ -134,7 +176,7 @@ export default {
   data() {
     return {
       rooms: [],
-      currentRoom: null,
+      currentRoom: {},
       currentIndex: -1,
       roomCode: '',
 
@@ -143,6 +185,8 @@ export default {
       pageSize: 3,
 
       pageSizes: [3, 6, 9],
+
+      modalDelete: false,
     };
   },
   components: {
@@ -152,6 +196,11 @@ export default {
     mdbCardBody,
     mdbTbl,
     mdbIcon,
+    mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
     mdbBtn,
   },
   methods: {
@@ -206,6 +255,34 @@ export default {
       this.$router.push(`room/${id}`);
     },
 
+    disableRoom(id) {
+      RoomService.disableRoom(id).then(() => {
+        RoomService.getAll().then((response) => {
+          const { rooms, totalItems } = response.data;
+          this.rooms = rooms;
+          this.count = totalItems;
+          console.log(response.data);
+          if (this.rooms.status === 'true') {
+            this.messageTooltip = 'Disable this room';
+          } else {
+            this.messageTooltip = 'Enable this room';
+          }
+          this.modalDelete = false;
+        });
+      });
+    },
+    ShowModalDisable(id) {
+      console.log(id);
+      this.modalDelete = true;
+      RoomService.getRoomById(id)
+        .then((response) => {
+          this.currentRoom = response.data;
+          console.log(this.currentRoom);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
     handelSearch() {
       this.page = 1;
       this.retrieveRoom();
@@ -214,6 +291,14 @@ export default {
     showAll() {
       this.roomCode = '';
       this.retrieveRoom();
+    },
+
+    setTextTooltip(text) {
+      if (text === 'true') {
+        return 'Disable this room';
+      } else {
+        return 'Enable this room';
+      }
     },
   },
 

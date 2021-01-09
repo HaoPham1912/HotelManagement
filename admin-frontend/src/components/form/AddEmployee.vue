@@ -6,6 +6,7 @@
     <div class="row mb-4">
       <div class="col">
         <div class="form-outline">
+          <label class="form-label" for="employeeCode">Employee Code</label>
           <input
             type="text"
             id="employeeCode"
@@ -13,11 +14,11 @@
             v-model="employee.employeeCode"
             required
           />
-          <label class="form-label" for="employeeCode">Employee Code</label>
         </div>
       </div>
       <div class="col">
         <div class="form-outline">
+          <label class="form-label" for="empIdCard">Id Card</label>
           <input
             type="text"
             id="empIdCard"
@@ -25,13 +26,13 @@
             v-model="employee.empIdCard"
             required
           />
-          <label class="form-label" for="empIdCard">Id Card</label>
         </div>
       </div>
     </div>
 
     <!-- Text input -->
     <div class="form-outline mb-4">
+      <label class="form-label" for="empName">Employee Name</label>
       <input
         type="text"
         id="empName"
@@ -39,11 +40,11 @@
         v-model="employee.empName"
         required
       />
-      <label class="form-label" for="empName">Employee Name</label>
     </div>
 
     <!-- Text input -->
     <div class="form-outline mb-4">
+      <label class="form-label" for="empPhone">Phone</label>
       <input
         type="text"
         id="empPhone"
@@ -51,11 +52,11 @@
         v-model="employee.empPhone"
         required
       />
-      <label class="form-label" for="empPhone">Phone</label>
     </div>
 
     <!-- Email input -->
     <div class="form-outline mb-4">
+      <label class="form-label" for="email">Email</label>
       <input
         type="email"
         id="email"
@@ -63,11 +64,11 @@
         v-model="employee.email"
         required
       />
-      <label class="form-label" for="email">Email</label>
     </div>
 
     <!-- Number input -->
     <div class="form-outline mb-4">
+      <label class="form-label" for="username">Username Account</label>
       <input
         type="text"
         id="username"
@@ -75,11 +76,11 @@
         v-model="employee.username"
         required
       />
-      <label class="form-label" for="username">Username Account</label>
     </div>
 
     <!-- Number input -->
     <div class="form-outline mb-4">
+      <label class="form-label" for="password">Password Account</label>
       <input
         type="text"
         id="password"
@@ -87,9 +88,8 @@
         v-model="employee.password"
         required
       />
-      <label class="form-label" for="password">Password Account</label>
     </div>
-
+    <!-- 
     <div class="form-outline mb-4">
       <input
         type="text"
@@ -98,16 +98,16 @@
         v-model="employee.password"
       />
       <label class="form-label" for="password">Confirm Password</label>
-    </div>
+    </div> -->
 
     <!-- Message input -->
     <div class="form-outline mb-4">
+      <label class="form-label" for="branchCode">Choose Branch Code</label>
       <b-form-select
         v-model="employee.branchCode"
         :options="branchCodes"
         required
       ></b-form-select>
-      <label class="form-label" for="branchCode">Choose Branch Code</label>
     </div>
     <button
       type="submit"

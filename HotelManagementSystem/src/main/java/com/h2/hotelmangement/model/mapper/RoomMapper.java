@@ -30,6 +30,7 @@ public class RoomMapper {
         roomDTO.setPolicyCode(room.getCancelPolicy().getCode());
         roomDTO.setMainImage(room.getMainImage());
         roomDTO.setAmmountPeople(String.valueOf(room.getAmountPeople()));
+        roomDTO.setStatus(String.valueOf(room.getStatus()));
         Set<Bed> bedSet = room.getBedSet();
         List<Bed> bedList = Lists.newArrayList(bedSet);
         List<BedDTO> bedDTOList = bedMapper.listBedEntityToDto(bedList);

@@ -29,15 +29,17 @@
         </span>
       </mdb-navbar-toggler>
     </mdb-navbar>
-    <div style="margin-top: 200px">
-      <h1 class="text-center">
-        WELCOME TO H2 HOTEL MANAGEMENT SYSTEM
-      </h1>
-      <img
-        class="rounded mx-auto d-block"
-        src="../../assets/h2logo.png"
-        alt=""
-      />
+    <div class="main-content">
+      <div style="margin-top: 200px">
+        <h1 class="text-center">
+          WELCOME TO H2 HOTEL MANAGEMENT SYSTEM
+        </h1>
+        <img
+          class="rounded mx-auto d-block"
+          src="../../assets/h2logo.png"
+          alt=""
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -84,3 +86,4 @@ export default {
   },
 };
 </script>
+<style scoped></style>

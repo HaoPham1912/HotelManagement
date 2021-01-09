@@ -67,7 +67,7 @@
                           color="warning"
                           class="btn-sm btn-warning"
                           v-tooltip.top-center="{
-                            content: 'Edit this account',
+                            content: 'Edit this bed',
                           }"
                           @click="bindingDataToModal(data.bedId)"
                         >
@@ -363,9 +363,9 @@ export default {
             this.count = totalItems;
             console.log(response.data);
             if (this.beds.status === 'true') {
-              this.messageTooltip = 'Disable this account';
+              this.messageTooltip = 'Disable this bed';
             } else {
-              this.messageTooltip = 'Enable this account';
+              this.messageTooltip = 'Enable this bed';
             }
             this.modalDelete = false;
           });
@@ -391,9 +391,9 @@ export default {
     },
     setTextTooltip(text) {
       if (text === 'true') {
-        return 'Disable this acoount';
+        return 'Disable this bed';
       } else {
-        return 'Enable this account';
+        return 'Enable this bed';
       }
     },
   },

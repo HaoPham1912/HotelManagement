@@ -95,7 +95,7 @@ import BillService from '../../services/BillService';
 import RoomService from '../../services/RoomService';
 import jspdf from 'jspdf';
 // /import html2canvas from 'html2canvas';
-
+import { AUTH_LOGOUT } from '../../store/actions/auth';
 export default {
   data() {
     return {
@@ -125,6 +125,12 @@ export default {
             this.totalPrice += element.paidPrice;
             this.currentRoomId.push(element.roomId);
           });
+          if (Object.entries(this.bookingList).length === 0) {
+            alert('Session time out!!!');
+            this.$store
+              .dispatch(AUTH_LOGOUT)
+              .then(() => this.$router.push('/login'));
+          }
           console.log(this.currentRoomId);
           this.currentRoomId.forEach((element) => {
             console.log(`element ${element}`);
@@ -177,8 +183,9 @@ export default {
     },
 
     download() {
-      var pdf = new jspdf();
+      var pdf = new jspdf('p', 'mm', [200, 120]);
       var index = 10;
+
       pdf.text('H2 HOTEL', 50, index);
       pdf.text('CUSTOMER BILL', 10, (index += 10));
       pdf.text(`Date Export: ${this.printDate}`, 10, (index += 10));
@@ -210,8 +217,19 @@ export default {
       }
       pdf.text('------------------------------', 10, (index += 10));
       pdf.text(`Total Price ${this.totalPrice}`, 10, (index += 10));
-
-      pdf.save('test.pdf');
+      pdf.text('------------------------------', 10, (index += 10));
+      pdf.text('Signature', 10, (index += 10));
+      var today = new Date();
+      var date =
+        today.getFullYear() +
+        '-' +
+        (today.getMonth() + 1) +
+        '-' +
+        today.getDate();
+      var time =
+        today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+      var dateTime = date + ' ' + time;
+      pdf.save(`Bill at ${dateTime}.pdf`);
     },
   },
 
