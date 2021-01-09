@@ -230,6 +230,12 @@ export default {
           const { rooms, totalItems } = response.data;
           this.rooms = rooms;
           this.count = totalItems;
+          if (Object.entries(this.rooms).length === 0) {
+            alert('Session time out!!!');
+            this.$store
+              .dispatch(AUTH_LOGOUT)
+              .then(() => this.$router.push('/login'));
+          }
         })
         .catch((e) => {
           console.log(e);

@@ -112,7 +112,7 @@ public class EmployeeAPI {
     }
 
     @PostMapping("/employee")
-    public void addNewEmployee(@RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<HttpStatus> addNewEmployee(@RequestBody EmployeeDTO employeeDTO) {
         Account account = new Account();
         Role role = roleService.findByRoleName("EMPLOYEE");
         Set<Role> roleSet = new HashSet<>();
@@ -131,10 +131,14 @@ public class EmployeeAPI {
         employee.setEmpBranch(branch);
 
         employee.setAccountEmp(account);
-        accountService.save(account);
-        employeeService.save(employee);
-
-        System.out.println(employeeDTO.toString());
+      try{
+          accountService.save(account);
+          employeeService.save(employee);
+          return new ResponseEntity<>(HttpStatus.OK);
+      }catch (Exception e){
+          System.out.println(e.getMessage());
+          return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
     }
 
     @PutMapping("/employee/{id}")

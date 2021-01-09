@@ -279,6 +279,12 @@ export default {
       BedService.get(id)
         .then((response) => {
           this.currentBed = response.data;
+          if (Object.entries(this.currentBed).length === 0) {
+            alert('Session time out!!!');
+            this.$store
+              .dispatch(AUTH_LOGOUT)
+              .then(() => this.$router.push('/login'));
+          }
         })
         .catch((e) => {
           console.log(e);

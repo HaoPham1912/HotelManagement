@@ -184,6 +184,12 @@ export default {
           this.branchs = branchs;
           this.count = totalItems;
           console.log(response.data);
+          if (Object.entries(this.branchs).length === 0) {
+            alert('Session time out!!!');
+            this.$store
+              .dispatch(AUTH_LOGOUT)
+              .then(() => this.$router.push('/login'));
+          }
         })
         .catch((e) => {
           console.log(e);

@@ -248,8 +248,11 @@ export default {
           const { customers, totalItems } = response.data;
           this.customers = customers;
           this.count = totalItems;
-          if (this.customers.length === 0) {
-            this.noDataMessage = 'No data matching';
+          if (Object.entries(this.customers).length === 0) {
+            alert('Session time out!!!');
+            this.$store
+              .dispatch(AUTH_LOGOUT)
+              .then(() => this.$router.push('/login'));
           }
         })
         .catch((e) => {
