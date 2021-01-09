@@ -163,10 +163,4 @@ public class BranchAPI {
         }
     }
 
-    @GetMapping("/branch/location")
-    public ResponseEntity<Object> getAllLocation(){
-        return new ResponseEntity<>(branchService.getListLocation(),HttpStatus.OK);
-
-    }
-
 }

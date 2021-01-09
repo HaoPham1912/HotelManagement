@@ -1,22 +1,22 @@
 package com.h2.hotelmangement.Request;
 
 public class AccountPeopleDTO {
-    Integer numberOfAdust ;
-    Integer numberOfChildren;
+    Integer numberAdult ;
+    Integer numberChildren;
 
     public Integer getNumberOfAdust() {
-        return numberOfAdust;
+        return numberAdult;
     }
 
     public void setNumberOfAdust(Integer numberOfAdust) {
-        this.numberOfAdust = numberOfAdust;
+        this.numberAdult = numberOfAdust;
     }
 
     public Integer getNumberOfChildren() {
-        return numberOfChildren;
+        return numberChildren;
     }
 
     public void setNumberOfChildren(Integer numberOfChildren) {
-        this.numberOfChildren = numberOfChildren;
+        this.numberChildren = numberOfChildren;
     }
 }

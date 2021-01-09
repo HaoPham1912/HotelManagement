@@ -1,9 +1,11 @@
 package com.h2.hotelmangement.service;
 
+import com.h2.hotelmangement.Request.BookingCustomerDTO;
 import com.h2.hotelmangement.entity.Bill;
 import com.h2.hotelmangement.entity.Customer;
 import com.h2.hotelmangement.model.dto.BillDTO;
 import org.springframework.data.domain.Page;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,4 +27,7 @@ public interface BillService {
     void deleteBillById(Long id);
 
     Bill getBillByBillId(Long id);
+
+    @Transactional(rollbackFor = {Exception.class})
+    Optional<Bill> createBill(BookingCustomerDTO bookingCustomerDTO);
 }

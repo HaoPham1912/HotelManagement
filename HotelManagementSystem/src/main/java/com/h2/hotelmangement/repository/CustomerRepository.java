@@ -17,4 +17,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     Page<Customer> findAllByNameContains(String name, Pageable pageable);
 
+    Customer findByAccountCus_Username(String userName);
+
 }

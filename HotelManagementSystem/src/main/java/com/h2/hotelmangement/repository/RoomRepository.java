@@ -18,12 +18,17 @@ import java.util.Set;
 public interface RoomRepository extends JpaRepository<Room, Long> {
     Room findRoomByRoomCode(String roomCode);
 
-    @Query("SELECT r FROM Room r WHERE r.roomId not in :roomIdList and r.roomBranch.branchCode in :branchCode")
-    Optional<Set<Room>> findRoomAvailable(Set<Long> roomIdList, String branchCode);
+    @Query("SELECT r FROM Room r WHERE r.roomId not in :roomIdList and r.roomBranch.branchCode Like %:branchCode% ")
+    Set<Room> findRoomAvailable(Set<Long> roomIdList, String branchCode);
 
-    Optional<Set<Room>> findRoomByRoomBranch_BranchCode(String branchCode);
-
+    Set<Room> findRoomByRoomBranch_BranchCode(String branchCode);
 
     Page<Room> findAllByRoomCodeContains(String roomCode, Pageable pageable);
+
+    @Query("SELECT r FROM Room r WHERE r.roomId not in :roomIdList and r.roomBranch.branchCode Like %:branchCode%")
+    Page<Room> findRoomAvailable2(Set<Long> roomIdList, String branchCode, Pageable pageable);
+
+    Page<Room> findRoomByRoomBranch_BranchCode(String branchCode, Pageable pageable);
+
 
 }

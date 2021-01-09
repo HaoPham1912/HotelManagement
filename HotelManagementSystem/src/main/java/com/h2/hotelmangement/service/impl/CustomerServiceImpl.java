@@ -1,8 +1,10 @@
 package com.h2.hotelmangement.service.impl;
 
 import com.h2.hotelmangement.Request.UserInfoUpdateDTO;
+import com.h2.hotelmangement.common.util.ModelMapperUtil;
 import com.h2.hotelmangement.entity.Customer;
 import com.h2.hotelmangement.entity.Employee;
+import com.h2.hotelmangement.model.dto.CustomerDTO;
 import com.h2.hotelmangement.repository.CustomerRepository;
 import com.h2.hotelmangement.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,5 +70,11 @@ public class CustomerServiceImpl implements CustomerService {
         customer.get().setName(userUnfoUpdate.getUserName());
         customer.get().setPhone(userUnfoUpdate.getPhone());
         customerRepository.save(customer.get());
+    }
+
+    @Override
+    public Optional<Customer> findCustomerByEmail(String email) {
+        return customerRepository.findByEmail(email);
+
     }
 }

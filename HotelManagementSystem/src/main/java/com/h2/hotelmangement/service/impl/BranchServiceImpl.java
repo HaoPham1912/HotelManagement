@@ -40,7 +40,7 @@ public class BranchServiceImpl implements BranchService {
 
     @Override
     public Optional<List<BranchDTO>> getBranchByLocation(String location) {
-        Optional<Set<Branch>> listBranch = branchRepository.findBranchByAddress(location);
+        Optional<Set<Branch>> listBranch = branchRepository.findBranchByLocationLike(location);
         if(listBranch.isPresent()){
             return Optional.ofNullable(ModelMapperUtil.mapAll(listBranch.get(),BranchDTO.class));
         }

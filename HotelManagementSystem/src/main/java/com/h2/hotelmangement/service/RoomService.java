@@ -8,6 +8,7 @@ import com.h2.hotelmangement.model.dto.RoomDTO;
 import org.springframework.data.domain.Page;
 
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -24,11 +25,13 @@ public interface RoomService {
 
     Room getRoomByRoomCode(String roomCode);
 
-    Optional<Set<RoomDTO>> getListAllRoomAvailable (BookRoomDTO bookRoomDTO);
+    Optional<Set<RoomDTO>> getListAllRoomAvailable (BookRoomDTO bookRoomDTO) ;
 
 
     Page<Room> getPageRoom(int pageNo, int pageSize);
 
     Page<Room> getPageRoomByCode(String roomCode, int pageNo, int pageSize);
+
+    Page<Room> getListAllRoomAvailable2(BookRoomDTO bookRoomDTO) throws ParseException;
 
 }

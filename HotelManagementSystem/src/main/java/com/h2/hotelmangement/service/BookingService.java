@@ -1,5 +1,6 @@
 package com.h2.hotelmangement.service;
 
+import com.h2.hotelmangement.Request.BookingCustomerDTO;
 import com.h2.hotelmangement.Request.ResponseHistoryBookDTO;
 import com.h2.hotelmangement.entity.Booking;
 import com.h2.hotelmangement.model.dto.BookingDTO;
@@ -25,4 +26,6 @@ public interface BookingService {
     Long deleteBooking(Long billId, Long roomId) throws Exception;
 
     Booking getBookingInfor(Long billId, Long roomId);
+
+    Optional<List<BookingDTO>> createBookingCustomer(BookingCustomerDTO bookingCustomerDTO) throws Exception;
 }

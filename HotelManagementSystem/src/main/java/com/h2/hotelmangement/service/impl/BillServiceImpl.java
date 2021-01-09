@@ -1,26 +1,32 @@
 package com.h2.hotelmangement.service.impl;
 
+import com.h2.hotelmangement.Request.BookingCustomerDTO;
 import com.h2.hotelmangement.common.util.ModelMapperUtil;
 import com.h2.hotelmangement.entity.Bill;
 import com.h2.hotelmangement.entity.Customer;
+import com.h2.hotelmangement.entity.Room;
 import com.h2.hotelmangement.model.dto.BillDTO;
+import com.h2.hotelmangement.model.dto.RoomDTO;
 import com.h2.hotelmangement.repository.BillRepository;
+import com.h2.hotelmangement.repository.CustomerRepository;
 import com.h2.hotelmangement.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.ObjectUtils;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class BillServiceImpl implements BillService {
 
     @Autowired
     private BillRepository billRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @Override
     public List<Bill> getAllBill() {
@@ -71,4 +77,18 @@ public class BillServiceImpl implements BillService {
         return billRepository.getOne(id);
     }
 
+    @Override
+    public Optional<Bill> createBill(BookingCustomerDTO bookingCustomerDTO) {
+        Customer customer = customerRepository.findByAccountCus_Username(bookingCustomerDTO.getUserName());
+        if(!Objects.isNull(customer)){
+            Bill bill = new Bill();
+            Date date = new Date();
+            bill.setCreatedate(date);
+            bill.setCustomer(customer);
+           bill.setTotalprice(bookingCustomerDTO.getTotalPrice());
+           bill.setStatus(false);
+          return Optional.ofNullable(billRepository.save(bill));
+        }
+        return Optional.empty();
+    }
 }

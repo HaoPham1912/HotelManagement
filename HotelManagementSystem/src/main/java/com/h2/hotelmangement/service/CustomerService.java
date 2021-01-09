@@ -2,9 +2,12 @@ package com.h2.hotelmangement.service;
 
 import com.h2.hotelmangement.Request.UserInfoUpdateDTO;
 import com.h2.hotelmangement.entity.Customer;
+import com.h2.hotelmangement.model.dto.CustomerDTO;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface CustomerService {
@@ -22,4 +25,7 @@ public interface CustomerService {
     Customer getCustomerById(Long id);
 
     void updateCustomerInfo(UserInfoUpdateDTO userUnfoUpdate);
+
+    Optional<Customer> findCustomerByEmail(String email);
+
 }

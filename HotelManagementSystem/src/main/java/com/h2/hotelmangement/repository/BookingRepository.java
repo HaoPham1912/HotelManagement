@@ -20,8 +20,8 @@ import java.util.Set;
 public interface BookingRepository extends JpaRepository<Booking, BookingKey> {
     List<Booking> findBookingByBookingKey_BookDate(String bookDate);
 
-    @Query("SELECT b.room from Booking b where b.bookingKey.checkinDate > :checkOut and b.checkoutDate < :checkIn ")
-    Optional<Set<Room>> findRoomAvailableTime(Date checkIn, Date checkOut);
+    @Query("SELECT b.room from Booking b where b.bookingKey.checkinDate > :checkOut or b.checkoutDate < :checkIn ")
+    Set<Room> findRoomAvailableTime(Date checkIn, Date checkOut);
 
     Optional<Booking> findByBills_Billid(String billId);
 

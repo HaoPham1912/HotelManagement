@@ -12,8 +12,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -56,15 +59,17 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Optional<Set<RoomDTO>> getListAllRoomAvailable(BookRoomDTO bookRoomDTO) {
-        Optional<Set<Room>> listRoomCheck = bookingRepository.findRoomAvailableTime(bookRoomDTO.getCheckIn(),bookRoomDTO.getCheckOut());
-        if(listRoomCheck.isPresent()){
-            Set<Long> listRoomId = listRoomCheck.get().stream().map(r -> r.getRoomId()).collect(Collectors.toSet());
-            Optional<Set<Room>> listRoomAvailable = roomRepository.findRoomAvailable(listRoomId,bookRoomDTO.getBranch().getBranchCode());
-            return Optional.ofNullable(ModelMapperUtil.mapAllToSet(listRoomAvailable.get(),RoomDTO.class));
+    public Optional<Set<RoomDTO>> getListAllRoomAvailable(BookRoomDTO bookRoomDTO){
+        Date dateCheckIn = new Date(bookRoomDTO.getCheckIn());
+        Date dateCheckOut = new Date(bookRoomDTO.getCheckOut());
+        Set<Room> listRoomCheck = bookingRepository.findRoomAvailableTime(dateCheckIn,dateCheckOut);
+        if(CollectionUtils.isEmpty(listRoomCheck)){
+            Set<Long> listRoomId = listRoomCheck.stream().map(r -> r.getRoomId()).collect(Collectors.toSet());
+            Set<Room> listRoomAvailable = roomRepository.findRoomAvailable(listRoomId,bookRoomDTO.getBranchCode());
+            return Optional.ofNullable(ModelMapperUtil.mapAllToSet(listRoomAvailable,RoomDTO.class));
         }
-        Optional<Set<Room>> listRoomInBranch = roomRepository.findRoomByRoomBranch_BranchCode(bookRoomDTO.getBranch().getBranchCode());
-        return Optional.ofNullable(ModelMapperUtil.mapAllToSet(listRoomInBranch.get(),RoomDTO.class));
+        Set<Room> listRoomInBranch = roomRepository.findRoomByRoomBranch_BranchCode(bookRoomDTO.getBranchCode());
+        return Optional.ofNullable(ModelMapperUtil.mapAllToSet(listRoomInBranch,RoomDTO.class));
     }
 
 
@@ -77,6 +82,19 @@ public class RoomServiceImpl implements RoomService {
     public Page<Room> getPageRoomByCode(String roomCode, int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         return roomRepository.findAllByRoomCodeContains(roomCode,pageable);
+    }
+
+    @Override
+    public Page<Room> getListAllRoomAvailable2(BookRoomDTO bookRoomDTO) throws ParseException {
+        Date dateCheckIn = new Date(bookRoomDTO.getCheckIn());
+        Date dateCheckOut = new Date(bookRoomDTO.getCheckOut());
+        Pageable pageable = PageRequest.of(bookRoomDTO.getPageNo(), bookRoomDTO.getPageSize());
+        Set<Room> listRoomCheck = bookingRepository.findRoomAvailableTime(dateCheckIn,dateCheckOut);
+        if(CollectionUtils.isEmpty(listRoomCheck)){
+            Set<Long> listRoomId = listRoomCheck.stream().map(r -> r.getRoomId()).collect(Collectors.toSet());
+           return roomRepository.findRoomAvailable2(listRoomId,bookRoomDTO.getBranchCode(),pageable);
+        }
+        return roomRepository.findRoomByRoomBranch_BranchCode(bookRoomDTO.getBranchCode(),pageable);
     }
 
 }

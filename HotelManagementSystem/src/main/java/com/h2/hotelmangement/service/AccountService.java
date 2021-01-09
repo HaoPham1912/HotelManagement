@@ -22,4 +22,5 @@ public interface AccountService {
     Page<Account> getAllAccountPagination(String username, int pageNo, int pageSize);
 
     Account findAccountByUsername(String username);
+
 }

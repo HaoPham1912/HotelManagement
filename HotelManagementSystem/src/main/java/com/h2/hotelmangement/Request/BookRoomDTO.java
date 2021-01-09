@@ -7,40 +7,58 @@ import java.util.List;
 
 public class BookRoomDTO {
 
-    Date checkIn;
-    Date checkOut;
-    BranchDTO branch;
-    List<AccountPeopleDTO> accountPeopleDTOList;
+    Long checkIn;
+    Long checkOut;
+    String branchCode;
+    List<Integer> accountPeopleDTOList;
+    int pageNo;
+    int pageSize;
 
-    public Date getCheckIn() {
+    public Long getCheckIn() {
         return checkIn;
     }
 
-    public void setCheckIn(Date checkIn) {
+    public void setCheckIn(Long checkIn) {
         this.checkIn = checkIn;
     }
 
-    public Date getCheckOut() {
+    public Long getCheckOut() {
         return checkOut;
     }
 
-    public void setCheckOut(Date checkOut) {
+    public void setCheckOut(Long checkOut) {
         this.checkOut = checkOut;
     }
 
-    public BranchDTO getBranch() {
-        return branch;
-    }
-
-    public void setBranch(BranchDTO branch) {
-        this.branch = branch;
-    }
-
-    public List<AccountPeopleDTO> getAccountPeopleDTOList() {
+    public List<Integer> getAccountPeopleDTOList() {
         return accountPeopleDTOList;
     }
 
-    public void setAccountPeopleDTOList(List<AccountPeopleDTO> accountPeopleDTOList) {
+    public void setAccountPeopleDTOList(List<Integer> accountPeopleDTOList) {
         this.accountPeopleDTOList = accountPeopleDTOList;
+    }
+
+    public String getBranchCode() {
+        return branchCode;
+    }
+
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
+    }
+
+    public int getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(int pageNo) {
+        this.pageNo = pageNo;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 }

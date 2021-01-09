@@ -1,6 +1,8 @@
 package com.h2.hotelmangement.api;
 
+import com.h2.hotelmangement.Request.BookingCustomerDTO;
 import com.h2.hotelmangement.Request.ResponseHistoryBookDTO;
+import com.h2.hotelmangement.common.util.ResponseTemplate;
 import com.h2.hotelmangement.entity.Bill;
 import com.h2.hotelmangement.entity.Booking;
 import com.h2.hotelmangement.entity.Customer;
@@ -108,5 +110,18 @@ public class BookingAPI {
             }
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/booking")
+    public ResponseEntity<Map<String, Object>> bookRoomForCustomer(@RequestBody BookingCustomerDTO params) throws Exception {
+        Map<String, Object> response = new HashMap<>();
+        Optional<List<BookingDTO>> bookingDTOList = bookingService.createBookingCustomer(params);
+        if(bookingDTOList.isPresent()){
+            response.put("status", "Booking success");
+            return new ResponseEntity<>(response,HttpStatus.CREATED);
+        }
+        response.put("status","Ohh... something went wrong. Please try again");
+        return new ResponseEntity<>(response,HttpStatus.OK);
+
     }
 }
